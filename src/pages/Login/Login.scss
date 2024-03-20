@@ -1,0 +1,8 @@
+@import '../../partials/mixins.scss';
+
+.login {
+  @include page;
+  background-color: yellow;
+
+
+}

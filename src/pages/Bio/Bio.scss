@@ -1,0 +1,10 @@
+@import '../../partials/mixins';
+
+.bio {
+  @include page;
+
+  &__h1 {
+    color: green;
+  }
+  
+}

@@ -1,0 +1,9 @@
+@import '../../partials/mixins';
+
+.contact {
+  @include page;
+  &__h1 {
+    color: orange;
+  }
+  
+}

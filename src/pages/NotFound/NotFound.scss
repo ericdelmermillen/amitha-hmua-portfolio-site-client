@@ -1,0 +1,10 @@
+@import '../../partials/mixins';
+
+.notFound {
+  @include page;
+
+  &__h1 {
+    color: red;
+  }
+  
+}
