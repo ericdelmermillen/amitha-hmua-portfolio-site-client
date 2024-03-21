@@ -28,7 +28,7 @@ const Nav = () => {
             <Link to={'/contact'}>
               <li className="nav__link">Contact</li>
             </Link>
-            <a href="https://www.instagram.com/" target="_blank" className="">
+            <a href="https://www.instagram.com/amitha_hmua/" target="_blank" className="">
               <li className="nav__link">Instagram</li>
             </a>
           </ul>
