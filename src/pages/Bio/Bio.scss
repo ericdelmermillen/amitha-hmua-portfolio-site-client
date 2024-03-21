@@ -2,9 +2,10 @@
 
 .bio {
   @include page;
+  background: blue;
 
   &__h1 {
-    color: green;
+    color: white;
   }
   
 }

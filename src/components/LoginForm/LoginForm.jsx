@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import AppContext from '../../AppContext'; 
+import { Link } from 'react-router-dom';
 
 import './LoginForm.scss';
 
@@ -21,7 +22,6 @@ const LoginForm = () => {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,39 +53,57 @@ const LoginForm = () => {
   
 
   return (
-    <div className="loginForm">
-      <div className="loginForm__modal">
-        <h2 className="loginForm__title">Admin Login</h2>
-        <form 
-          className="loginForm__form" 
-          onSubmit={handleSubmit}
-        >
-          <div className="loginForm__group">
-            <label htmlFor="email" className="loginForm__label">Email</label>
-            <input
-              type="email"
-              id="email"
-              className="loginForm__input"
-              value={email}
-              placeholder="Email"
-              onChange={handleEmailChange}
-            />
-          </div>
-          <div className="loginForm__group">
-            <label htmlFor="password" className="loginForm__label">Password</label>
-            <input
-              type="password"
-              id="password"
-              className="loginForm__input"
-              value={password}
-              placeholder="Password"
-              onChange={handlePasswordChange}
-            />
-          </div>
-          <button type="submit" className="loginForm__button">Login</button>
-        </form>
+    <>
+      <div className="loginForm">
+        <div className="loginForm__modal">
+          <h2 className="loginForm__title">Admin Login</h2>
+          <form 
+            className="loginForm__form" 
+            onSubmit={handleSubmit}>
+            <div className="loginForm__group">
+              <label 
+                htmlFor="email" className="loginForm__label">
+                  Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                className="loginForm__input"
+                value={email}
+                placeholder="Email"
+                onChange={handleEmailChange}
+              />
+            </div>
+            <div className="loginForm__group">
+              <label 
+                htmlFor="password" className="loginForm__label">
+                  Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                className="loginForm__input"
+                value={password}
+                placeholder="Password"
+                onChange={handlePasswordChange}
+                />
+            </div>
+            <div className="button__container">
+              <button 
+                type="submit" className="loginForm__button">
+                  Login
+              </button>
+              <Link to={'/'}>
+                <button 
+                  type="submit" className="loginForm__button">
+                    Cancel
+                </button>
+              </Link>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
-  )};
+    </>
+)};
 
 export default LoginForm;

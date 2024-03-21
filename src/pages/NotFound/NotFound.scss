@@ -2,9 +2,10 @@
 
 .notFound {
   @include page;
+  background-color: red;
 
   &__h1 {
-    color: red;
+    color: white;
   }
   
 }

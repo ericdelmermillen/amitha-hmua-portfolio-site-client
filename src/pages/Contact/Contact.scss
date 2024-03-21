@@ -2,6 +2,8 @@
 
 .contact {
   @include page;
+  background-color: green;
+  
   &__h1 {
     color: orange;
   }

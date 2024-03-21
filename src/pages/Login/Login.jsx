@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import LoginForm from '../../components/LoginForm/LoginForm';
 import './Login.scss';
 
@@ -10,6 +9,6 @@ const Login = () => {
         <LoginForm />
       </div>
     </>
-)};
+  )};
 
 export default Login;

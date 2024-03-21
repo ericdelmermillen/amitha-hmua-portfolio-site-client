@@ -1,14 +1,28 @@
-*, *::before, *::after {
+@import './partials/variables';
+
+*, 
+*::before, 
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html {
+  // font-family: $body-font;
+  scroll-behavior: smooth;
+}
+
 a {
   color: inherit;
+  font-family: inherit;
   text-decoration: none;
 }
 
 ul li {
   list-style: none;
+}
+
+.app {
+  min-height: 200vh;
 }
