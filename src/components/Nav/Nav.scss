@@ -51,7 +51,12 @@
   &__logout {
     display: none;
     
+  }
+
+  &__logout.loggedIn {
+
     @media(min-width: $tablet) {
+      display: block;
       margin-inline-start: 2rem;
     }
   }

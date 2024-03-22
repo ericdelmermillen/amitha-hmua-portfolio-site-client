@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import AppContext from '../../AppContext';
 import './Nav.scss';
 
-const Nav = () => {
+const Nav = ({ handleLogOut }) => {
   const { 
     isLoggedIn, 
     setIsLoggedIn
@@ -32,18 +32,17 @@ const Nav = () => {
               <li className="nav__link">Instagram</li>
             </a>
           </ul>
-          
+
           { 
             isLoggedIn && 
             
             <h4 
-              className="nav__logout"
-              onClick={() => setIsLoggedIn(false)}
+              className={`nav__logout ${isLoggedIn && "loggedIn"}`}
+              onClick={handleLogOut}
               >
                 Logout
             </h4> 
           }
-
 
           <div 
             className="nav__toggle-button" 

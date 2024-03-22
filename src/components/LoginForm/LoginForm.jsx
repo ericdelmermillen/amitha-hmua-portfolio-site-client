@@ -1,6 +1,10 @@
-import React, { useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import AppContext from '../../AppContext'; 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { isValidEmail, isValidPassword } from '../../utils/utils';
+import { toast } from 'react-toastify';
+import hide from '../../../src/assets/hide.png';
+import show from '../../../src/assets/show.png';
 
 import './LoginForm.scss';
 
@@ -12,8 +16,13 @@ const LoginForm = () => {
     setIsLoggedIn
   } = useContext(AppContext);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [ emailInvalid, setEmailInvalid ] = useState(false);
+  const [ passwordInvalid, setPasswordInvalid ] = useState(false);
+  const [ email, setEmail ] = useState('');
+  const [ password, setPassword ] = useState('');
+  const [ showPassword, setShowPassword ] = useState(false);
+
+  const navigate = useNavigate(); 
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -25,6 +34,18 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if(isValidEmail(email)) {
+      setEmailInvalid(false)
+    } else {
+      return setEmailInvalid(true)
+    }
+  
+    if(isValidPassword(password)) {
+      setPasswordInvalid(false);
+    } else {
+     return setPasswordInvalid(true);
+    }
     
     try {
       const response = await fetch(`${BASE_URL}/auth/login`, {
@@ -38,19 +59,20 @@ const LoginForm = () => {
         })
       });
   
-      if (response.ok) {
-        // Handle successful login
+      if(response.ok) {
+        const data = await response.json();
+        const token = data.token
+        localStorage.setItem('token', token);
         setIsLoggedIn(true);
+        navigate('/')
       } else {
-        // Handle login error
-        console.error('Login failed');
+        toast.error('Login Failed. Check Email & Password')
       }
-    } catch (error) {
-      // Handle fetch error
+    } catch(error) {
+      toast.error(error.message)
       console.error('Error:', error);
     }
   };
-  
 
   return (
     <>
@@ -66,29 +88,46 @@ const LoginForm = () => {
                   Email
               </label>
               <input
-                type="email"
+                type="text"
                 id="email"
                 className="loginForm__input"
                 value={email}
                 placeholder="Email"
                 onChange={handleEmailChange}
               />
+              <div 
+                className={`loginForm__error ${emailInvalid && "email-error"}`}
+              >
+                Invalid Email
+              </div>
             </div>
             <div className="loginForm__group">
               <label 
                 htmlFor="password" className="loginForm__label">
                   Password
               </label>
-              <input
-                type="password"
-                id="password"
-                className="loginForm__input"
-                value={password}
-                placeholder="Password"
-                onChange={handlePasswordChange}
+              <div className="passwordInput">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  className="loginForm__input"
+                  value={password}
+                  placeholder="Password"
+                  onChange={handlePasswordChange}
                 />
+                <img 
+                  className="passwordInput__icon"
+                  src={showPassword ? hide : show} 
+                  alt="hide password icon"
+                  onClick={() => setShowPassword(!showPassword)}/>
+              </div>
+              <div 
+                className={`loginForm__error ${passwordInvalid && "password-error"}`}
+              >
+                Password Incorrect
+              </div>
             </div>
-            <div className="button__container">
+            <div className="loginForm__button-container">
               <button 
                 type="submit" className="loginForm__button">
                   Login
