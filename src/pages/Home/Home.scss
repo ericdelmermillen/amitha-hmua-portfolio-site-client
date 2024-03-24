@@ -2,9 +2,11 @@
 
 .home {
   @include page;
-
+  background: pink;
+  
   &__h1 {
     color: blue;
   }
   
 }
+

@@ -6,9 +6,11 @@ import './Nav.scss';
 const Nav = ({ handleLogOut }) => {
   const { 
     isLoggedIn, 
-    setIsLoggedIn
+    setIsLoggedIn,
+    showSideNav, 
+    setShowSideNav
    } = useContext(AppContext);
-  
+
   
   return (
     <>
@@ -28,7 +30,7 @@ const Nav = ({ handleLogOut }) => {
             <Link to={'/contact'}>
               <li className="nav__link">Contact</li>
             </Link>
-            <a href="https://www.instagram.com/amitha_hmua/" target="_blank" className="">
+            <a href="https://www.instagram.com/amitha_hmua/" target="_blank">
               <li className="nav__link">Instagram</li>
             </a>
           </ul>
@@ -43,10 +45,11 @@ const Nav = ({ handleLogOut }) => {
                 Logout
             </h4> 
           }
-
+          
           <div 
             className="nav__toggle-button" 
             aria-label="Toggle Menu"
+            onClick={() => setShowSideNav(!showSideNav)}
           >
             <div className="nav__toggle-icon"></div>
             <div className="nav__toggle-icon"></div>

@@ -8,9 +8,14 @@
   box-sizing: border-box;
 }
 
+// research webkit-fill-available
 html {
-  // font-family: $body-font;
   scroll-behavior: smooth;
+  // height: -webkit-fill-available;
+}
+
+body {
+  // height: -webkit-fill-available;
 }
 
 a {
@@ -24,5 +29,37 @@ ul li {
 }
 
 .app {
-  // min-height: 200vh;
+  position: relative;
+  margin-top: -100vh;
+  min-height: 300vh;
+  // max-width: 100vw;
+  
+  &.isiPhone {
+    margin-top: calc(-100dvh - 4rem);
+
+  }
+
+  @media(min-width: $tablet) {
+    margin-top: 0;
+  }
+}
+
+.touchOff__div {
+  height: 100vh;
+  // margin-top: 100dvh;
+  position: sticky;
+  top: 0;
+  width: 100vw;
+  z-index: 2;
+  // background: green;
+  opacity: 0.5;
+  
+  &.behind {
+    z-index: 0;
+
+  }
+
+  @media(min-width: $tablet) {
+    display: none;
+  }
 }

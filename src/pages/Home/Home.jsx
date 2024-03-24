@@ -8,6 +8,14 @@ const Home = () => {
     setIsLoggedIn
    } = useContext(AppContext);
 
+  const isiOS = () => {
+    return /iPhone|iPad|iPod/.test(navigator.platform);
+  };
+
+  const isiPhone = isiOS()
+
+  console.log(isiPhone)
+
   return ( 
     <>
       <div className="home">

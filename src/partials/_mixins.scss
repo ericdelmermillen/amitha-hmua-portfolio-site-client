@@ -9,4 +9,14 @@
   max-width: 1920px;
   min-height: 100vh;
   outline: 1px solid #333;
+  margin-top: -100vh;
+  
+  @media(min-width: 768px) {
+    margin-top: 0;
+
+  }
 }
+
+// @mixin pageIsiPhone {
+//   @include page; 
+// }

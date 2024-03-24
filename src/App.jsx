@@ -8,6 +8,7 @@ import Contact from './pages/Contact/Contact';
 import Login from './pages/Login/Login';
 import Nav from './components/Nav/Nav';
 import Footer from './components/Footer/Footer';
+import SideNav from './components/SideNav/SideNav';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
@@ -15,7 +16,9 @@ import './App.scss';
 const App = () => {
   const { 
     isLoggedIn, 
-    setIsLoggedIn
+    setIsLoggedIn,
+    showSideNav, 
+    setShowSideNav
   } = useContext(AppContext);
   
   
@@ -27,7 +30,22 @@ const App = () => {
   return (
     <>
       <div className="app">
+    
+          <div 
+            className={showSideNav 
+              ? "touchOff__div"
+              : "touchOff__div behind"
+            }
+            onClick={showSideNav 
+              ? () => setShowSideNav(false)
+              : null
+            }
+          ></div>
+
+
         <Nav handleLogOut={handleLogOut}/>
+        {/* {isiPhone && <h1 className='isiPhone'>isiPhone</h1>} */}
+        <SideNav handleLogOut={handleLogOut}/>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />

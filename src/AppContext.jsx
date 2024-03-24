@@ -6,7 +6,10 @@ import { useNavigate } from 'react-router-dom';
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [ isLoggedIn, setIsLoggedIn ] = useState(false);
+  const [ showSideNav, setShowSideNav ] = useState(false);
+
+  // do I need state for os?
 
   const navigate = useNavigate(); 
 
@@ -49,8 +52,11 @@ export const AppProvider = ({ children }) => {
 
   return (
     <>
-      <AppContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
-        {children}
+      <AppContext.Provider 
+        value={{ 
+          isLoggedIn, setIsLoggedIn,
+          showSideNav, setShowSideNav}}>
+            {children}
       </AppContext.Provider>
     </>
   )};
