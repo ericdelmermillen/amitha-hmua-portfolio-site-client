@@ -10,8 +10,34 @@ export const AppProvider = ({ children }) => {
   const [ showSideNav, setShowSideNav ] = useState(false);
   const [ scrollYPos, setScrollYPos ] = useState(window.scrollY);
   const [ prevScrollYPos, setPrevScrollYPos ] = useState(window.scrollY);
+  const [ shootsData, setShootsData ] = useState([])
 
   const navigate = useNavigate(); 
+
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  `${BASE_URL}/shoots/all`
+
+  useEffect(() => {
+    const fetchShoots = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}/shoots/all`);
+
+        if(response.ok) {
+          const data = await response.json()
+          setShootsData(data);
+        } else {
+          console.error('Failed to fetch shoots:', response.statusText);
+        }
+        
+      } catch(error) {
+        console.log(`Error fetching shoots: ${error}`)
+      }
+    }
+    fetchShoots();
+    console.log("shootsData fetched")
+  }, [])
+  
+  
 
   useEffect(() => {
 
@@ -58,7 +84,9 @@ export const AppProvider = ({ children }) => {
     scrollYPos, 
     setScrollYPos,
     prevScrollYPos, 
-    setPrevScrollYPos
+    setPrevScrollYPos,
+    shootsData, 
+    setShootsData
    }
   
   return (
