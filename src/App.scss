@@ -1,21 +1,30 @@
 @import './partials/variables';
 
+/* css reset */
 *, 
 *::before, 
 *::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
-// research webkit-fill-available
 html {
+  // font-family: $body-font;
   scroll-behavior: smooth;
-  // height: -webkit-fill-available;
 }
 
 body {
-  // height: -webkit-fill-available;
+  // background: $main-backing-color;
+  // color: $flat-black-color;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+ul, ol {
+  // font-family: $body-font;
+  list-style: none;
 }
 
 a {
@@ -24,42 +33,32 @@ a {
   text-decoration: none;
 }
 
-ul li {
-  list-style: none;
-}
-
 .app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   position: relative;
-  margin-top: -100vh;
-  min-height: 300vh;
-  // max-width: 100vw;
+  margin-inline: auto;
+  height: 100%;
   
-  &.isiPhone {
-    margin-top: calc(-100dvh - 4rem);
-
-  }
-
-  @media(min-width: $tablet) {
-    margin-top: 0;
+  .touchOffDiv {
+    height: 100%;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 3;
   }
 }
 
-.touchOff__div {
-  height: 100vh;
-  // margin-top: 100dvh;
-  position: sticky;
-  top: 0;
-  width: 100vw;
-  z-index: 2;
-  // background: green;
-  opacity: 0.5;
-  
-  &.behind {
-    z-index: 0;
 
-  }
 
-  @media(min-width: $tablet) {
-    display: none;
-  }
-}
+
+
+
+
+
+
+
+
+
+

@@ -8,8 +8,8 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const [ isLoggedIn, setIsLoggedIn ] = useState(false);
   const [ showSideNav, setShowSideNav ] = useState(false);
-
-  // do I need state for os?
+  const [ scrollYPos, setScrollYPos ] = useState(window.scrollY);
+  const [ prevScrollYPos, setPrevScrollYPos ] = useState(window.scrollY);
 
   const navigate = useNavigate(); 
 
@@ -48,15 +48,23 @@ export const AppProvider = ({ children }) => {
 
     return () => clearInterval(intervalId);
   }, []);
-  
 
+
+  const contextValues = {
+    isLoggedIn, 
+    setIsLoggedIn,
+    showSideNav, 
+    setShowSideNav,
+    scrollYPos, 
+    setScrollYPos,
+    prevScrollYPos, 
+    setPrevScrollYPos
+   }
+  
   return (
     <>
-      <AppContext.Provider 
-        value={{ 
-          isLoggedIn, setIsLoggedIn,
-          showSideNav, setShowSideNav}}>
-            {children}
+      <AppContext.Provider value={contextValues}>
+        {children}
       </AppContext.Provider>
     </>
   )};

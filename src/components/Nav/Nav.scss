@@ -1,16 +1,31 @@
 @import '../../partials/variables';
+
 .nav {
   align-items: center;
   background: yellow;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
   display: flex;
+  height: 4rem;
   justify-content: center;
-  min-height: 3.5rem;
-  position: fixed;
+  margin-top: 0;
+  position: sticky;
+  transition: all 600ms ease;
   top: 0;
   width: 100%;
-  
-  @media(min-width: $tablet) {
-    position: sticky;
+  z-index: 1;
+
+  @media (min-width: 768px) {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    left: 0;
+    padding-block: 1rem;
+    position: fixed;
+    right: 0;
+    }
+    
+  &.hide {
+    top: -6rem;
   }
   
   &__inner {
@@ -23,13 +38,6 @@
     
     @media(min-width: $tablet) {
       justify-content:baseline;
-    }
-  }
-
-  &__logo {
-    
-    @media(min-width: $tablet) {
-      // border: 2px solid blue;
     }
   }
 
@@ -49,7 +57,6 @@
 
   &__logout {
     display: none;
-    
   }
 
   &__logout.loggedIn {
@@ -65,12 +72,11 @@
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
-    height: 0.25rem;
+    height: 2.5rem;
     justify-content: center;
-    position: fixed;
+    position: absolute;
     right: 2rem;
-    width: 2rem;
-    height: 2.75rem;
+    top: 0.6rem;
     width: 2rem;
     
     @media(min-width: $tablet) {

@@ -1,12 +1,12 @@
 @import '../../partials/mixins';
+@import '../../partials/variables';
+
 
 .home {
   @include page;
   background: pink;
-  
-  &__h1 {
-    color: blue;
-  }
-  
-}
 
+  @media(min-width: $tablet) {
+    margin-top: 4rem;
+  }
+}

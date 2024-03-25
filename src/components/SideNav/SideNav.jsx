@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import AppContext from '../../AppContext';
 import './SideNav.scss';
 
-const SideNav = () => {
+const SideNav = ({ handleLogOut, handleScrollToTopOnNavLink }) => {
   const { 
     isLoggedIn, 
     setIsLoggedIn,
@@ -12,12 +12,19 @@ const SideNav = () => {
    } = useContext(AppContext);
 
    const handleNavLinkClick = () => {
-    setShowSideNav(false)
-   }
+    setShowSideNav(false);
+  }
+  
+  const handleSideNavLogout = () => {
+    setTimeout(() => {
+      handleLogOut();
+    }, 500)
+    handleNavLinkClick();
+  }
 
   return (
     <>
-      <div className={`sideNav ${showSideNav && "show"}`}>
+      <div className={`sideNav ${showSideNav ? "show" : ""}`}>
         <div 
           className="sideNav__inner"
           >
@@ -55,7 +62,16 @@ const SideNav = () => {
                     Instagram
                 </li>
               </a>
+              {isLoggedIn &&
+              <h4 
+              className='sideNav__h4nk'
+              onClick={handleSideNavLogout}
+              >
+                  Logout
+              </h4>
+            }
             </ul>
+
           </div>
 
         </div>

@@ -3,18 +3,21 @@ import { Link } from 'react-router-dom';
 import AppContext from '../../AppContext';
 import './Nav.scss';
 
-const Nav = ({ handleLogOut }) => {
+const Nav = ({ handleLogOut, handleScrollToTopOnNavLink }) => {
   const { 
     isLoggedIn, 
     setIsLoggedIn,
     showSideNav, 
-    setShowSideNav
+    setShowSideNav,
+    scrollYPos, 
+    setScrollYPos,
+    prevScrollYPos, 
+    setPrevScrollYPos
    } = useContext(AppContext);
-
   
   return (
     <>
-      <nav className="nav">
+      <nav className={`nav ${prevScrollYPos < scrollYPos ? "hide": ""}`}>
         <div className="nav__inner">
 
           <Link to={'/home'}>

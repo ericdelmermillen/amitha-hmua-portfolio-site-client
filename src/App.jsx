@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import AppContext from './AppContext'; 
-import { useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import Home from './pages/Home/Home';
 import NotFound from './pages/NotFound/NotFound';
 import Bio from './pages/Bio/Bio';
@@ -18,7 +18,11 @@ const App = () => {
     isLoggedIn, 
     setIsLoggedIn,
     showSideNav, 
-    setShowSideNav
+    setShowSideNav,
+    scrollYPos, 
+    setScrollYPos,
+    prevScrollYPos, 
+    setPrevScrollYPos
   } = useContext(AppContext);
   
   
@@ -27,14 +31,41 @@ const App = () => {
     localStorage.removeItem('token'); 
   };
 
+  const handleScrollToTopOnNavLink = () => {
+    window.scrollTo({
+      behavior: 'smooth',
+      top: 0
+    });
+  }
+
+
+  useEffect(() => {
+    const handleScrollY = () => {
+      const newScrollYPos = window.scrollY;
+
+      if(scrollYPos !== undefined && setPrevScrollYPos !== undefined && newScrollYPos !== scrollYPos) {
+        setPrevScrollYPos(scrollYPos);
+        setScrollYPos(newScrollYPos);
+      }
+    };
+
+    handleScrollY();
+
+    window.addEventListener("scroll", handleScrollY);
+
+    return () => {
+      window.removeEventListener("scroll", handleScrollY);
+    };
+  }, [scrollYPos]);
+  
   return (
     <>
       <div className="app">
     
           <div 
             className={showSideNav 
-              ? "touchOff__div"
-              : "touchOff__div behind"
+              ? "touchOffDiv"
+              : ""
             }
             onClick={showSideNav 
               ? () => setShowSideNav(false)
@@ -43,7 +74,10 @@ const App = () => {
           ></div>
 
 
-        <Nav handleLogOut={handleLogOut}/>
+        <Nav 
+          handleLogOut={handleLogOut}
+          handleScrollToTopOnNavLink={handleScrollToTopOnNavLink}
+          />
         {/* {isiPhone && <h1 className='isiPhone'>isiPhone</h1>} */}
         <SideNav handleLogOut={handleLogOut}/>
         <Routes>
