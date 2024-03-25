@@ -2,12 +2,7 @@ import './Shoot.scss';
 import AppContext from '../../AppContext';
 import { useState, useContext } from 'react';
 
-const Shoot = (
-  { title,
-    shoot_id,
-    thumbnail_url,
-    models, 
-    photographers }) => {
+const Shoot = ({ title, shoot_id, thumbnail_url, models, photographers }) => {
 
   const { 
     isLoggedIn, 
@@ -20,7 +15,7 @@ const Shoot = (
     setPrevScrollYPos,
     shootsData, 
     setShootsData
-    } = useContext(AppContext);
+  } = useContext(AppContext);
 
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
