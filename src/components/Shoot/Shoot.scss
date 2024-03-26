@@ -20,16 +20,29 @@
   &__models, &__photographers {
     color: red;
     text-align: center;
-    // font-weight: bold;
     font-style: italic;
     font-size: 1.5rem;
   }
 
   &__delete-btn {
     position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    height: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    outline: 1px solid red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    padding: 0.55rem;
+  }
+
+  &__delete-icon {
+    width: 100%;
+    height: 100%;
   }
 
   .models__label, .photographers__label {

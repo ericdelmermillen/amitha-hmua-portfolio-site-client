@@ -1,6 +1,7 @@
 import './Shoot.scss';
 import AppContext from '../../AppContext';
 import { useState, useContext } from 'react';
+import delete_icon from '../../../src/assets/delete.svg';
 
 const Shoot = ({ title, shoot_id, thumbnail_url, models, photographers, showDeleteModal, setShowDeleteModal }) => {
 
@@ -28,15 +29,15 @@ const Shoot = ({ title, shoot_id, thumbnail_url, models, photographers, showDele
     <>
       <div className="shoot">
         {isLoggedIn && 
-          <button 
+          <div 
             className="shoot__delete-btn"
             onClick={handleDeleteClick}
           >
-            Delete
-            {/* <img className="shoot__delete-icon" 
-              src={} 
-              alt="Shoot delete icon"/>  */}
-          </button>
+            <img 
+              className='shoot__delete-icon'
+              src={delete_icon}
+              alt="Shoot delete icon"/> 
+          </div>
         }
         <img 
           className='shoot__img'

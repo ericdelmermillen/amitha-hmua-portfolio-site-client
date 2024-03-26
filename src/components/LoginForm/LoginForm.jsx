@@ -3,8 +3,8 @@ import AppContext from '../../AppContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { isValidEmail, isValidPassword } from '../../utils/utils';
 import { toast } from 'react-toastify';
-import hide from '../../../src/assets/hide.png';
-import show from '../../../src/assets/show.png';
+import hide from '../../../src/assets/hide.svg';
+import show from '../../../src/assets/show.svg';
 
 import './LoginForm.scss';
 
