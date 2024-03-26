@@ -2,7 +2,7 @@ import './Shoot.scss';
 import AppContext from '../../AppContext';
 import { useState, useContext } from 'react';
 
-const Shoot = ({ title, shoot_id, thumbnail_url, models, photographers }) => {
+const Shoot = ({ title, shoot_id, thumbnail_url, models, photographers, showDeleteModal, setShowDeleteModal }) => {
 
   const { 
     isLoggedIn, 
@@ -15,8 +15,6 @@ const Shoot = ({ title, shoot_id, thumbnail_url, models, photographers }) => {
     setPrevScrollYPos,
     shootsData, 
     setShootsData,
-    showDeleteModal,
-    setShowDeleteModal,
     selectedShoot, 
     setSelectedShoot
   } = useContext(AppContext);
@@ -25,30 +23,6 @@ const Shoot = ({ title, shoot_id, thumbnail_url, models, photographers }) => {
     setShowDeleteModal(true)
     setSelectedShoot(shoot_id)
   }
-
-  // const handleDeleteShoot = async (shoot_id) => {
-  //   if(isLoggedIn) {
-  //     try {
-  //       const response = await fetch(`${BASE_URL}/shoots/delete/${shoot_id}`, {
-  //         method: 'DELETE',
-  //         headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //       });
-
-  //       if(response.ok) {
-  //         const newShootData = shootsData.filter(shoot => shoot.shoot_id !== shoot_id);
-  //         setShootsData(newShootData); 
-  //         console.log(`Delete Shoot ${shoot_id}`)
-  //       } else {
-  //         console.error(`Failed to delete Shoot ${shoot_id}: ${response.statusText}`);
-  //       }
-  //     } catch(error) {
-  //     }
-  //   } else {
-  //     console.log("Sorry please login again")
-  //   }
-  // }
 
   return (
     <>

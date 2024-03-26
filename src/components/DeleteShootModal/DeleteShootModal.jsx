@@ -1,8 +1,18 @@
 import './DeleteShootModal.scss';
 import AppContext from '../../AppContext';
 import { useContext } from 'react';
+import { toast } from "react-toastify";
 
-const DeleteShootModal = ({ handleDeleteShoot }) => {
+
+const DeleteShootModal = ({ 
+  showDeleteModal, 
+  setShowDeleteModal, 
+  shootsData, 
+  setShootsData 
+}) => {
+  
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const { 
     isLoggedIn, 
     setIsLoggedIn,
@@ -12,8 +22,6 @@ const DeleteShootModal = ({ handleDeleteShoot }) => {
     setScrollYPos,
     prevScrollYPos, 
     setPrevScrollYPos,
-    showDeleteModal, 
-    setShowDeleteModal,
     selectedShoot, 
     setSelectedShoot
   } = useContext(AppContext);
@@ -22,6 +30,43 @@ const DeleteShootModal = ({ handleDeleteShoot }) => {
     setShowDeleteModal(false);
     setSelectedShoot(null);
   }
+
+  // 
+  const handleDeleteShoot = async () => {
+    if(isLoggedIn) {
+      try {
+        const response = await fetch(`${BASE_URL}/shoots/delete/${selectedShoot}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if(response.ok) {
+          const newShootData = shootsData.filter(shoot => shoot.shoot_id !== selectedShoot); 
+          setShootsData(newShootData);
+          console.log(`Delete Shoot ${selectedShoot}`);
+          setShowDeleteModal(false);
+          toast.success(`Shoot ${selectedShoot} successfully  deleted.`); 
+          setSelectedShoot(null);
+        } else {
+          toast.error(`Failed to delete Shoot ${selectedShoot}`)
+          console.error(`Failed to delete Shoot ${selectedShoot}: ${response.statusText}`);
+          setShowDeleteModal(false);
+          setSelectedShoot(null);
+        }
+      } catch (error) {
+        console.error(`Error deleting Shoot ${selectedShoot}: ${error}`);
+      }
+    } else {
+      console.log("Sorry please login again");
+    }
+  };
+
+
+
+  
+  // 
   
   return (
     <>

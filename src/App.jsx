@@ -12,7 +12,6 @@ import SideNav from './components/SideNav/SideNav';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
-import DeleteShootModal from './components/DeleteShootModal/DeleteShootModal';
 
 const App = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -26,12 +25,10 @@ const App = () => {
     setScrollYPos,
     prevScrollYPos, 
     setPrevScrollYPos,
-    shootsData, 
-    setShootsData,
-    showDeleteModal, 
-    setShowDeleteModal,
     selectedShoot, 
-    setSelectedShoot
+    setSelectedShoot,
+    isLoading, 
+    setIsLoading
   } = useContext(AppContext);
   
   const handleLogOut = () => {
@@ -53,8 +50,6 @@ const App = () => {
       if(scrollYPos !== undefined && setPrevScrollYPos !== undefined && newScrollYPos !== scrollYPos) {
         setPrevScrollYPos(scrollYPos);
         setScrollYPos(newScrollYPos);
-        setShowDeleteModal(false);
-        setSelectedShoot(null)
       }
     };
 
@@ -102,7 +97,6 @@ const App = () => {
   return (
     <>
       <div className="app">
-    
           <div 
             className={showSideNav 
               ? "touchOffDiv"
@@ -118,7 +112,6 @@ const App = () => {
           handleLogOut={handleLogOut}
           handleScrollToTopOnNavLink={handleScrollToTopOnNavLink}
           />
-        {/* {isiPhone && <h1 className='isiPhone'>isiPhone</h1>} */}
         <SideNav handleLogOut={handleLogOut}/>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -142,11 +135,6 @@ const App = () => {
           pauseOnHover={false}
           theme="light"/>
       </div>
-      {showDeleteModal &&
-        <DeleteShootModal 
-          handleDeleteShoot={handleDeleteShoot}
-        />
-      }
     </>
   )};
 
