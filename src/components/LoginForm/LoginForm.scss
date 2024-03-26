@@ -1,4 +1,5 @@
 @import '../../partials/variables';
+@import '../../partials/mixins';
 
 .loginForm {
   align-items: center;
@@ -93,19 +94,11 @@
   }
     
   &__button {
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-    font-size: 1.125rem;
-    font-weight: bold;
-    padding: 10px;
-    transition: background-color 0.3s;
-    width: 100%;
+    @include button;
     
-    &:hover {
-      background-color: #0056b3;
+    
+    &--cancel {
+      width: 100%;
     }
   }
 }

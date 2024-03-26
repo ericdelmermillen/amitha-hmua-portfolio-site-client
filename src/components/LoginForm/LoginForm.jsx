@@ -129,12 +129,12 @@ const LoginForm = () => {
             </div>
             <div className="loginForm__button-container">
               <button 
-                type="submit" className="loginForm__button">
+                type="submit" className="loginForm__button loginForm__button--login">
                   Login
               </button>
               <Link to={'/'}>
                 <button 
-                  type="submit" className="loginForm__button">
+                  type="submit" className="loginForm__button loginForm__button--cancel">
                     Cancel
                 </button>
               </Link>

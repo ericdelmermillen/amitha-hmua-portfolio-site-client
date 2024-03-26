@@ -34,7 +34,9 @@ const Nav = ({ handleLogOut, handleScrollToTopOnNavLink }) => {
               <li className="nav__link">Contact</li>
             </Link>
             <a href="https://www.instagram.com/amitha_hmua/" target="_blank">
-              <li className="nav__link">Instagram</li>
+              <li className="nav__link">
+                Instagram
+              </li>
             </a>
           </ul>
 

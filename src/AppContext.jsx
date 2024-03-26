@@ -10,7 +10,9 @@ export const AppProvider = ({ children }) => {
   const [ showSideNav, setShowSideNav ] = useState(false);
   const [ scrollYPos, setScrollYPos ] = useState(window.scrollY);
   const [ prevScrollYPos, setPrevScrollYPos ] = useState(window.scrollY);
-  const [ shootsData, setShootsData ] = useState([])
+  const [ shootsData, setShootsData ] = useState([]);
+  const [ showDeleteModal, setShowDeleteModal ] = useState(false); 
+  const [selectedShoot, setSelectedShoot] = useState(null);
 
   const navigate = useNavigate(); 
 
@@ -36,7 +38,6 @@ export const AppProvider = ({ children }) => {
     fetchShoots();
     console.log("shootsData fetched")
   }, [])
-  
   
 
   useEffect(() => {
@@ -86,7 +87,11 @@ export const AppProvider = ({ children }) => {
     prevScrollYPos, 
     setPrevScrollYPos,
     shootsData, 
-    setShootsData
+    setShootsData,
+    showDeleteModal, 
+    setShowDeleteModal,
+    selectedShoot, 
+    setSelectedShoot
    }
   
   return (

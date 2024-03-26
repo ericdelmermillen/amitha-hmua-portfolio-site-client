@@ -64,7 +64,7 @@ const SideNav = ({ handleLogOut, handleScrollToTopOnNavLink }) => {
               </a>
               {isLoggedIn &&
               <h4 
-              className='sideNav__h4nk'
+              className='sideNav__logout'
               onClick={handleSideNavLogout}
               >
                   Logout

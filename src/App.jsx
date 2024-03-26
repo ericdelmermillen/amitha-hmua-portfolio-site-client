@@ -12,8 +12,11 @@ import SideNav from './components/SideNav/SideNav';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
+import DeleteShootModal from './components/DeleteShootModal/DeleteShootModal';
 
 const App = () => {
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  
   const { 
     isLoggedIn, 
     setIsLoggedIn,
@@ -22,9 +25,14 @@ const App = () => {
     scrollYPos, 
     setScrollYPos,
     prevScrollYPos, 
-    setPrevScrollYPos
+    setPrevScrollYPos,
+    shootsData, 
+    setShootsData,
+    showDeleteModal, 
+    setShowDeleteModal,
+    selectedShoot, 
+    setSelectedShoot
   } = useContext(AppContext);
-  
   
   const handleLogOut = () => {
     setIsLoggedIn(false);
@@ -38,7 +46,6 @@ const App = () => {
     });
   }
 
-
   useEffect(() => {
     const handleScrollY = () => {
       const newScrollYPos = window.scrollY;
@@ -46,6 +53,8 @@ const App = () => {
       if(scrollYPos !== undefined && setPrevScrollYPos !== undefined && newScrollYPos !== scrollYPos) {
         setPrevScrollYPos(scrollYPos);
         setScrollYPos(newScrollYPos);
+        setShowDeleteModal(false);
+        setSelectedShoot(null)
       }
     };
 
@@ -57,6 +66,38 @@ const App = () => {
       window.removeEventListener("scroll", handleScrollY);
     };
   }, [scrollYPos]);
+
+
+  const handleDeleteShoot = async () => {
+    if (isLoggedIn) {
+      try {
+        const response = await fetch(`${BASE_URL}/shoots/delete/${selectedShoot}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+  
+        if(response.ok) {
+          const newShootData = shootsData.filter(shoot => shoot.shoot_id !== selectedShoot); 
+          setShootsData(newShootData);
+          console.log(`Delete Shoot ${selectedShoot}`);
+          setShowDeleteModal(false);
+          toast.success(`Shoot ${selectedShoot} successfully  deleted.`); 
+          setSelectedShoot(null);
+        } else {
+          toast.error(`Failed to delete Shoot ${selectedShoot}`)
+          console.error(`Failed to delete Shoot ${selectedShoot}: ${response.statusText}`);
+          setShowDeleteModal(false);
+          setSelectedShoot(null);
+        }
+      } catch (error) {
+        console.error(`Error deleting Shoot ${selectedShoot}: ${error}`);
+      }
+    } else {
+      console.log("Sorry please login again");
+    }
+  };
   
   return (
     <>
@@ -72,7 +113,6 @@ const App = () => {
               : null
             }
           ></div>
-
 
         <Nav 
           handleLogOut={handleLogOut}
@@ -102,6 +142,11 @@ const App = () => {
           pauseOnHover={false}
           theme="light"/>
       </div>
+      {showDeleteModal &&
+        <DeleteShootModal 
+          handleDeleteShoot={handleDeleteShoot}
+        />
+      }
     </>
   )};
 

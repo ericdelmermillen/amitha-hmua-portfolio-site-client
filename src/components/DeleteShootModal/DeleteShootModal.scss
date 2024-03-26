@@ -1,0 +1,50 @@
+@import '../../partials/mixins';
+@import '../../partials/variables';
+
+.deleteShootModal {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  &__modal {
+    padding-block: 2rem;
+    padding-inline: 2rem;
+    top: 25%;
+    position: fixed;
+    z-index: 11;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85%;
+    text-align: center;
+    min-height: 50%;
+    border-radius: 6px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    
+    @media(min-width: $tablet) {
+      width: 50%;
+
+    }
+  }
+
+  &__heading {
+    font-size: 2rem;
+    margin-block: auto;
+  }
+
+  &__button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: auto;
+  }
+
+  &__button {
+    @include button;
+  }
+}

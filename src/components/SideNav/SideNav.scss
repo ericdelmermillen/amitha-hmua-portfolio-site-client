@@ -1,3 +1,4 @@
+@import '../../partials/mixins';
 @import '../../partials/variables';
 
 .sideNav {
@@ -72,7 +73,6 @@
   }
 
 
-
   &__close-icon {
     position: absolute;
     width: 100%;
@@ -81,49 +81,16 @@
     background-color: #333; 
     transform-origin: center;
   }
-  
-      &__close-icon:first-child {
-        transform: rotate(45deg);
-      }
-    
-      &__close-icon:last-child {
-        transform: rotate(-45deg);
-      }
+
+  &__close-icon:first-child {
+    transform: rotate(45deg);
+  }
+
+  &__close-icon:last-child {
+    transform: rotate(-45deg);
+  }
+
+  &__logout {
+    @include button;
+  }
 }
-
-
-
-
-
-
-//   &__menu {
-//     border: 2px solid red;
-//     position: fixed;
-//     top: 0;
-//     width: 100%;
-//     height: 100%;
-//   }
-  
-//   &__links {
-//     display: flex;
-//     flex-direction: column;
-//     gap: 2rem;
-//     text-align: center;
-//     max-width: 50%;
-//     margin-top: 50%;
-//   }
-
-//   &__link {
-//     font-weight: bold;
-//   }
-// }
-
-// .isiPhone {
-//   border: 2px solid blue;
-//   position: fixed;
-//   top: 50%;
-//   left: 50%;
-//   transform: translateY(-50%);
-//   transform: translateX(-50%);
-//   z-index: 10;
-// }

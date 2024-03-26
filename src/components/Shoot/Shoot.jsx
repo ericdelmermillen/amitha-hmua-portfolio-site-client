@@ -14,36 +14,41 @@ const Shoot = ({ title, shoot_id, thumbnail_url, models, photographers }) => {
     prevScrollYPos, 
     setPrevScrollYPos,
     shootsData, 
-    setShootsData
+    setShootsData,
+    showDeleteModal,
+    setShowDeleteModal,
+    selectedShoot, 
+    setSelectedShoot
   } = useContext(AppContext);
-
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
-  `${BASE_URL}/shoots/delete/${shoot_id}`
-
-  const handleDeleteShoot = async () => {
-    if(isLoggedIn) {
-      try {
-        const response = await fetch(`${BASE_URL}/shoots/delete/${shoot_id}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-
-        if(response.ok) {
-          const newShootData = shootsData.filter(shoot => shoot.shoot_id !== shoot_id);
-          setShootsData(newShootData); 
-          console.log(`Delete Shoot ${shoot_id}`)
-        } else {
-          console.error(`Failed to delete Shoot ${shoot_id}: ${response.statusText}`);
-        }
-      } catch(error) {
-      }
-    } else {
-      console.log("Sorry please login again")
-    }
+  
+  const handleDeleteClick = () => {
+    setShowDeleteModal(true)
+    setSelectedShoot(shoot_id)
   }
+
+  // const handleDeleteShoot = async (shoot_id) => {
+  //   if(isLoggedIn) {
+  //     try {
+  //       const response = await fetch(`${BASE_URL}/shoots/delete/${shoot_id}`, {
+  //         method: 'DELETE',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //       });
+
+  //       if(response.ok) {
+  //         const newShootData = shootsData.filter(shoot => shoot.shoot_id !== shoot_id);
+  //         setShootsData(newShootData); 
+  //         console.log(`Delete Shoot ${shoot_id}`)
+  //       } else {
+  //         console.error(`Failed to delete Shoot ${shoot_id}: ${response.statusText}`);
+  //       }
+  //     } catch(error) {
+  //     }
+  //   } else {
+  //     console.log("Sorry please login again")
+  //   }
+  // }
 
   return (
     <>
@@ -51,7 +56,7 @@ const Shoot = ({ title, shoot_id, thumbnail_url, models, photographers }) => {
         {isLoggedIn && 
           <button 
             className="shoot__delete-btn"
-            onClick={handleDeleteShoot}
+            onClick={handleDeleteClick}
           >
             Delete
             {/* <img className="shoot__delete-icon" 
