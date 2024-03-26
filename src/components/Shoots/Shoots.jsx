@@ -1,9 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import './Shoots.scss';
-import Shoot from '../Shoot/Shoot';
-import AppContext from '../../AppContext';
+import Shoot from '../Shoot/Shoot.jsx';
+import AppContext from '../../AppContext.jsx';
 import DeleteShootModal from '../DeleteShootModal/DeleteShootModal.jsx'
-import { toast } from 'react-toastify';
 
 const Shoots = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -87,7 +86,6 @@ const Shoots = () => {
   }, [scrollYPos, isLoading]);
 
   
-
   return (
     <>
       <div className="shoots">

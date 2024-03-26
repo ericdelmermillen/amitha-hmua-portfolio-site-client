@@ -34,6 +34,7 @@ const App = () => {
   const handleLogOut = () => {
     setIsLoggedIn(false);
     localStorage.removeItem('token'); 
+    toast.success("Successfully logged out!");
   };
 
   const handleScrollToTopOnNavLink = () => {

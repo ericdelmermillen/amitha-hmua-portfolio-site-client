@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import AppContext from '../../AppContext';
+import { toast } from 'react-toastify';
 import './Nav.scss';
 
 const Nav = ({ handleLogOut, handleScrollToTopOnNavLink }) => {

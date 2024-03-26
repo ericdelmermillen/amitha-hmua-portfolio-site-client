@@ -61,10 +61,11 @@ const LoginForm = () => {
   
       if(response.ok) {
         const data = await response.json();
-        const token = data.token
+        const token = data.token;
         localStorage.setItem('token', token);
         setIsLoggedIn(true);
-        navigate('/')
+        navigate('/');
+        toast.success('Successfully logged in!')
       } else {
         toast.error('Login Failed. Check Email & Password')
       }
