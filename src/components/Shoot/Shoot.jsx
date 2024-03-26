@@ -41,22 +41,16 @@ const Shoot = ({ title, shoot_id, thumbnail_url, models, photographers, showDele
         <img 
           className='shoot__img'
           src={thumbnail_url} alt={`Thumbnail for "${title}" shoot`} />
-        <p className='shoot__models'>
-          {models.length > 1 ? "Models" : "Model"}
-        </p>
-        <ul>
-          {models.map((model, index) => (
-            <li key={index}>{model}</li>
-          ))}
-        </ul>
-        <p className='shoot__photographers'>
-          {photographers.length > 1 ? "Photographers" : "Photographer"}
-        </p>
-        <ul>
-          {photographers.map(photographer => (
-            <li key={photographer}>{photographer}</li>
-          ))}
-        </ul>
+        <div className="shoot__info">
+          <p className='shoot__models'>
+            <span className="models__label">{models.length > 1 ? "Models: " : "Model: "}</span>
+            {models.length > 1 ? models.join(", ") : models}
+          </p>
+          <p className='shoot__photographers'>
+            <span className="photographers__label">{photographers.length > 1 ? "Photographers: " : "Photographer: "}</span>
+              {photographers.length > 1 ? photographers.join(", ") : photographers}
+          </p>
+        </div>
       </div>
     </>
   )};

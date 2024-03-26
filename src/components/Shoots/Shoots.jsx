@@ -28,7 +28,7 @@ const Shoots = () => {
   const [ currentPage, setCurrentPage ] = useState(1);
   const [ shouldUpdate, setShouldUpdate ] = useState(true);
 
-  const itemsPerPage = 2;
+  const itemsPerPage = 6;
 
   useEffect(() => {
     const fetchShoots = async () => {
