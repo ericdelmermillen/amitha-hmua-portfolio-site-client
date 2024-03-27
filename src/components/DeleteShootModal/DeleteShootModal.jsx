@@ -31,7 +31,6 @@ const DeleteShootModal = ({
     setSelectedShoot(null);
   }
 
-  // 
   const handleDeleteShoot = async () => {
     if(isLoggedIn) {
       try {
@@ -45,7 +44,6 @@ const DeleteShootModal = ({
         if(response.ok) {
           const newShootData = shootsData.filter(shoot => shoot.shoot_id !== selectedShoot); 
           setShootsData(newShootData);
-          console.log(`Delete Shoot ${selectedShoot}`);
           setShowDeleteModal(false);
           toast.success(`Shoot ${selectedShoot} successfully  deleted.`); 
           setSelectedShoot(null);
@@ -57,16 +55,13 @@ const DeleteShootModal = ({
         }
       } catch (error) {
         console.error(`Error deleting Shoot ${selectedShoot}: ${error}`);
+        toast.error(`Error deleting Shoot ${selectedShoot}: ${error}`);
       }
     } else {
-      console.log("Sorry please login again");
+      toast.error("Sorry please login again");
     }
   };
-
-
-
   
-  // 
   
   return (
     <>

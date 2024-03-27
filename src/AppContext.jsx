@@ -25,7 +25,7 @@ export const AppProvider = ({ children }) => {
           const decodedToken = jwtDecode(token);
           const currentTime = Math.floor(Date.now() / 1000); 
 
-          if(decodedToken.exp < currentTime) {
+          if (decodedToken.exp < currentTime) {
             setIsLoggedIn(false); 
             localStorage.removeItem('token'); 
             toast.error('Token expired. Logging you out...');

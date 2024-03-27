@@ -65,7 +65,7 @@ const App = () => {
 
 
   const handleDeleteShoot = async () => {
-    if (isLoggedIn) {
+    if(isLoggedIn) {
       try {
         const response = await fetch(`${BASE_URL}/shoots/delete/${selectedShoot}`, {
           method: 'DELETE',
@@ -75,8 +75,6 @@ const App = () => {
         });
   
         if(response.ok) {
-          const newShootData = shootsData.filter(shoot => shoot.shoot_id !== selectedShoot); 
-          setShootsData(newShootData);
           console.log(`Delete Shoot ${selectedShoot}`);
           setShowDeleteModal(false);
           toast.success(`Shoot ${selectedShoot} successfully  deleted.`); 
@@ -99,15 +97,10 @@ const App = () => {
     <>
       <div className="app">
           <div 
-            className={showSideNav 
-              ? "touchOffDiv"
-              : ""
-            }
-            onClick={showSideNav 
-              ? () => setShowSideNav(false)
-              : null
-            }
-          ></div>
+            className={showSideNav ? "touchOffDiv" : ""}
+            onClick={showSideNav ? () => setShowSideNav(false) : null}
+          >  
+          </div>
 
         <Nav 
           handleLogOut={handleLogOut}

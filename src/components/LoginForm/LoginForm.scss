@@ -1,5 +1,5 @@
-@import '../../partials/variables';
 @import '../../partials/mixins';
+@import '../../partials/variables';
 
 .loginForm {
   align-items: center;
@@ -15,7 +15,7 @@
   
   &__modal {
     background-color: white;
-    border-radius: 8px;
+    border-radius: $borderRadius;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
@@ -53,11 +53,7 @@
   }
 
   &__input {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1.125rem;
-    padding: 10px;
-    width: 100%;
+    @include input;
   }
 
   .passwordInput {

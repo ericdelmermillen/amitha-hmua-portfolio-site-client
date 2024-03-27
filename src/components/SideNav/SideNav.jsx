@@ -13,6 +13,7 @@ const SideNav = ({ handleLogOut, handleScrollToTopOnNavLink }) => {
 
    const handleNavLinkClick = () => {
     setShowSideNav(false);
+    handleScrollToTopOnNavLink()
   }
   
   const handleSideNavLogout = () => {
@@ -31,7 +32,6 @@ const SideNav = ({ handleLogOut, handleScrollToTopOnNavLink }) => {
           <div 
             className="sideNav__close-button"
             onClick={() => setShowSideNav(false)}
-            // onClick={() => console.log("click")}
           >
             <div className="sideNav__close-icon"></div>
             <div className="sideNav__close-icon"></div>

@@ -58,11 +58,10 @@
 
   &__logout {
     display: none;
-    @include button;
-    border-radius: 50px;
   }
-
+  
   &__logout.loggedIn {
+    @include buttonRounded;
     display: none;
 
     @media(min-width: $tablet) {

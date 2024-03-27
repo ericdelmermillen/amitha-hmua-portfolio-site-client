@@ -1,11 +1,11 @@
-// @import '../../partials/mixins';
+@import '../../partials/mixins';
 
-// .notFound {
-//   @include page;
-//   background-color: red;
+.notFound {
+  @include page;
+  background-color: red;
 
-//   &__h1 {
-//     color: white;
-//   }
+  &__h1 {
+    color: white;
+  }
   
-// }
+}

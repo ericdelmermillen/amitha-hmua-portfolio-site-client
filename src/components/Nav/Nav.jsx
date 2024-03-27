@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import AppContext from '../../AppContext';
-import { toast } from 'react-toastify';
 import './Nav.scss';
 
 const Nav = ({ handleLogOut, handleScrollToTopOnNavLink }) => {
@@ -21,17 +20,29 @@ const Nav = ({ handleLogOut, handleScrollToTopOnNavLink }) => {
       <nav className={`nav ${prevScrollYPos < scrollYPos ? "hide": ""}`}>
         <div className="nav__inner">
 
-          <Link to={'/home'}>
+          <Link 
+            to={'/home'}
+            onClick={handleScrollToTopOnNavLink}
+          >
             <h1 className="nav__logo">Logo</h1>
           </Link>
           <ul className="nav__links">
-            <Link to={'/home'}>
+            <Link 
+              to={'/home'}
+              onClick={handleScrollToTopOnNavLink}
+            >
               <li className="nav__link">Work</li>
             </Link>
-            <Link to={'/bio'}>
+            <Link 
+              to={'/bio'}
+              onClick={handleScrollToTopOnNavLink}
+            >
               <li className="nav__link">Bio</li>
             </Link>
-            <Link to={'/contact'}>
+            <Link 
+              to={'/contact'}
+              onClick={handleScrollToTopOnNavLink}
+            >
               <li className="nav__link">Contact</li>
             </Link>
             <a href="https://www.instagram.com/amitha_hmua/" target="_blank">
@@ -41,15 +52,17 @@ const Nav = ({ handleLogOut, handleScrollToTopOnNavLink }) => {
             </a>
           </ul>
 
-          { 
-            isLoggedIn && 
+          {
+          
+          isLoggedIn && 
             
             <h4 
               className={`nav__logout ${isLoggedIn && "loggedIn"}`}
               onClick={handleLogOut}
               >
                 Logout
-            </h4> 
+            </h4>
+            
           }
           
           <div 

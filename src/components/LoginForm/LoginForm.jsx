@@ -1,11 +1,10 @@
 import { useState, useContext } from 'react';
-import AppContext from '../../AppContext'; 
 import { Link, useNavigate } from 'react-router-dom';
 import { isValidEmail, isValidPassword } from '../../utils/utils';
 import { toast } from 'react-toastify';
+import AppContext from '../../AppContext'; 
 import hide from '../../../src/assets/hide.svg';
 import show from '../../../src/assets/show.svg';
-
 import './LoginForm.scss';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -65,7 +64,7 @@ const LoginForm = () => {
         localStorage.setItem('token', token);
         setIsLoggedIn(true);
         navigate('/');
-        toast.success('Successfully logged in!')
+        toast.success('Successfully logged in!');
       } else {
         toast.error('Login Failed. Check Email & Password')
       }

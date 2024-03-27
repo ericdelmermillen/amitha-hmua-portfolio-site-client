@@ -1,0 +1,48 @@
+@import '../../partials/mixins';
+@import '../../partials/variables';
+
+.placeholderShoot {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  width: 100%;
+
+  &__img-skeleton {
+    @include shootImgSkeleton;
+  }
+
+  &__info {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding-block: 1rem;
+  }
+}
+
+.placeholder {
+
+  &__label--models {
+    background: grey;
+    height: 1.5rem;
+    width: 50%;
+  }
+  
+  &__models {
+    background: grey;
+    height: 1.5rem;
+    margin-top: 0.75rem;
+    width: 75%;
+  }
+  
+  &__label--photographers {
+    background: grey;
+    height: 1.5rem;
+    margin-top: 1rem;
+    width: 50%;
+  }
+
+  &__photographers {
+    background: grey;
+    height: 1.5rem;
+    margin-top: 0.75rem;
+    width: 80%;
+  }
+}

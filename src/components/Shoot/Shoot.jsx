@@ -1,6 +1,6 @@
 import './Shoot.scss';
 import AppContext from '../../AppContext';
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import delete_icon from '../../../src/assets/delete.svg';
 
 const Shoot = ({ title, shoot_id, thumbnail_url, models, photographers, showDeleteModal, setShowDeleteModal }) => {
@@ -21,8 +21,8 @@ const Shoot = ({ title, shoot_id, thumbnail_url, models, photographers, showDele
   } = useContext(AppContext);
   
   const handleDeleteClick = () => {
-    setShowDeleteModal(true)
-    setSelectedShoot(shoot_id)
+    setShowDeleteModal(true);
+    setSelectedShoot(shoot_id);
   }
 
   return (

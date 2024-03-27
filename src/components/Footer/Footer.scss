@@ -1,5 +1,7 @@
+@import '../../partials/mixins';
+@import '../../partials/variables';
+
 .footer {
-  border-top: 2px solid red;
   height: 4rem;
 
   &__inner {
