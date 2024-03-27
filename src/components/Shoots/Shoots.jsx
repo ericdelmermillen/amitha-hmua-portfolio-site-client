@@ -30,7 +30,7 @@ const Shoots = () => {
   const [ isLoadingInitial, setIsLoadingInitial ] = useState(true);
 
   const itemsPerPage = 6;
-  const isLoadingInterval = 200;
+  const isLoadingInterval = 100;
 
   useEffect(() => {
     const fetchShoots = async () => {

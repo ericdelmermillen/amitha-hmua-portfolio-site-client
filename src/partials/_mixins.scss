@@ -89,6 +89,15 @@
   width: 100%;
 }
 
+@mixin heroImg {
+  @include shootImg;
+
+  @media(min-width: $desktop) {
+    max-width: 50%;
+    min-width: 50%;
+  }
+}
+
 @mixin shootImgSkeleton {
   @include shootImg;
   background: grey;

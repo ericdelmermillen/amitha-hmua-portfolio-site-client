@@ -11,7 +11,7 @@ export const AppProvider = ({ children }) => {
   const [ scrollYPos, setScrollYPos ] = useState(window.scrollY);
   const [ prevScrollYPos, setPrevScrollYPos ] = useState(window.scrollY);
   const [ selectedShoot, setSelectedShoot ] = useState(null);
-  const [ isLoading, setIsLoading ] = useState(true); 
+  const [ isLoading, setIsLoading ] = useState(false); 
 
   const navigate = useNavigate(); 
 
