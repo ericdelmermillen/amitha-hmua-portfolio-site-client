@@ -1,9 +1,9 @@
 import './PlaceholderShoot.scss';
 
-const PlaceholderShoot = () => {
+const PlaceholderShoot = ({ placeholderClass }) => {
   return (
     <>
-      <div className="placeholderShoot">
+      <div className={placeholderClass}>
         <img className="placeholderShoot__img-skeleton" />
         <div className="placeholderShoot__info">
           <div className="placeholder__label--models"></div>

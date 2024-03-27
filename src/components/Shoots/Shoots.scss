@@ -18,5 +18,7 @@
 
   &__inner {
     @include shootsContainer;
+    margin-bottom: 1rem;
   }
 }
+

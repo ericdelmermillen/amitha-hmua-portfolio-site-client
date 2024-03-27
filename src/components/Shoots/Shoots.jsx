@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
-import './Shoots.scss';
 import Shoot from '../Shoot/Shoot.jsx';
 import AppContext from '../../AppContext.jsx';
 import DeleteShootModal from '../DeleteShootModal/DeleteShootModal.jsx'
 import PlaceholderShoot from '../PlaceholderShoot/PlaceholderShoot.jsx';
+import './Shoots.scss';
 
 const Shoots = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -29,8 +29,8 @@ const Shoots = () => {
   const [ shouldUpdate, setShouldUpdate ] = useState(true);
   const [ isLoadingInitial, setIsLoadingInitial ] = useState(true);
 
-  const itemsPerPage = 6;
-  const isLoadingInterval = 100;
+  const itemsPerPage = 10;
+  const isLoadingInterval = 250;
 
   useEffect(() => {
     const fetchShoots = async () => {
@@ -83,7 +83,7 @@ const Shoots = () => {
         if(scrollYPos !== undefined && setPrevScrollYPos !== undefined && newScrollYPos !== scrollYPos) {
           setShowDeleteModal(false);
           setSelectedShoot(null);
-        } else if (newScrollYPos + windowHeight >= documentHeight - 200) {
+        } else if (newScrollYPos + windowHeight >= documentHeight - 1250) {
           if(!isLoading) {
             setCurrentPage((prevPage) => prevPage + 1);
           }
@@ -105,8 +105,11 @@ const Shoots = () => {
       <div className="placeholderShoots">
         <div className="placeholderShoots__inner">
 
-          {isLoadingInitial && shouldUpdate && Array.from({ length: itemsPerPage }).map((_, index) => (
-            <PlaceholderShoot key={index} />
+          {Array.from({ length: itemsPerPage }).map((_, index) => (
+            <PlaceholderShoot 
+              key={index} 
+              placeholderClass={`placeholderShoot ${(isLoadingInitial && shouldUpdate) ? "show" : ""}`}
+            />
           ))}
 
         </div>
@@ -114,22 +117,24 @@ const Shoots = () => {
       
       <div className="shoots">
         <div className="shoots__inner">
-        {shootsData.map(shoot => (
-          <Shoot 
-            key={shoot.shoot_id} 
-            shoot_id={shoot.shoot_id}
-            title={shoot.shoot_title}
-            thumbnail_url={shoot.thumbnail_url}
-            models={shoot.models}
-            photographers={shoot.photographers}
-            showDeleteModal={showDeleteModal}
-            setShowDeleteModal={setShowDeleteModal}
-          /> 
-          )
-        )}
-          
-          {!isLoadingInitial && isLoading && shouldUpdate && Array.from({ length: itemsPerPage }).map((_, index) => (
-            <PlaceholderShoot key={index} />
+          {shootsData.map(shoot => (
+            <Shoot 
+              key={shoot.shoot_id} 
+              shoot_id={shoot.shoot_id}
+              title={shoot.shoot_title}
+              thumbnail_url={shoot.thumbnail_url}
+              models={shoot.models}
+              photographers={shoot.photographers}
+              showDeleteModal={showDeleteModal}
+              setShowDeleteModal={setShowDeleteModal}
+            /> 
+          ))}
+
+          {Array.from({ length: itemsPerPage }).map((_, index) => (
+            <PlaceholderShoot 
+              key={index} 
+              placeholderClass={`placeholderShoot ${(!isLoadingInitial && shouldUpdate && isLoading) ? "show" : ""}`}
+            />
           ))}
         </div>
       </div>
