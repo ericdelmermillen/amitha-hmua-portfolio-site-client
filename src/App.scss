@@ -48,17 +48,38 @@ img {
     width: 100%;
     z-index: 3;
   }
+
+  .loading {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 5;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    opacity: 1; /* Initial opacity set to 1 */
+
+    /* Styling for spinning circle */
+    &::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 6px solid #fff;
+      border-top-color: transparent;
+      animation: spin 0.5s infinite linear; 
+    }
+
+    transition: opacity 0.25s ease;
+  }
+
+  .loading:not(.isLoading) {
+    opacity: 0;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

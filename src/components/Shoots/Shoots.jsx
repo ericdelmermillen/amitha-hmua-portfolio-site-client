@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
+import './Shoots.scss';
 import Shoot from '../Shoot/Shoot.jsx';
 import AppContext from '../../AppContext.jsx';
 import DeleteShootModal from '../DeleteShootModal/DeleteShootModal.jsx'
 import PlaceholderShoot from '../PlaceholderShoot/PlaceholderShoot.jsx';
-import './Shoots.scss';
 
 const Shoots = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -30,39 +30,42 @@ const Shoots = () => {
   const [ isLoadingInitial, setIsLoadingInitial ] = useState(true);
 
   const itemsPerPage = 6;
+  const isLoadingInterval = 200;
 
   useEffect(() => {
     const fetchShoots = async () => {
       if(shouldUpdate) {
+
+        setIsLoading(true);
           
         try {
           const response = await fetch(`${BASE_URL}/shoots/all?page=${currentPage}&limit=${itemsPerPage}`);
 
           if(response.ok) {
-            const data = await response.json();
+            const data = await response.json()
             setShootsData([...shootsData, ...data]);
-            setTimeout(() => {});
-            setIsLoading(false); 
+            setTimeout(() => {
+              setIsLoading(false); 
+            }, isLoadingInterval);
             
             if(isLoadingInitial) {
               setTimeout(() => {
-
-                setIsLoadingInitial(false);
-              }, 250);
+                setIsLoadingInitial(false)
+              }, isLoadingInterval)
             }
 
             if(data.length === 0) {
-              setShouldUpdate(false);
+              setTimeout(() => {
+                setShouldUpdate(false)
+              }, setIsLoading(false))
             }
-
           } else {
             console.error('Failed to fetch shoots:', response.statusText);
-            toast.error(`Failed to fetch shoots:, ${response.statusText}`);
+            toast.error(`Failed to fetch shoots:, ${response.statusText}`)
           }
           
         } catch(error) {
-          console.log(`Error fetching shoots: ${error}`);
-          toast.error(`Error fetching shoots: ${error}`);
+          console.log(`Error fetching shoots: ${error}`)
         }
       }
     }
@@ -70,29 +73,31 @@ const Shoots = () => {
   }, [currentPage]);
   
   useEffect(() => {
-    const handleScrollY = () => {
-      const newScrollYPos = window.scrollY;
-      const documentHeight = document.documentElement.scrollHeight;
-      const windowHeight = window.innerHeight;
+    if(shouldUpdate) {
 
-      if(scrollYPos !== undefined && setPrevScrollYPos !== undefined && newScrollYPos !== scrollYPos) {
-        setShowDeleteModal(false);
-        setSelectedShoot(null);
-      } else if (newScrollYPos + windowHeight >= documentHeight - 200) {
-        if(!isLoading) {
-          setCurrentPage((prevPage) => prevPage + 1);
-          setIsLoading(true); 
+      const handleScrollY = () => {
+        const newScrollYPos = window.scrollY;
+        const documentHeight = document.documentElement.scrollHeight;
+        const windowHeight = window.innerHeight;
+        
+        if(scrollYPos !== undefined && setPrevScrollYPos !== undefined && newScrollYPos !== scrollYPos) {
+          setShowDeleteModal(false);
+          setSelectedShoot(null);
+        } else if (newScrollYPos + windowHeight >= documentHeight - 200) {
+          if(!isLoading) {
+            setCurrentPage((prevPage) => prevPage + 1);
+          }
         }
-      }
-    };
-
-    handleScrollY();
-
-    window.addEventListener('scroll', handleScrollY);
-
-    return () => {
-      window.removeEventListener('scroll', handleScrollY);
-    };
+      };
+      
+      handleScrollY();
+      
+      window.addEventListener('scroll', handleScrollY);
+      
+      return () => {
+        window.removeEventListener('scroll', handleScrollY);
+      };
+    } 
   }, [scrollYPos, isLoading]);
 
   return (
@@ -123,17 +128,9 @@ const Shoots = () => {
           )
         )}
           
-        </div>
-
-      </div>
-
-      <div className="placeholderShoots">
-        <div className="placeholderShoots__inner">
-
           {!isLoadingInitial && isLoading && shouldUpdate && Array.from({ length: itemsPerPage }).map((_, index) => (
             <PlaceholderShoot key={index} />
           ))}
-
         </div>
       </div>
 

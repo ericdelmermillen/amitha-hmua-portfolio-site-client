@@ -95,7 +95,9 @@ const App = () => {
   
   return (
     <>
+
       <div className="app">
+        <h3 className={`loading ${isLoading && "isLoading"}`}></h3>
           <div 
             className={showSideNav ? "touchOffDiv" : ""}
             onClick={showSideNav ? () => setShowSideNav(false) : null}
