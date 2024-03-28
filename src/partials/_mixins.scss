@@ -1,6 +1,5 @@
 @import '../partials/variables';
 
-
 @mixin page {
   align-items: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -83,9 +82,9 @@
 
 @mixin shootImg {
   aspect-ratio: 1 / 1;
-  object-fit: cover;
+  // object-fit: cover;
   max-width: 100%;
-  object-position: center center;
+  // object-position: center top;
   width: 100%;
 }
 

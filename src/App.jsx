@@ -9,6 +9,7 @@ import Login from './pages/Login/Login';
 import Nav from './components/Nav/Nav';
 import Footer from './components/Footer/Footer';
 import SideNav from './components/SideNav/SideNav';
+import ShootDetails from './pages/ShootDetails/ShootDetails';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
@@ -115,6 +116,7 @@ const App = () => {
           <Route path="/bio" element={<Bio />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/shoot/:shoot_id" element={<ShootDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

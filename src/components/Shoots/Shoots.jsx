@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import Shoot from '../Shoot/Shoot.jsx';
 import AppContext from '../../AppContext.jsx';
 import DeleteShootModal from '../DeleteShootModal/DeleteShootModal.jsx'
@@ -118,16 +119,21 @@ const Shoots = () => {
       <div className="shoots">
         <div className="shoots__inner">
           {shootsData.map(shoot => (
-            <Shoot 
-              key={shoot.shoot_id} 
-              shoot_id={shoot.shoot_id}
-              title={shoot.shoot_title}
-              thumbnail_url={shoot.thumbnail_url}
-              models={shoot.models}
-              photographers={shoot.photographers}
-              showDeleteModal={showDeleteModal}
-              setShowDeleteModal={setShowDeleteModal}
-            /> 
+            <Link 
+              to={`/shoot/${shoot.shoot_id}`} 
+              key={shoot.shoot_id}
+            >
+              <Shoot
+                key={shoot.shoot_id}
+                shoot_id={shoot.shoot_id}
+                title={shoot.shoot_title}
+                thumbnail_url={shoot.thumbnail_url}
+                models={shoot.models}
+                photographers={shoot.photographers}
+                showDeleteModal={showDeleteModal}
+                setShowDeleteModal={setShowDeleteModal}
+              />
+            </Link>
           ))}
 
           {Array.from({ length: itemsPerPage }).map((_, index) => (

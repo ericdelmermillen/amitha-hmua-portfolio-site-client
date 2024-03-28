@@ -48,7 +48,7 @@ const Shoot = ({ title, shoot_id, thumbnail_url, models, photographers, showDele
             {models.length > 1 ? models.join(", ") : models}
           </p>
           <p className='shoot__photographers'>
-            <span className="photographers__label">{photographers.length > 1 ? "Photographers: " : "Photographer: "}</span>
+            <span className="photographers__label"> Photos</span>
               {photographers.length > 1 ? photographers.join(", ") : photographers}
           </p>
         </div>
