@@ -16,6 +16,7 @@ const SideNav = ({ handleLogOut }) => {
    const handleNavLinkHome = () => {
     if(location.pathname === "/" || location.pathname === "/home") {
       setShowSideNav(false);
+      screenTop();
     }
   }
   
