@@ -38,13 +38,6 @@ const App = () => {
     toast.success("Successfully logged out!");
   };
 
-  const handleScrollToTopOnNavLink = () => {
-    window.scrollTo({
-      behavior: 'smooth',
-      top: 0
-    });
-  }
-
   useEffect(() => {
     const handleScrollY = () => {
       const newScrollYPos = window.scrollY;
@@ -107,8 +100,7 @@ const App = () => {
 
         <Nav 
           handleLogOut={handleLogOut}
-          handleScrollToTopOnNavLink={handleScrollToTopOnNavLink}
-          />
+        />
         <SideNav handleLogOut={handleLogOut}/>
         <Routes>
           <Route path="/" element={<Home />} />

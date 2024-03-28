@@ -14,20 +14,24 @@
   margin-left: 100vw;
   margin-top: -4rem;
   top: 0;
-  transition: all 400ms ease;
-  z-index: 50;
+  z-index: 5;
+
+  // Apply initial transition for sliding animation
+  transition: margin-left 0.5s ease-in-out;
 
   @media (min-width: 768px) {
     display: none;
   }
 
-  &.show {
-    margin-left: 50vw;
-  }
-
   &__inner {
     transition: all 450ms ease-out;
   }
+
+  &.show {
+    // Slide in from right when show class is added
+    margin-left: 50vw;
+  }
+
   &.show &__inner {
     align-items: center;
     display: flex;

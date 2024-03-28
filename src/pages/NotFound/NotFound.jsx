@@ -1,6 +1,13 @@
 import './NotFound.scss';
+import { useEffect } from 'react';
+import { scrollToTop } from '../../utils/utils';
 
 const NotFound = () => {
+
+  useEffect(() => {
+    scrollToTop();
+  }, []);
+
   return (
     <>
       <div className="notFound">

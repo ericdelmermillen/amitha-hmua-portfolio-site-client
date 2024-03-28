@@ -1,9 +1,10 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { scrollToTop } from '../../utils/utils';
 import AppContext from '../../AppContext';
 import './Nav.scss';
 
-const Nav = ({ handleLogOut, handleScrollToTopOnNavLink }) => {
+const Nav = ({ handleLogOut }) => {
   const { 
     isLoggedIn, 
     setIsLoggedIn,
@@ -22,26 +23,23 @@ const Nav = ({ handleLogOut, handleScrollToTopOnNavLink }) => {
 
           <Link 
             to={'/home'}
-            onClick={handleScrollToTopOnNavLink}
+            onClick={() => scrollToTop()}
           >
             <h1 className="nav__logo">Logo</h1>
           </Link>
           <ul className="nav__links">
             <Link 
               to={'/home'}
-              onClick={handleScrollToTopOnNavLink}
             >
               <li className="nav__link">Work</li>
             </Link>
             <Link 
               to={'/bio'}
-              onClick={handleScrollToTopOnNavLink}
             >
               <li className="nav__link">Bio</li>
             </Link>
             <Link 
               to={'/contact'}
-              onClick={handleScrollToTopOnNavLink}
             >
               <li className="nav__link">Contact</li>
             </Link>

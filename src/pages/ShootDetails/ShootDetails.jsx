@@ -82,7 +82,6 @@ const ShootDetails = () => {
     }
 
     fetchShootDetails();
-
   }, []);
   
 

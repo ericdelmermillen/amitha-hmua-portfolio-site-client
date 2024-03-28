@@ -1,11 +1,13 @@
 import AppContext from '../../AppContext';
 import { useState, useEffect, useContext } from 'react';
+import { scrollToTop } from '../../utils/utils';
 import './Bio.scss';
 
 const Bio = () => {
   const { 
     isLoading, 
-    setIsLoading
+    setIsLoading,
+    setShowSideNav
   } = useContext(AppContext);
 
   const [ componentIsLoaded, setIsComponentLoaded ] = useState(false)
@@ -19,6 +21,8 @@ const Bio = () => {
 
   useEffect(() => {
     setIsLoading(true);
+    setShowSideNav(false);
+    scrollToTop();
   }, []); 
   
   

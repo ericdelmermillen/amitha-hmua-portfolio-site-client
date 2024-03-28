@@ -1,9 +1,9 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import AppContext from '../../AppContext';
 import './SideNav.scss';
 
-const SideNav = ({ handleLogOut, handleScrollToTopOnNavLink }) => {
+const SideNav = ({ handleLogOut }) => {
   const { 
     isLoggedIn, 
     setIsLoggedIn,
@@ -11,16 +11,31 @@ const SideNav = ({ handleLogOut, handleScrollToTopOnNavLink }) => {
     setShowSideNav
    } = useContext(AppContext);
 
-   const handleNavLinkClick = () => {
-    setShowSideNav(false);
-    handleScrollToTopOnNavLink()
+   const location = useLocation()
+
+   const handleNavLinkHome = () => {
+    if(location.pathname === "/" || location.pathname === "/home") {
+      setShowSideNav(false);
+    }
+  }
+  
+  const handleNavLinkBio = () => {
+    if(location.pathname === "/bio") {
+      setShowSideNav(false);
+    }
+  }
+  
+  const handleNavLinkContact = () => {
+    if(location.pathname === "/contact") {
+      setShowSideNav(false);
+    }
   }
   
   const handleSideNavLogout = () => {
     setTimeout(() => {
       handleLogOut();
     }, 500)
-    handleNavLinkClick();
+    setShowSideNav(false)
   }
 
   return (
@@ -40,24 +55,24 @@ const SideNav = ({ handleLogOut, handleScrollToTopOnNavLink }) => {
           <div className="sideNav__menu">
             <ul className='sideNav__links'>
               <Link to={'/'}
-                onClick={handleNavLinkClick}
+                onClick={handleNavLinkHome}
               >
                 <li className='sideNav__link'>Work</li>
               </Link>
               <Link to={'/bio'}
-                onClick={handleNavLinkClick}
+                onClick={handleNavLinkBio}
               >
                 <li className='sideNav__link'>Bio</li>
               </Link>
               <Link to={'/contact'}
-                onClick={handleNavLinkClick}
+                onClick={handleNavLinkContact}
               >
                 <li className='sideNav__link'>Contact</li>
               </Link>
               <a href="https://www.instagram.com/amitha_hmua/" target="_blank">
                 <li 
                   className='sideNav__link'
-                  onClick={handleNavLinkClick}
+                  onClick={() => setShowSideNav(false)}
                   >
                     Instagram
                 </li>
