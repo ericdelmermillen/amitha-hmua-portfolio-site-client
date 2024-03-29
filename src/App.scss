@@ -83,3 +83,16 @@ img {
     }
   }
 }
+
+.floating-button {
+  position: fixed;
+  bottom: 2.5rem;
+  right: 2.5rem;
+  z-index: 5;
+  height: 3rem;
+  width: 3rem;
+  display: flex;
+  background: white;
+  cursor: pointer;
+  border-radius: 50%;
+}

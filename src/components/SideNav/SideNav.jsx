@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import AppContext from '../../AppContext';
 import './SideNav.scss';
+import { scrollToTop } from '../../utils/utils';
 
 const SideNav = ({ handleLogOut }) => {
   const { 
@@ -16,7 +17,7 @@ const SideNav = ({ handleLogOut }) => {
    const handleNavLinkHome = () => {
     if(location.pathname === "/" || location.pathname === "/home") {
       setShowSideNav(false);
-      screenTop();
+      scrollToTop();
     }
   }
   

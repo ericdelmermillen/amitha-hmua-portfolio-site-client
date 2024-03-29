@@ -69,7 +69,6 @@ const ShootDetails = () => {
           scrollToTop();
           setPhotographers(data.photographers);
           setModels(data.models);
-          console.log(data.shoot_date)
         } else {
           throw new Error(`Failed to fetch shoot details: ${response.statusText}`);
         }

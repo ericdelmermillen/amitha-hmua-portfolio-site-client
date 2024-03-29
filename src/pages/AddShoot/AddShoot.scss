@@ -1,0 +1,15 @@
+@import '../../partials/mixins';
+@import '../../partials/variables';
+
+.addShoot {
+  background: brown;
+  @include page;
+
+  &__inner {
+    border: 2px solid #fff;
+  }
+
+  &__h1 {
+    color: #fff;
+  }
+}

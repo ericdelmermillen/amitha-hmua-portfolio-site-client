@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import AppContext from './AppContext'; 
 import { useEffect, useContext } from 'react';
 import Home from './pages/Home/Home';
@@ -10,12 +10,19 @@ import Nav from './components/Nav/Nav';
 import Footer from './components/Footer/Footer';
 import SideNav from './components/SideNav/SideNav';
 import ShootDetails from './pages/ShootDetails/ShootDetails';
+import AddShoot from './pages/AddShoot/AddShoot';
 import { ToastContainer, toast } from "react-toastify";
+import up from '../src/assets/up.svg';
+import add from '../src/assets/add.svg'
 import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
+import { scrollToTop } from './utils/utils';
 
 const App = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+  const navigate = useNavigate();
+  const location = useLocation();
   
   const { 
     isLoggedIn, 
@@ -33,10 +40,26 @@ const App = () => {
   } = useContext(AppContext);
   
   const handleLogOut = () => {
-    setIsLoggedIn(false);
+    setIsLoading(true)
+    setIsLoggedIn(false)
     localStorage.removeItem('token'); 
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 250)
+    navigate('/home')
     toast.success("Successfully logged out!");
   };
+
+  const handleNavigateToAddShoot = () => {
+    navigate('/shoots/add');
+    setIsLoading(true);
+
+    if(location.pathname === '/shoots/add') {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 250)
+    }
+  }
 
   useEffect(() => {
     const handleScrollY = () => {
@@ -69,7 +92,6 @@ const App = () => {
         });
   
         if(response.ok) {
-          console.log(`Delete Shoot ${selectedShoot}`);
           setShowDeleteModal(false);
           toast.success(`Shoot ${selectedShoot} successfully  deleted.`); 
           setSelectedShoot(null);
@@ -98,6 +120,18 @@ const App = () => {
           >  
           </div>
 
+            <div 
+              className={`floating-button ${isLoggedIn 
+                ? "toTop" : "add_Shoot"}`}
+            >
+              <img 
+                src={isLoggedIn ? add : up}
+                onClick={isLoggedIn 
+                  ? handleNavigateToAddShoot
+                  : scrollToTop }
+              />
+            </div>
+
         <Nav 
           handleLogOut={handleLogOut}
         />
@@ -110,6 +144,7 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/shoot/:shoot_id" element={<ShootDetails />} />
           <Route path="/login" element={<Login />} />
+          {isLoggedIn && <Route path="/shoots/add" element={<AddShoot />} />}
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
