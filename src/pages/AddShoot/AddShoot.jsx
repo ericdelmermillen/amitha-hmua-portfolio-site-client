@@ -20,8 +20,7 @@ const AddShoot = () => {
   
   // models
   const [ models, setModels ] = useState([]);
-  const [ modelChooserIdx, setModelChooserIdx ] = useState(1);
-  const [ modelChooserCountIDs, setModelChooserCountIDs ] = useState([{ chooserIdx: modelChooserIdx, modelID: null}]);
+  const [ modelChooserIDs, setModelChooserIDs ] = useState([{ chooserIdx: 1, modelID: null}]);
 
   const [ newShootPhotographerIds, setNewShootPhotographerIds ] = useState([]);
   const [ newShootPhotoURLS, setNewShootPhotoURLS ] = useState([]);
@@ -35,6 +34,18 @@ const AddShoot = () => {
   };
 
   const handleLogClick = () => {
+    const selectedModelIDs = modelChooserIDs.filter(({ modelID }) => modelID !== null);
+
+
+    // const includesModel = (model_id) => {
+    //   return selectedModelIDs.some(({ modelID }) => modelID === model_id);
+    // };
+    
+  
+    const modelIDs = selectedModelIDs.map(({ modelID }) => modelID);
+    console.log(selectedModelIDs)
+    
+    
     const shoot = {};
     shoot.date = newShootDate.toISOString().split('T')[0];
     shoot.shoot_title = newShootTitle;
@@ -43,22 +54,24 @@ const AddShoot = () => {
     // shoot.model_ids = newShootModelIds;
 
     console.log(shoot);
-    console.log(modelChooserIdx)
+    // console.log(modelChooserIdx)
   };
 
   const handleAddModelChooser = (selectedModel) => {
-    setModelChooserIdx(modelChooserIdx + 1)
-    setModelChooserCountIDs([...modelChooserCountIDs]);
-    console.log(modelChooserCountIDs)
-    console.log(selectedModel)
+    // setModelChooserIdx(modelChooserIdx + 1)
+
+    const newChooser = { chooserIdx: modelChooserIDs.length + 1, modelID: null}
+    setModelChooserIDs([...modelChooserIDs, newChooser]);
+    console.log(modelChooserIDs)
+    // console.log(selectedModel)
   };
   
   
   const handleRemoveModelChooser = () => {
-    if(modelChooserCountIDs.length > 1) {
+    if(modelChooserIDs.length > 1) {
       console.log("remove")
       // const filteredChoosers = modelChooserCountIDs.filter()
-      setModelChooserCountIDs([]);
+      setModelChooserIDs([]);
     }
 
   };
@@ -144,17 +157,17 @@ const AddShoot = () => {
               ></textarea>
             </div>
 
-            {modelChooserCountIDs.map((chooser) => (
+            {modelChooserIDs.map((chooser) => (
               <ModelChooser
-                key={modelChooserIdx}
-                modelChooserIdx={modelChooserIdx}
-                setModelChooserIdx={setModelChooserIdx}
+                key={chooser.chooserIdx}
+                modelChooserIdx={chooser.chooserIdx}
                 models={models}
                 setModels={setModels}
                 handleAddModelChooser={handleAddModelChooser}
                 handleRemoveModelChooser={handleRemoveModelChooser}
-                modelChooserCountIDs={modelChooserCountIDs}
-                setModelChooserCountIDs={setModelChooserCountIDs}
+                modelChooserIDs={modelChooserIDs}
+                setModelChooserIDs={setModelChooserIDs}
+                modelID={chooser.modelID}
               />
             ))}
 

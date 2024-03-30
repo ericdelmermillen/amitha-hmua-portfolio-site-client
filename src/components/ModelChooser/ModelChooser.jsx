@@ -6,14 +6,13 @@ import minus from '../../assets/minus.svg';
 
 const ModelChooser = ({ 
   modelChooserIdx,
-  setModelChooserIdx,
   handleAddModelChooser,
   handleRemoveModelChooser,
   models,
   setModels,
-  // for setting modelChooserCountID objects
-  modelChooserCountIDs, 
-  setModelChooserCountIDs
+  modelChooserIDs, 
+  setModelChooserIDs,
+  modelID
 }) => {
 
   const { 
@@ -21,15 +20,17 @@ const ModelChooser = ({
     setIsLoading 
   } = useContext(AppContext);
 
-  const [ selectedModel, setSelectedModel ] = useState('');
+  const [ selectedModel, setSelectedModel ] = useState(modelID || '');
+  // modelChooser.modelID = chosenModel || modelID
   const [ isOptionSet, setIsOptionSet ] = useState(false)
 
   const handleSetModel = (event) => {
     const chosenModel = +event.target.value;
+    console.log(`chosenModel: ${chosenModel}`)
 
-      const updatedModelChooserCountIDs = [...modelChooserCountIDs]
+      const updatedModelChooserCountIDs = [...modelChooserIDs]
 
-      for(let modelChooser of modelChooserCountIDs) {
+      for(let modelChooser of modelChooserIDs) {
         if(modelChooser.chooserIdx === modelChooserIdx) {
           modelChooser.modelID = chosenModel
         }
@@ -39,7 +40,14 @@ const ModelChooser = ({
     setIsOptionSet(true)
   };
 
-  console.log(modelChooserCountIDs)
+  const includesModel = (model_id) => {
+    return modelChooserIDs.some(({ modelID }) => modelID === model_id);
+  };
+
+  const modelIsNotNull = (chooserIdx) => {
+    const targetModelChooser = modelChooserIDs.find(modelChooser => modelChooser.chooserIdx === chooserIdx);
+    return !!targetModelChooser && targetModelChooser.modelID !== null;
+  };
 
   return (
     <div className="modelChooser">
@@ -61,8 +69,7 @@ const ModelChooser = ({
             <option 
               key={model.id} 
               value={model.id}
-              // need to adjust this so that modelIDs in the modelChooserCountIDs are disabled for new pickers
-              // disabled={newShootModelIds.includes(model.id)}
+              disabled={includesModel(model.id)}
             >
               {model.model_name}
             </option>
@@ -71,7 +78,11 @@ const ModelChooser = ({
         <img
           className="addModelButton" 
           src={add}
-          onClick={() => handleAddModelChooser(selectedModel)}
+          disabled={true} 
+          onClick={modelIsNotNull(modelChooserIdx) 
+            ? () => handleAddModelChooser(selectedModel)
+            : null
+          }
         />
         <img
           className="removeModelButton" 
