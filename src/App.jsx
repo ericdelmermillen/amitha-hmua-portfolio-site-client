@@ -17,6 +17,7 @@ import add from '../src/assets/add.svg'
 import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
 import { scrollToTop } from './utils/utils';
+import ModelChooser from './components/ModelChooser/ModelChooser';
 
 const App = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -148,8 +149,9 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
+
         <ToastContainer
-          position="top-right"
+          position="bottom-center"
           autoClose={3000}
           hideProgressBar={true}
           newestOnTop={false}

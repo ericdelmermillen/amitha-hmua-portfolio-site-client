@@ -1,0 +1,14 @@
+@import '../../partials/mixins';
+@import '../../partials/variables';
+
+.addShoot__date-picker {
+  font-size: 1rem;
+  width: 8rem;
+  padding-inline: 0.25rem;
+
+  &:focus, &:active {
+    outline: none;
+    border: none;
+  }
+}
+

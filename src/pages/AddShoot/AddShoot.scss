@@ -7,9 +7,61 @@
 
   &__inner {
     border: 2px solid #fff;
+    width: 80%;
   }
 
   &__h1 {
     color: #fff;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  
+  &__form {
+    display: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    color: #fff;
+  }
+
+  &__date-container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &__date-picker {
+    // border: 2px solid green;
+    height: 2rem;
+    border-radius: $borderRadius;
+    display: block;
+    margin-inline: auto;
+    border: none;
+  }
+
+  &__title-container {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid yellow;
+    border-radius: $borderRadius;
+    margin-top: 4rem;
+  }
+  
+  &__title-input {
+    height: 2rem;
+    padding-inline: 0.25rem;
+  }
+  
+  &__blurb-container  {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid pink;
+  }
+  
+  &__blurb-input {
+    border-radius: $borderRadius;
+    height: 10rem;
+    padding-inline: 0.25rem;
+    padding-block: 0.5rem;
   }
 }
