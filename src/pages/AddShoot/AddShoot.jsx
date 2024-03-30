@@ -22,8 +22,8 @@ const AddShoot = () => {
   const [ models, setModels ] = useState([]);
   const [ modelChooserIDs, setModelChooserIDs ] = useState([{ chooserIdx: 1, modelID: null}]);
 
-  const [ newShootPhotographerIds, setNewShootPhotographerIds ] = useState([]);
-  const [ newShootPhotoURLS, setNewShootPhotoURLS ] = useState([]);
+  // const [ newShootPhotographerIds, setNewShootPhotographerIds ] = useState([]);
+  // const [ newShootPhotoURLS, setNewShootPhotoURLS ] = useState([]);
 
   const handleTitleChange = (event) => {
     setNewShootTitle(event.target.value);
@@ -34,44 +34,39 @@ const AddShoot = () => {
   };
 
   const handleLogClick = () => {
-    const selectedModelIDs = modelChooserIDs.filter(({ modelID }) => modelID !== null);
+    const selectedModelIDs = [];
 
+    modelChooserIDs.forEach(modelChooser => {
+      modelChooser.modelID !== null
+      selectedModelIDs.push(modelChooser.modelID)
+      }
+    );
 
-    // const includesModel = (model_id) => {
-    //   return selectedModelIDs.some(({ modelID }) => modelID === model_id);
-    // };
-    
-  
     const modelIDs = selectedModelIDs.map(({ modelID }) => modelID);
-    console.log(selectedModelIDs)
-    
     
     const shoot = {};
     shoot.date = newShootDate.toISOString().split('T')[0];
     shoot.shoot_title = newShootTitle;
     shoot.shoot_blurb = newShootBlurb;
-    // adjust this to get the model ids from the modelChooserCountIDS array
-    // shoot.model_ids = newShootModelIds;
+    shoot.model_ids = selectedModelIDs;
 
     console.log(shoot);
-    // console.log(modelChooserIdx)
   };
 
   const handleAddModelChooser = (selectedModel) => {
-    // setModelChooserIdx(modelChooserIdx + 1)
+    const maxChooserIdx = Math.max(...modelChooserIDs.map(chooser => chooser.chooserIdx));
 
-    const newChooser = { chooserIdx: modelChooserIDs.length + 1, modelID: null}
+    const newChooser = { chooserIdx: maxChooserIdx + 1, modelID: null}
     setModelChooserIDs([...modelChooserIDs, newChooser]);
-    console.log(modelChooserIDs)
-    // console.log(selectedModel)
   };
   
-  
-  const handleRemoveModelChooser = () => {
+  const handleRemoveModelChooser = (modelChooserIdx) => {
     if(modelChooserIDs.length > 1) {
-      console.log("remove")
-      // const filteredChoosers = modelChooserCountIDs.filter()
-      setModelChooserIDs([]);
+      const filteredChoosers = modelChooserIDs.filter(chooser => chooser.chooserIdx !== modelChooserIdx)
+
+      // console.log(filteredChoosers)
+      setModelChooserIDs(filteredChoosers);
+      // console.log(modelChooserIdx)
     }
 
   };

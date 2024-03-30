@@ -26,15 +26,14 @@ const ModelChooser = ({
 
   const handleSetModel = (event) => {
     const chosenModel = +event.target.value;
-    console.log(`chosenModel: ${chosenModel}`)
 
-      const updatedModelChooserCountIDs = [...modelChooserIDs]
+    const updatedModelChooserCountIDs = [...modelChooserIDs]
 
-      for(let modelChooser of modelChooserIDs) {
-        if(modelChooser.chooserIdx === modelChooserIdx) {
-          modelChooser.modelID = chosenModel
-        }
+    for(let modelChooser of modelChooserIDs) {
+      if(modelChooser.chooserIdx === modelChooserIdx) {
+        modelChooser.modelID = chosenModel
       }
+    }
 
     setSelectedModel(chosenModel);
     setIsOptionSet(true)
@@ -87,7 +86,7 @@ const ModelChooser = ({
         <img
           className="removeModelButton" 
           src={minus}
-          onClick={handleRemoveModelChooser}
+          onClick={() => handleRemoveModelChooser(modelChooserIdx)}
         />
       </div>
     </div>
