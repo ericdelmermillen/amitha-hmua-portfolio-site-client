@@ -1,10 +1,10 @@
 import { useState, useEffect, useContext } from 'react';
 import AppContext from '../../AppContext';
-import { scrollToTop } from '../../utils/utils';
-import './AddShoot.scss';
-import { toast } from 'react-toastify';
 import NewShootdatePicker from '../../components/NewShootDatePicker/NewShootDatePicker';
 import ModelChooser from '../../components/ModelChooser/ModelChooser';
+import { scrollToTop } from '../../utils/utils';
+import { toast } from 'react-toastify';
+import './AddShoot.scss';
 
 const AddShoot = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -21,9 +21,11 @@ const AddShoot = () => {
   // models
   const [ models, setModels ] = useState([]);
   const [ modelChooserIDs, setModelChooserIDs ] = useState([{ chooserIdx: 1, modelID: null}]);
+  
+  // photographers
+  const [ photographers, setPhotographers ] = useState([]);
+  const [ PphotographerChooserIDs, setPhotographerChooserIDs ] = useState([{ chooserIdx: 1, photographerID: null}]);
 
-  // const [ newShootPhotographerIds, setNewShootPhotographerIds ] = useState([]);
-  // const [ newShootPhotoURLS, setNewShootPhotoURLS ] = useState([]);
 
   const handleTitleChange = (event) => {
     setNewShootTitle(event.target.value);
@@ -34,15 +36,17 @@ const AddShoot = () => {
   };
 
   const handleLogClick = () => {
+    // need validation for:
+    // --title
+    // --blurb
+    // --
     const selectedModelIDs = [];
 
     modelChooserIDs.forEach(modelChooser => {
-      modelChooser.modelID !== null
-      selectedModelIDs.push(modelChooser.modelID)
+      if(modelChooser.modelID !== null) {
+        selectedModelIDs.push(modelChooser.modelID);
       }
-    );
-
-    const modelIDs = selectedModelIDs.map(({ modelID }) => modelID);
+    });
     
     const shoot = {};
     shoot.date = newShootDate.toISOString().split('T')[0];
@@ -54,6 +58,11 @@ const AddShoot = () => {
   };
 
   const handleAddModelChooser = (selectedModel) => {
+
+    if(!selectedModel) {
+      return toast.error('Select a model from the model chooser before adding another.')
+    }
+    
     const maxChooserIdx = Math.max(...modelChooserIDs.map(chooser => chooser.chooserIdx));
 
     const newChooser = { chooserIdx: maxChooserIdx + 1, modelID: null}
@@ -64,9 +73,9 @@ const AddShoot = () => {
     if(modelChooserIDs.length > 1) {
       const filteredChoosers = modelChooserIDs.filter(chooser => chooser.chooserIdx !== modelChooserIdx)
 
-      // console.log(filteredChoosers)
       setModelChooserIDs(filteredChoosers);
-      // console.log(modelChooserIdx)
+    } else {
+      toast.error("Can't remove this. All shoots need at least one model. ")
     }
 
   };

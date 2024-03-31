@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
 import AppContext from '../../AppContext';
-import './ModelChooser.scss';
 import add from '../../assets/add.svg';
 import minus from '../../assets/minus.svg';
+import './ModelChooser.scss';
 
 const ModelChooser = ({ 
   modelChooserIdx,
@@ -43,11 +43,6 @@ const ModelChooser = ({
     return modelChooserIDs.some(({ modelID }) => modelID === model_id);
   };
 
-  const modelIsNotNull = (chooserIdx) => {
-    const targetModelChooser = modelChooserIDs.find(modelChooser => modelChooser.chooserIdx === chooserIdx);
-    return !!targetModelChooser && targetModelChooser.modelID !== null;
-  };
-
   return (
     <div className="modelChooser">
       <div className="modelChooser__inner">
@@ -78,10 +73,7 @@ const ModelChooser = ({
           className="addModelButton" 
           src={add}
           disabled={true} 
-          onClick={modelIsNotNull(modelChooserIdx) 
-            ? () => handleAddModelChooser(selectedModel)
-            : null
-          }
+          onClick={() => handleAddModelChooser(selectedModel)}
         />
         <img
           className="removeModelButton" 
