@@ -17,7 +17,6 @@ import add from '../src/assets/add.svg'
 import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
 import { scrollToTop } from './utils/utils';
-import ModelChooser from './components/ModelChooser/ModelChooser';
 
 const App = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;

@@ -1,0 +1,50 @@
+@import '../../partials/mixins';
+@import '../../partials/variables';
+
+@import '../../partials/mixins';
+@import '../../partials/variables';
+
+.photographerChooser {
+
+  &__h4 {
+    color: #fff;
+  }
+
+  &__inner {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  &__select {
+    height: 2.25rem;
+    border-radius: $borderRadius;
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.25rem;
+    text-align: center;
+
+    &.userDisabled {
+      pointer-events: none;
+    }
+
+    &:focus, &:active {
+      outline: none;
+    }
+  }
+}
+
+.addPhotographerButton {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  padding: 0.25rem;
+}
+
+.removePhotographerButton {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  padding: 0.25rem;
+}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 import AppContext from '../../AppContext';
 import add from '../../assets/add.svg';
 import minus from '../../assets/minus.svg';
@@ -26,8 +26,6 @@ const ModelChooser = ({
 
   const handleSetModel = (event) => {
     const chosenModel = +event.target.value;
-
-    const updatedModelChooserCountIDs = [...modelChooserIDs]
 
     for(let modelChooser of modelChooserIDs) {
       if(modelChooser.chooserIdx === modelChooserIdx) {

@@ -5,6 +5,7 @@ import ModelChooser from '../../components/ModelChooser/ModelChooser';
 import { scrollToTop } from '../../utils/utils';
 import { toast } from 'react-toastify';
 import './AddShoot.scss';
+import PhotographerChooser from '../../components/PhotographerChooser/PhotographerChooser';
 
 const AddShoot = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -24,7 +25,7 @@ const AddShoot = () => {
   
   // photographers
   const [ photographers, setPhotographers ] = useState([]);
-  const [ PphotographerChooserIDs, setPhotographerChooserIDs ] = useState([{ chooserIdx: 1, photographerID: null}]);
+  const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([{ chooserIdx: 1, photographerID: null}]);
 
 
   const handleTitleChange = (event) => {
@@ -40,6 +41,7 @@ const AddShoot = () => {
     // --title
     // --blurb
     // --
+    
     const selectedModelIDs = [];
 
     modelChooserIDs.forEach(modelChooser => {
@@ -47,16 +49,35 @@ const AddShoot = () => {
         selectedModelIDs.push(modelChooser.modelID);
       }
     });
+
+    const selectedPhotographerIDs = [];
+
+    // selectedPhotographerIDs.forEach(photographerChooser => {
+    //   if(photographerChooser.photographerID !== null) {
+    //     selectedPhotographerIDs.push(photographerChooser.photographerID);
+    //   }
+    // });
+
+    photographerChooserIDs.forEach(photographerChooser => {
+      if (photographerChooser.photographerID !== null) {
+        selectedPhotographerIDs.push(photographerChooser.photographerID);
+      }
+    });
+    
+    
+    console.log(selectedPhotographerIDs)
     
     const shoot = {};
     shoot.date = newShootDate.toISOString().split('T')[0];
     shoot.shoot_title = newShootTitle;
     shoot.shoot_blurb = newShootBlurb;
     shoot.model_ids = selectedModelIDs;
+    shoot.photographer_ids = selectedPhotographerIDs;
 
     console.log(shoot);
   };
 
+  // model chooser handlers
   const handleAddModelChooser = (selectedModel) => {
 
     if(!selectedModel) {
@@ -77,9 +98,34 @@ const AddShoot = () => {
     } else {
       toast.error("Can't remove this. All shoots need at least one model. ")
     }
-
   };
 
+
+  // photographer chooser handlers
+  const handleAddPhotographerChooser = (selectedPhotographer) => {
+
+    if(!selectedPhotographer) {
+      return toast.error('Select a photographer from the photographer chooser before adding another.')
+    }
+    
+    const maxChooserIdx = Math.max(...photographerChooserIDs.map(chooser => chooser.chooserIdx));
+
+    const newChooser = { chooserIdx: maxChooserIdx + 1, photographerID: null}
+    setPhotographerChooserIDs([...photographerChooserIDs, newChooser]);
+  };
+  
+  const handleRemovePhotographerChooser = (photographerChooserIdx) => {
+    if(photographerChooserIDs.length > 1) {
+      const filteredChoosers = photographerChooserIDs.filter(chooser => chooser.chooserIdx !== photographerChooserIdx)
+
+      setPhotographerChooserIDs(filteredChoosers);
+    } else {
+      toast.error("Can't remove this. All shoots need at least one photographer. ")
+    }
+  };
+  
+
+  // fetch models
   useEffect(() => {
     setIsLoading(true);
 
@@ -112,7 +158,44 @@ const AddShoot = () => {
 
     fetchModels();
   }, [BASE_URL, setIsLoading]);
+  
+  
+  // fetch photographers
+  useEffect(() => {
+    setIsLoading(true);
 
+    const fetchPhotographers = async () => {
+      const token = localStorage.getItem('token');
+      const headers = {};
+
+      if(token) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
+
+      try {
+        const response = await fetch(`${BASE_URL}/photographers/all`, { headers });
+
+        if(!response.ok) {
+          throw new Error(`Failed to fetch photographers: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        setPhotographers(data.photographers);
+      } catch (error) {
+        console.log(error);
+        toast.error(`Error fetching photographers: ${error.message}`);
+      } finally {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 250);
+      }
+    };
+
+    fetchPhotographers();
+  }, [BASE_URL, setIsLoading]);
+
+
+  // initial load useEffect
   useEffect(() => {
     scrollToTop();
     setTimeout(() => {
@@ -161,19 +244,47 @@ const AddShoot = () => {
               ></textarea>
             </div>
 
-            {modelChooserIDs.map((chooser) => (
-              <ModelChooser
-                key={chooser.chooserIdx}
-                modelChooserIdx={chooser.chooserIdx}
-                models={models}
-                setModels={setModels}
-                handleAddModelChooser={handleAddModelChooser}
-                handleRemoveModelChooser={handleRemoveModelChooser}
-                modelChooserIDs={modelChooserIDs}
-                setModelChooserIDs={setModelChooserIDs}
-                modelID={chooser.modelID}
-              />
-            ))}
+            <div 
+              className="addShoot__modelChoosers"
+            >
+
+              <h3 >Choose At Least One Model</h3>
+              
+              {modelChooserIDs.map((chooser) => (
+                <ModelChooser
+                  key={chooser.chooserIdx}
+                  modelChooserIdx={chooser.chooserIdx}
+                  models={models}
+                  setModels={setModels}
+                  handleAddModelChooser={handleAddModelChooser}
+                  handleRemoveModelChooser={handleRemoveModelChooser}
+                  modelChooserIDs={modelChooserIDs}
+                  setModelChooserIDs={setModelChooserIDs}
+                  modelID={chooser.modelID}
+                />
+              ))}
+            </div>
+          
+                
+            <div 
+              className="addShoot__photographerChoosers"
+            >
+              <h3 >Choose At Least One Photographer</h3>
+
+              {photographerChooserIDs.map((chooser) => (
+                <PhotographerChooser
+                  key={chooser.chooserIdx}
+                  photographerChooserIdx={chooser.chooserIdx}
+                  photographers={photographers}
+                  setPhotographers={setPhotographers}
+                  handleAddPhotographerChooser={handleAddPhotographerChooser}
+                  handleRemovePhotographerChooser={handleRemovePhotographerChooser}
+                  photographerChooserIDs={photographerChooserIDs}
+                  setPhotographerChooserIDs={setPhotographerChooserIDs}
+                  photographerID={chooser.photographerID}
+                />
+              ))}
+            </div>
 
             <div className="button" onClick={handleLogClick}>
               Submit
