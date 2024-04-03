@@ -28,6 +28,9 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   &__date-picker {
@@ -37,6 +40,10 @@
     display: block;
     margin-inline: auto;
     border: none;
+  }
+
+  &__label {
+    text-align: center;
   }
 
   &__title-container {
@@ -63,5 +70,39 @@
     height: 10rem;
     padding-inline: 0.25rem;
     padding-block: 0.5rem;
+  }
+
+  &__modelChoosers {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  &__photographerChoosers {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    // max-width: 50rem;
+
+    @media(min-width: $tablet) {
+      flex-direction: row;
+      padding-inline: max(2rem, 10%);
+    }
+  }
+  
+  &__button {
+    @include button;
+    gap: 2rem;
+    width: 100%;
+
+    // @media(min-width: $tablet) {
+    //   width: 50%;
+    // }
   }
 }

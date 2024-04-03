@@ -2,14 +2,20 @@
 @import '../../partials/variables';
 
 .modelChooser {
-
+  
   &__h4 {
     color: #fff;
   }
-
+  
   &__inner {
+    border: 2px solid yellow;
     display: flex;
+    flex-direction: column;
     gap: 0.5rem;
+
+    @media(min-width: $tablet) {
+      flex-direction: row;
+    }
   }
 
   &__select {
@@ -28,9 +34,20 @@
       outline: none;
     }
   }
+
+  &__button-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    
+    @media(min-width: $tablet) {
+      flex-direction: row;
+      gap: 0.5rem;
+    }
+  }
 }
 
-.addModelButton {
+.modelChooser__button {
   width: 2.25rem;
   height: 2.25rem;
   border-radius: 50%;
@@ -38,10 +55,10 @@
   padding: 0.25rem;
 }
 
-.removeModelButton {
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 50%;
-  border: 2px solid #fff;
-  padding: 0.25rem;
-}
+// .removeModelButton {
+//   width: 2.25rem;
+//   height: 2.25rem;
+//   border-radius: 50%;
+//   border: 2px solid #fff;
+//   padding: 0.25rem;
+// }

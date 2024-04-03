@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AppContext from '../../AppContext';
 import NewShootdatePicker from '../../components/NewShootDatePicker/NewShootDatePicker';
 import ModelChooser from '../../components/ModelChooser/ModelChooser';
@@ -10,9 +11,13 @@ import PhotographerChooser from '../../components/PhotographerChooser/Photograph
 const AddShoot = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+  const navigate = useNavigate();
+
   const { 
     isLoading,
-    setIsLoading
+    setIsLoading,
+    isLoggedIn, 
+    setIsLoggedIn,
   } = useContext(AppContext);
 
   const [ newShootTitle, setNewShootTitle ] = useState("");
@@ -36,45 +41,87 @@ const AddShoot = () => {
     setNewShootBlurb(event.target.value);
   };
 
-  const handleLogClick = () => {
-    // need validation for:
-    // --title
-    // --blurb
-    // --
-    
-    const selectedModelIDs = [];
+  const handleCancel = () => {
+    navigate('/home')
+  }
 
-    modelChooserIDs.forEach(modelChooser => {
-      if(modelChooser.modelID !== null) {
-        selectedModelIDs.push(modelChooser.modelID);
+  const handleSubmit = async () => {
+    try {
+
+    
+      // need validation for:
+      // --title
+      // --blurb
+      // --
+      
+      const selectedModelIDs = [];
+
+      modelChooserIDs.forEach(modelChooser => {
+        if(modelChooser.modelID !== null) {
+          selectedModelIDs.push(modelChooser.modelID);
+        }
+      });
+
+      const selectedPhotographerIDs = [];
+
+      photographerChooserIDs.forEach(photographerChooser => {
+        if(photographerChooser.photographerID !== null) {
+          selectedPhotographerIDs.push(photographerChooser.photographerID);
+        }
+      });
+      
+      const shoot = {};
+      shoot.shoot_date = newShootDate.toISOString().split('T')[0];
+      shoot.shoot_title = newShootTitle;
+      shoot.shoot_blurb = newShootBlurb;
+      shoot.model_ids = selectedModelIDs;
+      shoot.photographer_ids = selectedPhotographerIDs;
+      shoot.photo_urls = [
+        "https://images.squarespace-cdn.com/content/v1/5c2b8497620b859e3110e2e9/1627601727660-BDMJVSOP3C6JUCVRUOQA/IMG_8389.JPG?format=1000w",
+        "https://images.squarespace-cdn.com/content/v1/5c2b8497620b859e3110e2e9/1627601764606-ATC169LN5RT0QP8C424N/IMG_8280.JPG?format=1000w",
+        "https://images.squarespace-cdn.com/content/v1/5c2b8497620b859e3110e2e9/1627601806737-L9CI06R5M8ELWDASOC0W/IMG_8281.JPG?format=1000w",
+        "https://images.squarespace-cdn.com/content/v1/5c2b8497620b859e3110e2e9/1627602367230-LB8ZNUQ5EMF6P9J4WCKW/IMG_8390.JPG?format=1000w",
+        "https://images.squarespace-cdn.com/content/v1/5c2b8497620b859e3110e2e9/1627602409500-KSPOFX7TCQ3PTM5V3SWJ/IMG_8282.JPG?format=1000w",
+        "https://images.squarespace-cdn.com/content/v1/5c2b8497620b859e3110e2e9/1627602423146-1HOO5NJ6RHHOYXQC4JAY/IMG_8283.jpg?format=1000w"
+      ]
+
+      const token = localStorage.getItem('token');
+
+      if(!token) {
+          setIsLoading(true);
+          setIsLoggedIn(false);
+          navigate('/home');
+        return toast.error("Sorry please login again");
       }
-    });
 
-    const selectedPhotographerIDs = [];
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      };
 
-    // selectedPhotographerIDs.forEach(photographerChooser => {
-    //   if(photographerChooser.photographerID !== null) {
-    //     selectedPhotographerIDs.push(photographerChooser.photographerID);
-    //   }
-    // });
+      setIsLoading(true);
 
-    photographerChooserIDs.forEach(photographerChooser => {
-      if (photographerChooser.photographerID !== null) {
-        selectedPhotographerIDs.push(photographerChooser.photographerID);
+       // Make POST request
+      const response = await fetch(`${BASE_URL}/shoots/add`, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(shoot)
+      });
+
+      // Check if response is ok
+      if(!response.ok) {
+        throw new Error("Error creating shoot");
+      } else {
+        toast.success("Shoot added Successfully");
+        navigate('/home')
       }
-    });
     
-    
-    console.log(selectedPhotographerIDs)
-    
-    const shoot = {};
-    shoot.date = newShootDate.toISOString().split('T')[0];
-    shoot.shoot_title = newShootTitle;
-    shoot.shoot_blurb = newShootBlurb;
-    shoot.model_ids = selectedModelIDs;
-    shoot.photographer_ids = selectedPhotographerIDs;
-
-    console.log(shoot);
+    } catch(error) {
+      console.log(error)
+      toast.error(error);
+      setIsLoading(false);
+      // navigate('/home')
+    }
   };
 
   // model chooser handlers
@@ -211,6 +258,10 @@ const AddShoot = () => {
 
           <div className="addShoot__form">
             <div className="addShoot__date-container">
+
+              <h3 className='addShoot__label'>
+                Enter Shoot Date
+              </h3>
               <NewShootdatePicker
                 newShootDate={newShootDate}
                 setNewShootDate={setNewShootDate}
@@ -248,7 +299,9 @@ const AddShoot = () => {
               className="addShoot__modelChoosers"
             >
 
-              <h3 >Choose At Least One Model</h3>
+              <h3 className='addShoot__label'>
+                Choose At Least One Model
+              </h3>
               
               {modelChooserIDs.map((chooser) => (
                 <ModelChooser
@@ -265,11 +318,12 @@ const AddShoot = () => {
               ))}
             </div>
           
-                
             <div 
               className="addShoot__photographerChoosers"
             >
-              <h3 >Choose At Least One Photographer</h3>
+              <h3 className='addShoot__label'>
+                Choose At Least One Photographer
+                </h3>
 
               {photographerChooserIDs.map((chooser) => (
                 <PhotographerChooser
@@ -286,13 +340,23 @@ const AddShoot = () => {
               ))}
             </div>
 
-            <div className="button" onClick={handleLogClick}>
-              Submit
+            <div className="addShoot__button-container">
+
+              <div 
+                className="addShoot__button addShoot__button--cancel" 
+                onClick={handleCancel}
+                >
+                Cancel
+              </div>
+
+              <div 
+                className="addShoot__button addShoot__button--submit" 
+                onClick={handleSubmit}
+                >
+                Submit
+              </div>
             </div>
-            
-            <div className="button" onClick={handleRemoveModelChooser}>
-              Remove Model Chooser
-            </div>
+      
           </div>
         </div>
       </div>

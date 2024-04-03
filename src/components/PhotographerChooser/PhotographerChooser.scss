@@ -11,8 +11,14 @@
   }
 
   &__inner {
+    border: 2px solid yellow;
     display: flex;
+    flex-direction: column;
     gap: 0.5rem;
+
+    @media(min-width: $tablet) {
+      flex-direction: row;
+    }
   }
 
   &__select {
@@ -31,20 +37,23 @@
       outline: none;
     }
   }
-}
 
-.addPhotographerButton {
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 50%;
-  border: 2px solid #fff;
-  padding: 0.25rem;
-}
-
-.removePhotographerButton {
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 50%;
-  border: 2px solid #fff;
-  padding: 0.25rem;
+  &__button-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    
+    @media(min-width: $tablet) {
+      flex-direction: row;
+      gap: 0.5rem;
+    }
+  }
+  
+  &__button {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    padding: 0.25rem;
+  }
 }

@@ -67,17 +67,19 @@ const ModelChooser = ({
             </option>
           ))}
         </select>
-        <img
-          className="addModelButton" 
-          src={add}
-          disabled={true} 
-          onClick={() => handleAddModelChooser(selectedModel)}
-        />
-        <img
-          className="removeModelButton" 
-          src={minus}
-          onClick={() => handleRemoveModelChooser(modelChooserIdx)}
-        />
+        <div className="modelChooser__button-container">
+          <img
+            className="modelChooser__button modelChooser__button--add"
+            src={add}
+            disabled={true}
+            onClick={() => handleAddModelChooser(selectedModel)}
+          />
+          <img
+            className="modelChooser__button modelChooser__button--remove"
+            src={minus}
+            onClick={() => handleRemoveModelChooser(modelChooserIdx)}
+          />
+        </div>
       </div>
     </div>
   );

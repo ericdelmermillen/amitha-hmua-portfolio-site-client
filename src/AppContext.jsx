@@ -7,6 +7,9 @@ const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [ isLoggedIn, setIsLoggedIn ] = useState(false);
+  // color mode
+  const [ colorMode, setColorMode ] = useState('light');
+  // 
   const [ showSideNav, setShowSideNav ] = useState(false);
   const [ scrollYPos, setScrollYPos ] = useState(window.scrollY);
   const [ prevScrollYPos, setPrevScrollYPos ] = useState(window.scrollY);
@@ -49,6 +52,16 @@ export const AppProvider = ({ children }) => {
     const intervalId = setInterval(checkTokenExpiration, 60000);
 
     return () => clearInterval(intervalId);
+  }, []);
+
+  // color mode
+  useEffect(() => {
+    const storedColorMode = localStorage.getItem('colorMode');
+    if(storedColorMode) {
+      setColorMode(storedColorMode);
+    }
+
+    console.log(colorMode)
   }, []);
 
 

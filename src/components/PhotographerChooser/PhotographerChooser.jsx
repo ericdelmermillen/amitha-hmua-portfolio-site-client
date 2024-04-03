@@ -66,17 +66,20 @@ const PhotographerChooser = ({
             </option>
           ))}
         </select>
-        <img
-          className="addPhotographerButton" 
-          src={add}
-          disabled={true} 
-          onClick={() => handleAddPhotographerChooser(selectedPhotographer)}
-        />
-        <img
-          className="removePhotographerButton" 
-          src={minus}
-          onClick={() => handleRemovePhotographerChooser(photographerChooserIdx)}
-        />
+        <div className="photographerChooser__button-container">
+
+          <img
+            className="photographerChooser__button photographerChooser__button--add" 
+            src={add}
+            disabled={true} 
+            onClick={() => handleAddPhotographerChooser(selectedPhotographer)}
+          />
+          <img
+            className="photographerChooser__button photographerChooser__button--remove" 
+            src={minus}
+            onClick={() => handleRemovePhotographerChooser(photographerChooserIdx)}
+          />
+        </div>
       </div>
     </div>
   );
