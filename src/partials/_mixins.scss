@@ -1,5 +1,19 @@
 @import '../partials/variables';
 
+.app {
+  // light mode custom variables
+  &[data-color-mode='light'] {
+    --button-color: white;
+    --button-background: blue;
+  }
+  
+  // dark mode custom variables
+  &[data-color-mode='dark'] {
+    --button-color: blue;
+    --button-background: white;
+  }
+}
+
 @mixin page {
   align-items: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -29,8 +43,8 @@
   align-items: center;
   border: none;
   border-radius: $borderRadius;
-  background: $buttonBackground;
-  color: $buttonColor;
+  background: var(--button-background);
+  color: var(--button-color);
   cursor: pointer;
   display: inline-flex;
   font-size: 1rem;
@@ -40,9 +54,9 @@
   transition: background-color 0.3s ease;
 
   &:hover, &:focus {
-    background: $buttonColor;
-    color: $buttonBackground;
-    outline: 1px solid $buttonBackground;
+    background: var(--button-color);
+    color: var(--button-background);
+    outline: 1px solid var(--button-background);
     transition: all 0.3s ease;
   }
 

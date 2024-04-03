@@ -83,6 +83,27 @@ img {
   }
 }
 
+.colorModeToggle__container {
+  position: fixed;
+  top: 6rem;
+  left: 2rem;
+  height: 2rem;
+  transition: all 2s ease-in;
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+  z-index: 10;
+  
+  &.show {
+    border: 2px solid var(--button-color);
+    user-select: auto;
+    transition: all 0.5s ease-out;
+    opacity: 1;
+    pointer-events:all;
+
+  }
+}
+
 .floating-button {
   background: white;
   border-radius: 50%;

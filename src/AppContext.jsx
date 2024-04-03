@@ -54,20 +54,26 @@ export const AppProvider = ({ children }) => {
     return () => clearInterval(intervalId);
   }, []);
 
-  // color mode
+  // color mode checking on initial mount
   useEffect(() => {
-    const storedColorMode = localStorage.getItem('colorMode');
+    const storedColorMode = localStorage.getItem('colorMode');  
+
     if(storedColorMode) {
       setColorMode(storedColorMode);
     }
 
-    console.log(colorMode)
   }, []);
 
+  // Update local storage when color mode state changes
+  useEffect(() => {
+    localStorage.setItem('colorMode', colorMode);
+  }, [colorMode]);
 
   const contextValues = {
     isLoggedIn, 
     setIsLoggedIn,
+    colorMode, 
+    setColorMode,
     showSideNav, 
     setShowSideNav,
     scrollYPos, 

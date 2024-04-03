@@ -10,6 +10,7 @@ import Nav from './components/Nav/Nav';
 import Footer from './components/Footer/Footer';
 import SideNav from './components/SideNav/SideNav';
 import ShootDetails from './pages/ShootDetails/ShootDetails';
+import ColorModeToggle from './components/ColorModeToggle/ColorModeToggle';
 import AddShoot from './pages/AddShoot/AddShoot';
 import { ToastContainer, toast } from "react-toastify";
 import up from '../src/assets/up.svg';
@@ -27,6 +28,8 @@ const App = () => {
   const { 
     isLoggedIn, 
     setIsLoggedIn,
+    colorMode, 
+    setColorMode,
     showSideNav, 
     setShowSideNav,
     scrollYPos, 
@@ -111,8 +114,11 @@ const App = () => {
   
   return (
     <>
+      <div className="app" data-color-mode={colorMode}>
 
-      <div className="app">
+        <div className={`colorModeToggle__container ${scrollYPos < 60 ? "show" : "hide"}`}>
+          <ColorModeToggle />
+        </div>
         <h3 className={`loading ${isLoading && "isLoading"}`}></h3>
           <div 
             className={showSideNav ? "touchOffDiv" : ""}
