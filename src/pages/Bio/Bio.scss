@@ -31,17 +31,17 @@
 
   &__hero-img {
     @include shootImg;
-  object-position: center center;
-  object-fit: cover;
-  
-  @media(min-width: $tablet) {
-    max-height: 90vh;
-  }
+    object-position: center center;
+    object-fit: cover;
+    
+    @media(min-width: $tablet) {
+      max-height: 90vh;
+    }
 
-  @media(min-width: $desktop) {
-    max-width: 50%;
-    min-width: 50%;
-  }
+    @media(min-width: $desktop) {
+      max-width: 50%;
+      min-width: 50%;
+    }
   }
 
   &__text-container {

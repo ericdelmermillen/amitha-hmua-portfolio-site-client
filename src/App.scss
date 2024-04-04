@@ -64,7 +64,7 @@ img {
     &::after {
       content: '';
       animation: spin 0.5s infinite linear; 
-      border: 6px solid #fff;
+      border: 6px solid var(--background-color);
       border-radius: 50%;
       border-top-color: transparent;
       display: block;

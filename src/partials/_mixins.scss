@@ -12,10 +12,12 @@
     --text-color: #333333;
     // --navAndFooterBG: #FFFFFF;
     --navAndFooterBG: #F3F3F3;
-    --background-color: #d7d3d3;
-    --button-color: white;
-    --button-background: blue;
+    --background-color: #F3F3F3;
+    --button-color: var(--background-color);
+    --button-background: #888676;
     --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    --nav-boxShadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    --footer-boxShadow: 0 -4px 8px rgba(0, 0, 0, 0.25);
   }
   
   // dark mode custom variables
@@ -23,9 +25,11 @@
     --text-color: #F3F3F3;
     --navAndFooterBG: #181717;
     --background-color: #4b4a4a;
-    --button-color: blue;
-    --button-background: white;
+    --button-color: var(--text-color);
+    --button-background: var(--background-color);
     --box-shadow: 0 4px 8px rgba(37, 31, 31, 0.6);
+    --nav-boxShadow: 0 4px 8px rgba(37, 31, 31, 0.6);
+    --footer-boxShadow: 0 -4px 8px rgba(37, 31, 31, 0.6);
   }
 }
 

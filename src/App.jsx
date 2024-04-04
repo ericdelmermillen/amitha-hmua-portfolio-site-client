@@ -119,7 +119,9 @@ const App = () => {
         <div className={`colorModeToggle__container ${scrollYPos < 60 ? "show" : "hide"}`}>
           <ColorModeToggle />
         </div>
-        <h3 className={`loading ${isLoading && "isLoading"}`}></h3>
+          <h3 
+            className={`loading ${isLoading && "isLoading"}`}>  
+          </h3>
           <div 
             className={showSideNav ? "touchOffDiv" : ""}
             onClick={showSideNav ? () => setShowSideNav(false) : null}

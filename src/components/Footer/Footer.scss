@@ -3,6 +3,7 @@
 
 .footer {
   height: 6rem;
+  box-shadow: var(--footer-boxShadow); 
 
   &__inner {
     align-items: center;

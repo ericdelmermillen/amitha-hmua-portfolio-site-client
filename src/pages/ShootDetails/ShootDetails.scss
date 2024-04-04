@@ -18,11 +18,18 @@
     display: flex;
     flex-direction: column;
     margin-block: 2rem;
+    margin-top: 1rem;
     height: 10rem;
     gap: 1rem;
     border: 2px solid red;
-  }
+    
+    @media(min-width: $tablet) {
+      margin-top: 8rem;
 
+    }
+    
+  }
+  
   &__date {
     height: 2rem;
     background: gray;
@@ -37,6 +44,7 @@
       text-align: center;
       font-size: 2rem;
       transition: color 0.2s ease-out;
+      color: var(--text-color);
     }
   }
   
@@ -55,6 +63,7 @@
       font-size: 2rem;
       display:block;
       transition: color 0.2s ease-out;
+      color: var(--text-color);
     }
   }
   
@@ -73,6 +82,7 @@
       font-size: 2rem;
       display:block;
       transition: color 0.2s ease-out;
+      color: var(--text-color);
     }
   }
 
