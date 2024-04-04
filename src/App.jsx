@@ -115,10 +115,11 @@ const App = () => {
   return (
     <>
       <div className="app" data-color-mode={colorMode}>
+        <div className="app__inner">
 
-        <div className={`colorModeToggle__container ${scrollYPos < 60 ? "show" : "hide"}`}>
+        {/* <div className={`colorModeToggle__container ${scrollYPos < 60 ? "show" : "hide"}`}>
           <ColorModeToggle />
-        </div>
+        </div> */}
           <h3 
             className={`loading ${isLoading && "isLoading"}`}>  
           </h3>
@@ -168,6 +169,7 @@ const App = () => {
           draggable
           pauseOnHover={false}
           theme="light"/>
+      </div>
       </div>
     </>
   )};

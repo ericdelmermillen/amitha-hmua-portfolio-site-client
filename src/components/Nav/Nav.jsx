@@ -26,7 +26,6 @@ const Nav = ({ handleLogOut }) => {
             to={'/home'}
             onClick={() => scrollToTop()}
           >
-            {/* <h1 className="nav__logo">Logo</h1> */}
             <img 
               src={logo} 
               className="nav__logo"

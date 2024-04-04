@@ -9,13 +9,18 @@
   height: 5rem;
   justify-content: center;
   margin-top: 0;
-  position: sticky;
+  position: fixed;
   transition: all 600ms ease;
   top: 0;
   width: 100%;
   z-index: 1;
 
-  @media (min-width: 768px) {
+  &.hide {
+    background: yellow;;
+    top: -6rem;
+  }
+
+  @media(min-width: 768px) {
     align-items: center;
     display: flex;
     justify-content: center;
@@ -26,7 +31,8 @@
     }
     
   &.hide {
-    top: -6rem;
+    top: 0;
+    top: -5rem;
   }
   
   &__inner {

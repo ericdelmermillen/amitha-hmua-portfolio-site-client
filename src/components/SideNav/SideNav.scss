@@ -2,80 +2,54 @@
 @import '../../partials/variables';
 
 .sideNav {
-  align-items: center;
-  background: var(--background-color);
+  background-color: var(--background-color);
+  bottom: 0;
   box-shadow: var(--box-shadow);
-  color: var(--text-color);
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
   height: 100vh;
-  justify-content: center;
-  position: sticky;
-  margin-left: 100vw;
-  margin-top: -5rem;
+  left: 100vw;
+  position: fixed;
   top: 0;
+  transition: all 0.5s ease-in;
+  width: 50vw;
   z-index: 5;
-
-  // Apply initial transition for sliding animation
-  transition: margin-left 0.5s ease-in-out;
-
-  @media (min-width: 768px) {
-    display: none;
+  
+  &.show {
+    left: 50vw;
+    transition: all 0.5s ease-out;
   }
 
   &__inner {
-    transition: all 450ms ease-out;
-  }
-
-  &.show {
-    // Slide in from right when show class is added
-    margin-left: 50vw;
-  }
-
-  &.show &__inner {
     align-items: center;
     display: flex;
-    justify-content: center;
-    height: 100%;
-    transition: all 450ms ease-out;
-  }
-
-  &__menu {
-    display: none;
-    transition: all 300ms ease-out;
-  }
-
-  &.show &__menu {
-    display: block;
-    transition: all 450ms ease-out;
-  }
-
-  &__links {
-    display: flex;
     flex-direction: column;
-    font-size: 1.5rem;
-    font-weight: bold;
-    gap: 2rem;
-    text-align: center;
+    height: 100%;
+    justify-content: center;
+    position: relative;
   }
-  
+
   &__close-button {
     cursor: pointer;
-    display: none;
     height: 2.5rem;
     padding-top: 1rem;
     position: fixed;
     top: 1.75rem;
-    width: 2.5rem; 
+    width: 2.5rem;
   }
-  
-  &.show &__close-button {
-    display: block;
+
+  &__links {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  &__link {
+    font-size: 1.5rem;
+    font-weight: bold;
   }
 
   &__close-icon {
-    background-color: var(--text-color); 
+    background-color: #333; 
     border-radius: 2px;
     height: 3.5px;
     position: absolute;
