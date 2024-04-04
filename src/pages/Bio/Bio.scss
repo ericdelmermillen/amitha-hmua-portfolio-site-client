@@ -3,7 +3,7 @@
 
 .bio {
   @include page;
-  background: blue;
+  background: var(--background-color);
 
   &__inner {
     display: none;
@@ -11,6 +11,7 @@
     height: 100%;
     gap: 2rem;
     margin-bottom: 2rem;
+    margin-top: 1rem;
     width: 90%;
 
     &.show {
@@ -19,16 +20,28 @@
     
     @media(min-width: $tablet) {
       gap: 0;
-      margin-top: 4rem;
+      margin-top: 8rem;
     }
-
+    
     @media(min-width: $desktop) {
+      // margin-top: 6rem;
       flex-direction: row;
     }
   }
 
   &__hero-img {
-    @include heroImg;
+    @include shootImg;
+  object-position: center center;
+  object-fit: cover;
+  
+  @media(min-width: $tablet) {
+    max-height: 90vh;
+  }
+
+  @media(min-width: $desktop) {
+    max-width: 50%;
+    min-width: 50%;
+  }
   }
 
   &__text-container {
@@ -45,6 +58,7 @@
   &__text {
     font-size: 1.75rem;
     line-height: 1.4;
+    color: var(--text-color);
   }
 }
 
@@ -76,7 +90,6 @@
   }
 
   &__hero-img {
-    @include heroImg;
     border: 2px solid green;
     background-color: gray;
     min-height: 60%;

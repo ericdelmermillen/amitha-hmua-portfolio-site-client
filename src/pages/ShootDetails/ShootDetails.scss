@@ -3,7 +3,7 @@
 
 .shootDetails {
   @include page;
-  background: purple;
+  background: var(--background-color);
 
   &__inner {
     display: flex;

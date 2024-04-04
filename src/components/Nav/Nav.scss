@@ -3,10 +3,10 @@
 
 .nav {
   align-items: center;
-  background: yellow;
+  background: var(--navAndFooterBG);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
   display: flex;
-  height: 4rem;
+  height: 5rem;
   justify-content: center;
   margin-top: 0;
   position: sticky;
@@ -42,18 +42,27 @@
     }
   }
 
+  &__logo {
+    height: 3.75rem;
+    height: 4.5rem;
+  }
+
   &__links {
     display: none;
     
     @media(min-width: $tablet) {
       display: flex;
-      gap: 4rem;
+      gap: 3rem;
       margin-inline-start: auto;
     }
   }
-
+  
   &__link {
-    font-weight: bold;
+    // font-weight: bold;
+    font-weight: 600;
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+    color: var(--text-color);
   }
 
   &__logout {
@@ -80,6 +89,7 @@
     position: absolute;
     right: 2rem;
     top: 0.6rem;
+    top: 1.3rem;
     width: 2rem;
     
     @media(min-width: $tablet) {
@@ -88,7 +98,7 @@
     }
     
     &__toggle-icon {
-      border: 2px solid #333;
+      border: 2px solid var(--text-color);
       border-radius: 2px;
       min-width: 100%;
       width: 2rem;

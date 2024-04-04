@@ -3,8 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { isValidEmail, isValidPassword } from '../../utils/utils';
 import AppContext from '../../AppContext'; 
 import { toast } from 'react-toastify';
-import hide from '../../../src/assets/hide.svg';
-import show from '../../../src/assets/show.svg';
+import hide from '../../../src/assets/icons/hide.svg';
+import show from '../../../src/assets/icons/show.svg';
 import './LoginForm.scss';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;

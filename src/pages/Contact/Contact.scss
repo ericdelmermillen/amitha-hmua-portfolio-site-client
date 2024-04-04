@@ -3,7 +3,7 @@
 
 .contact {
   @include page;
-  background-color: green;
+  background-color: var(--background-color);
   
   &__h1 {
     color: orange;

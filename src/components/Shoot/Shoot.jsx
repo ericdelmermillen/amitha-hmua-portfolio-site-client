@@ -1,7 +1,7 @@
 import './Shoot.scss';
 import AppContext from '../../AppContext';
 import { useContext } from 'react';
-import delete_icon from '../../../src/assets/delete.svg';
+import delete_icon from '../../../src/assets/icons/delete.svg';
 
 const Shoot = ({ title, shoot_id, thumbnail_url, models, photographers, showDeleteModal, setShowDeleteModal }) => {
 

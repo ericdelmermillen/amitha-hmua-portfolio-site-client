@@ -3,10 +3,17 @@
 
 
 .home {
-  @include page;
-  background: pink;
-
+  background: var(--background-color);
+  
   @media(min-width: $tablet) {
     margin-top: 4rem;
+  }
+  
+  &__inner {
+    @include page;
+
+    @media(min-width:$tablet) {
+      padding-top: 3rem;
+    }
   }
 }

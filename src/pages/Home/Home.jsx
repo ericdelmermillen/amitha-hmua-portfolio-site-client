@@ -30,7 +30,9 @@ const Home = () => {
   return ( 
     <>
       <div className="home">
-        <Shoots />
+        <div className="home__inner">
+          <Shoots />
+        </div>
       </div>
     </>
   )};

@@ -17,6 +17,9 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
+  font-family: arial;
+  color: var(--text-color);
+  background-color: var(--background-color);
 }
 
 ul, ol {
@@ -105,7 +108,8 @@ img {
 }
 
 .floating-button {
-  background: white;
+  background: var(--background-color);
+  box-shadow: var(--box-shadow);
   border-radius: 50%;
   bottom: 2.5rem;
   cursor: pointer;

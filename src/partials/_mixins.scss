@@ -1,22 +1,37 @@
 @import '../partials/variables';
 
+// #888676 green grey color
+// #C4C3C1 lighter green grey
+// #F3F3F3 lightest green
+// #3A3A3A Darkest
+// #333333 off white
+
 .app {
   // light mode custom variables
   &[data-color-mode='light'] {
+    --text-color: #333333;
+    // --navAndFooterBG: #FFFFFF;
+    --navAndFooterBG: #F3F3F3;
+    --background-color: #d7d3d3;
     --button-color: white;
     --button-background: blue;
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
   }
   
   // dark mode custom variables
   &[data-color-mode='dark'] {
+    --text-color: #F3F3F3;
+    --navAndFooterBG: #181717;
+    --background-color: #4b4a4a;
     --button-color: blue;
     --button-background: white;
+    --box-shadow: 0 4px 8px rgba(37, 31, 31, 0.6);
   }
 }
 
 @mixin page {
   align-items: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--box-shadow);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -28,6 +43,7 @@
   outline: 1px solid #333;
   padding-top: 2rem;
   padding-block: 4rem;
+  padding-top: 0rem;
   width: 100%;
 
   @media(min-width: $tablet) {
@@ -100,15 +116,6 @@
   max-width: 100%;
   // object-position: center top;
   width: 100%;
-}
-
-@mixin heroImg {
-  @include shootImg;
-
-  @media(min-width: $desktop) {
-    max-width: 50%;
-    min-width: 50%;
-  }
 }
 
 @mixin shootImgSkeleton {

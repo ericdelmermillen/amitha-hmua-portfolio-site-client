@@ -2,12 +2,20 @@
 @import '../../partials/variables';
 
 .footer {
-  height: 4rem;
+  height: 6rem;
 
   &__inner {
     align-items: center;
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--navAndFooterBG);
+    color: var(--text-color);
     height: 100%;
-    justify-content: center;
+  }
+
+  &__text {
+    margin-block: auto;
+    font-size: 1.25rem;
   }
 }

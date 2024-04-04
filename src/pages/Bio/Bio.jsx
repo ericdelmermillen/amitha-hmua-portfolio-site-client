@@ -1,6 +1,7 @@
 import AppContext from '../../AppContext';
 import { useState, useEffect, useContext } from 'react';
 import { scrollToTop } from '../../utils/utils';
+import bioPic from '../../assets/images/bio-pic.jpg'
 import './Bio.scss';
 
 const Bio = () => {
@@ -31,7 +32,7 @@ const Bio = () => {
       <div className="bio">
         <div className={`bio__inner ${componentIsLoaded ? "show": ""}`}>
           <img 
-            src="https://scontent-ord5-1.xx.fbcdn.net/v/t39.30808-6/432584672_10161253506945768_7528924934946103991_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_ohc=pbCwTwumOBMAX-bI_Cd&_nc_ht=scontent-ord5-1.xx&oh=00_AfBIUwxmOy6nX2CUFV1mQ5f2EYyMwcyBGsnCjSLu4-CEnA&oe=66099017" 
+            src={bioPic}
             alt="" 
             className="bio__hero-img" 
             onLoad={handleImageLoad}

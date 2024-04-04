@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import AppContext from '../../AppContext';
-import add from '../../assets/add.svg';
-import minus from '../../assets/minus.svg';
+import add from '../../assets/icons/add.svg';
+import minus from '../../assets/icons/minus.svg';
 import './PhotographerChooser.scss';
 
 const PhotographerChooser = ({ 

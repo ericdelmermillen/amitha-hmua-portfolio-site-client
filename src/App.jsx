@@ -13,8 +13,8 @@ import ShootDetails from './pages/ShootDetails/ShootDetails';
 import ColorModeToggle from './components/ColorModeToggle/ColorModeToggle';
 import AddShoot from './pages/AddShoot/AddShoot';
 import { ToastContainer, toast } from "react-toastify";
-import up from '../src/assets/up.svg';
-import add from '../src/assets/add.svg'
+import up from '../src/assets/icons/up.svg';
+import add from '../src/assets/icons/add.svg'
 import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
 import { scrollToTop } from './utils/utils';
