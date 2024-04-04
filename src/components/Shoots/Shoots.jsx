@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Shoot from '../Shoot/Shoot.jsx';
 import AppContext from '../../AppContext.jsx';
 import DeleteShootModal from '../DeleteShootModal/DeleteShootModal.jsx'
@@ -24,11 +24,16 @@ const Shoots = () => {
     setIsLoading
   } = useContext(AppContext);
 
+  const location = useLocation();
+
   const [ shootsData, setShootsData ] = useState([]);
   const [ showDeleteModal, setShowDeleteModal ] = useState(false)
   const [ currentPage, setCurrentPage ] = useState(1);
   const [ shouldUpdate, setShouldUpdate ] = useState(true);
   const [ isLoadingInitial, setIsLoadingInitial ] = useState(true);
+  const [ isOnShootDetails, setIsOnShootDetails ] = useState(location.pathname.includes('/shoot/'));
+
+  // console.log(isOnShootDetails)
 
   const itemsPerPage = 10;
   const isLoadingInterval = 250;
@@ -72,6 +77,7 @@ const Shoots = () => {
     }
     fetchShoots();
   }, [currentPage]);
+
   
   useEffect(() => {
     if(shouldUpdate) {
@@ -117,7 +123,7 @@ const Shoots = () => {
       </div>
       
       <div className="shoots">
-        <div className="shoots__inner">
+        <div className={`shoots__inner ${isOnShootDetails && "onShootDetails"}`}>
           {shootsData.map(shoot => (
             <Link 
               to={`/shoot/${shoot.shoot_id}`} 
@@ -132,6 +138,7 @@ const Shoots = () => {
                 photographers={shoot.photographers}
                 showDeleteModal={showDeleteModal}
                 setShowDeleteModal={setShowDeleteModal}
+                isOnShootDetails={isOnShootDetails}
               />
             </Link>
           ))}

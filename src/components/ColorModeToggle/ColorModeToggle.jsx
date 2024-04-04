@@ -18,11 +18,26 @@ const ColorModeToggle = () => {
   
   return (
     <>
-      <div 
-        className="colorModeToggle"
-        onClick={handleToggleColorMode}
-        >ColorModeToggle
+      <div className='colorModeToggle'>
+        <input 
+          type="checkbox" 
+          className="checkbox" 
+          id="checkbox" 
+          onClick={handleToggleColorMode}
+        />
+        <label 
+          htmlFor="checkbox" 
+          className="checkbox-label"
+        >
+          <i className="moon">m</i>
+          <i className="sun">s</i>
+          <span className="ball"></span>
+        </label>
       </div>
+
+      
+
+      
     </>
   )};
 

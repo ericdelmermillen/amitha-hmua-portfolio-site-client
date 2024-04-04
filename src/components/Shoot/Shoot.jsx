@@ -3,7 +3,7 @@ import AppContext from '../../AppContext';
 import { useContext } from 'react';
 import delete_icon from '../../../src/assets/icons/delete.svg';
 
-const Shoot = ({ title, shoot_id, thumbnail_url, models, photographers, showDeleteModal, setShowDeleteModal }) => {
+const Shoot = ({ title, shoot_id, thumbnail_url, models, photographers, showDeleteModal, setShowDeleteModal, isOnShootDetails }) => {
 
   const { 
     isLoggedIn, 
@@ -42,7 +42,7 @@ const Shoot = ({ title, shoot_id, thumbnail_url, models, photographers, showDele
         <img 
           className='shoot__img'
           src={thumbnail_url} alt={`Thumbnail for "${title}" shoot`} />
-        <div className="shoot__info">
+        <div className={`shoot__info ${isOnShootDetails && "smallText"}`}>
           <p className='shoot__models'>
             <span className="models__label">{models.length > 1 ? "Models: " : "Model: "}</span>
             {models.length > 1 ? models.join(", ") : models}

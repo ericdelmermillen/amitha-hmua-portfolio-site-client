@@ -44,6 +44,13 @@
     }
   }
 
+  &__hero-caption {
+    font-size: 1.75rem;
+    font-weight: normal;
+    text-align: center;
+    margin-top: 1rem;
+  }
+
   &__text-container {
     display: flex;
     flex-direction: column;
@@ -51,13 +58,17 @@
     padding-inline: 2rem;
     
     @media(min-width: $tablet) {
-      margin-top: 0;
+      margin-top: 2rem;
+    }
+    
+    @media(min-width: $desktop) {
+      margin-top: 0rem;
     }
   }
 
   &__text {
     font-size: 1.75rem;
-    line-height: 1.4;
+    line-height: 1.5;
     color: var(--text-color);
   }
 }

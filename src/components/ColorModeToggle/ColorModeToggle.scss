@@ -1,3 +1,55 @@
 @import '../../partials/mixins';
 @import '../../partials/variables';
 
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+
+* {box-sizing: border-box;}
+
+.checkbox {
+  opacity: 0;
+  position: absolute;
+}
+
+.checkbox-label {
+  background-color: var(--background-color);
+  outline: 2px solid var(--text-color);
+  width: 50px;
+  height: 26px;
+  border-radius: 50px;
+  position: relative;
+  padding: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.moon {
+  color: #f1c40f;
+  width: 0.5rem;
+  height: 0.5rem;
+  font-size: 10px;
+  text-align: center;
+}
+
+.sun {
+  color: #f39c12;
+  width: 0.5rem;
+  height: 0.5rem;
+  font-size: 10px;
+}
+
+.checkbox-label .ball {
+  background-color: var(--text-color);
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  border-radius: 50%;
+  transition: transform 0.2s linear;
+}
+
+.checkbox:checked + .checkbox-label .ball {
+  transform: translateX(24px);
+}

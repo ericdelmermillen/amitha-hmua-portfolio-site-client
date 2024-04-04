@@ -16,7 +16,6 @@
   z-index: 1;
 
   &.hide {
-    background: yellow;;
     top: -6rem;
   }
 
@@ -60,6 +59,8 @@
       display: flex;
       gap: 3rem;
       margin-inline-start: auto;
+      display: flex;
+      align-items: center;
     }
   }
   

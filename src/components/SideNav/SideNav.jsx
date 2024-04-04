@@ -12,7 +12,7 @@ const SideNav = ({ handleLogOut }) => {
     setShowSideNav
    } = useContext(AppContext);
 
-   const location = useLocation()
+   const location = useLocation();
 
    const handleNavLinkHome = () => {
     if(location.pathname === "/" || location.pathname === "/home") {

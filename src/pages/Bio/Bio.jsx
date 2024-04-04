@@ -31,21 +31,24 @@ const Bio = () => {
     <>
       <div className="bio">
         <div className={`bio__inner ${componentIsLoaded ? "show": ""}`}>
-          <img 
-            src={bioPic}
-            alt="" 
-            className="bio__hero-img" 
-            onLoad={handleImageLoad}
-          />
+          <div className="bio__hero-container">
+            <img
+              src={bioPic}
+              alt=""
+              className="bio__hero-img"
+              onLoad={handleImageLoad}
+            />
+          <h3 className='bio__hero-caption'>Hi, I'm Amitha!</h3>
+          </div>
           <div className="bio__text-container">
             <p className="bio__text">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia totam ab doloribus sunt error! Nihil esse officia quae quisquam temporibus quasi aspernatur earum aliquid, commodi corrupti minus saepe maiores iste, doloremque praesentium laboriosam illo fugiat cupiditate.
+              Meet Amitha, a dynamic makeup artist and fashion stylist who thrives on celebrating the unique beauty of each person. With a deep understanding that beauty knows no bounds, she rejects the notion of a one-size-fits-all approach to makeup. Instead, she crafts bespoke experiences for her clients, considering their individuality, comfort levels, and personal style. 
             </p>
             <p className="bio__text">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Soluta ullam doloremque temporibus, fuga deleniti laborum! Praesentium distinctio commodi obcaecati! Consectetur ducimus a assumenda perspiciatis ut.
+              Located in the heart of Toronto, Ontario, Amitha's professional journey has been a whirlwind of diverse experiences within the beauty industry. Though she revels in all aspects of her craft, her passion ignites most brightly within the realms of Fashion and Bridal makeup. 
             </p>
             <p className="bio__text">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta eaque non optio omnis molestiae ullam saepe voluptate repudiandae doloremque recusandae eligendi, provident cum natus neque cumque facilis perspiciatis facere eos repellat tempore quod ratione commodi similique. Facilis odit voluptate explicabo.
+              From esteemed corporations to celebrated singers, actors, and brands across Canada, the USA, and the UK, Amitha and her team ensure that each client embarks on a unique and unforgettable beauty journey.
             </p>
           </div>
         </div>

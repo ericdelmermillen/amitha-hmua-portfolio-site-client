@@ -4,6 +4,7 @@ import AppContext from '../../AppContext';
 import { scrollToTop } from '../../utils/utils.js';
 import { toast } from 'react-toastify';
 import './ShootDetails.scss';
+import Shoots from '../../components/Shoots/Shoots.jsx';
 
 const ShootDetails = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -11,6 +12,8 @@ const ShootDetails = () => {
   const navigate = useNavigate();
   
   const { shoot_id } = useParams();
+
+  console.log(shoot_id)
 
   const { 
     isLoggedIn, 
@@ -81,7 +84,7 @@ const ShootDetails = () => {
     }
 
     fetchShootDetails();
-  }, []);
+  }, [shoot_id]);
   
 
   return (
@@ -163,6 +166,11 @@ const ShootDetails = () => {
 
           </div>
 
+        </div>
+        <div className="shootDetails__divider"></div>
+        <div className="shootDetails__bottom">
+          <h3>Other Shoots:</h3>
+          <Shoots />
         </div>
       </div>
     </>

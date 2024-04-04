@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { scrollToTop } from '../../utils/utils';
 import AppContext from '../../AppContext';
+import ColorModeToggle from '../ColorModeToggle/ColorModeToggle';
 import logo from '../../assets/icons/logo.svg'
 import './Nav.scss';
 
@@ -53,7 +54,12 @@ const Nav = ({ handleLogOut }) => {
                 INSTAGRAM
               </li>
             </a>
+            <li className="nav__link">
+              {/* INSTAGRAM */}
+              <ColorModeToggle />
+            </li>
           </ul>
+
 
           {
           
