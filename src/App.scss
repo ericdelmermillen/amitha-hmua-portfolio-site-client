@@ -117,16 +117,27 @@ img {
   }
 }
 
-.floating-button {
+.floatingButton {
   background: var(--background-color);
   box-shadow: var(--box-shadow);
   border-radius: 50%;
   bottom: 2.5rem;
   cursor: pointer;
   display: flex;
+  align-items: center;
+  justify-content: center;
   height: 3rem;
+  padding: 0.25rem;
   position: fixed;
   right: 2.5rem;
   width: 3rem;
   z-index: 5;
+
+  // &__up {
+
+  // }
+
+  &__up-stroke {
+    stroke: var(--text-color);
+  }
 }

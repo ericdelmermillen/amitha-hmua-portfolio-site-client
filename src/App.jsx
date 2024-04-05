@@ -13,11 +13,11 @@ import ShootDetails from './pages/ShootDetails/ShootDetails';
 import ColorModeToggle from './components/ColorModeToggle/ColorModeToggle';
 import AddShoot from './pages/AddShoot/AddShoot';
 import { ToastContainer, toast } from "react-toastify";
-import up from '../src/assets/icons/up.svg';
 import add from '../src/assets/icons/add.svg'
 import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
 import { scrollToTop } from './utils/utils';
+import UpIcon from './components/UpIcon/UpIcon';
 
 const App = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -130,15 +130,20 @@ const App = () => {
           </div>
 
             <div 
-              className={`floating-button ${isLoggedIn 
+              className={`floatingButton ${isLoggedIn 
                 ? "toTop" : "add_Shoot"}`}
-            >
-              <img 
-                src={isLoggedIn ? add : up}
                 onClick={isLoggedIn 
                   ? handleNavigateToAddShoot
                   : scrollToTop }
-              />
+            >
+              {isLoggedIn 
+                ? null
+                
+                :  <UpIcon 
+                    className={"floatingButton__up"}
+                    classNameStroke={"floatingButton__up-stroke"}
+                  />
+              }
             </div>
 
         <Nav 

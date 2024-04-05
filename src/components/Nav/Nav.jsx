@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import { scrollToTop } from '../../utils/utils';
 import AppContext from '../../AppContext';
 import ColorModeToggle from '../ColorModeToggle/ColorModeToggle';
-import logo from '../../assets/icons/logo.svg'
+// import logo from '../../assets/icons/logo.svg';
+import logo from '../../assets/icons/logo_small-bottom.svg';
+import NavLogo from '../NavLogo/NavLogo';
 import './Nav.scss';
 
 const Nav = ({ handleLogOut }) => {
@@ -32,6 +34,7 @@ const Nav = ({ handleLogOut }) => {
               className="nav__logo"
               alt="navbar logo" 
             />
+            {/* <NavLogo color={'purple'}/> */}
           </Link>
           <ul className="nav__links">
             <Link 
