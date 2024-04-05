@@ -13,8 +13,6 @@ const ShootDetails = () => {
   
   const { shoot_id } = useParams();
 
-  console.log(shoot_id)
-
   const { 
     isLoggedIn, 
     setIsLoggedIn,
@@ -91,12 +89,12 @@ const ShootDetails = () => {
     <>
       <div className="shootDetails">
         <div className="shootDetails__inner">
-          <div className={"shootDetails__info"}>
-            <h4 className={`shootDetails__date ${shootDetails && "show"}`}>
+          {/* <div className={"shootDetails__info"}> */}
+            {/* <h4 className={`shootDetails__date ${shootDetails && "show"}`}>
               {formattedDate && formattedDate}
-            </h4>
+            </h4> */}
 
-            <h3   
+            {/* <h3   
               className={`shootDetails__photographers ${shootDetails && "show"}`}
             >
               {photographers && 
@@ -115,8 +113,8 @@ const ShootDetails = () => {
                 : photographers
               
               }
-            </h3>
-            <h3   
+            </h3> */}
+            {/* <h3   
               className={`shootDetails__models ${shootDetails && "show"}`}
             >
               {shootDetails && 
@@ -137,8 +135,8 @@ const ShootDetails = () => {
                   : models
               
               }
-            </h3>
-          </div>
+            </h3> */}
+          {/* </div> */}
 
 
           <div className="shootDetails__photos">          
@@ -155,13 +153,84 @@ const ShootDetails = () => {
 
 
             {photos && photos.map((photo, idx) => 
-              <img 
-                className='shootDetails__photo'
+              <div 
+                className="shootDetails__photo-container"
                 key={idx}
-                src={photo.photo_url} 
-                alt={`Photo from photo shoot ${shoot_id}`} 
-                onLoad={idx === photos.length - 1 ? handlePhotosLoaded : null} 
-              />
+              >
+                {idx === 0 && 
+
+                  <h4 
+                    className={`shootDetails__date ${shootDetails && "show"}`}
+                  >
+                    {formattedDate && formattedDate}
+                  </h4>
+                }
+                
+                <img 
+                  className='shootDetails__photo'
+                  src={photo.photo_url} 
+                  alt={`Photo from photo shoot ${shoot_id}`} 
+                  onLoad={idx === photos.length - 1 ? handlePhotosLoaded : null} 
+                />
+
+                {idx === 0 && 
+                  (
+                    <>
+                      <div className="shootDetails__info">
+                        
+                        <h3   
+                          className={`shootDetails__photographers ${shootDetails && "show"}`}
+                        >
+                          {photographers && 
+
+                          <span   
+                            className="shootDetails__label"
+                          >
+                            {"Photos: "}
+                          </span>              
+
+                          }
+
+                          {shootDetails &&              
+
+                            photographers.length > 1 
+                            ? photographers.join(", ") 
+                            : photographers
+                
+                          }
+                        </h3>
+                        <h3   
+                          className={`shootDetails__models ${shootDetails && "show"}`}
+                        >
+                          {shootDetails && 
+                            
+                            <span 
+                              className={"models__label"}>
+                                {models.length > 1 
+                                ? "Models: " 
+                                : "Model: "}
+                            </span>
+
+                          }
+                        
+                          {shootDetails &&
+                          
+                            models.length > 1 
+                              ? models.join(", ") 
+                              : models
+                          
+                          }
+                        </h3>
+                      </div>
+                    </>
+
+                  )
+                }
+                {/* {formattedDate && formattedDate} */}
+                
+                  
+                {/* } */}
+              </div>
             )}
 
           </div>

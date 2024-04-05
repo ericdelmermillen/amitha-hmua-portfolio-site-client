@@ -30,7 +30,8 @@ const Bio = () => {
   return (
     <>
       <div className="bio">
-        <div className={`bio__inner ${componentIsLoaded ? "show": ""}`}>
+        <div 
+          className={`bio__inner ${componentIsLoaded ? "show": ""}`}>
           <div className="bio__hero-container">
             <img
               src={bioPic}
@@ -38,8 +39,12 @@ const Bio = () => {
               className="bio__hero-img"
               onLoad={handleImageLoad}
             />
-          <h3 className='bio__hero-caption'>Hi, I'm Amitha!</h3>
+            <h3 className='bio__hero-caption'>
+              {/* Hi, I'm Amitha! */}
+              Amitha Millen-Suwanta
+            </h3>
           </div>
+          <div className="bio__divider"></div>
           <div className="bio__text-container">
             <p className="bio__text">
               Meet Amitha, a dynamic makeup artist and fashion stylist who thrives on celebrating the unique beauty of each person. With a deep understanding that beauty knows no bounds, she rejects the notion of a one-size-fits-all approach to makeup. Instead, she crafts bespoke experiences for her clients, considering their individuality, comfort levels, and personal style. 
