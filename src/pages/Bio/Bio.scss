@@ -8,8 +8,8 @@
   &__inner {
     display: grid;
     margin-top: 1rem;
-    width: 90%;
     justify-content: center;;
+    width: 90%;
     
     @media(min-width: $tablet) {
       margin-top: 8rem;
@@ -43,14 +43,13 @@
 
     @media(min-width: $tablet) {
       margin-bottom: 2rem;
-
     }
   }
 
   &__hero-img {
     @include shootImg;
-    object-position: center center;
     object-fit: cover;
+    object-position: center center;
     
     @media(min-width: $tablet) {
       max-height: 90vh;
@@ -62,16 +61,15 @@
   }
 
   &__hero-caption {
+    color: var(--text-color);
     font-size: 1.75rem;
     font-weight: normal;
-    text-align: center;
     margin-top: 1.5rem;
-    color: var(--text-color);
+    text-align: center;
     
     @media(min-width: $tablet) {
       font-size: 2rem;
       margin-top: 2rem;
-
     }
   }
 
@@ -97,14 +95,14 @@
   }
 
   &__divider {
-    width: 90%;
-    height: 0.25rem;
-    margin-top: 3rem;
     background-color: var(--text-color);
     border-radius: $borderRadius;
-    margin-inline: auto;
-    margin-bottom: 3rem;
     display: block;
+    height: 0.25rem;
+    margin-bottom: 3rem;
+    margin-inline: auto;
+    margin-top: 3rem;
+    width: 90%;
 
     @media(min-width: $largeTablet) {
       display: none;
@@ -130,8 +128,8 @@
     
     @media(min-width: $tablet) {
       gap: 0;
-      margin-top: 4rem;
       height: calc(100vh - (4rem + 12rem));
+      margin-top: 4rem;
     }
 
     @media(min-width: $desktop) {
@@ -140,7 +138,6 @@
   }
 
   &__hero-img {
-    border: 2px solid green;
     background-color: gray;
     min-height: 60%;
     
@@ -156,7 +153,6 @@
     min-height: 40vh;
     padding-block: 1rem;
     padding-inline: 2rem;
-    background: yellow;
     width: 100%;
     
     @media(min-width: $tablet) {
