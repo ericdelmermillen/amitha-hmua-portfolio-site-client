@@ -89,59 +89,8 @@ const ShootDetails = () => {
     <>
       <div className="shootDetails">
         <div className="shootDetails__inner">
-          {/* <div className={"shootDetails__info"}> */}
-            {/* <h4 className={`shootDetails__date ${shootDetails && "show"}`}>
-              {formattedDate && formattedDate}
-            </h4> */}
 
-            {/* <h3   
-              className={`shootDetails__photographers ${shootDetails && "show"}`}
-            >
-              {photographers && 
-
-                <span   
-                  className="shootDetails__label">
-                    {"Photos: "}
-                </span>              
-
-              }
-
-              {shootDetails &&              
-
-                photographers.length > 1 
-                ? photographers.join(", ") 
-                : photographers
-              
-              }
-            </h3> */}
-            {/* <h3   
-              className={`shootDetails__models ${shootDetails && "show"}`}
-            >
-              {shootDetails && 
-                
-                <span 
-                  className={"models__label"}>
-                    {models.length > 1 
-                    ? "Models: " 
-                    : "Model: "}
-                </span>
-
-              }
-            
-              {shootDetails &&
-              
-                models.length > 1 
-                  ? models.join(", ") 
-                  : models
-              
-              }
-            </h3> */}
-          {/* </div> */}
-
-
-          <div className="shootDetails__photos">          
-            {/* photos placeholder */}
-
+          <div className="shootDetails__photos">         
               {placeholderPhotos.map((photo, idx) =>
                 <div 
                   className={`photoPlaceholder ${!isLoading && shootIsLoaded ? "hide": ""}`}
@@ -149,7 +98,6 @@ const ShootDetails = () => {
                   
                 ></div>)}
               
-            {/*  */}
 
 
             {photos && photos.map((photo, idx) => 
@@ -226,10 +174,6 @@ const ShootDetails = () => {
 
                   )
                 }
-                {/* {formattedDate && formattedDate} */}
-                
-                  
-                {/* } */}
               </div>
             )}
 

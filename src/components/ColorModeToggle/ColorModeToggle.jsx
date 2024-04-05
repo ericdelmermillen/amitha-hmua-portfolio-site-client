@@ -1,9 +1,6 @@
 import { useState, useContext } from 'react';
 import AppContext from '../../AppContext';
-// import sun from '../../assets/icons/sun.svg';
-// import sun from '../../assets/icons/sun_1.svg';
-import sun from '../../assets/icons/sun_2.svg';
-// import sun from '../../assets/icons/sun_3.svg';
+import sun from '../../assets/icons/sun.svg';
 import moon from '../../assets/icons/crescent_moon.svg';
 import './ColorModeToggle.scss';
 

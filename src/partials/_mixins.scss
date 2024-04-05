@@ -10,7 +10,6 @@
   // light mode custom variables
   &[data-color-mode='light'] {
     --text-color: #333333;
-    // --navAndFooterBG: #FFFFFF;
     --navAndFooterBG: #F3F3F3;
     --background-color: #F3F3F3;
     --button-color: var(--background-color);
@@ -18,8 +17,8 @@
     --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
     --nav-boxShadow: 0 4px 8px rgba(0, 0, 0, 0.25);
     --footer-boxShadow: 0 -4px 8px rgba(0, 0, 0, 0.25);
+    --toggle-sky: #303077;
     --toggle-ball: #F3F3F3;
-    --toggle-sky: #0b75e7;
 
   }
   
@@ -33,7 +32,7 @@
     --box-shadow: 0 4px 8px rgba(37, 31, 31, 0.6);
     --nav-boxShadow: 0 4px 8px rgba(37, 31, 31, 0.6);
     --footer-boxShadow: 0 -4px 8px rgba(37, 31, 31, 0.6);
-    --toggle-sky: #303077;
+    --toggle-sky: #4799f0;
     --toggle-ball: #F3F3F3;
     ;
   }

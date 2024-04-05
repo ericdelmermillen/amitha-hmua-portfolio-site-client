@@ -7,8 +7,7 @@ const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [ isLoggedIn, setIsLoggedIn ] = useState(false);
-  // color mode
-  const [ colorMode, setColorMode ] = useState('light');
+  const [ colorMode, setColorMode ] = useState(localStorage.getItem('colorMode'));
   // 
   const [ showSideNav, setShowSideNav ] = useState(false);
   const [ scrollYPos, setScrollYPos ] = useState(window.scrollY);

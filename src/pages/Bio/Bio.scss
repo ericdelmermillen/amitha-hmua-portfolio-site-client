@@ -7,8 +7,8 @@
 
   &__inner {
     display: grid;
+    justify-content: center;
     margin-top: 1rem;
-    justify-content: center;;
     width: 90%;
     
     @media(min-width: $tablet) {
@@ -19,27 +19,9 @@
       grid-template-columns: repeat(2, 1fr);
       margin-top: 8rem;
     }
-    // flex-direction: column;
-    // height: 100%;
-    // gap: 2rem;
-    // margin-bottom: 2rem;
-    // margin-top: 1rem;
-    // width: 90%;
-    // display: flex;
-    
-    // @media(min-width: $tablet) {
-    //   gap: 0;
-    //   margin-top: 8rem;
-    // }
-    
-    // @media(min-width: $desktop) {
-    //   // margin-top: 6rem;
-    //   flex-direction: row;
-    // }
   }
 
   &__hero-container {
-    // border: 2px solid green;
 
     @media(min-width: $tablet) {
       margin-bottom: 2rem;
@@ -79,19 +61,15 @@
     gap: 1rem;
     padding-inline: 2rem;
     
-    @media(min-width: $tablet) {
-      margin-top: 2rem;
-    }
-    
     @media(min-width: $desktop) {
       margin-top: 0rem;
     }
   }
 
   &__text {
+    color: var(--text-color);
     font-size: 1.75rem;
     line-height: 1.5;
-    color: var(--text-color);
   }
 
   &__divider {
@@ -161,7 +139,6 @@
   }
 
   &__text {
-    // width: 80%;
     background: green;
     
     &--1 {
