@@ -140,4 +140,13 @@ img {
   &__up-stroke {
     stroke: var(--text-color);
   }
+
+  &__add {
+    height: 35px;
+    width: 35px;
+  }
+
+  &__add-stroke {
+    stroke: var(--text-color);
+  }
 }

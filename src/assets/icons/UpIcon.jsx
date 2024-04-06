@@ -7,7 +7,7 @@ const UpIcon = ({ className, classNameStroke }) => {
           <g id="Group_59" data-name="Group 59" transform="translate(346 295.5)">
           <path id="Path_51" data-name="Path 51" d="M237,103l-5-5-5,5" transform="translate(-227 -98)" fill="none" 
           className={classNameStroke}
-          stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+          strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="2"/>
           </g>
           <rect id="Rectangle_1" data-name="Rectangle 1" width="20" height="20" transform="translate(341 288)" fill="none"/>
         </g>

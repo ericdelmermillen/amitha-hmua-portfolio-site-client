@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom';
 import { scrollToTop } from '../../utils/utils';
 import AppContext from '../../AppContext';
 import ColorModeToggle from '../ColorModeToggle/ColorModeToggle';
-// import logo from '../../assets/icons/logo.svg';
-import logo from '../../assets/icons/logo_small-bottom.svg';
-import NavLogo from '../NavLogo/NavLogo';
+import Logo from '../../assets/icons/Logo';
 import './Nav.scss';
+import Instagram from '../../assets/icons/Instagram';
 
 const Nav = ({ handleLogOut }) => {
   const { 
@@ -29,12 +28,12 @@ const Nav = ({ handleLogOut }) => {
             to={'/home'}
             onClick={() => scrollToTop()}
           >
-            <img 
-              src={logo} 
+            <div 
               className="nav__logo"
               alt="navbar logo" 
-            />
-            {/* <NavLogo color={'purple'}/> */}
+            >
+              <Logo className={"nav__logo--icon"}/>
+            </div>
           </Link>
           <ul className="nav__links">
             <Link 
@@ -53,8 +52,12 @@ const Nav = ({ handleLogOut }) => {
               <li className="nav__link">CONTACT</li>
             </Link>
             <a href="https://www.instagram.com/amitha_hmua/" target="_blank">
-              <li className="nav__link">
-                INSTAGRAM
+              <li 
+                className="nav__link nav__link--instagram"
+              >
+                <Instagram    
+                  className="nav__link--instagram"
+                />
               </li>
             </a>
             <li className="nav__link">

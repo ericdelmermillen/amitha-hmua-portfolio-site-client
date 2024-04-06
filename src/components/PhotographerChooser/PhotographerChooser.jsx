@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import AppContext from '../../AppContext';
-import add from '../../assets/icons/add.svg';
-import minus from '../../assets/icons/minus.svg';
+import AddIcon from '../../assets/icons/AddIcon';
+import MinusIcon from '../../assets/icons/MinusIcon';
 import './PhotographerChooser.scss';
 
 const PhotographerChooser = ({ 
@@ -68,17 +68,24 @@ const PhotographerChooser = ({
         </select>
         <div className="photographerChooser__button-container">
 
-          <img
+          <div
             className="photographerChooser__button photographerChooser__button--add" 
-            src={add}
             disabled={true} 
             onClick={() => handleAddPhotographerChooser(selectedPhotographer)}
-          />
-          <img
+          >
+            <AddIcon 
+              className={"photographerChooser__button--add"}
+              classNameStroke={"photographerChooser__button--add-stroke"}
+            />
+          </div>
+          <div
             className="photographerChooser__button photographerChooser__button--remove" 
-            src={minus}
             onClick={() => handleRemovePhotographerChooser(photographerChooserIdx)}
-          />
+          >
+            <MinusIcon 
+              className= {"photographerChooser__button--remove-icon"}
+            />
+          </div>
         </div>
       </div>
     </div>

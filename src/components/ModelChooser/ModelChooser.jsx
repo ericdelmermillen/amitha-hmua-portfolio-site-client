@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
+import AddIcon from '../../assets/icons/AddIcon';
 import AppContext from '../../AppContext';
-import add from '../../assets/icons/add.svg';
-import minus from '../../assets/icons/minus.svg';
+import MinusIcon from '../../assets/icons/MinusIcon';
 import './ModelChooser.scss';
 
 const ModelChooser = ({ 
@@ -68,17 +68,24 @@ const ModelChooser = ({
           ))}
         </select>
         <div className="modelChooser__button-container">
-          <img
+          <div
             className="modelChooser__button modelChooser__button--add"
-            src={add}
             disabled={true}
             onClick={() => handleAddModelChooser(selectedModel)}
-          />
-          <img
+          >
+            <AddIcon 
+              className={"modelChooser__button--add"}
+              classNameStroke={"modelChooser__button--add-stroke"}
+            />
+          </div>
+          <div
             className="modelChooser__button modelChooser__button--remove"
-            src={minus}
             onClick={() => handleRemoveModelChooser(modelChooserIdx)}
-          />
+          >
+            <MinusIcon 
+              className= {"modelChooser__button--remove-icon"} 
+            />
+          </div>
         </div>
       </div>
     </div>

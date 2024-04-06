@@ -55,5 +55,33 @@
     border-radius: 50%;
     border: 2px solid #fff;
     padding: 0.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    &--add {
+      height: 35px;
+      width: 35px;
+    }
+    
+    &--add-stroke {
+      stroke: var(--text-color);
+    }
+  }
+}
+
+
+.photographerChooser {
+
+  &__button {
+
+    &--remove {
+      // border: 2px solid green;
+      // background: var(--background-color);
+    }
+
+    &--remove-icon {
+      stroke: var(--text-color);
+    }
   }
 }

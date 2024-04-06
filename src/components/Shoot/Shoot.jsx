@@ -1,7 +1,7 @@
 import './Shoot.scss';
 import AppContext from '../../AppContext';
 import { useContext } from 'react';
-import delete_icon from '../../../src/assets/icons/delete.svg';
+import Delete from '../../assets/icons/Delete';
 
 const Shoot = ({ title, shoot_id, thumbnail_url, models, photographers, showDeleteModal, setShowDeleteModal, isOnShootDetails }) => {
 
@@ -33,10 +33,9 @@ const Shoot = ({ title, shoot_id, thumbnail_url, models, photographers, showDele
             className="shoot__delete-btn"
             onClick={handleDeleteClick}
           >
-            <img 
-              className='shoot__delete-icon'
-              src={delete_icon}
-              alt="Shoot delete icon"/> 
+            <Delete 
+              className={"shoot__delete-btn---icon"}
+            />
           </div>
         }
         <img 

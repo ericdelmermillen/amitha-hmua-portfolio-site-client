@@ -31,13 +31,12 @@
 
   &__delete-btn {
     align-items: center;
-    background: white;
+    background: var(--background-color);
     border-radius: 50%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    box-shadow: var(--box-shadow);
     display: flex;
     height: 2.5rem;
     justify-content: center;
-    outline: 1px solid red;
     position: absolute;
     right: 0.75rem;
     top: 0.75rem;
@@ -45,9 +44,8 @@
     width: 2.5rem;
   }
 
-  &__delete-icon {
-    height: 100%;
-    width: 100%;
+  &__delete-btn---icon {
+    fill: var(--text-color);
   }
 
   .models__label, .photographers__label {

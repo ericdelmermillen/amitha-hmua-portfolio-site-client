@@ -53,7 +53,15 @@
     height: 4.25rem;
     margin-top: 0.25rem;
     height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     // border: 2px solid red;
+
+    &--icon {
+     fill: var(--text-color); 
+     stroke: var(--text-color);
+    }
   }
 
   &__links {
@@ -61,7 +69,8 @@
     
     @media(min-width: $tablet) {
       display: flex;
-      gap: 3rem;
+      gap: max(2.5rem, 8%);
+      // gap: min(2.5rem, 15%);
       margin-inline-start: auto;
       display: flex;
       align-items: center;
@@ -74,6 +83,16 @@
     font-size: 1.25rem;
     letter-spacing: 1px;
     color: var(--text-color);
+    display: flex;
+    justify-content: center;
+
+    &--instagram {
+      fill: var(--text-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      
+    }
   }
 
   &__logout {

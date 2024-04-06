@@ -10,14 +10,13 @@ import Nav from './components/Nav/Nav';
 import Footer from './components/Footer/Footer';
 import SideNav from './components/SideNav/SideNav';
 import ShootDetails from './pages/ShootDetails/ShootDetails';
-import ColorModeToggle from './components/ColorModeToggle/ColorModeToggle';
 import AddShoot from './pages/AddShoot/AddShoot';
 import { ToastContainer, toast } from "react-toastify";
-import add from '../src/assets/icons/add.svg'
 import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
 import { scrollToTop } from './utils/utils';
-import UpIcon from './components/UpIcon/UpIcon';
+import UpIcon from './assets/icons/UpIcon';
+import AddIcon from './assets/icons/AddIcon';
 
 const App = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -137,7 +136,10 @@ const App = () => {
                   : scrollToTop }
             >
               {isLoggedIn 
-                ? null
+                ? <AddIcon
+                    className={"floatingButton__add"}
+                    classNameStroke={"floatingButton__add-stroke"}
+                  />
                 
                 :  <UpIcon 
                     className={"floatingButton__up"}

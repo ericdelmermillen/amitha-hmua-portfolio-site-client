@@ -3,9 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { isValidEmail, isValidPassword } from '../../utils/utils';
 import AppContext from '../../AppContext'; 
 import { toast } from 'react-toastify';
-import hide from '../../../src/assets/icons/hide.svg';
-import show from '../../../src/assets/icons/show.svg';
 import './LoginForm.scss';
+import Hide from '../../assets/icons/Hide';
+import Show from '../../assets/icons/Show';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -126,11 +126,21 @@ const LoginForm = () => {
                   placeholder="Password"
                   onChange={handlePasswordChange}
                 />
-                <img 
+                <div 
                   className="passwordInput__icon"
-                  src={showPassword ? hide : show} 
-                  alt="hide password icon"
-                  onClick={() => setShowPassword(!showPassword)}/>
+                  alt="password hide/show icon"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+
+                  {showPassword 
+                  ? <Hide 
+                      className={"passwordInput__icon--hide"}
+                    />
+                  : <Show 
+                      className={"passwordInput__icon--show"}
+                    />
+                  }
+                </div>
               </div>
               <div 
                 className={`loginForm__error ${passwordInvalid && "password-error"}`}

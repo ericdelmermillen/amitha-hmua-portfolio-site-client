@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import AppContext from '../../AppContext';
 import './SideNav.scss';
 import { scrollToTop } from '../../utils/utils';
+import ColorModeToggle from '../ColorModeToggle/ColorModeToggle';
 
 const SideNav = ({ handleLogOut }) => {
   const { 
@@ -27,7 +28,7 @@ const SideNav = ({ handleLogOut }) => {
     }
   }
   
-  const handleNavLinkContact = () => {
+  const handleNavLinkContact = () => { 
     if(location.pathname === "/contact") {
       setShowSideNav(false);
     }
@@ -79,14 +80,19 @@ const SideNav = ({ handleLogOut }) => {
                     Instagram
                 </li>
               </a>
-              {isLoggedIn &&
-              <h4 
-              className='sideNav__logout'
-              onClick={handleSideNavLogout}
-              >
-                  Logout
-              </h4>
-            }
+                {isLoggedIn &&
+                  <li className="sideNav__link">
+                    <h4 
+                      className='sideNav__logout'
+                      onClick={handleSideNavLogout}
+                    >
+                    Logout
+                    </h4>
+                  </li>
+                }
+                  <li className="sideNav__colorModeToggler">
+                    <ColorModeToggle />
+                  </li>
             </ul>
 
           </div>
