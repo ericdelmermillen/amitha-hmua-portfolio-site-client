@@ -10,10 +10,10 @@ const MinusIcon = ({ className }) => {
           transform="translate(357.5 11.5)"
           fill="none"
           stroke="#000"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-miterlimit="10"
-          stroke-width="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeMiterlimit="10"
+          strokeWidth="2.5"
         />
         <rect
           id="Rectangle_1"
@@ -25,7 +25,6 @@ const MinusIcon = ({ className }) => {
         />
       </g>
     </svg>
-  );
-};
+  )};
 
 export default MinusIcon;

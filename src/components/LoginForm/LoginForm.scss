@@ -114,13 +114,8 @@
   }
 
   input {
+    @include input;
     background: var(--background-color);
     color: var(--text-color);
-
-    &::placeholder {
-      color: var(--text-color);
-      opacity: 0.6;
-
-    }
   }
 }

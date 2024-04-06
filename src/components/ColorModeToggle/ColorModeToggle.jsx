@@ -4,7 +4,7 @@ import sun from '../../assets/icons/sun.svg';
 import moon from '../../assets/icons/crescent_moon.svg';
 import './ColorModeToggle.scss';
 
-const ColorModeToggle = () => {
+const ColorModeToggle = ({ inputId }) => {
 
   const { 
     colorMode, 
@@ -14,21 +14,19 @@ const ColorModeToggle = () => {
   const handleToggleColorMode = () => {
     const currentMode = colorMode === 'light' ? 'dark' : 'light'
     setColorMode(currentMode);
-    console.log(currentMode)
   };
 
-  
   return (
     <>
       <div className='colorModeToggle'>
         <input 
           type="checkbox" 
           className="checkbox" 
-          id="checkbox" 
+          id={inputId} 
           onClick={handleToggleColorMode}
         />
         <label 
-          htmlFor="checkbox" 
+          htmlFor={inputId} 
           className="checkbox-label"
           >
           <img 
@@ -42,10 +40,6 @@ const ColorModeToggle = () => {
           <span className="ball"></span>
         </label>
       </div>
-
-      
-
-      
     </>
   )};
 

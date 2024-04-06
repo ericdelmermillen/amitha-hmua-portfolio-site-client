@@ -16,12 +16,6 @@ const DeleteShootModal = ({
   const { 
     isLoggedIn, 
     setIsLoggedIn,
-    showSideNav, 
-    setShowSideNav,
-    scrollYPos, 
-    setScrollYPos,
-    prevScrollYPos, 
-    setPrevScrollYPos,
     selectedShoot, 
     setSelectedShoot
   } = useContext(AppContext);
@@ -48,7 +42,7 @@ const DeleteShootModal = ({
           toast.success(`Shoot ${selectedShoot} successfully  deleted.`); 
           setSelectedShoot(null);
         } else {
-          toast.error(`Failed to delete Shoot ${selectedShoot}`)
+          toast.error(`Failed to delete Shoot ${selectedShoot}`);
           console.error(`Failed to delete Shoot ${selectedShoot}: ${response.statusText}`);
           setShowDeleteModal(false);
           setSelectedShoot(null);
@@ -62,7 +56,6 @@ const DeleteShootModal = ({
     }
   };
   
-  
   return (
     <>
       <div 
@@ -71,20 +64,20 @@ const DeleteShootModal = ({
       >
         <div className="deleteShootModal__modal">
           <h3 className="deleteShootModal__heading">
-            Delete Shoot Number {selectedShoot}?</h3>
-            <div className="deleteShootModal__button-container">
-
-              <button
-                className="deleteShootModal__button deleteShootModal__button--cancel"
-                onClick={handleCloseModal}>
-                  Cancel
-              </button>
-              <button
-                className="deleteShootModal__button deleteShootModal__button--delete"
-                onClick={handleDeleteShoot}>
-                  Confirm
-              </button>
-            </div>
+            Delete Shoot Number {selectedShoot}?
+          </h3>
+          <div className="deleteShootModal__button-container">
+            <button
+              className="deleteShootModal__button deleteShootModal__button--cancel"
+              onClick={handleCloseModal}>
+                Cancel
+            </button>
+            <button
+              className="deleteShootModal__button deleteShootModal__button--delete"
+              onClick={handleDeleteShoot}>
+                Confirm
+            </button>
+          </div>
 
         </div>
       </div>

@@ -3,10 +3,10 @@
 
 .placeholderShoot {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-  width: 100%;
   display: none;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
+  width: 100%;
   
   &.show {
     display: block;

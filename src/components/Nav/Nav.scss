@@ -48,15 +48,11 @@
   }
 
   &__logo {
-    height: 3.75rem;
-    height: 4.5rem;
-    height: 4.25rem;
-    margin-top: 0.25rem;
-    height: 4rem;
-    display: flex;
-    justify-content: center;
     align-items: center;
-    // border: 2px solid red;
+    display: flex;
+    height: 4rem;
+    justify-content: center;
+    margin-top: 0.25rem;
 
     &--icon {
      fill: var(--text-color); 
@@ -68,30 +64,26 @@
     display: none;
     
     @media(min-width: $tablet) {
+      align-items: center;
       display: flex;
       gap: max(2.5rem, 8%);
-      // gap: min(2.5rem, 15%);
       margin-inline-start: auto;
-      display: flex;
-      align-items: center;
     }
   }
   
   &__link {
-    // font-weight: bold;
-    font-weight: 600;
-    font-size: 1.25rem;
-    letter-spacing: 1px;
     color: var(--text-color);
     display: flex;
+    font-size: 1.25rem;
+    font-weight: 600;
     justify-content: center;
+    letter-spacing: 1px;
 
     &--instagram {
-      fill: var(--text-color);
-      display: flex;
-      justify-content: center;
       align-items: center;
-      
+      display: flex;
+      fill: var(--text-color);
+      justify-content: center;
     }
   }
 
@@ -118,7 +110,6 @@
     justify-content: center;
     position: absolute;
     right: 2rem;
-    top: 0.6rem;
     top: 1.3rem;
     width: 2rem;
     

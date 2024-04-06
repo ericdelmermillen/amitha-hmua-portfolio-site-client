@@ -4,9 +4,9 @@ import AppContext from '../../AppContext';
 import NewShootdatePicker from '../../components/NewShootDatePicker/NewShootDatePicker';
 import ModelChooser from '../../components/ModelChooser/ModelChooser';
 import { scrollToTop } from '../../utils/utils';
+import PhotographerChooser from '../../components/PhotographerChooser/PhotographerChooser';
 import { toast } from 'react-toastify';
 import './AddShoot.scss';
-import PhotographerChooser from '../../components/PhotographerChooser/PhotographerChooser';
 
 const AddShoot = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -47,8 +47,6 @@ const AddShoot = () => {
 
   const handleSubmit = async () => {
     try {
-
-    
       // need validation for:
       // --title
       // --blurb
@@ -128,46 +126,45 @@ const AddShoot = () => {
   const handleAddModelChooser = (selectedModel) => {
 
     if(!selectedModel) {
-      return toast.error('Select a model from the model chooser before adding another.')
+      return toast.error('Select a model from the model chooser before adding another.');
     }
     
     const maxChooserIdx = Math.max(...modelChooserIDs.map(chooser => chooser.chooserIdx));
 
-    const newChooser = { chooserIdx: maxChooserIdx + 1, modelID: null}
+    const newChooser = { chooserIdx: maxChooserIdx + 1, modelID: null};
     setModelChooserIDs([...modelChooserIDs, newChooser]);
   };
   
   const handleRemoveModelChooser = (modelChooserIdx) => {
     if(modelChooserIDs.length > 1) {
-      const filteredChoosers = modelChooserIDs.filter(chooser => chooser.chooserIdx !== modelChooserIdx)
+      const filteredChoosers = modelChooserIDs.filter(chooser => chooser.chooserIdx !== modelChooserIdx);
 
       setModelChooserIDs(filteredChoosers);
     } else {
-      toast.error("Can't remove this. All shoots need at least one model. ")
+      toast.error("Can't remove this. All shoots need at least one model. ");
     }
   };
-
 
   // photographer chooser handlers
   const handleAddPhotographerChooser = (selectedPhotographer) => {
 
     if(!selectedPhotographer) {
-      return toast.error('Select a photographer from the photographer chooser before adding another.')
+      return toast.error('Select a photographer from the photographer chooser before adding another.');
     }
     
     const maxChooserIdx = Math.max(...photographerChooserIDs.map(chooser => chooser.chooserIdx));
 
-    const newChooser = { chooserIdx: maxChooserIdx + 1, photographerID: null}
+    const newChooser = { chooserIdx: maxChooserIdx + 1, photographerID: null};
     setPhotographerChooserIDs([...photographerChooserIDs, newChooser]);
   };
   
   const handleRemovePhotographerChooser = (photographerChooserIdx) => {
     if(photographerChooserIDs.length > 1) {
-      const filteredChoosers = photographerChooserIDs.filter(chooser => chooser.chooserIdx !== photographerChooserIdx)
+      const filteredChoosers = photographerChooserIDs.filter(chooser => chooser.chooserIdx !== photographerChooserIdx);
 
       setPhotographerChooserIDs(filteredChoosers);
     } else {
-      toast.error("Can't remove this. All shoots need at least one photographer. ")
+      toast.error("Can't remove this. All shoots need at least one photographer. ");
     }
   };
   
@@ -254,7 +251,9 @@ const AddShoot = () => {
     <>
       <div className="addShoot">
         <div className="addShoot__inner">
-          <h1 className="addShoot__h1">Add A New Shoot</h1>
+          <h1 className="addShoot__h1">
+            Add A New Shoot
+          </h1>
 
           <div className="addShoot__form">
             <div className="addShoot__date-container">
@@ -296,29 +295,6 @@ const AddShoot = () => {
             </div>
 
             <div 
-              className="addShoot__modelChoosers"
-            >
-
-              <h3 className='addShoot__label'>
-                Choose At Least One Model
-              </h3>
-              
-              {modelChooserIDs.map((chooser) => (
-                <ModelChooser
-                  key={chooser.chooserIdx}
-                  modelChooserIdx={chooser.chooserIdx}
-                  models={models}
-                  setModels={setModels}
-                  handleAddModelChooser={handleAddModelChooser}
-                  handleRemoveModelChooser={handleRemoveModelChooser}
-                  modelChooserIDs={modelChooserIDs}
-                  setModelChooserIDs={setModelChooserIDs}
-                  modelID={chooser.modelID}
-                />
-              ))}
-            </div>
-          
-            <div 
               className="addShoot__photographerChoosers"
             >
               <h3 className='addShoot__label'>
@@ -340,19 +316,41 @@ const AddShoot = () => {
               ))}
             </div>
 
+            <div 
+              className="addShoot__modelChoosers"
+            >
+              <h3 className='addShoot__label'>
+                Choose At Least One Model
+              </h3>
+              
+              {modelChooserIDs.map((chooser) => (
+                <ModelChooser
+                  key={chooser.chooserIdx}
+                  modelChooserIdx={chooser.chooserIdx}
+                  models={models}
+                  setModels={setModels}
+                  handleAddModelChooser={handleAddModelChooser}
+                  handleRemoveModelChooser={handleRemoveModelChooser}
+                  modelChooserIDs={modelChooserIDs}
+                  setModelChooserIDs={setModelChooserIDs}
+                  modelID={chooser.modelID}
+                />
+              ))}
+            </div>
+          
             <div className="addShoot__button-container">
 
               <div 
                 className="addShoot__button addShoot__button--cancel" 
                 onClick={handleCancel}
-                >
+              >
                 Cancel
               </div>
 
               <div 
                 className="addShoot__button addShoot__button--submit" 
                 onClick={handleSubmit}
-                >
+              >
                 Submit
               </div>
             </div>
@@ -361,7 +359,6 @@ const AddShoot = () => {
         </div>
       </div>
     </>
-  );
-};
+  )};
 
 export default AddShoot;

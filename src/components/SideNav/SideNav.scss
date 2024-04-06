@@ -37,16 +37,16 @@
   }
 
   &__links {
-    text-align: center;
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    text-align: center;
   }
 
   &__link {
+    color: var(--text-color);
     font-size: 1.5rem;
     font-weight: bold;
-    color: var(--text-color);
   }
 
   &__close-icon {
@@ -71,8 +71,8 @@
   }
 
   &__colorModeToggler {
-    display: flex;
     align-items: center;
+    display: flex;
     justify-content: center;
   }
 }

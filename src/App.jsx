@@ -11,12 +11,12 @@ import Footer from './components/Footer/Footer';
 import SideNav from './components/SideNav/SideNav';
 import ShootDetails from './pages/ShootDetails/ShootDetails';
 import AddShoot from './pages/AddShoot/AddShoot';
+import UpIcon from './assets/icons/UpIcon';
+import AddIcon from './assets/icons/AddIcon';
+import { scrollToTop } from './utils/utils';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
-import { scrollToTop } from './utils/utils';
-import UpIcon from './assets/icons/UpIcon';
-import AddIcon from './assets/icons/AddIcon';
 
 const App = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -115,16 +115,14 @@ const App = () => {
     <>
       <div className="app" data-color-mode={colorMode}>
         <div className="app__inner">
-
-        {/* <div className={`colorModeToggle__container ${scrollYPos < 60 ? "show" : "hide"}`}>
-          <ColorModeToggle />
-        </div> */}
           <h3 
             className={`loading ${isLoading && "isLoading"}`}>  
           </h3>
           <div 
             className={showSideNav ? "touchOffDiv" : ""}
-            onClick={showSideNav ? () => setShowSideNav(false) : null}
+            onClick={showSideNav 
+              ? () => setShowSideNav(false) 
+              : null}
           >  
           </div>
 
@@ -148,9 +146,7 @@ const App = () => {
               }
             </div>
 
-        <Nav 
-          handleLogOut={handleLogOut}
-        />
+        <Nav handleLogOut={handleLogOut}/>
         <SideNav handleLogOut={handleLogOut}/>
         <Routes>
           <Route path="/" element={<Home />} />

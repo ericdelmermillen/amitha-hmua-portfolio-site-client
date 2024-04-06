@@ -10,10 +10,10 @@ const AddIcon = ({ className, classNameStroke }) => {
             transform="translate(320 6)"
             fill="none"
             stroke="#000"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-miterlimit="10"
-            stroke-width="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeMiterlimit="10"
+            strokeWidth="2"
             className={classNameStroke} 
           />
           <line
@@ -23,17 +23,16 @@ const AddIcon = ({ className, classNameStroke }) => {
             transform="translate(314 12)"
             fill="none"
             stroke="#000"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-miterlimit="10"
-            stroke-width="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeMiterlimit="10"
+            strokeWidth="2"
             className={classNameStroke}
           />
         </g>
         <rect id="Rectangle_2" data-name="Rectangle 2" width="20" height="20" transform="translate(450 178)" fill="none" />
       </g>
     </svg>
-  );
-};
+  )};
 
 export default AddIcon;

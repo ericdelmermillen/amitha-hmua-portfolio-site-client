@@ -7,7 +7,7 @@ const Login = () => {
 
   useEffect(() => {
     scrollToTop();
-  })
+  }, [])
   
   return (
     <>

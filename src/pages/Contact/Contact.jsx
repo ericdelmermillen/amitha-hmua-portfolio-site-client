@@ -1,22 +1,12 @@
-import './Contact.scss';
 import { useState, useEffect, useContext } from 'react';
 import { scrollToTop } from '../../utils/utils';
 import AppContext from '../../AppContext';
-
-
+import './Contact.scss';
 
 const Contact = () => {
   const { 
-    isLoggedIn, 
-    setIsLoggedIn,
     showSideNav, 
     setShowSideNav,
-    scrollYPos, 
-    setScrollYPos,
-    prevScrollYPos, 
-    setPrevScrollYPos,
-    selectedShoot, 
-    setSelectedShoot,
     isLoading, 
     setIsLoading
   } = useContext(AppContext);

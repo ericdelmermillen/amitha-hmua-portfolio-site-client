@@ -1,13 +1,14 @@
 import AppContext from '../../AppContext';
 import { useState, useEffect, useContext } from 'react';
-import { scrollToTop } from '../../utils/utils';
 import bioPic from '../../assets/images/bio-pic.jpg'
+import { scrollToTop } from '../../utils/utils';
 import './Bio.scss';
 
 const Bio = () => {
   const { 
     isLoading, 
     setIsLoading,
+    showSideNav,
     setShowSideNav
   } = useContext(AppContext);
 
@@ -26,17 +27,19 @@ const Bio = () => {
     scrollToTop();
   }, []); 
   
-  
   return (
     <>
       <div className="bio">
         <div 
-          className={`bio__inner ${componentIsLoaded ? "show": ""}`}>
+          className={`bio__inner ${componentIsLoaded 
+            ? "show"
+            : ""}`}
+        >
           <div className="bio__hero-container">
             <img
-              src={bioPic}
-              alt=""
               className="bio__hero-img"
+              src={bioPic}
+              alt="Hero Image of Amitha Millen-Suwanta"
               onLoad={handleImageLoad}
             />
             <h3 className='bio__hero-caption'>
@@ -58,7 +61,11 @@ const Bio = () => {
           </div>
         </div>
 
-        <div className={`placeholder__inner ${componentIsLoaded && "hide"}`}>
+        <div 
+          className={`placeholder__inner ${componentIsLoaded 
+            ? "hide" 
+            : ""}`}
+        >
           <div src="" alt="" className="placeholder__hero-img"></div>
           <div className="placeholder__text-container">
             <div className="placeholder__text placeholder__text--1"></div>

@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import AppContext from '../../AppContext';
-import './SideNav.scss';
 import { scrollToTop } from '../../utils/utils';
 import ColorModeToggle from '../ColorModeToggle/ColorModeToggle';
+import './SideNav.scss';
 
 const SideNav = ({ handleLogOut }) => {
   const { 
@@ -13,40 +13,44 @@ const SideNav = ({ handleLogOut }) => {
     setShowSideNav
    } = useContext(AppContext);
 
-   const location = useLocation();
+  const location = useLocation();
 
-   const handleNavLinkHome = () => {
+  const handleNavLinkHome = () => {
     if(location.pathname === "/" || location.pathname === "/home") {
       setShowSideNav(false);
       scrollToTop();
     }
-  }
+  };
   
   const handleNavLinkBio = () => {
     if(location.pathname === "/bio") {
       setShowSideNav(false);
     }
-  }
+  };
   
   const handleNavLinkContact = () => { 
     if(location.pathname === "/contact") {
       setShowSideNav(false);
     }
-  }
+  };
   
   const handleSideNavLogout = () => {
     setTimeout(() => {
       handleLogOut();
-    }, 500)
-    setShowSideNav(false)
-  }
+    }, 500);
+    setShowSideNav(false);
+  };
 
   return (
     <>
-      <div className={`sideNav ${showSideNav ? "show" : ""}`}>
+      <div 
+        className={`sideNav ${showSideNav 
+          ? "show" 
+          : ""}`}
+      >
         <div 
           className="sideNav__inner"
-          >
+        >
           <div 
             className="sideNav__close-button"
             onClick={() => setShowSideNav(false)}
@@ -60,17 +64,23 @@ const SideNav = ({ handleLogOut }) => {
               <Link to={'/'}
                 onClick={handleNavLinkHome}
               >
-                <li className='sideNav__link'>Work</li>
+                <li className='sideNav__link'>
+                  Work
+                </li>
               </Link>
               <Link to={'/bio'}
                 onClick={handleNavLinkBio}
               >
-                <li className='sideNav__link'>Bio</li>
+                <li className='sideNav__link'>
+                  Bio
+                </li>
               </Link>
               <Link to={'/contact'}
                 onClick={handleNavLinkContact}
               >
-                <li className='sideNav__link'>Contact</li>
+                <li className='sideNav__link'>
+                  Contact
+                </li>
               </Link>
               <a href="https://www.instagram.com/amitha_hmua/" target="_blank">
                 <li 
@@ -80,19 +90,21 @@ const SideNav = ({ handleLogOut }) => {
                     Instagram
                 </li>
               </a>
-                {isLoggedIn &&
-                  <li className="sideNav__link">
-                    <h4 
-                      className='sideNav__logout'
-                      onClick={handleSideNavLogout}
-                    >
+              {isLoggedIn &&
+                <li className="sideNav__link">
+                  <h4 
+                    className='sideNav__logout'
+                    onClick={handleSideNavLogout}
+                  >
                     Logout
-                    </h4>
-                  </li>
-                }
-                  <li className="sideNav__colorModeToggler">
-                    <ColorModeToggle />
-                  </li>
+                  </h4>
+                </li>
+              }
+              <li className="sideNav__colorModeToggler">
+                <ColorModeToggle 
+                  inputId={"sideNavColorModeToggle"}
+                />
+              </li>
             </ul>
 
           </div>

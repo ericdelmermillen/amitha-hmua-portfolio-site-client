@@ -40,15 +40,13 @@
       margin-bottom: 0.75rem;
     }
 
-    
     &.show {
       background: transparent;
-      color: #fff;
-      text-align: center;
+      color: var(--text-color);
       font-size: 1.125rem;
       font-weight: normal;
+      text-align: center;
       transition: color 0.2s ease-out;
-      color: var(--text-color);
     }
   }
   
@@ -57,7 +55,6 @@
     color: transparent;
     height: 2rem;
     margin-inline: auto;
-    max-width: 90%;
     min-width: 70%;
 
     &.show {
@@ -114,12 +111,10 @@
     width: 90%;
   }
 
-
   &__photo-container {
     
     img {
       box-shadow: var(--box-shadow);
-
     }
   }
 }
@@ -182,5 +177,4 @@
   display: flex;
   flex-direction: column;
   margin-top: 2rem;
-  // border: 2px solid red;
 }

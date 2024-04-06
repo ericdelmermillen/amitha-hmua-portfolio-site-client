@@ -1,9 +1,8 @@
-import './NotFound.scss';
 import { useEffect } from 'react';
 import { scrollToTop } from '../../utils/utils';
+import './NotFound.scss';
 
 const NotFound = () => {
-
   useEffect(() => {
     scrollToTop();
   }, []);
@@ -11,7 +10,9 @@ const NotFound = () => {
   return (
     <>
       <div className="notFound">
-        <h1 className="notFound__h1">From Not Found</h1>
+        <h1 className="notFound__h1">
+          From Not Found
+        </h1>
       </div>
     </>
   )};

@@ -2,74 +2,71 @@
 @import '../../partials/variables';
 
 .addShoot {
-  background: brown;
+  background: var(--background-color);
   @include page;
 
   &__inner {
-    border: 2px solid #fff;
+    // border: 2px solid red;
     width: 80%;
   }
 
   &__h1 {
-    color: #fff;
-    text-align: center;
+    color: var(--text-color);
     margin-bottom: 1rem;
+    text-align: center;
   }
   
   &__form {
-    display: relative;
+    color: var(--text-color);
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    color: #fff;
   }
 
   &__date-container {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    align-items: center;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
   }
 
   &__date-picker {
     // border: 2px solid green;
-    height: 2rem;
     border-radius: $borderRadius;
-    display: block;
-    margin-inline: auto;
     border: none;
+    display: block;
+    height: 2rem;
+    margin-inline: auto;
+    padding-inline: 0.5rem;
   }
 
   &__label {
+    display: none;
     text-align: center;
   }
 
   &__title-container {
+    // border: 2px solid yellow;
+    border-radius: $borderRadius;
     display: flex;
     flex-direction: column;
-    border: 2px solid yellow;
-    border-radius: $borderRadius;
     margin-top: 4rem;
   }
   
   &__title-input {
-    height: 2rem;
-    padding-inline: 0.25rem;
+    @include input;
   }
   
   &__blurb-container  {
     display: flex;
     flex-direction: column;
-    border: 2px solid pink;
   }
   
   &__blurb-input {
-    border-radius: $borderRadius;
-    height: 10rem;
-    padding-inline: 0.25rem;
-    padding-block: 0.5rem;
+    @include input;
+    height: 12rem;
   }
 
   &__modelChoosers {
@@ -100,9 +97,5 @@
     @include button;
     gap: 2rem;
     width: 100%;
-
-    // @media(min-width: $tablet) {
-    //   width: 50%;
-    // }
   }
 }

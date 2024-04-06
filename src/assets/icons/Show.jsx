@@ -11,7 +11,6 @@ const Show = ({ className }) => {
         <rect id="Rectangle_234" data-name="Rectangle 234" width="25" height="25" transform="translate(239 1103)" fill="none" />
       </g>
     </svg>
-  );
-};
+  )};
 
 export default Show;

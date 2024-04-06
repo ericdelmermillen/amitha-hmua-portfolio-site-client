@@ -21,7 +21,7 @@ const PhotographerChooser = ({
   } = useContext(AppContext);
 
   const [ selectedPhotographer, setSelectedPhotographer ] = useState(photographerID || '');
-  const [ isOptionSet, setIsOptionSet ] = useState(false)
+  const [ isOptionSet, setIsOptionSet ] = useState(false);
 
   const handleSetPhotographer = (event) => {
     const chosenPhotographer = +event.target.value;
@@ -33,7 +33,7 @@ const PhotographerChooser = ({
     }
 
     setSelectedPhotographer(chosenPhotographer);
-    setIsOptionSet(true)
+    setIsOptionSet(true);
   };
 
   const includesPhotographer = (photographer_id) => {
@@ -44,15 +44,15 @@ const PhotographerChooser = ({
     <div className="photographerChooser">
       <div className="photographerChooser__inner">
         <select
-          className={`photographerChooser__select ${isOptionSet ? "userDisabled" : ""}`}
+          className={`photographerChooser__select ${isOptionSet 
+            ? "userDisabled" 
+            : ""}`}
           value={selectedPhotographer}
           tabIndex={isOptionSet ? "-1" : "0"}
           onChange={handleSetPhotographer}
           onBlur={handleSetPhotographer}
         >
-          <option 
-            value=""
-          >
+          <option value="">
             Select Photographer
           </option>
 
@@ -89,7 +89,6 @@ const PhotographerChooser = ({
         </div>
       </div>
     </div>
-  );
-};
+  )};
 
 export default PhotographerChooser;

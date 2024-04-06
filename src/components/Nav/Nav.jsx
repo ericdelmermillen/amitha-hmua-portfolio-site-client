@@ -4,8 +4,8 @@ import { scrollToTop } from '../../utils/utils';
 import AppContext from '../../AppContext';
 import ColorModeToggle from '../ColorModeToggle/ColorModeToggle';
 import Logo from '../../assets/icons/Logo';
-import './Nav.scss';
 import Instagram from '../../assets/icons/Instagram';
+import './Nav.scss';
 
 const Nav = ({ handleLogOut }) => {
   const { 
@@ -61,11 +61,9 @@ const Nav = ({ handleLogOut }) => {
               </li>
             </a>
             <li className="nav__link">
-              {/* INSTAGRAM */}
-              <ColorModeToggle />
+              <ColorModeToggle inputId={"navColorModeToggle"}/>
             </li>
           </ul>
-
 
           {
           

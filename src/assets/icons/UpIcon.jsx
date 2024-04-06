@@ -13,7 +13,6 @@ const UpIcon = ({ className, classNameStroke }) => {
         </g>
       </svg>
     </>
-  );
-};
+  )};
 
 export default UpIcon;

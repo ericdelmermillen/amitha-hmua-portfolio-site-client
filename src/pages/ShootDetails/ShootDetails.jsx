@@ -1,10 +1,10 @@
+import AppContext from '../../AppContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
-import AppContext from '../../AppContext';
+import Shoots from '../../components/Shoots/Shoots.jsx';
 import { scrollToTop } from '../../utils/utils.js';
 import { toast } from 'react-toastify';
 import './ShootDetails.scss';
-import Shoots from '../../components/Shoots/Shoots.jsx';
 
 const ShootDetails = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -14,16 +14,6 @@ const ShootDetails = () => {
   const { shoot_id } = useParams();
 
   const { 
-    isLoggedIn, 
-    setIsLoggedIn,
-    showSideNav, 
-    setShowSideNav,
-    scrollYPos, 
-    setScrollYPos,
-    prevScrollYPos, 
-    setPrevScrollYPos,
-    selectedShoot, 
-    setSelectedShoot,
     isLoading, 
     setIsLoading
   } = useContext(AppContext);
@@ -52,7 +42,7 @@ const ShootDetails = () => {
 
   useEffect(() => {
     scrollToTop();
-    setIsLoading(true)
+    setIsLoading(true);
     
     const fetchShootDetails = async () => {
       try {
@@ -71,6 +61,7 @@ const ShootDetails = () => {
           setPhotographers(data.photographers);
           setModels(data.models);
         } else {
+          toast.error(response.statusText);
           throw new Error(`Failed to fetch shoot details: ${response.statusText}`);
         }
 
@@ -91,15 +82,13 @@ const ShootDetails = () => {
         <div className="shootDetails__inner">
 
           <div className="shootDetails__photos">         
-              {placeholderPhotos.map((photo, idx) =>
+              {placeholderPhotos.map((_, idx) =>
                 <div 
                   className={`photoPlaceholder ${!isLoading && shootIsLoaded ? "hide": ""}`}
                   key={idx}
-                  
-                ></div>)}
+                >
+                </div>)}
               
-
-
             {photos && photos.map((photo, idx) => 
               <div 
                 className="shootDetails__photo-container"
@@ -118,7 +107,9 @@ const ShootDetails = () => {
                   className='shootDetails__photo'
                   src={photo.photo_url} 
                   alt={`Photo from photo shoot ${shoot_id}`} 
-                  onLoad={idx === photos.length - 1 ? handlePhotosLoaded : null} 
+                  onLoad={idx === photos.length - 1 
+                    ? handlePhotosLoaded 
+                    : null} 
                 />
 
                 {idx === 0 && 
@@ -140,12 +131,9 @@ const ShootDetails = () => {
                           }
 
                           {shootDetails &&              
-
                             photographers.length > 1 
                             ? photographers.join(", ") 
-                            : photographers
-                
-                          }
+                            : photographers}
                         </h3>
                         <h3   
                           className={`shootDetails__models ${shootDetails && "show"}`}
@@ -158,7 +146,7 @@ const ShootDetails = () => {
                                 ? "Models: " 
                                 : "Model: "}
                             </span>
-
+                            
                           }
                         
                           {shootDetails &&

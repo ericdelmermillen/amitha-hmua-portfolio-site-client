@@ -3,8 +3,8 @@
 
 .shoot {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-  position: relative;
   cursor: pointer;
+  position: relative;
   
   &__img {
     @include shootImg;
@@ -42,13 +42,19 @@
     top: 0.75rem;
     padding: 0.55rem;
     width: 2.5rem;
+    
+    &:hover {
+      border: 2px solid red;
+
+    }
   }
 
   &__delete-btn---icon {
     fill: var(--text-color);
   }
 
-  .models__label, .photographers__label {
+  .models__label, 
+  .photographers__label {
     color: green;
     display: block;
     font-style: normal;

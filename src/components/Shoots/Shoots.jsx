@@ -10,10 +10,6 @@ const Shoots = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   
   const { 
-    isLoggedIn, 
-    setIsLoggedIn,
-    showSideNav, 
-    setShowSideNav,
     scrollYPos, 
     setScrollYPos,
     prevScrollYPos, 
@@ -27,13 +23,11 @@ const Shoots = () => {
   const location = useLocation();
 
   const [ shootsData, setShootsData ] = useState([]);
-  const [ showDeleteModal, setShowDeleteModal ] = useState(false)
+  const [ showDeleteModal, setShowDeleteModal ] = useState(false);
   const [ currentPage, setCurrentPage ] = useState(1);
   const [ shouldUpdate, setShouldUpdate ] = useState(true);
   const [ isLoadingInitial, setIsLoadingInitial ] = useState(true);
   const [ isOnShootDetails, setIsOnShootDetails ] = useState(location.pathname.includes('/shoot/'));
-
-  // console.log(isOnShootDetails)
 
   const itemsPerPage = 10;
   const isLoadingInterval = 250;
@@ -48,7 +42,7 @@ const Shoots = () => {
           const response = await fetch(`${BASE_URL}/shoots/all?page=${currentPage}&limit=${itemsPerPage}`);
 
           if(response.ok) {
-            const data = await response.json()
+            const data = await response.json();
             setShootsData([...shootsData, ...data]);
             setTimeout(() => {
               setIsLoading(false); 
@@ -56,18 +50,19 @@ const Shoots = () => {
             
             if(isLoadingInitial) {
               setTimeout(() => {
-                setIsLoadingInitial(false)
-              }, isLoadingInterval)
+                setIsLoadingInitial(false);
+              }, isLoadingInterval);
             }
 
             if(data.length === 0) {
               setTimeout(() => {
-                setShouldUpdate(false)
-              }, setIsLoading(false))
+                setShouldUpdate(false);
+                setIsLoading(false)
+              }, isLoadingInterval);
             }
           } else {
             console.error('Failed to fetch shoots:', response.statusText);
-            toast.error(`Failed to fetch shoots:, ${response.statusText}`)
+            toast.error(`Failed to fetch shoots:, ${response.statusText}`);
           }
           
         } catch(error) {
