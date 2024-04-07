@@ -258,9 +258,9 @@ const AddShoot = () => {
           <div className="addShoot__form">
             <div className="addShoot__date-container">
 
-              <h3 className='addShoot__label'>
+              <label className='addShoot__label'>
                 Enter Shoot Date
-              </h3>
+              </label>
                 <NewShootdatePicker
                   newShootDate={newShootDate}
                   setNewShootDate={setNewShootDate}
@@ -294,49 +294,55 @@ const AddShoot = () => {
                 onChange={handleBlurbChange}
               ></textarea>
             </div>
+            <div  
+              className="addShoot__photographersAndModels-container">
 
-            <div 
-              className="addShoot__photographerChoosers"
-            >
-              <h3 className='addShoot__label'>
-                Choose At Least One Photographer
+            
+
+              <div 
+                className="addShoot__photographerChoosers"
+              >
+                <h3 className='addShoot__label'>
+                  Choose At Least One Photographer
+                  </h3>
+
+                {photographerChooserIDs.map((chooser, idx) => (
+                  <PhotographerChooser
+                    key={chooser.chooserIdx}
+                    photographerChooserIdx={chooser.chooserIdx}
+                    photographers={photographers}
+                    setPhotographers={setPhotographers}
+                    handleAddPhotographerChooser={handleAddPhotographerChooser}
+                    handleRemovePhotographerChooser={handleRemovePhotographerChooser}
+                    photographerChooserIDs={photographerChooserIDs}
+                    setPhotographerChooserIDs={setPhotographerChooserIDs}
+                    photographerID={chooser.photographerID}
+                  />
+                ))}
+              </div>
+
+              <div 
+                className="addShoot__modelChoosers"
+              >
+                <h3 className='addShoot__label'>
+                  Choose At Least One Model
                 </h3>
-
-              {photographerChooserIDs.map((chooser) => (
-                <PhotographerChooser
-                  key={chooser.chooserIdx}
-                  photographerChooserIdx={chooser.chooserIdx}
-                  photographers={photographers}
-                  setPhotographers={setPhotographers}
-                  handleAddPhotographerChooser={handleAddPhotographerChooser}
-                  handleRemovePhotographerChooser={handleRemovePhotographerChooser}
-                  photographerChooserIDs={photographerChooserIDs}
-                  setPhotographerChooserIDs={setPhotographerChooserIDs}
-                  photographerID={chooser.photographerID}
-                />
-              ))}
-            </div>
-
-            <div 
-              className="addShoot__modelChoosers"
-            >
-              <h3 className='addShoot__label'>
-                Choose At Least One Model
-              </h3>
-              
-              {modelChooserIDs.map((chooser) => (
-                <ModelChooser
-                  key={chooser.chooserIdx}
-                  modelChooserIdx={chooser.chooserIdx}
-                  models={models}
-                  setModels={setModels}
-                  handleAddModelChooser={handleAddModelChooser}
-                  handleRemoveModelChooser={handleRemoveModelChooser}
-                  modelChooserIDs={modelChooserIDs}
-                  setModelChooserIDs={setModelChooserIDs}
-                  modelID={chooser.modelID}
-                />
-              ))}
+                
+                {modelChooserIDs.map((chooser) => (
+                  <ModelChooser
+                    key={chooser.chooserIdx}
+                    modelChooserIdx={chooser.chooserIdx}
+                    models={models}
+                    setModels={setModels}
+                    handleAddModelChooser={handleAddModelChooser}
+                    handleRemoveModelChooser={handleRemoveModelChooser}
+                    modelChooserIDs={modelChooserIDs}
+                    setModelChooserIDs={setModelChooserIDs}
+                    modelID={chooser.modelID}
+                  />
+                ))}
+              </div>
+            
             </div>
           
             <div className="addShoot__button-container">
