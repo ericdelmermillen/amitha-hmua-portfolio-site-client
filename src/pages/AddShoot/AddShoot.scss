@@ -4,14 +4,22 @@
 .addShoot {
   background: var(--background-color);
   @include page;
-
+  
   &__inner {
+    margin-top: 2rem;
     // border: 2px solid red;
     width: 80%;
+    
+    @media(min-width: $tablet) {
+      margin-top: 4rem;
+
+    }
   }
 
-  &__h1 {
+  &__heading {
     color: var(--text-color);
+    font-size: 1.75rem;
+    font-weight: 600;
     margin-bottom: 1rem;
     text-align: center;
   }
@@ -97,5 +105,14 @@
     @include button;
     gap: 2rem;
     width: 100%;
+  }
+
+  &__icon-container {
+    position: absolute;
+
+  }
+
+  &__calendarIcon {
+    fill: var(--text-color);
   }
 }

@@ -251,7 +251,7 @@ const AddShoot = () => {
     <>
       <div className="addShoot">
         <div className="addShoot__inner">
-          <h1 className="addShoot__h1">
+          <h1 className="addShoot__heading">
             Add A New Shoot
           </h1>
 
@@ -261,10 +261,11 @@ const AddShoot = () => {
               <h3 className='addShoot__label'>
                 Enter Shoot Date
               </h3>
-              <NewShootdatePicker
-                newShootDate={newShootDate}
-                setNewShootDate={setNewShootDate}
-              />
+                <NewShootdatePicker
+                  newShootDate={newShootDate}
+                  setNewShootDate={setNewShootDate}
+                  className={"addShoot__calendarIcon"}
+                />
             </div>
 
             <div className="addShoot__title-container">

@@ -1,16 +1,25 @@
 @import '../../partials/mixins';
 @import '../../partials/variables';
 
-.addShoot__date-picker {
-  background: var(--background-color);
-  color: var(--text-color);
-  font-size: 1rem;
-  outline: 1px solid var(--text-color);
-  padding-inline: 0.25rem;
-  width: 8rem;
+.datePicker {
+  
+  &__selector {
+    @include input;
+  }
+  
+  &__container {
+    position: relative;
+    width: 9rem;
+  }
+    
+    &:focus, &:active {
+      outline: 1px solid var(--text-color);
+    }
 
-  &:focus, &:active {
-    outline: 1px solid var(--text-color);
+  &__icon-container {
+    position: absolute;
+    right: 0.8rem;
+    top: 0.45rem;
   }
 }
 
