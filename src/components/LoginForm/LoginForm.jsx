@@ -27,9 +27,11 @@ const LoginForm = () => {
   
   const [ email, setEmail ] = useState('');
   const [ emailInvalid, setEmailInvalid ] = useState(false);
-
+  const [ shouldCheckEmailIsValid, setShouldCheckEmailIsValid ] = useState(false);
+  
   const [ password, setPassword ] = useState('');
   const [ passwordInvalid, setPasswordInvalid ] = useState(false);
+  const [ shouldCheckPasswordIsValid, setShouldCheckPasswordIsValid ] = useState(false);
 
   const [ showPassword, setShowPassword ] = useState(false);
 
@@ -37,11 +39,38 @@ const LoginForm = () => {
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
+
+    if(shouldCheckEmailIsValid) {
+      setEmailInvalid(!isValidEmail(email));
+    }
   };
+
+  const handleCheckEmailIsValid =() => {
+    if(isValidEmail(email)) {
+      setEmailInvalid(false)
+    } else {
+      setEmailInvalid(true);
+      setShouldCheckEmailIsValid(true);
+    }
+  }
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
+    
+    if(shouldCheckPasswordIsValid) {
+      handleCheckPasswordIsValid()
+    }
+    
   };
+
+  const handleCheckPasswordIsValid =() => {
+    if(isValidPassword(password)) {
+      setPasswordInvalid(false);
+    } else {
+      setPasswordInvalid(true)
+      setShouldCheckPasswordIsValid(true)
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -109,6 +138,7 @@ const LoginForm = () => {
                 value={email}
                 placeholder="Email"
                 onChange={handleEmailChange}
+                onBlur={handleCheckEmailIsValid}
               />
               <div 
                 className={`loginForm__error ${emailInvalid && "email-error"}`}
@@ -129,6 +159,7 @@ const LoginForm = () => {
                   value={password}
                   placeholder="Password"
                   onChange={handlePasswordChange}
+                  onBlur={handleCheckPasswordIsValid}
                 />
                 <div 
                   className="passwordInput__icon"

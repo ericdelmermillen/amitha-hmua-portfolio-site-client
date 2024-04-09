@@ -19,17 +19,23 @@
     box-shadow: var(--box-shadow);
     display: flex;
     flex-direction: column;
-    height: 90%;
+    height: 80%;
     max-height: 40rem;
     max-width: 40rem;
     margin-top: 3rem;
     overflow-y: auto;
-    padding: 20px;
+    padding: 2rem;
     width: 90%;
     
     @media(min-width: $tablet) {
       width: 80%;
     }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
   
   &__title {
@@ -65,7 +71,7 @@
   }
 
   &__firstName {
-    height: 4.5rem;
+    height: 3.85rem;
     position: relative;
   }
 
@@ -78,7 +84,7 @@
   }
 
   &__lastName {
-    height: 4.5rem;
+    height: 4rem;
     position: relative;
   }
 
@@ -91,7 +97,7 @@
   }
   
   &__email {
-    height: 4.5rem;
+    height: 3.85rem;
     position: relative;
   }
 
@@ -105,7 +111,7 @@
   
   &__subject {
     position: relative;
-    height: 4.5rem;
+    height: 3.85rem;
     // border: 2px solid yellow;
   }
 
@@ -118,9 +124,8 @@
   }
   
   &__message {
-    position: relative;
     height: 8rem;
-    // border: 2px solid yellow;
+    position: relative;
   }
 
   &__message-input {
@@ -138,12 +143,12 @@
   }
   
   &__button-container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
-    margin-top: 1rem;
+    margin-block: auto;
   }
-
+  
   &__button {
     @include button;
     

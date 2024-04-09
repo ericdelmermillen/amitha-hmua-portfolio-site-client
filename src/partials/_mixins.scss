@@ -111,10 +111,11 @@
 
 @mixin error {
   color: var(--error-color);
-  bottom: 0.5rem;
+  bottom: 0.25rem;
   display: block;
   margin-inline-start: 0.5rem;
   position: absolute;
+  font-size: 0.8rem;
 }
 
 @mixin shootImg {

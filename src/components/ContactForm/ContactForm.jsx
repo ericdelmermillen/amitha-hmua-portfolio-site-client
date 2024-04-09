@@ -13,10 +13,10 @@ const ContactForm = () => {
   const [ emailIsInvalid, setEmailIsInvalid ] = useState(false);
   
   const [ subject, setSubject ] = useState('');
-  const [ subjectIsInvalid, setSubjectIsInvalid ] = useState(!false);
+  const [ subjectIsInvalid, setSubjectIsInvalid ] = useState(false);
   
   const [ message, setMessage ] = useState('');
-  const [ messageIsInvalid, setMessageIsInvalid ] = useState(!false);
+  const [ messageIsInvalid, setMessageIsInvalid ] = useState(false);
 
   const navigate = useNavigate(); 
 
@@ -168,22 +168,18 @@ const ContactForm = () => {
               </p>
             </div>
             <div className="contactForm__button-container">
-              <button 
-                type="submit" className="contactForm__button contactForm__button--send">
-                  Send
-              </button>
+              
               <Link to={'/'}>
                 <button 
                   type="button" className="contactForm__button contactForm__button--cancel">
                     Cancel
                 </button>
               </Link>
+              <button 
+                type="submit" className="contactForm__button contactForm__button--send">
+                  Send
+              </button>
             </div>
-
-
-
-            
-
 
           </form>
         </div>
