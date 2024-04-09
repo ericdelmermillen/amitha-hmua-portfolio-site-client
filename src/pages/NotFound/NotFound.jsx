@@ -11,8 +11,11 @@ const NotFound = () => {
     <>
       <div className="notFound">
         <h1 className="notFound__h1">
-          From Not Found
+          Error 404
         </h1>
+        <h2 className="notFound__h2">
+          Nothing beautiful to see here...
+        </h2>
       </div>
     </>
   )};

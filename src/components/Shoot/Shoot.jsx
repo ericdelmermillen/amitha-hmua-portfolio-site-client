@@ -20,7 +20,8 @@ const Shoot = ({
     setSelectedShoot
   } = useContext(AppContext);
   
-  const handleDeleteClick = () => {
+  const handleDeleteClick = (e) => {
+    e.preventDefault();
     setShowDeleteModal(true);
     setSelectedShoot(shoot_id);
   }
@@ -28,16 +29,21 @@ const Shoot = ({
   return (
     <>
       <div className="shoot">
-        {isLoggedIn && 
-          <div 
-            className="shoot__delete-btn"
-            onClick={handleDeleteClick}
-            >
-            <Delete 
-              onClick={handleDeleteClick}
-              className={"shoot__delete-btn---icon"}
-            />
-          </div>
+        {isLoggedIn && !isOnShootDetails 
+
+          ?
+            <div 
+              className="shoot__delete-btn"
+              onClick={(e) => handleDeleteClick(e)}
+              >
+              <Delete 
+                onClick={handleDeleteClick}
+                className={"shoot__delete-btn---icon"}
+              />
+            </div>
+
+          : null
+          
         }
         <img 
           className='shoot__img'

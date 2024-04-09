@@ -1,0 +1,155 @@
+@import '../../partials/mixins';
+@import '../../partials/variables';
+
+.contactForm {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  left: 50%;
+  position: fixed;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  
+  &__modal {
+    background-color: var(--background-color);
+    border-radius: $borderRadius;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    flex-direction: column;
+    height: 90%;
+    max-height: 40rem;
+    max-width: 40rem;
+    margin-top: 3rem;
+    overflow-y: auto;
+    padding: 20px;
+    width: 90%;
+    
+    @media(min-width: $tablet) {
+      width: 80%;
+    }
+  }
+  
+  &__title {
+    color: var(--text-color);
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    margin-top: 2.5%;
+    text-align: center;
+  }
+  
+  &__instructions {
+    color: var(--text-color);
+    font-size: 1.25rem;
+    font-weight: normal;
+    margin-bottom: 1rem;
+  }
+
+  &__label {
+    display: none;
+  }
+
+  &__name-container {
+
+    @media(min-width: $tablet) {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  input {
+    @include input;
+  }
+
+  &__firstName {
+    height: 4.5rem;
+    position: relative;
+  }
+
+  &__firstName-error {
+    display: none;
+    
+    &.error {
+      @include error;
+    }
+  }
+
+  &__lastName {
+    height: 4.5rem;
+    position: relative;
+  }
+
+  &__lastName-error {
+    display: none;
+    
+    &.error {
+      @include error;
+    }
+  }
+  
+  &__email {
+    height: 4.5rem;
+    position: relative;
+  }
+
+  &__email-error {
+    display: none;
+    
+    &.error {
+      @include error;
+    }
+  }
+  
+  &__subject {
+    position: relative;
+    height: 4.5rem;
+    // border: 2px solid yellow;
+  }
+
+  &__subject-error {
+    display: none;
+    
+    &.error {
+      @include error;
+    }
+  }
+  
+  &__message {
+    position: relative;
+    height: 8rem;
+    // border: 2px solid yellow;
+  }
+
+  &__message-input {
+    @include input;
+    resize: none;
+    height: 6rem;
+  }
+
+  &__message-error {
+    display: none;
+    
+    &.error {
+      @include error;
+    }
+  }
+  
+  &__button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  &__button {
+    @include button;
+    
+    &--cancel {
+      width: 100%;
+    }
+
+  }
+}

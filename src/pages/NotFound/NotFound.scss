@@ -4,7 +4,13 @@
   @include page;
   background-color: var(--background-color);
 
-  &__h1 {
+  &__h1, 
+  &__h2 {
     color: var(--text-color);
+    text-align: center;
+  }
+  
+  &__h2 {
+    margin-top: 1rem;
   }
 }

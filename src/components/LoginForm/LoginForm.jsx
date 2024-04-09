@@ -24,11 +24,13 @@ const LoginForm = () => {
     isLoading, 
     setIsLoading
   } = useContext(AppContext);
-
-  const [ emailInvalid, setEmailInvalid ] = useState(false);
-  const [ passwordInvalid, setPasswordInvalid ] = useState(false);
+  
   const [ email, setEmail ] = useState('');
+  const [ emailInvalid, setEmailInvalid ] = useState(false);
+
   const [ password, setPassword ] = useState('');
+  const [ passwordInvalid, setPasswordInvalid ] = useState(false);
+
   const [ showPassword, setShowPassword ] = useState(false);
 
   const navigate = useNavigate(); 
@@ -89,7 +91,9 @@ const LoginForm = () => {
     <>
       <div className="loginForm">
         <div className="loginForm__modal">
-          <h2 className="loginForm__title">Admin Login</h2>
+          <h1 className="loginForm__title">
+            Admin Login
+          </h1>
           <form 
             className="loginForm__form" 
             onSubmit={handleSubmit}>
@@ -155,7 +159,7 @@ const LoginForm = () => {
               </button>
               <Link to={'/'}>
                 <button 
-                  type="submit" className="loginForm__button loginForm__button--cancel">
+                  type="button" className="loginForm__button loginForm__button--cancel">
                     Cancel
                 </button>
               </Link>

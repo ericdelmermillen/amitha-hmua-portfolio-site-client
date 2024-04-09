@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { scrollToTop } from '../../utils/utils';
 import AppContext from '../../AppContext';
+import ContactForm from '../../components/ContactForm/ContactForm';
 import './Contact.scss';
 
 const Contact = () => {
@@ -12,14 +13,18 @@ const Contact = () => {
   } = useContext(AppContext);
 
   useEffect(() => {
+    setIsLoading(true);
     setShowSideNav(false);
     scrollToTop();
-  }, [])
+    setTimeout(() => {
+      setIsLoading(false);
+    })
+  }, [500]); 
 
   return (
     <>
       <div className="contact">
-        <h1 className="contact__h1">From Contact</h1>
+        <ContactForm />
       </div>
     </>
   )};
