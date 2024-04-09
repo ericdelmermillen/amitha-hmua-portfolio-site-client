@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { isValidEmail, isValidPassword } from '../../utils/utils';
 import AppContext from '../../AppContext'; 
@@ -26,7 +26,7 @@ const LoginForm = () => {
   } = useContext(AppContext);
   
   const [ email, setEmail ] = useState('');
-  const [ emailInvalid, setEmailInvalid ] = useState(false);
+  const [ emailIsInvalid, setEmailIsInvalid ] = useState(false);
   const [ shouldCheckEmailIsValid, setShouldCheckEmailIsValid ] = useState(false);
   
   const [ password, setPassword ] = useState('');
@@ -41,15 +41,15 @@ const LoginForm = () => {
     setEmail(e.target.value);
 
     if(shouldCheckEmailIsValid) {
-      setEmailInvalid(!isValidEmail(email));
+      setEmailIsInvalid(!isValidEmail(email));
     }
   };
 
   const handleCheckEmailIsValid =() => {
     if(isValidEmail(email)) {
-      setEmailInvalid(false)
+      setEmailIsInvalid(false)
     } else {
-      setEmailInvalid(true);
+      setEmailIsInvalid(true);
       setShouldCheckEmailIsValid(true);
     }
   }
@@ -63,7 +63,7 @@ const LoginForm = () => {
     
   };
 
-  const handleCheckPasswordIsValid =() => {
+  const handleCheckPasswordIsValid = () => {
     if(isValidPassword(password)) {
       setPasswordInvalid(false);
     } else {
@@ -76,9 +76,9 @@ const LoginForm = () => {
     e.preventDefault();
 
     if(isValidEmail(email)) {
-      setEmailInvalid(false)
+      setEmailIsInvalid(false);
     } else {
-      return setEmailInvalid(true)
+      return setEmailIsInvalid(true);
     }
   
     if(isValidPassword(password)) {
@@ -116,6 +116,12 @@ const LoginForm = () => {
     }
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 500)
+  }, [])
+
   return (
     <>
       <div className="loginForm">
@@ -141,7 +147,7 @@ const LoginForm = () => {
                 onBlur={handleCheckEmailIsValid}
               />
               <div 
-                className={`loginForm__error ${emailInvalid && "email-error"}`}
+                className={`loginForm__error ${emailIsInvalid && "email-error"}`}
               >
                 Invalid Email
               </div>

@@ -16,10 +16,7 @@ const Contact = () => {
     setIsLoading(true);
     setShowSideNav(false);
     scrollToTop();
-    setTimeout(() => {
-      setIsLoading(false);
-    })
-  }, [500]); 
+  }, []); 
 
   return (
     <>

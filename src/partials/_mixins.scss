@@ -200,5 +200,9 @@
     &--remove-icon {
       stroke: var(--text-color);
     }
+
+    &:focus {
+      border: 2px solid red;
+    }
   }
 }

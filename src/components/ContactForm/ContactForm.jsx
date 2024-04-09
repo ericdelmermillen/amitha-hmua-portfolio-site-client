@@ -1,10 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import AppContext from '../../AppContext';
 import { Link, useNavigate } from 'react-router-dom';
+import { isValidEmail, isValidPassword } from '../../utils/utils';
+import { toast } from 'react-toastify';
 import './ContactForm.scss';
 
 const ContactForm = () => {
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+  const { 
+    isLoading, 
+    setIsLoading
+  } = useContext(AppContext);
+  
   const [ firstName, setFirstName ] = useState('');
   const [ firstNameIsInvalid, setFirstNameIsInvalid ] = useState(false);
+  const [ shouldCheckFirstName, setShouldCheckFirstName ] = useState(false);
   
   const [ lastName, setLastName ] = useState('');
   const [ lastNameIsInvalid, setLastNameIsInvalid ] = useState(false);
@@ -17,37 +28,137 @@ const ContactForm = () => {
   
   const [ message, setMessage ] = useState('');
   const [ messageIsInvalid, setMessageIsInvalid ] = useState(false);
+  const [ shouldCheckMessage, setShouldCheckMessage ] = useState(false);
 
   const navigate = useNavigate(); 
 
   const handleFirstNameChange = (e) => {
-    setFirstName(e.target.value);
-    // console.log(firstName)
+    setFirstName(e.target.value); 
+
+    if(shouldCheckFirstName) {
+      setFirstNameIsInvalid(firstName.length >= 2);
+    }
   };
+
+  const handleShouldCheckFirstName = () => {
+    setFirstNameIsInvalid(firstName.length < 2)
+    setShouldCheckFirstName(true);
+  }
   
   const handleLastNameChange = (e) => {
     setLastName(e.target.value);
-    // console.log(lastName)
   };
+
+  const handleShouldCheckLastName = () => {
+    setLastNameIsInvalid(lastName.length < 2)
+  }
   
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
-    console.log(email)
   };
+
+  const handleShouldCheckEmail = () => {
+    setEmailIsInvalid(!isValidEmail(email));
+  }
   
   const handleSubjectChange = (e) => {
     setSubject(e.target.value);
-    console.log(subject)
   };
+
+  const handleShouldCheckSubject = () => {
+    setSubjectIsInvalid(subject.length <= 10)
+  }
   
   const handleMessageChange = (e) => {
     setMessage(e.target.value);
+
+    // if(shouldCheckMessage) {
+    //   console.log(e.target.value)
+    // }
   };
+
+  const handleShouldCheckMessage = () => {
+    setMessageIsInvalid(message.length <= 25);
+    setShouldCheckMessage(true);
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  }
 
+    if(firstName.length < 2) {
+      return setFirstNameIsInvalid(true);
+    } else {
+      setFirstNameIsInvalid(false);
+    }
+
+    if(lastName.length < 2) {
+      return setLastNameIsInvalid(true);
+    } else {
+      setLastNameIsInvalid(false);
+    }
+
+    if(isValidEmail(email)) {
+      setEmailIsInvalid(false);
+    } else {
+      return setEmailIsInvalid(true);
+    }
+
+    if(subject.length <= 10) {
+      return setSubjectIsInvalid(true);
+    } else {
+      setSubjectIsInvalid(false);
+    }
+
+    if(message.length < 25) {
+      return setMessageIsInvalid(true);
+    } else {
+      setMessageIsInvalid(false);
+    }
+    
+    
+    const formData = {
+      firstName,
+      lastName,
+      email,
+      subject,
+      message
+    };
+  
+    try {
+      setIsLoading(true)
+      const response = await fetch(`${BASE_URL}/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+  
+      if(!response.ok) {
+        throw new Error('Failed to send message');
+
+      }
+      
+      const responseData = await response.json(); 
+  
+      toast.success(`${responseData.message} Redirecting...`);
+      setIsLoading(false);
+      setTimeout(() => {
+        navigate('/home')
+      }, 1000)
+      
+    } catch(error) {
+      toast.error(error.message)
+      console.error('Error sending message:', error.message);
+      setIsLoading(false);
+    }
+  };
+  
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 500);
+  }, []);
 
   return (
     <>
@@ -56,9 +167,6 @@ const ContactForm = () => {
           <h1 className="contactForm__title">
             Contact Amitha
           </h1>
-          {/* <h2 className="contactForm__instructions">
-            Please complete the form below
-          </h2> */}
           <form 
             className="contactForm__form">
             <div className="contactForm__name-container">
@@ -76,6 +184,7 @@ const ContactForm = () => {
                   value={firstName}
                   placeholder='First Name'
                   onChange={(e) => handleFirstNameChange(e)}
+                  onBlur={handleShouldCheckFirstName}
                 />
                 <p 
                   className={`contactForm__firstName-error ${firstNameIsInvalid ? "error" : ""}`}>
@@ -96,6 +205,7 @@ const ContactForm = () => {
                   value={lastName}
                   placeholder='Last Name'
                   onChange={(e) => handleLastNameChange(e)}
+                  onBlur={handleShouldCheckLastName}
                 />
                 <p 
                   className={`contactForm__lastName-error ${lastNameIsInvalid ? "error" : ""}`}>
@@ -119,6 +229,7 @@ const ContactForm = () => {
                 value={email}
                 placeholder='Email Address'
                 onChange={(e) => handleEmailChange(e)}
+                onBlur={handleShouldCheckEmail}
               />
               <p 
                 className={`contactForm__email-error ${emailIsInvalid ? "error" : ""}`}>
@@ -140,6 +251,7 @@ const ContactForm = () => {
                 value={subject}
                 placeholder='Subject'
                 onChange={(e) => handleSubjectChange(e)}
+                onBlur={handleShouldCheckSubject}
               />
               <p 
                 className={`contactForm__subject-error ${subjectIsInvalid ? "error" : ""}`}>
@@ -161,6 +273,7 @@ const ContactForm = () => {
                 value={message}
                 placeholder='Message'
                 onChange={(e) => handleMessageChange(e)}
+                onBlur={handleShouldCheckMessage}
               ></textarea>
               <p 
                 className={`contactForm__message-error ${messageIsInvalid ? "error" : ""}`}>
@@ -176,7 +289,10 @@ const ContactForm = () => {
                 </button>
               </Link>
               <button 
-                type="submit" className="contactForm__button contactForm__button--send">
+                type="submit" 
+                className="contactForm__button contactForm__button--send"
+                onClick={handleSubmit}
+              >
                   Send
               </button>
             </div>

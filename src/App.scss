@@ -30,6 +30,10 @@ a {
   color: inherit;
   font-family: inherit;
   text-decoration: none;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 img {
@@ -74,7 +78,7 @@ img {
     &::after {
       content: '';
       animation: spin 0.5s infinite linear; 
-      border: 6px solid var(--background-color);
+      border: 6px solid var(--text-color);
       border-radius: 50%;
       border-top-color: transparent;
       display: block;
