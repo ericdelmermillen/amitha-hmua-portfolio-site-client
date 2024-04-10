@@ -140,7 +140,6 @@ const ContactForm = () => {
   
       if(!response.ok) {
         throw new Error('Failed to send message');
-
       }
       
       const responseData = await response.json(); 
