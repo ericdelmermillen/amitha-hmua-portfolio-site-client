@@ -68,14 +68,14 @@ const DeleteShootModal = ({
           </h3>
           <div className="deleteShootModal__button-container">
             <button
-              className="deleteShootModal__button deleteShootModal__button--cancel"
-              onClick={handleCloseModal}>
-                Cancel
-            </button>
-            <button
               className="deleteShootModal__button deleteShootModal__button--delete"
               onClick={handleDeleteShoot}>
                 Confirm
+            </button>
+            <button
+              className="deleteShootModal__button deleteShootModal__button--cancel"
+              onClick={handleCloseModal}>
+                Cancel
             </button>
           </div>
 

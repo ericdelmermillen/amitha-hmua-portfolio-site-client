@@ -11,7 +11,8 @@ const Shoot = ({
   photographers, 
   showDeleteModal, 
   setShowDeleteModal, 
-  isOnShootDetails}) => {
+  isOnShootDetails,
+  handleNewShootId}) => {
 
   const { 
     isLoggedIn, 
@@ -28,7 +29,10 @@ const Shoot = ({
 
   return (
     <>
-      <div className="shoot">
+      <div 
+        className="shoot"
+        onClick={() => handleNewShootId(shoot_id)}
+      >
         {isLoggedIn && !isOnShootDetails 
 
           ?

@@ -2,7 +2,6 @@
 @import '../../partials/variables';
 
 .shoot {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
   cursor: pointer;
   position: relative;
   
@@ -41,11 +40,11 @@
     right: 0.75rem;
     top: 0.75rem;
     padding: 0.55rem;
-    width: 2.5rem;
     outline: 1px solid var(--text-color);
+    width: 2.5rem;
     
     &:hover {
-      border: 2px solid red;
+      scale: 1.05;
 
     }
   }

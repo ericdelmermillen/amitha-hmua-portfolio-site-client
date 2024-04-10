@@ -47,18 +47,7 @@ const AddShoot = () => {
 
   const handleSubmit = async () => {
     try {
-      // need validation for:
-      // --title
-      // --blurb
-      // --
-      
-      const selectedModelIDs = [];
-
-      modelChooserIDs.forEach(modelChooser => {
-        if(modelChooser.modelID !== null) {
-          selectedModelIDs.push(modelChooser.modelID);
-        }
-      });
+      setIsLoading(true);
 
       const selectedPhotographerIDs = [];
 
@@ -67,6 +56,25 @@ const AddShoot = () => {
           selectedPhotographerIDs.push(photographerChooser.photographerID);
         }
       });
+
+      if(!selectedPhotographerIDs.length) {
+        setIsLoading(false);
+        return toast.error("Select at least one photographer");
+      }
+
+      const selectedModelIDs = [];
+
+      modelChooserIDs.forEach(modelChooser => {
+        if(modelChooser.modelID !== null) {
+          selectedModelIDs.push(modelChooser.modelID);
+        }
+      });
+
+
+      if(!selectedModelIDs.length) {
+        setIsLoading(false);
+        return toast.error("Select at least one model");
+      }
       
       const shoot = {};
       shoot.shoot_date = newShootDate.toISOString().split('T')[0];
@@ -86,9 +94,7 @@ const AddShoot = () => {
       const token = localStorage.getItem('token');
 
       if(!token) {
-          setIsLoading(true);
-          setIsLoggedIn(false);
-          navigate('/home');
+        navigate('/home');
         return toast.error("Sorry please login again");
       }
 
@@ -96,8 +102,6 @@ const AddShoot = () => {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       };
-
-      setIsLoading(true);
 
        // Make POST request
       const response = await fetch(`${BASE_URL}/shoots/add`, {
@@ -111,14 +115,15 @@ const AddShoot = () => {
         throw new Error("Error creating shoot");
       } else {
         toast.success("Shoot added Successfully");
-        navigate('/home')
+        setTimeout(() => {
+          navigate('/home');
+        }, 500)
       }
     
     } catch(error) {
       console.log(error)
-      toast.error(error);
+      toast.error('Error creating shoot');
       setIsLoading(false);
-      // navigate('/home')
     }
   };
 
@@ -280,6 +285,9 @@ const AddShoot = () => {
                 value={newShootTitle}
                 onChange={handleTitleChange}
               />
+              <p className="addShoot__title-error">
+                Title must be between 3-50 characters.
+              </p>
             </div>
 
             <div className="addShoot__blurb-container">
@@ -297,14 +305,12 @@ const AddShoot = () => {
             <div  
               className="addShoot__photographersAndModels-container">
 
-            
-
               <div 
                 className="addShoot__photographerChoosers"
               >
                 <h3 className='addShoot__label'>
                   Choose At Least One Photographer
-                  </h3>
+                </h3>
 
                 {photographerChooserIDs.map((chooser, idx) => (
                   <PhotographerChooser
@@ -348,17 +354,17 @@ const AddShoot = () => {
             <div className="addShoot__button-container">
 
               <div 
-                className="addShoot__button addShoot__button--cancel" 
-                onClick={handleCancel}
-              >
-                Cancel
-              </div>
-
-              <div 
                 className="addShoot__button addShoot__button--submit" 
                 onClick={handleSubmit}
               >
                 Submit
+              </div>
+
+              <div 
+                className="addShoot__button addShoot__button--cancel" 
+                onClick={handleCancel}
+              >
+                Cancel
               </div>
             </div>
       

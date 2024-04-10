@@ -33,8 +33,7 @@
     height: 2rem;
     margin-bottom: 0.125rem;
     margin-inline: auto;
-    max-width: 15rem;
-    width: 40%;
+    width: 100%;
     
     @media(min-width: $tablet) {
       margin-bottom: 0.75rem;
@@ -45,7 +44,7 @@
       color: var(--text-color);
       font-size: 1.125rem;
       font-weight: normal;
-      text-align: center;
+      text-align: right;
       transition: color 0.2s ease-out;
     }
   }
@@ -114,7 +113,7 @@
   &__photo-container {
     
     img {
-      box-shadow: var(--box-shadow);
+      // box-shadow: var(--box-shadow);
     }
   }
 }

@@ -1,13 +1,18 @@
 import { useState, useEffect, useContext } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams, useNavigate } from 'react-router-dom';
 import Shoot from '../Shoot/Shoot.jsx';
 import AppContext from '../../AppContext.jsx';
 import DeleteShootModal from '../DeleteShootModal/DeleteShootModal.jsx'
 import PlaceholderShoot from '../PlaceholderShoot/PlaceholderShoot.jsx';
+import { toast } from 'react-toastify';
 import './Shoots.scss';
 
 const Shoots = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+  const { shoot_id } = useParams();
+
+  const navigate = useNavigate();
   
   const { 
     scrollYPos, 
@@ -28,22 +33,39 @@ const Shoots = () => {
   const [ shouldUpdate, setShouldUpdate ] = useState(true);
   const [ isLoadingInitial, setIsLoadingInitial ] = useState(true);
   const [ isOnShootDetails, setIsOnShootDetails ] = useState(location.pathname.includes('/shoot/'));
+  const [ currentShootId, setCurrentShootId ] = useState(shoot_id)
 
   const itemsPerPage = 10;
   const isLoadingInterval = 250;
 
+  const handleNewShootId = (shootId) => {
+    setCurrentPage(1);
+    setShootsData([]);
+    setCurrentShootId(shootId);
+    setShouldUpdate(true);
+  }
+
   useEffect(() => {
     const fetchShoots = async () => {
       if(shouldUpdate) {
-
         setIsLoading(true);
           
         try {
+
           const response = await fetch(`${BASE_URL}/shoots/all?page=${currentPage}&limit=${itemsPerPage}`);
 
           if(response.ok) {
             const data = await response.json();
-            setShootsData([...shootsData, ...data]);
+
+            let filteredData = [...data];
+
+            if(isOnShootDetails) {
+              const currentShoot = shoot_id;
+              filteredData = data.filter(shoot => shoot.shoot_id !== +currentShoot);
+            }            
+            
+            setShootsData([...shootsData, ...filteredData]);
+
             setTimeout(() => {
               setIsLoading(false); 
             }, isLoadingInterval);
@@ -60,18 +82,18 @@ const Shoots = () => {
                 setIsLoading(false)
               }, isLoadingInterval);
             }
-          } else {
-            console.error('Failed to fetch shoots:', response.statusText);
-            toast.error(`Failed to fetch shoots:, ${response.statusText}`);
           }
-          
         } catch(error) {
           console.log(`Error fetching shoots: ${error}`)
+          toast.error(`Failed to fetch shoots:, ${error}`);
+          setTimeout(() => {
+            setIsLoading(false);
+          }, isLoadingInterval);
         }
       }
     }
     fetchShoots();
-  }, [currentPage]);
+  }, [currentPage, currentShootId]);
 
   
   useEffect(() => {
@@ -134,6 +156,7 @@ const Shoots = () => {
                 showDeleteModal={showDeleteModal}
                 setShowDeleteModal={setShowDeleteModal}
                 isOnShootDetails={isOnShootDetails}
+                handleNewShootId={handleNewShootId}
               />
             </Link>
           ))}
