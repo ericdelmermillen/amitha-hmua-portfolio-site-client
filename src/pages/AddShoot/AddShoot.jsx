@@ -20,8 +20,6 @@ const AddShoot = () => {
     setIsLoggedIn,
   } = useContext(AppContext);
 
-  const [ newShootTitle, setNewShootTitle ] = useState("");
-  const [ newShootBlurb, setNewShootBlurb ] = useState("");
   const [ newShootDate, setNewShootDate ] = useState(new Date());
   
   // models
@@ -31,15 +29,6 @@ const AddShoot = () => {
   // photographers
   const [ photographers, setPhotographers ] = useState([]);
   const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([{ chooserIdx: 1, photographerID: null}]);
-
-
-  const handleTitleChange = (event) => {
-    setNewShootTitle(event.target.value);
-  };
-
-  const handleBlurbChange = (event) => {
-    setNewShootBlurb(event.target.value);
-  };
 
   const handleCancel = () => {
     navigate('/home')
@@ -70,7 +59,6 @@ const AddShoot = () => {
         }
       });
 
-
       if(!selectedModelIDs.length) {
         setIsLoading(false);
         return toast.error("Select at least one model");
@@ -78,8 +66,6 @@ const AddShoot = () => {
       
       const shoot = {};
       shoot.shoot_date = newShootDate.toISOString().split('T')[0];
-      shoot.shoot_title = newShootTitle;
-      shoot.shoot_blurb = newShootBlurb;
       shoot.model_ids = selectedModelIDs;
       shoot.photographer_ids = selectedPhotographerIDs;
       shoot.photo_urls = [
@@ -273,35 +259,6 @@ const AddShoot = () => {
                 />
             </div>
 
-            <div className="addShoot__title-container">
-              <label className="addShoot__label" htmlFor="addShootTitle">
-                Title:
-              </label>
-              <input
-                className="addShoot__title-input"
-                type="text"
-                id="addShootTitle"
-                placeholder="Shoot Title"
-                value={newShootTitle}
-                onChange={handleTitleChange}
-              />
-              <p className="addShoot__title-error">
-                Title must be between 3-50 characters.
-              </p>
-            </div>
-
-            <div className="addShoot__blurb-container">
-              <label className="addShoot__label" htmlFor="newShootBlurb">
-                Blurb:
-              </label>
-              <textarea
-                className="addShoot__blurb-input"
-                id="newShootBlurb"
-                placeholder="Shoot Description"
-                value={newShootBlurb}
-                onChange={handleBlurbChange}
-              ></textarea>
-            </div>
             <div  
               className="addShoot__photographersAndModels-container">
 

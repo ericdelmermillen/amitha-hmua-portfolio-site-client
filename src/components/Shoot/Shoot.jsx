@@ -4,7 +4,6 @@ import Delete from '../../assets/icons/Delete';
 import './Shoot.scss';
 
 const Shoot = ({ 
-  title, 
   shoot_id, 
   thumbnail_url, 
   models, 
@@ -52,7 +51,7 @@ const Shoot = ({
         <img 
           className='shoot__img'
           src={thumbnail_url} 
-          alt={`Thumbnail for "${title}" shoot`} 
+          alt={`Thumbnail for "${shoot_id}" shoot`} 
         />
         <div 
           className={`shoot__info ${isOnShootDetails && "smallText"}`}

@@ -149,7 +149,6 @@ const Shoots = () => {
               <Shoot
                 key={shoot.shoot_id}
                 shoot_id={shoot.shoot_id}
-                title={shoot.shoot_title}
                 thumbnail_url={shoot.thumbnail_url}
                 models={shoot.models}
                 photographers={shoot.photographers}

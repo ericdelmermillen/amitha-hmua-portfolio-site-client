@@ -42,8 +42,6 @@
     flex-direction: column;
     left: 50%;
     gap: 0.5rem;
-    // position: absolute;
-    // transform: translateX(-50%);
   }
 
   &__date-picker {
@@ -58,40 +56,6 @@
   &__label {
     display: none;
     text-align: center;
-  }
-
-  &__title-container {
-    border-radius: $borderRadius;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    height: 4.25rem;
-
-    @media(min-width: $desktop) {
-      margin-inline: auto;
-      width: 900px;
-    }
-  }
-  
-  &__title-input {
-    @include input;
-  }
-  
-  &__blurb-container  {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-
-    @media(min-width: $desktop) {
-      margin-inline: auto;
-      width: 900px;
-    }
-  }
-  
-  &__blurb-input {
-    @include input;
-    resize: none;
-    height: 12rem;
   }
 
   &__photographersAndModels-container {
