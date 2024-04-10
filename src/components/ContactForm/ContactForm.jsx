@@ -86,12 +86,14 @@ const ContactForm = () => {
     e.preventDefault();
 
     if(firstName.length < 2) {
+      toast.error("Invalid First Name");
       return setFirstNameIsInvalid(true);
     } else {
       setFirstNameIsInvalid(false);
     }
 
     if(lastName.length < 2) {
+      toast.error("Invalid Last Name");
       return setLastNameIsInvalid(true);
     } else {
       setLastNameIsInvalid(false);
@@ -100,21 +102,23 @@ const ContactForm = () => {
     if(isValidEmail(email)) {
       setEmailIsInvalid(false);
     } else {
+      toast.error("Invalid Email");
       return setEmailIsInvalid(true);
     }
 
     if(subject.length <= 10) {
+      toast.error("Invalid Subject");
       return setSubjectIsInvalid(true);
     } else {
       setSubjectIsInvalid(false);
     }
 
     if(message.length < 25) {
+      toast.error("Invalid Message");
       return setMessageIsInvalid(true);
     } else {
       setMessageIsInvalid(false);
     }
-    
     
     const formData = {
       firstName,
