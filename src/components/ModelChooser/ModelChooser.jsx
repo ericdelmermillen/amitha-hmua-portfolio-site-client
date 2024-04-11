@@ -27,6 +27,11 @@ const ModelChooser = ({
   const handleSetModel = (event) => {
     const chosenModel = +event.target.value;
 
+    if(!chosenModel) {
+      return;
+    }
+
+
     for(let modelChooser of modelChooserIDs) {
       if(modelChooser.chooserIdx === modelChooserIdx) {
         modelChooser.modelID = chosenModel

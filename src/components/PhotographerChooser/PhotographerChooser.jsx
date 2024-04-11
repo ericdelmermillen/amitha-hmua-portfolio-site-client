@@ -26,6 +26,10 @@ const PhotographerChooser = ({
   const handleSetPhotographer = (event) => {
     const chosenPhotographer = +event.target.value;
 
+    if(!chosenPhotographer) {}
+
+    console.log(chosenPhotographer)
+
     for(let photographerChooser of photographerChooserIDs) {
       if(photographerChooser.chooserIdx === photographerChooserIdx) {
         photographerChooser.photographerID = chosenPhotographer

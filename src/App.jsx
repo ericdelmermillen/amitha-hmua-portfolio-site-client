@@ -18,6 +18,7 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
 import AddPhotographerModal from './components/AddPhotographerModal/AddPhotographerModal';
+import DeleteShootModal from './components/DeleteShootModal/DeleteShootModal';
 
 const App = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -40,7 +41,8 @@ const App = () => {
     setSelectedShoot,
     showDeleteModal, 
     setShowDeleteModal,
-    showAddPhotographerModal, setShowAddPhotographerModal,
+    showAddPhotographerModal, 
+    setShowAddPhotographerModal,
     isLoading, 
     setIsLoading
   } = useContext(AppContext);
@@ -86,35 +88,6 @@ const App = () => {
     };
   }, [scrollYPos]);
 
-
-  const handleDeleteShoot = async () => {
-    if(isLoggedIn) {
-      try {
-        const response = await fetch(`${BASE_URL}/shoots/delete/${selectedShoot}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-  
-        if(response.ok) {
-          setShowDeleteModal(false);
-          toast.success(`Shoot ${selectedShoot} successfully  deleted.`); 
-          setSelectedShoot(null);
-        } else {
-          toast.error(`Failed to delete Shoot ${selectedShoot}`)
-          console.error(`Failed to delete Shoot ${selectedShoot}: ${response.statusText}`);
-          setShowDeleteModal(false);
-          setSelectedShoot(null);
-        }
-      } catch (error) {
-        console.error(`Error deleting Shoot ${selectedShoot}: ${error}`);
-      }
-    } else {
-      console.log("Sorry please login again");
-    }
-  };
-  
   return (
     <>
       <div className="app" data-color-mode={colorMode}>
@@ -181,6 +154,15 @@ const App = () => {
       {showAddPhotographerModal 
 
         ? <AddPhotographerModal />
+        : null
+      }
+
+      {isLoggedIn && showDeleteModal
+      
+        ? <DeleteShootModal 
+            showDeleteModal={showDeleteModal}
+            setShowDeleteModal={setShowDeleteModal}
+          />
         : null
       }
       </div>

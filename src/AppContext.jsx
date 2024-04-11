@@ -16,7 +16,8 @@ export const AppProvider = ({ children }) => {
   const [ showDeleteModal, setShowDeleteModal ] = useState(false);
   const [ showAddPhotographerModal, setShowAddPhotographerModal ] = useState(false);
   const [ isLoading, setIsLoading ] = useState(false); 
-  const [ shouldUpdatePhotographers, setShouldUpdatePhotographers ] = useState(false)
+  const [ shouldUpdateShoots, setShouldUpdateShoots ] = useState(false);
+  const [ shouldUpdatePhotographers, setShouldUpdatePhotographers ] = useState(false);
 
   const navigate = useNavigate(); 
 
@@ -88,7 +89,10 @@ export const AppProvider = ({ children }) => {
     setShowDeleteModal,
     showAddPhotographerModal, 
     setShowAddPhotographerModal,
-    shouldUpdatePhotographers, setShouldUpdatePhotographers,
+    shouldUpdatePhotographers, 
+    setShouldUpdatePhotographers,
+    shouldUpdateShoots, 
+    setShouldUpdateShoots,
     isLoading, 
     setIsLoading
    }

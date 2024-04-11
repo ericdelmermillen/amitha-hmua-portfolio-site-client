@@ -2,10 +2,11 @@ import { useState, useEffect, useContext } from 'react';
 import { Link, useLocation, useParams, useNavigate } from 'react-router-dom';
 import Shoot from '../Shoot/Shoot.jsx';
 import AppContext from '../../AppContext.jsx';
-import DeleteShootModal from '../DeleteShootModal/DeleteShootModal.jsx'
 import PlaceholderShoot from '../PlaceholderShoot/PlaceholderShoot.jsx';
 import { toast } from 'react-toastify';
 import './Shoots.scss';
+
+// issue with pagination and placeholders rendering when near bottom of page changing viewport height and causing selectedShoot to not be defined or null
 
 const Shoots = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -23,6 +24,8 @@ const Shoots = () => {
     setSelectedShoot,
     showDeleteModal, 
     setShowDeleteModal,
+    shouldUpdateShoots, 
+    setShouldUpdateShoots,
     isLoading, 
     setIsLoading
   } = useContext(AppContext);
@@ -36,7 +39,7 @@ const Shoots = () => {
   const [ isOnShootDetails, setIsOnShootDetails ] = useState(location.pathname.includes('/shoot/'));
   const [ currentShootId, setCurrentShootId ] = useState(shoot_id)
 
-  const itemsPerPage = 10;
+  const itemsPerPage = 2;
   const isLoadingInterval = 250;
 
   const handleNewShootId = (shootId) => {
@@ -48,6 +51,14 @@ const Shoots = () => {
 
   useEffect(() => {
     const fetchShoots = async () => {
+
+      // if(shouldUpdateShoots) {
+      //   setCurrentPage(1);
+      //   setShouldUpdate(true);
+      //   setShootsData([]);
+      //   setShouldUpdateShoots(false);
+      // }
+
       if(shouldUpdate) {
         setIsLoading(true);
           
@@ -95,7 +106,16 @@ const Shoots = () => {
     }
     fetchShoots();
   }, [currentPage, currentShootId]);
+  // }, [currentPage, currentShootId, shouldUpdateShoots]);
 
+  useEffect(() => {
+      if(shouldUpdateShoots) {
+        setCurrentPage(1);
+        setShouldUpdate(true);
+        setShootsData([]);
+        setShouldUpdateShoots(false);
+      } 
+  }, [shouldUpdateShoots])
   
   useEffect(() => {
     if(shouldUpdate) {
@@ -106,7 +126,7 @@ const Shoots = () => {
         const windowHeight = window.innerHeight;
         
         if(scrollYPos !== undefined && setPrevScrollYPos !== undefined && newScrollYPos !== scrollYPos) {
-          setShowDeleteModal(false);
+          // setShowDeleteModal(false);
           setSelectedShoot(null);
         } else if (newScrollYPos + windowHeight >= documentHeight - 1250) {
           if(!isLoading) {
@@ -169,16 +189,6 @@ const Shoots = () => {
           ))}
         </div>
       </div>
-
-      {showDeleteModal && 
-        
-        <DeleteShootModal 
-          showDeleteModal={showDeleteModal}
-          setShowDeleteModal={setShowDeleteModal}
-          shootsData={shootsData}
-          setShootsData={setShootsData}
-        />
-      }
     </>
   )};
 

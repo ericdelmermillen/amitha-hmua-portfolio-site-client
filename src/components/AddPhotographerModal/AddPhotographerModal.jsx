@@ -6,11 +6,9 @@ import { toast } from "react-toastify";
 
 // Define the component
 const AddPhotographerModal = () => {
-  
-  // Initialize the BASE_URL using environment variables
+
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-  // Destructure values from the AppContext
   const { 
     isLoggedIn, 
     setIsLoggedIn,
@@ -26,7 +24,6 @@ const AddPhotographerModal = () => {
 
   // Event handler for changes in the photographer name input
   const handlePhotographerNameChange = (e) => {
-    // Update the newPhotographerName state with the input value
     setNewPhotographerName(e.target.value);
   }
   
@@ -40,6 +37,11 @@ const AddPhotographerModal = () => {
   const handleAddPhotographer = async () => {
     // add validation for valid newPhotographerName
     if(isLoggedIn) {
+
+      if(newPhotographerName.length < 2) {
+        return toast.error("Photographer names must be at least 2 characters long");
+      }
+
       try {
         setIsLoading(true)
         const response = await fetch(`${BASE_URL}/photographers/add/`, {
@@ -58,13 +60,15 @@ const AddPhotographerModal = () => {
           setNewPhotographerName('');
           setShouldUpdatePhotographers(true);
           setIsLoading(false);
+        } else if(response.status === 409) {
+          setIsLoading(false);
+          return toast.error(`Photographer ${newPhotographerName} already exists`)
         } else {
           toast.error(`Failed to add photographer ${newPhotographerName}`);
           console.error(`Failed to add photographer ${newPhotographerName}: ${response.statusText}`);
           setShowAddPhotographerModal(false);
           setNewPhotographerName('');
           setIsLoading(false);
-          // add handling for if photographer already exists
         }
       } catch (error) {
         console.error(`Error adding ${newPhotographerName}: ${error}`);

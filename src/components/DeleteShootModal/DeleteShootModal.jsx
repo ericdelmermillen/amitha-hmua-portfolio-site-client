@@ -5,10 +5,7 @@ import { toast } from "react-toastify";
 
 
 const DeleteShootModal = ({ 
-  showDeleteModal, 
-  setShowDeleteModal, 
-  shootsData, 
-  setShootsData 
+  
 }) => {
   
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -17,7 +14,11 @@ const DeleteShootModal = ({
     isLoggedIn, 
     setIsLoggedIn,
     selectedShoot, 
-    setSelectedShoot
+    setSelectedShoot,
+    shouldUpdateShoots,
+    setShouldUpdateShoots,
+    showDeleteModal, 
+    setShowDeleteModal
   } = useContext(AppContext);
 
   const handleCloseModal = () => {
@@ -36,8 +37,7 @@ const DeleteShootModal = ({
         });
 
         if(response.ok) {
-          const newShootData = shootsData.filter(shoot => shoot.shoot_id !== selectedShoot); 
-          setShootsData(newShootData);
+          setShouldUpdateShoots(true);
           setShowDeleteModal(false);
           toast.success(`Shoot ${selectedShoot} successfully  deleted.`); 
           setSelectedShoot(null);
@@ -62,7 +62,10 @@ const DeleteShootModal = ({
         className="deleteShootModal"
         onClick={handleCloseModal}
       >
-        <div className="deleteShootModal__modal">
+        <div 
+          className="deleteShootModal__modal"
+          onClick={(e) => e.stopPropagation()}
+        >
           <h3 className="deleteShootModal__heading">
             Delete Shoot Number {selectedShoot}?
           </h3>
