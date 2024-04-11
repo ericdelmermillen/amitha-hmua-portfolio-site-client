@@ -21,6 +21,8 @@ const Shoots = () => {
     setPrevScrollYPos,
     selectedShoot, 
     setSelectedShoot,
+    showDeleteModal, 
+    setShowDeleteModal,
     isLoading, 
     setIsLoading
   } = useContext(AppContext);
@@ -28,7 +30,6 @@ const Shoots = () => {
   const location = useLocation();
 
   const [ shootsData, setShootsData ] = useState([]);
-  const [ showDeleteModal, setShowDeleteModal ] = useState(false);
   const [ currentPage, setCurrentPage ] = useState(1);
   const [ shouldUpdate, setShouldUpdate ] = useState(true);
   const [ isLoadingInitial, setIsLoadingInitial ] = useState(true);

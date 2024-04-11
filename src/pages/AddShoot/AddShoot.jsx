@@ -18,6 +18,10 @@ const AddShoot = () => {
     setIsLoading,
     isLoggedIn, 
     setIsLoggedIn,
+    showAddPhotographerModal, 
+    setShowAddPhotographerModal,
+    shouldUpdatePhotographers,
+    setShouldUpdatePhotographers
   } = useContext(AppContext);
 
   const [ newShootDate, setNewShootDate ] = useState(new Date());
@@ -29,6 +33,10 @@ const AddShoot = () => {
   // photographers
   const [ photographers, setPhotographers ] = useState([]);
   const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([{ chooserIdx: 1, photographerID: null}]);
+
+  const handleShowAddPhotographerModal = () => {
+    setShowAddPhotographerModal(true);
+  }
 
   const handleCancel = () => {
     navigate('/home')
@@ -225,9 +233,10 @@ const AddShoot = () => {
         }, 250);
       }
     };
+    setShouldUpdatePhotographers(false);
 
     fetchPhotographers();
-  }, [BASE_URL, setIsLoading]);
+  }, [BASE_URL, setIsLoading, shouldUpdatePhotographers]);
 
 
   // initial load useEffect
@@ -269,6 +278,13 @@ const AddShoot = () => {
                   Choose At Least One Photographer
                 </h3>
 
+                <h4 
+                  className="addShoot__textButton"
+                  onClick={handleShowAddPhotographerModal}
+                >
+                  Add New Photographer
+                </h4>
+
                 {photographerChooserIDs.map((chooser, idx) => (
                   <PhotographerChooser
                     key={chooser.chooserIdx}
@@ -290,6 +306,10 @@ const AddShoot = () => {
                 <h3 className='addShoot__label'>
                   Choose At Least One Model
                 </h3>
+
+                <h4 className="addShoot__textButton">
+                  Add New Model
+                </h4>
                 
                 {modelChooserIDs.map((chooser) => (
                   <ModelChooser

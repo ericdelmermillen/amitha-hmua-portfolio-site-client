@@ -17,6 +17,7 @@ import { scrollToTop } from './utils/utils';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
+import AddPhotographerModal from './components/AddPhotographerModal/AddPhotographerModal';
 
 const App = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -37,6 +38,9 @@ const App = () => {
     setPrevScrollYPos,
     selectedShoot, 
     setSelectedShoot,
+    showDeleteModal, 
+    setShowDeleteModal,
+    showAddPhotographerModal, setShowAddPhotographerModal,
     isLoading, 
     setIsLoading
   } = useContext(AppContext);
@@ -173,6 +177,12 @@ const App = () => {
           pauseOnHover={false}
           theme="light"/>
       </div>
+
+      {showAddPhotographerModal 
+
+        ? <AddPhotographerModal />
+        : null
+      }
       </div>
     </>
   )};

@@ -162,6 +162,12 @@
     &:focus, &:active {
       outline: none;
     }
+
+    &__option {
+      color: red;
+      text-align: center;
+      border: 2px solid red;
+    }
   }
 
   &__button-container {

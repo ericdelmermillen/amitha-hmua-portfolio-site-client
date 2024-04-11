@@ -12,7 +12,7 @@ const PhotographerChooser = ({
   setPhotographers,
   photographerChooserIDs, 
   setPhotographerChooserIDs,
-  photographerID
+  photographerID,
 }) => {
 
   const { 
@@ -52,12 +52,16 @@ const PhotographerChooser = ({
           onChange={handleSetPhotographer}
           onBlur={handleSetPhotographer}
         >
-          <option value="">
+          <option 
+            value=""
+            className='photographerChooser__option'
+          >
             Select Photographer
           </option>
 
           {photographers.map((photographer) => (
             <option 
+              className="photographerChooser__option"
               key={photographer.id} 
               value={photographer.id}
               disabled={includesPhotographer(photographer.id)}

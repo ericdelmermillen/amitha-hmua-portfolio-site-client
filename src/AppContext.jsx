@@ -7,13 +7,16 @@ const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const [ isLoggedIn, setIsLoggedIn ] = useState(false);
-  const [ colorMode, setColorMode ] = useState(localStorage.getItem('colorMode'));
+  const [ colorMode, setColorMode ] = useState(localStorage.getItem('colorMode') || "light");
   // 
   const [ showSideNav, setShowSideNav ] = useState(false);
   const [ scrollYPos, setScrollYPos ] = useState(window.scrollY);
   const [ prevScrollYPos, setPrevScrollYPos ] = useState(window.scrollY);
   const [ selectedShoot, setSelectedShoot ] = useState(null);
+  const [ showDeleteModal, setShowDeleteModal ] = useState(false);
+  const [ showAddPhotographerModal, setShowAddPhotographerModal ] = useState(false);
   const [ isLoading, setIsLoading ] = useState(false); 
+  const [ shouldUpdatePhotographers, setShouldUpdatePhotographers ] = useState(false)
 
   const navigate = useNavigate(); 
 
@@ -81,6 +84,11 @@ export const AppProvider = ({ children }) => {
     setPrevScrollYPos,
     selectedShoot, 
     setSelectedShoot,
+    showDeleteModal, 
+    setShowDeleteModal,
+    showAddPhotographerModal, 
+    setShowAddPhotographerModal,
+    shouldUpdatePhotographers, setShouldUpdatePhotographers,
     isLoading, 
     setIsLoading
    }

@@ -3,4 +3,10 @@
 
 .photographerChooser {
   @include selectChooser;
+
+}
+
+.photographerChooser__option {
+  color: red;
+  text-align: center;
 }
