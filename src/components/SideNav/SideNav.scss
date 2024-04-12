@@ -9,13 +9,13 @@
   left: 100vw;
   position: fixed;
   top: 0;
-  transition: all 0.5s ease-in;
+  transition: all 0.35s ease-in;
   width: 50vw;
   z-index: 5;
   
   &.show {
     left: 50vw;
-    transition: all 0.5s ease-out;
+    transition: all 0.35s ease-out;
   }
 
   &__inner {
@@ -45,6 +45,7 @@
 
   &__link {
     color: var(--text-color);
+    cursor: pointer;
     font-size: 1.5rem;
     font-weight: bold;
   }

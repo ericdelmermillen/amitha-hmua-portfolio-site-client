@@ -1,6 +1,6 @@
-import { useContext } from 'react';
-import { Link, useLocation } from 'react-router-dom';
 import AppContext from '../../AppContext';
+import { useContext } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { scrollToTop } from '../../utils/utils';
 import ColorModeToggle from '../ColorModeToggle/ColorModeToggle';
 import './SideNav.scss';
@@ -14,23 +14,42 @@ const SideNav = ({ handleLogOut }) => {
    } = useContext(AppContext);
 
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const timeOutValue = 300;
 
   const handleNavLinkHome = () => {
     if(location.pathname === "/" || location.pathname === "/home") {
       setShowSideNav(false);
       scrollToTop();
     }
+     else {
+      setShowSideNav(false);
+      setTimeout(() => {
+        navigate('/')
+      }, timeOutValue)
+    }
   };
   
   const handleNavLinkBio = () => {
     if(location.pathname === "/bio") {
       setShowSideNav(false);
+    } else {
+      setShowSideNav(false);
+      setTimeout(() => {
+        navigate('/bio')
+      }, timeOutValue)
     }
   };
   
   const handleNavLinkContact = () => { 
     if(location.pathname === "/contact") {
       setShowSideNav(false);
+    } else {
+      setShowSideNav(false);
+      setTimeout(() => {
+        navigate('/contact')
+      }, timeOutValue)
     }
   };
   
@@ -61,27 +80,24 @@ const SideNav = ({ handleLogOut }) => {
           
           <div className="sideNav__menu">
             <ul className='sideNav__links'>
-              <Link to={'/'}
+              <li 
+                className='sideNav__link'
                 onClick={handleNavLinkHome}
               >
-                <li className='sideNav__link'>
-                  Work
-                </li>
-              </Link>
-              <Link to={'/bio'}
+                Work
+              </li>
+              <li 
+                className='sideNav__link'
                 onClick={handleNavLinkBio}
               >
-                <li className='sideNav__link'>
-                  Bio
-                </li>
-              </Link>
-              <Link to={'/contact'}
+                Bio
+              </li>
+              <li 
+                className='sideNav__link'
                 onClick={handleNavLinkContact}
               >
-                <li className='sideNav__link'>
-                  Contact
-                </li>
-              </Link>
+                Contact
+              </li>
               <a href="https://www.instagram.com/amitha_hmua/" target="_blank">
                 <li 
                   className='sideNav__link'
