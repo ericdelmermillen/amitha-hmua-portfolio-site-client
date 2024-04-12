@@ -3,27 +3,23 @@ import AppContext from '../../AppContext';
 import { useContext } from 'react';
 import { toast } from "react-toastify";
 
-
-const DeleteShootModal = ({ 
-  
-}) => {
+const DeleteShootModal = () => {
   
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const { 
     isLoggedIn, 
     setIsLoggedIn,
-    selectedShoot, 
-    setSelectedShoot,
     shouldUpdateShoots,
     setShouldUpdateShoots,
+    selectedShoot, 
+    setSelectedShoot,
     showDeleteModal, 
     setShowDeleteModal
   } = useContext(AppContext);
 
   const handleCloseModal = () => {
     setShowDeleteModal(false);
-    setSelectedShoot(null);
   }
 
   const handleDeleteShoot = async () => {
@@ -40,12 +36,10 @@ const DeleteShootModal = ({
           setShouldUpdateShoots(true);
           setShowDeleteModal(false);
           toast.success(`Shoot ${selectedShoot} successfully  deleted.`); 
-          setSelectedShoot(null);
         } else {
           toast.error(`Failed to delete Shoot ${selectedShoot}`);
           console.error(`Failed to delete Shoot ${selectedShoot}: ${response.statusText}`);
           setShowDeleteModal(false);
-          setSelectedShoot(null);
         }
       } catch (error) {
         console.error(`Error deleting Shoot ${selectedShoot}: ${error}`);

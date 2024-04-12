@@ -1,6 +1,9 @@
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
-import AppContext from './AppContext'; 
 import { useEffect, useContext } from 'react';
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { scrollToTop } from './utils/utils';
+import AppContext from './AppContext'; 
 import Home from './pages/Home/Home';
 import NotFound from './pages/NotFound/NotFound';
 import Bio from './pages/Bio/Bio';
@@ -13,16 +16,11 @@ import ShootDetails from './pages/ShootDetails/ShootDetails';
 import AddShoot from './pages/AddShoot/AddShoot';
 import UpIcon from './assets/icons/UpIcon';
 import AddIcon from './assets/icons/AddIcon';
-import { scrollToTop } from './utils/utils';
-import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
-import './App.scss';
 import AddPhotographerModal from './components/AddPhotographerModal/AddPhotographerModal';
 import DeleteShootModal from './components/DeleteShootModal/DeleteShootModal';
+import './App.scss';
 
 const App = () => {
-  // const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -37,12 +35,10 @@ const App = () => {
     setScrollYPos,
     prevScrollYPos, 
     setPrevScrollYPos,
-    selectedShoot, 
-    setSelectedShoot,
-    showDeleteModal, 
-    setShowDeleteModal,
     showAddPhotographerModal, 
     setShowAddPhotographerModal,
+    showDeleteModal, 
+    setShowDeleteModal,
     isLoading, 
     setIsLoading
   } = useContext(AppContext);
@@ -133,7 +129,10 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/shoot/:shoot_id" element={<ShootDetails />} />
           <Route path="/login" element={<Login />} />
-          {isLoggedIn && <Route path="/shoots/add" element={<AddShoot />} />}
+          {isLoggedIn 
+            ? <Route path="/shoots/add" element={<AddShoot />} />
+            : null
+          }
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

@@ -21,11 +21,9 @@ const Shoot = ({
   } = useContext(AppContext);
   
   const handleDeleteClick = (e) => {
+    setSelectedShoot(shoot_id)
     e.preventDefault();
-    console.log(selectedShoot)
-    console.log(shoot_id)
-    
-    setSelectedShoot(shoot_id);
+    e.stopPropagation();
     setShowDeleteModal(true);
   }
 
