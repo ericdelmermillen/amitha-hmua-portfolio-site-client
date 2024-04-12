@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { Link, useLocation, useParams, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import Shoot from '../Shoot/Shoot.jsx';
 import AppContext from '../../AppContext.jsx';
 import PlaceholderShoot from '../PlaceholderShoot/PlaceholderShoot.jsx';
@@ -12,8 +12,6 @@ const Shoots = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const { shoot_id } = useParams();
-
-  const navigate = useNavigate();
   
   const { 
     scrollYPos, 
@@ -37,9 +35,9 @@ const Shoots = () => {
   const [ shouldUpdate, setShouldUpdate ] = useState(true);
   const [ isLoadingInitial, setIsLoadingInitial ] = useState(true);
   const [ isOnShootDetails, setIsOnShootDetails ] = useState(location.pathname.includes('/shoot/'));
-  const [ currentShootId, setCurrentShootId ] = useState(shoot_id)
+  const [ currentShootId, setCurrentShootId ] = useState(shoot_id);
 
-  const itemsPerPage = 2;
+  const itemsPerPage = 10;
   const isLoadingInterval = 250;
 
   const handleNewShootId = (shootId) => {
@@ -128,7 +126,7 @@ const Shoots = () => {
         if(scrollYPos !== undefined && setPrevScrollYPos !== undefined && newScrollYPos !== scrollYPos) {
           // setShowDeleteModal(false);
           setSelectedShoot(null);
-        } else if (newScrollYPos + windowHeight >= documentHeight - 1250) {
+        } else if (newScrollYPos + windowHeight >= documentHeight - 100) {
           if(!isLoading) {
             setCurrentPage((prevPage) => prevPage + 1);
           }
@@ -179,13 +177,6 @@ const Shoots = () => {
                 handleNewShootId={handleNewShootId}
               />
             </Link>
-          ))}
-
-          {Array.from({ length: itemsPerPage }).map((_, index) => (
-            <PlaceholderShoot 
-              key={index} 
-              placeholderClass={`placeholderShoot ${(!isLoadingInitial && shouldUpdate && isLoading) ? "show" : ""}`}
-            />
           ))}
         </div>
       </div>

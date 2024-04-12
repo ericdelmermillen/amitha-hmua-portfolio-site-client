@@ -6,11 +6,11 @@
   @include page;
   
   &__inner {
-    margin-top: 2rem;
-    width: 90%;
     border: 2px solid var(--text-color);
     padding-block: 2rem;
     padding-inline: 1rem;
+    margin-top: 2rem;
+    width: 90%;
     
     @media(min-width: $tablet) {
       margin-top: 7rem;
@@ -40,8 +40,8 @@
     align-items: center;
     display: flex;
     flex-direction: column;
-    left: 50%;
     gap: 0.5rem;
+    left: 50%;
   }
 
   &__date-picker {
@@ -60,12 +60,12 @@
 
   &__textButton {
     color: var(--button-link);
-    text-align: center;
+    cursor: pointer;
     font-size: 1rem;
     font-weight: normal;
-    text-decoration: underline;
-    cursor: pointer;
     margin-bottom: -0.5rem;
+    text-align: center;
+    text-decoration: underline;
   }
 
   &__photographersAndModels-container {

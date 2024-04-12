@@ -18,8 +18,8 @@ body {
   color: var(--text-color);
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
   font-family: arial;
+  overflow-x: hidden;
 }
 
 ul, ol {
@@ -41,6 +41,7 @@ img {
 }
 
 .app {
+  background: var(--background-color);
   display: flex;
   flex-direction: column;
   justify-content: center;

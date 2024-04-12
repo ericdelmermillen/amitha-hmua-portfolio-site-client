@@ -32,13 +32,6 @@ const ShootDetails = () => {
     setShootIsLoaded(true)
   }
 
-  // Placeholder array
-  const placeholderPhotos = Array.from({ length: 1 }).map((_, idx) => ({
-    key: idx,
-    src: 'placeholder_url_here', // Placeholder URL
-    alt: `Placeholder photo ${idx + 1}`,
-  }));
-  
 
   useEffect(() => {
     scrollToTop();
@@ -82,13 +75,6 @@ const ShootDetails = () => {
         <div className="shootDetails__inner">
 
           <div className="shootDetails__photos">         
-              {placeholderPhotos.map((_, idx) =>
-                <div 
-                  className={`photoPlaceholder ${!isLoading && shootIsLoaded ? "hide": ""}`}
-                  key={idx}
-                >
-                </div>)}
-              
             {photos && photos.map((photo, idx) => 
               <div 
                 className="shootDetails__photo-container"
@@ -118,30 +104,12 @@ const ShootDetails = () => {
                       <div className="shootDetails__info">
                         
                         <h3   
-                          className={`shootDetails__photographers ${shootDetails && "show"}`}
-                        >
-                          {photographers && 
-
-                          <span   
-                            className="shootDetails__label"
-                          >
-                            {"Photos: "}
-                          </span>              
-
-                          }
-
-                          {shootDetails &&              
-                            photographers.length > 1 
-                            ? photographers.join(", ") 
-                            : photographers}
-                        </h3>
-                        <h3   
                           className={`shootDetails__models ${shootDetails && "show"}`}
                         >
                           {shootDetails && 
                             
                             <span 
-                              className={"models__label"}>
+                              className={"shootDetails__models-label"}>
                                 {models.length > 1 
                                 ? "Models: " 
                                 : "Model: "}
@@ -157,6 +125,25 @@ const ShootDetails = () => {
                           
                           }
                         </h3>
+
+                        <h3   
+                          className={`shootDetails__photographers ${shootDetails && "show"}`}
+                        >
+                          {photographers && 
+
+                          <span   
+                            className="shootDetails__photographers-label"
+                          >
+                            {"Photos: "}
+                          </span>              
+
+                          }
+
+                          {shootDetails &&              
+                            photographers.length > 1 
+                            ? photographers.join(", ") 
+                            : photographers}
+                        </h3>
                       </div>
                     </>
 
@@ -170,7 +157,9 @@ const ShootDetails = () => {
         </div>
         <div className="shootDetails__divider"></div>
         <div className="shootDetails__bottom">
-          <h3>Other Shoots:</h3>
+          <h3 className='shootDetails__bottom-text'>
+            Other Shoots
+          </h3>
           <Shoots />
         </div>
       </div>

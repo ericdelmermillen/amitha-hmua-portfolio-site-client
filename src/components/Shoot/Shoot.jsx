@@ -22,8 +22,11 @@ const Shoot = ({
   
   const handleDeleteClick = (e) => {
     e.preventDefault();
-    setShowDeleteModal(true);
+    console.log(selectedShoot)
+    console.log(shoot_id)
+    
     setSelectedShoot(shoot_id);
+    setShowDeleteModal(true);
   }
 
   return (

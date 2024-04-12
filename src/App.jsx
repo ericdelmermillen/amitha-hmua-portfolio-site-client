@@ -21,7 +21,7 @@ import AddPhotographerModal from './components/AddPhotographerModal/AddPhotograp
 import DeleteShootModal from './components/DeleteShootModal/DeleteShootModal';
 
 const App = () => {
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  // const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -48,13 +48,13 @@ const App = () => {
   } = useContext(AppContext);
   
   const handleLogOut = () => {
-    setIsLoading(true)
-    setIsLoggedIn(false)
+    setIsLoading(true);
+    setIsLoggedIn(false);
     localStorage.removeItem('token'); 
     setTimeout(() => {
       setIsLoading(false);
     }, 250)
-    navigate('/home')
+    navigate('/home');
     toast.success("Successfully logged out!");
   };
 
