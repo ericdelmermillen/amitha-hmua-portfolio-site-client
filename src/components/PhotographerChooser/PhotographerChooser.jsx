@@ -28,7 +28,7 @@ const PhotographerChooser = ({
 
     if(!chosenPhotographer) {}
 
-    console.log(chosenPhotographer)
+    // console.log(chosenPhotographer)
 
     for(let photographerChooser of photographerChooserIDs) {
       if(photographerChooser.chooserIdx === photographerChooserIdx) {
@@ -43,6 +43,8 @@ const PhotographerChooser = ({
   const includesPhotographer = (photographer_id) => {
     return photographerChooserIDs.some(({ photographerID }) => photographerID === photographer_id);
   };
+
+  // console.log(photographers)
 
   return (
     <div className="photographerChooser">

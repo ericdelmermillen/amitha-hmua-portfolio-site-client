@@ -14,12 +14,12 @@ const DeleteShootModal = () => {
     setShouldUpdateShoots,
     selectedShoot, 
     setSelectedShoot,
-    showDeleteModal, 
-    setShowDeleteModal
+    showDeleteShootModal, 
+    setShowDeleteShootModal
   } = useContext(AppContext);
 
   const handleCloseModal = () => {
-    setShowDeleteModal(false);
+    setShowDeleteShootModal(false);
   }
 
   const handleDeleteShoot = async () => {
@@ -34,12 +34,12 @@ const DeleteShootModal = () => {
 
         if(response.ok) {
           setShouldUpdateShoots(true);
-          setShowDeleteModal(false);
-          toast.success(`Shoot ${selectedShoot} successfully  deleted.`); 
+          setShowDeleteShootModal(false);
+          toast.success(`Shoot ${selectedShoot} successfully deleted.`); 
         } else {
           toast.error(`Failed to delete Shoot ${selectedShoot}`);
           console.error(`Failed to delete Shoot ${selectedShoot}: ${response.statusText}`);
-          setShowDeleteModal(false);
+          setShowDeleteShootModal(false);
         }
       } catch (error) {
         console.error(`Error deleting Shoot ${selectedShoot}: ${error}`);

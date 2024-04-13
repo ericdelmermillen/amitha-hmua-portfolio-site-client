@@ -8,8 +8,8 @@ const Shoot = ({
   thumbnail_url, 
   models, 
   photographers, 
-  showDeleteModal, 
-  setShowDeleteModal, 
+  // showDeleteShootModal,  
+  // setShowDeleteShootModal,
   isOnShootDetails,
   handleNewShootId}) => {
 
@@ -17,14 +17,16 @@ const Shoot = ({
     isLoggedIn, 
     setIsLoggedIn,
     selectedShoot, 
-    setSelectedShoot
+    setSelectedShoot,
+    showDeleteShootModal, 
+    setShowDeleteShootModal
   } = useContext(AppContext);
   
   const handleDeleteClick = (e) => {
     setSelectedShoot(shoot_id)
     e.preventDefault();
     e.stopPropagation();
-    setShowDeleteModal(true);
+    setShowDeleteShootModal(true);
   }
 
   return (

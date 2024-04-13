@@ -35,7 +35,6 @@ const AddPhotographerModal = () => {
 
   // Event handler for deleting the shoot
   const handleAddPhotographer = async () => {
-    // add validation for valid newPhotographerName
     if(isLoggedIn) {
 
       if(newPhotographerName.length < 2) {

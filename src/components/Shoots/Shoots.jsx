@@ -19,8 +19,8 @@ const Shoots = () => {
     setPrevScrollYPos,
     selectedShoot, 
     setSelectedShoot,
-    showDeleteModal, 
-    setShowDeleteModal,
+    showDeleteShootModal, 
+    setShowDeleteShootModal,
     shouldUpdateShoots, 
     setShouldUpdateShoots,
     isLoading, 
@@ -115,7 +115,6 @@ const Shoots = () => {
         const windowHeight = window.innerHeight;
         
         if(scrollYPos !== undefined && setPrevScrollYPos !== undefined && newScrollYPos !== scrollYPos) {
-          // setShowDeleteModal(false);
           setSelectedShoot(null);
         } else if (newScrollYPos + windowHeight >= documentHeight - 100) {
           if(!isLoading) {
@@ -162,8 +161,6 @@ const Shoots = () => {
                 thumbnail_url={shoot.thumbnail_url}
                 models={shoot.models}
                 photographers={shoot.photographers}
-                showDeleteModal={showDeleteModal}
-                setShowDeleteModal={setShowDeleteModal}
                 isOnShootDetails={isOnShootDetails}
                 handleNewShootId={handleNewShootId}
               />

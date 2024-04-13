@@ -12,12 +12,43 @@ export const AppProvider = ({ children }) => {
   const [ showSideNav, setShowSideNav ] = useState(false);
   const [ scrollYPos, setScrollYPos ] = useState(window.scrollY);
   const [ prevScrollYPos, setPrevScrollYPos ] = useState(window.scrollY);
+
   const [ selectedShoot, setSelectedShoot ] = useState(null);
-  const [ showDeleteModal, setShowDeleteModal ] = useState(false);
+
+  // state to show selectedPhotogOrModel ---
+  const [ selectedPhotogOrModel, setSelectedPhotogOrModel ] = useState();
+
+  // const [ selectedPhotogOrModel, setSelectedPhotogOrModel ] = useState(
+    // {
+    //   "id": 1,
+    //   "photographer_name": "Natasha Gerschon"
+    // }
+    // {
+    //   "id": 1,
+    //   "model_name": "Samira Salastname"
+    // },
+  // );
+  // ---
+
+  // modals start
+  const [ showDeleteShootModal, setShowDeleteShootModal ] = useState(false);
+  
+  // for rewriting add photog and add model
+  const [ showAddPhotogOrModelModal, setShowAddPhotogOrModelModal ] = useState(false);
+  
+  // for change to addPhotogOrModelModal
   const [ showAddPhotographerModal, setShowAddPhotographerModal ] = useState(false);
-  const [ isLoading, setIsLoading ] = useState(false); 
+  
+
+  const [ showDeletePhotogOrModelModal, setShowDeletePhotogOrModelModal ] = useState(false);
+  // modals end
+  
+  
+  
   const [ shouldUpdateShoots, setShouldUpdateShoots ] = useState(false);
+  const [ isLoading, setIsLoading ] = useState(false); 
   const [ shouldUpdatePhotographers, setShouldUpdatePhotographers ] = useState(false);
+  const [ shouldUpdateModels, setShouldUpdateModels ] = useState(false);
 
   const navigate = useNavigate(); 
 
@@ -85,10 +116,26 @@ export const AppProvider = ({ children }) => {
     setPrevScrollYPos,
     selectedShoot, 
     setSelectedShoot,
-    showDeleteModal, 
-    setShowDeleteModal,
+
+    // modals start
+    showDeleteShootModal, 
+    setShowDeleteShootModal,
+    
+    selectedPhotogOrModel, 
+    setSelectedPhotogOrModel,
+    showDeletePhotogOrModelModal, 
+    setShowDeletePhotogOrModelModal,
+
+
+
+    // change to addPhotogOrModelModal --
     showAddPhotographerModal, 
     setShowAddPhotographerModal,
+    
+
+    // modals end
+    selectedPhotogOrModel, 
+    setSelectedPhotogOrModel,
     shouldUpdatePhotographers, 
     setShouldUpdatePhotographers,
     shouldUpdateShoots, 

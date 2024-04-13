@@ -2,23 +2,26 @@ import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useContext } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { scrollToTop } from './utils/utils';
-import AppContext from './AppContext'; 
-import Home from './pages/Home/Home';
-import NotFound from './pages/NotFound/NotFound';
-import Bio from './pages/Bio/Bio';
-import Contact from './pages/Contact/Contact';
-import Login from './pages/Login/Login';
-import Nav from './components/Nav/Nav';
-import Footer from './components/Footer/Footer';
-import SideNav from './components/SideNav/SideNav';
-import ShootDetails from './pages/ShootDetails/ShootDetails';
-import AddShoot from './pages/AddShoot/AddShoot';
-import UpIcon from './assets/icons/UpIcon';
-import AddIcon from './assets/icons/AddIcon';
-import AddPhotographerModal from './components/AddPhotographerModal/AddPhotographerModal';
-import DeleteShootModal from './components/DeleteShootModal/DeleteShootModal';
+import { scrollToTop } from './utils/utils.js';
+import AppContext from './AppContext.jsx'; 
+import Home from './pages/Home/Home.jsx';
+import NotFound from './pages/NotFound/NotFound.jsx';
+import Bio from './pages/Bio/Bio.jsx';
+import Contact from './pages/Contact/Contact.jsx';
+import Login from './pages/Login/Login.jsx';
+import Nav from './components/Nav/Nav.jsx';
+import Footer from './components/Footer/Footer.jsx';
+import SideNav from './components/SideNav/SideNav.jsx';
+import ShootDetails from './pages/ShootDetails/ShootDetails.jsx';
+import AddShoot from './pages/AddShoot/AddShoot.jsx';
+import UpIcon from './assets/icons/UpIcon.jsx';
+import AddIcon from './assets/icons/AddIcon.jsx';
+// make AddPhotogOrModelModal
+import AddPhotographerModal from './components/AddPhotographerModal/AddPhotographerModal.jsx';
+// 
+import DeleteShootModal from './components/DeleteShootModal/DeleteShootModal.jsx';
 import './App.scss';
+import DeletePhotogOrModelModal from './components/DeletePhotogOrModelModal/DeletePhotogOrModelModal.jsx';
 
 const App = () => {
   const navigate = useNavigate();
@@ -35,10 +38,20 @@ const App = () => {
     setScrollYPos,
     prevScrollYPos, 
     setPrevScrollYPos,
+    
+    // modals start
     showAddPhotographerModal, 
     setShowAddPhotographerModal,
-    showDeleteModal, 
-    setShowDeleteModal,
+    showDeleteShootModal, 
+    setShowDeleteShootModal,
+    
+    // delete photog or model modal and state
+    selectedPhotogOrModel, 
+    setSelectedPhotogOrModel,
+    
+    showDeletePhotogOrModelModal, 
+    setShowDeletePhotogOrModelModal,
+    // modals end
     isLoading, 
     setIsLoading
   } = useContext(AppContext);
@@ -156,12 +169,15 @@ const App = () => {
         : null
       }
 
-      {isLoggedIn && showDeleteModal
+      {isLoggedIn && showDeleteShootModal
       
-        ? <DeleteShootModal 
-            showDeleteModal={showDeleteModal}
-            setShowDeleteModal={setShowDeleteModal}
-          />
+        ? <DeleteShootModal />
+        : null
+      }
+
+      {isLoggedIn && showDeletePhotogOrModelModal
+      
+        ? <DeletePhotogOrModelModal />
         : null
       }
       </div>
