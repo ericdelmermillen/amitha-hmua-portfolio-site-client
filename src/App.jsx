@@ -3,25 +3,24 @@ import { useEffect, useContext } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { scrollToTop } from './utils/utils.js';
+import AddShoot from './pages/AddShoot/AddShoot.jsx';
+import AddPhotogOrModelModal from '../src/components/AddPhotogOrModelModal/AddPhotogOrModelModal.jsx';
 import AppContext from './AppContext.jsx'; 
-import Home from './pages/Home/Home.jsx';
-import NotFound from './pages/NotFound/NotFound.jsx';
 import Bio from './pages/Bio/Bio.jsx';
 import Contact from './pages/Contact/Contact.jsx';
+import DeletePhotogOrModelModal from './components/DeletePhotogOrModelModal/DeletePhotogOrModelModal.jsx';
+import DeleteShootModal from './components/DeleteShootModal/DeleteShootModal.jsx';
+import EditPhotogOrModelModal from './components/EditPhotogOrModelModal/EditPhotogOrModelModal.jsx';
+import Footer from './components/Footer/Footer.jsx';
+import Home from './pages/Home/Home.jsx';
 import Login from './pages/Login/Login.jsx';
 import Nav from './components/Nav/Nav.jsx';
-import Footer from './components/Footer/Footer.jsx';
-import SideNav from './components/SideNav/SideNav.jsx';
+import NotFound from './pages/NotFound/NotFound.jsx';
 import ShootDetails from './pages/ShootDetails/ShootDetails.jsx';
-import AddShoot from './pages/AddShoot/AddShoot.jsx';
-import UpIcon from './assets/icons/UpIcon.jsx';
+import SideNav from './components/SideNav/SideNav.jsx';
 import AddIcon from './assets/icons/AddIcon.jsx';
-// make AddPhotogOrModelModal
-import AddPhotogOrModelModal from '../src/components/AddPhotogOrModelModal/AddPhotogOrModelModal.jsx';
-// 
-import DeleteShootModal from './components/DeleteShootModal/DeleteShootModal.jsx';
+import UpIcon from './assets/icons/UpIcon.jsx';
 import './App.scss';
-import DeletePhotogOrModelModal from './components/DeletePhotogOrModelModal/DeletePhotogOrModelModal.jsx';
 
 const App = () => {
   const navigate = useNavigate();
@@ -50,6 +49,11 @@ const App = () => {
     setSelectedPhotogOrModel,
     showDeletePhotogOrModelModal, 
     setShowDeletePhotogOrModelModal,
+
+    // 
+    showEditPhotogOrModelModal, 
+    setShowEditPhotogOrModelModal,
+    // 
 
     showAddPhotogOrModelModal, setShowAddPhotogOrModelModal,
     // modals end
@@ -170,15 +174,21 @@ const App = () => {
         : null
       }
 
-      {isLoggedIn && showDeleteShootModal
+      {isLoggedIn && showDeletePhotogOrModelModal
       
+        ? <DeletePhotogOrModelModal />
+        : null
+      }
+
+      {isLoggedIn && showDeleteShootModal
+        
         ? <DeleteShootModal />
         : null
       }
 
-      {isLoggedIn && showDeletePhotogOrModelModal
-      
-        ? <DeletePhotogOrModelModal />
+      {isLoggedIn && showEditPhotogOrModelModal.entryType
+        
+        ? <EditPhotogOrModelModal />
         : null
       }
       </div>

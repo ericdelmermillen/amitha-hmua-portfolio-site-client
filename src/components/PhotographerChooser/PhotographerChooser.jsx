@@ -1,8 +1,14 @@
 import { useState, useContext } from 'react';
-import AppContext from '../../AppContext';
-import AddIcon from '../../assets/icons/AddIcon';
-import MinusIcon from '../../assets/icons/MinusIcon';
+import AppContext from '../../AppContext.jsx';
+import AddIcon from '../../assets/icons/AddIcon.jsx';
+import MinusIcon from '../../assets/icons/MinusIcon.jsx';
 import './PhotographerChooser.scss';
+
+
+// each option for chooser needs to have a delete/x icon and an edit icon
+// chooser needs to accept an entryType prop
+// chooser needs to accept an editEntry function which uses the id of the option, the name value and the entryType to set the showEditPhotogOrModelModal's entryType and the id and entryName to set the selectedPhotogOrModel state
+// chooser needs to accept a deleteEntry function which uses the id of the option, the name value and the entryType to set the showEditPhotogOrModelModal's entryType and the id and entryName to set the selectedPhotogOrModel state
 
 const PhotographerChooser = ({ 
   photographerChooserIdx,

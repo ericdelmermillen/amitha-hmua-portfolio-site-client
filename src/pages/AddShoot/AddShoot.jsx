@@ -10,6 +10,13 @@ import { scrollToTop } from '../../utils/utils';
 import { toast } from 'react-toastify';
 import './AddShoot.scss';
 
+
+// each option for chooser needs to have a delete/x icon and an edit icon
+// chooser needs to accept an entryType prop
+// chooser needs to accept an editEntry function which uses the id of the option, the name value and the entryType to set the showEditPhotogOrModelModal's entryType and the id and entryName to set the selectedPhotogOrModel state
+// chooser needs to accept a deleteEntry function which uses the id of the option, the name value and the entryType to set the showEditPhotogOrModelModal's entryType and the id and entryName to set the selectedPhotogOrModel state
+
+
 const AddShoot = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 

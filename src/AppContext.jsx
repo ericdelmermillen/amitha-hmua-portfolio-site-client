@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
 
 const AppContext = createContext();
 
@@ -12,22 +12,24 @@ export const AppProvider = ({ children }) => {
   const [ showSideNav, setShowSideNav ] = useState(false);
   const [ scrollYPos, setScrollYPos ] = useState(window.scrollY);
   const [ prevScrollYPos, setPrevScrollYPos ] = useState(window.scrollY);
+  
+  // add state and handling for closing SideNav on width change
 
   const [ selectedShoot, setSelectedShoot ] = useState(null);
-
+  
   // state to show selectedPhotogOrModel ---
-  const [ selectedPhotogOrModel, setSelectedPhotogOrModel ] = useState();
+  // const [ selectedPhotogOrModel, setSelectedPhotogOrModel ] = useState({});
 
-  // const [ selectedPhotogOrModel, setSelectedPhotogOrModel ] = useState(
-    // {
-    //   "id": 1,
-    //   "photographer_name": "Natasha Gerschon"
-    // }
+  const [ selectedPhotogOrModel, setSelectedPhotogOrModel ] = useState(
+    {
+      "id": 1,
+      "photographer_name": "Natasha Gerschon"
+    }
     // {
     //   "id": 1,
     //   "model_name": "Samira Salastname"
     // },
-  // );
+  );
   // ---
 
   // modals start
@@ -40,6 +42,19 @@ export const AppProvider = ({ children }) => {
   
 
   const [ showDeletePhotogOrModelModal, setShowDeletePhotogOrModelModal ] = useState(false);
+  // modals end
+
+  // const [ showEditPhotogOrModelModal, setShowEditPhotogOrModelModal ] = useState({entryType: null});
+  const [ showEditPhotogOrModelModal, setShowEditPhotogOrModelModal ] = useState(
+    // {
+    //   entryType: "Model"
+    // }
+    {
+      entryType: "Photographer"
+    }
+  );
+
+
   // modals end
   
   
@@ -119,12 +134,17 @@ export const AppProvider = ({ children }) => {
     // modals start
     showDeleteShootModal, 
     setShowDeleteShootModal,
-    
-    selectedPhotogOrModel, 
-    setSelectedPhotogOrModel,
     showDeletePhotogOrModelModal, 
     setShowDeletePhotogOrModelModal,
 
+    // 
+    showEditPhotogOrModelModal, 
+    setShowEditPhotogOrModelModal,
+    
+    // ue for delete or add
+    selectedPhotogOrModel, 
+    setSelectedPhotogOrModel,
+    // 
 
 
     // change to addPhotogOrModelModal --
