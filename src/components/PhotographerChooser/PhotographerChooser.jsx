@@ -13,6 +13,11 @@ const PhotographerChooser = ({
   photographerChooserIDs, 
   setPhotographerChooserIDs,
   photographerID,
+  // for making useEffect fire to update options
+  shouldUpdatePhotographers, 
+  setShouldUpdatePhotographers,
+  shouldUpdateModels, 
+  setShouldUpdateModels,
 }) => {
 
   const { 

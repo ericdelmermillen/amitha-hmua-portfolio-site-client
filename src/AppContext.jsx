@@ -34,10 +34,9 @@ export const AppProvider = ({ children }) => {
   const [ showDeleteShootModal, setShowDeleteShootModal ] = useState(false);
   
   // for rewriting add photog and add model
-  const [ showAddPhotogOrModelModal, setShowAddPhotogOrModelModal ] = useState(false);
+  const [ showAddPhotogOrModelModal, setShowAddPhotogOrModelModal ] = useState({entryType: null});
   
   // for change to addPhotogOrModelModal
-  const [ showAddPhotographerModal, setShowAddPhotographerModal ] = useState(false);
   
 
   const [ showDeletePhotogOrModelModal, setShowDeletePhotogOrModelModal ] = useState(false);
@@ -129,15 +128,20 @@ export const AppProvider = ({ children }) => {
 
 
     // change to addPhotogOrModelModal --
-    showAddPhotographerModal, 
-    setShowAddPhotographerModal,
+    showAddPhotogOrModelModal,
+    setShowAddPhotogOrModelModal,
     
 
     // modals end
     selectedPhotogOrModel, 
     setSelectedPhotogOrModel,
+    // should updates for model and photographer choosers
     shouldUpdatePhotographers, 
     setShouldUpdatePhotographers,
+    shouldUpdateModels, 
+    setShouldUpdateModels,
+    
+    
     shouldUpdateShoots, 
     setShouldUpdateShoots,
     isLoading, 

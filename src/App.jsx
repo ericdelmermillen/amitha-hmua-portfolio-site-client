@@ -17,7 +17,7 @@ import AddShoot from './pages/AddShoot/AddShoot.jsx';
 import UpIcon from './assets/icons/UpIcon.jsx';
 import AddIcon from './assets/icons/AddIcon.jsx';
 // make AddPhotogOrModelModal
-import AddPhotographerModal from './components/AddPhotographerModal/AddPhotographerModal.jsx';
+import AddPhotogOrModelModal from '../src/components/AddPhotogOrModelModal/AddPhotogOrModelModal.jsx';
 // 
 import DeleteShootModal from './components/DeleteShootModal/DeleteShootModal.jsx';
 import './App.scss';
@@ -38,7 +38,7 @@ const App = () => {
     setScrollYPos,
     prevScrollYPos, 
     setPrevScrollYPos,
-    
+
     // modals start
     showAddPhotographerModal, 
     setShowAddPhotographerModal,
@@ -48,9 +48,10 @@ const App = () => {
     // delete photog or model modal and state
     selectedPhotogOrModel, 
     setSelectedPhotogOrModel,
-    
     showDeletePhotogOrModelModal, 
     setShowDeletePhotogOrModelModal,
+
+    showAddPhotogOrModelModal, setShowAddPhotogOrModelModal,
     // modals end
     isLoading, 
     setIsLoading
@@ -163,9 +164,9 @@ const App = () => {
           theme="light"/>
       </div>
 
-      {showAddPhotographerModal 
+      {isLoggedIn && showAddPhotogOrModelModal.entryType 
 
-        ? <AddPhotographerModal />
+        ? <AddPhotogOrModelModal />
         : null
       }
 

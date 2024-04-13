@@ -2,9 +2,11 @@ import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppContext from '../../AppContext';
 import NewShootdatePicker from '../../components/NewShootDatePicker/NewShootDatePicker';
+// make this customer chooser component that can take either models or photographers
 import ModelChooser from '../../components/ModelChooser/ModelChooser';
-import { scrollToTop } from '../../utils/utils';
 import PhotographerChooser from '../../components/PhotographerChooser/PhotographerChooser';
+//
+import { scrollToTop } from '../../utils/utils';
 import { toast } from 'react-toastify';
 import './AddShoot.scss';
 
@@ -18,8 +20,11 @@ const AddShoot = () => {
     setIsLoading,
     isLoggedIn, 
     setIsLoggedIn,
-    showAddPhotographerModal, 
-    setShowAddPhotographerModal,
+    // showAddPhotographerModal, 
+    // setShowAddPhotographerModal,
+    showAddPhotogOrModelModal, 
+    setShowAddPhotogOrModelModal,
+
     shouldUpdatePhotographers,
     setShouldUpdatePhotographers
   } = useContext(AppContext);
@@ -34,8 +39,9 @@ const AddShoot = () => {
   const [ photographers, setPhotographers ] = useState([]);
   const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([{ chooserIdx: 1, photographerID: null}]);
 
-  const handleShowAddPhotographerModal = () => {
-    setShowAddPhotographerModal(true);
+  const handleShowAddPhotogOrModelModal = (entryType) => {
+    console.log({entryType: entryType})
+    setShowAddPhotogOrModelModal({entryType: entryType});
   }
 
   const handleCancel = () => {
@@ -280,7 +286,7 @@ const AddShoot = () => {
 
                 <h4 
                   className="addShoot__textButton"
-                  onClick={handleShowAddPhotographerModal}
+                  onClick={() => handleShowAddPhotogOrModelModal("Photographer")}
                 >
                   Add New Photographer
                 </h4>
@@ -307,7 +313,10 @@ const AddShoot = () => {
                   Choose At Least One Model
                 </h3>
 
-                <h4 className="addShoot__textButton">
+                <h4 
+                  className="addShoot__textButton"
+                  onClick={() => handleShowAddPhotogOrModelModal("Model")}
+                >
                   Add New Model
                 </h4>
                 

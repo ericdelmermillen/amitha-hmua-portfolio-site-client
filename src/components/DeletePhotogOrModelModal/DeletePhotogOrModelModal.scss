@@ -2,7 +2,7 @@
 @import '../../partials/variables';
 
 .deletePhotogOrModelModal {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--modalBg);
   height: 100%;
   left: 0;
   position: fixed;

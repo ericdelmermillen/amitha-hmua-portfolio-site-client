@@ -1,6 +1,9 @@
 @import '../partials/variables';
 
 .app {
+
+  --modalBg: rgba(0, 0, 0, 0.5);
+  
   // light mode custom variables
   &[data-color-mode='light'] {
     --text-color: #333333;
