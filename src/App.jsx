@@ -18,6 +18,50 @@ import AddIcon from './assets/icons/AddIcon.jsx';
 import UpIcon from './assets/icons/UpIcon.jsx';
 import './App.scss';
 import PhotogOrModelModal from './components/PhotogOrModelModal/PhotogOrModelModal.jsx';
+import CustomSelect from './components/CustomSelect/CustomSelect.jsx';
+
+const modelOptions = [
+  {
+    "id": 1,
+    "model_name": "Samira Salastname"
+  },
+  {
+    "id": 2,
+    "model_name": "Madison Samadison"
+  },
+  {
+    "id": 3,
+    "model_name": "Sadie Sadieson"
+  },
+  {
+    "id": 4,
+    "model_name": "Gwen Gwendovish"
+  },
+  {
+    "id": 5,
+    "model_name": "Joan Smithers"
+  },
+  {
+    "id": 6,
+    "model_name": "Carey Burns"
+  },
+  {
+    "id": 7,
+    "model_name": "Anika Anikason"
+  },
+  {
+    "id": 8,
+    "model_name": "Young Jiayan"
+  },
+  {
+    "id": 9,
+    "model_name": "Jas Jasserson"
+  },
+  {
+    "id": 10,
+    "model_name": "Sage Saganaki"
+  }
+]
 
 const App = () => {
   const navigate = useNavigate();
@@ -151,6 +195,12 @@ const App = () => {
         ? <PhotogOrModelModal />
         : null
       }
+      
+
+      <CustomSelect 
+        selectOptions={modelOptions}
+        updateSelectedOption={null}
+      />
       
       </div>
     </>

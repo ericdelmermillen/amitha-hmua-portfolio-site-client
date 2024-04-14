@@ -1,0 +1,80 @@
+@import '../../partials/mixins';
+@import '../../partials/variables';
+
+.customSelect {
+  height: calc(2.5rem + 4px);
+  left: 50%;
+  position: fixed;
+  top: 2rem;
+  transform: translateX(-50%);
+  width: 20rem;
+  transition: height 0.5s ease;
+  border: 2px solid var(--text-color);
+  border-radius: $borderRadius;
+  background: var(--background-color);
+  
+  &.tall {
+    height: 15rem;
+    transition: height 0.5s ease;
+  }
+
+  &__select {
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    font-size: 1.25rem; 
+    height: 2.5rem; 
+    left: 50%;
+    overflow-y: hidden;
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+    transition: height 0.5s ease-in-out;
+    width: 100%;
+    scrollbar-width: none;
+    
+    &.tall {
+      height: 100%;
+      overflow-y: auto;
+      transition: height 1s ease-out;
+      
+      /* Hide the scrollbar */
+      &::-webkit-scrollbar {
+        width: 0;
+      }
+    }
+  }
+  
+  &__selectValue {
+    align-items: center;
+    display: flex;
+    height: 2.5rem;
+    min-height: 2.5rem;
+    justify-content: center;
+    outline: 2px solid var(--text-color);
+    z-index: 200;
+    // transition: border-bottom 1s ease;
+    // border-bottom: 2px solid rgba(0, 0, 0, 0);
+    cursor: pointer;
+    background: var(--background-color);
+    
+    &.short {
+      // transition: border-bottom 1.5s ease;
+      // border-bottom: 2px solid var(--text-color);
+    }
+  }
+
+  &__option {
+    align-items: center;
+    background: var(--background-color);
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    height: 2.5rem;
+    min-height: 2.5rem;
+    justify-content: center;
+    outline: 2px solid var(--text-color);
+    position: relative;
+  }
+}
