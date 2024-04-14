@@ -4,13 +4,13 @@
   @include page;
   background-color: var(--background-color);
 
-  &__h1, 
-  &__h2 {
+  &__heading, 
+  &__sub-heading {
     color: var(--text-color);
     text-align: center;
   }
   
-  &__h2 {
+  &__sub-heading {
     margin-top: 1rem;
   }
 }

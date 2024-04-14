@@ -10,6 +10,7 @@ const Home = () => {
     setShowSideNav,
   } = useContext(AppContext);
   
+  // initial load useEffect
   useEffect(() => {
     setShowSideNav(false);
     scrollToTop();

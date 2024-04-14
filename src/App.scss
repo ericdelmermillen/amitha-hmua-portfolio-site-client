@@ -99,23 +99,26 @@ img {
   }
 }
 
-.colorModeToggle__container {
-  height: 2rem;
-  left: 2rem;
-  opacity: 0;
-  pointer-events: none;
-  position: fixed;
-  top: 6rem;
-  transition: all 2s ease-in;
-  user-select: none;
-  z-index: 10;
+.colorModeToggle {
   
-  &.show {
-    border: 2px solid var(--button-color);
-    opacity: 1;
-    pointer-events:all;
-    transition: all 0.5s ease-out;
-    user-select: auto;
+  &__container {
+    height: 2rem;
+    left: 2rem;
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+    top: 6rem;
+    transition: all 2s ease-in;
+    user-select: none;
+    z-index: 10;
+    
+    &.show {
+      border: 2px solid var(--button-color);
+      opacity: 1;
+      pointer-events:all;
+      transition: all 0.5s ease-out;
+      user-select: auto;
+    }
   }
 }
 

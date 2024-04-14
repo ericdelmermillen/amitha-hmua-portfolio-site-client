@@ -12,15 +12,16 @@ const Bio = () => {
     setShowSideNav
   } = useContext(AppContext);
 
-  const [ componentIsLoaded, setIsComponentLoaded ] = useState(false)
+  const [ componentIsLoaded, setIsComponentLoaded ] = useState(false);
 
   const handleImageLoad = () => {
     setTimeout(() => {
       setIsLoading(false);
-      setIsComponentLoaded(true)
+      setIsComponentLoaded(true);
     }, 1000)
   }
 
+  // initial load useEffect
   useEffect(() => {
     setIsLoading(true);
     setShowSideNav(false);
@@ -43,7 +44,6 @@ const Bio = () => {
               onLoad={handleImageLoad}
             />
             <h3 className='bio__hero-caption'>
-              {/* Hi, I'm Amitha! */}
               Amitha Millen-Suwanta
             </h3>
           </div>

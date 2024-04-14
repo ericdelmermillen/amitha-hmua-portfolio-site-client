@@ -8,31 +8,24 @@ const PhotogOrModelModal = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const { 
+    isLoading, 
+    setIsLoading,
     isLoggedIn, 
     setIsLoggedIn,
-    showAddPhotogOrModelModal, 
-    setShowAddPhotogOrModelModal,
     shouldUpdatePhotographers, 
     setShouldUpdatePhotographers,
     shouldUpdateModels, 
     setShouldUpdateModels,
-    showEditPhotogOrModelModal, 
-    setShowEditPhotogOrModelModal,
     selectedPhotogOrModel, 
     setSelectedPhotogOrModel,
-
-    // 
     showPhotogOrModelModal, 
     setShowPhotogOrModelModal,
-    // 
-    isLoading, 
-    setIsLoading
   } = useContext(AppContext);
 
   // modalType & entryType for UI as well as endpoint and request type
   const { modalType } = showPhotogOrModelModal;
 
-  const entryType = selectedPhotogOrModel.photographer_name
+  const entryType = selectedPhotogOrModel.hasOwnProperty("photographer_name")
     ? "Photographer"
     : "Model"
 
@@ -45,12 +38,9 @@ const PhotogOrModelModal = () => {
   // const entryType = showPhotogOrModelModal.entryType;
   // console.log(`modalType: ${modalType}, entryType: ${entryType}`)
 
-  // const id = selectedPhotogOrModel.id;
-
   const entryName = entryType === "Photographer"
     ? selectedPhotogOrModel.photographer_name
     : selectedPhotogOrModel.model_name;
-
 
   const [ newEntryName, setNewEntryName ] = useState('');
 
@@ -63,6 +53,7 @@ const PhotogOrModelModal = () => {
   }
 
   const handleEntry = async () => {
+    // add handling for if the user is not authorized/token expired on server
     if(isLoggedIn) {
       
       if(modalType !== "Delete" && newEntryName.length < 2) {
@@ -75,7 +66,6 @@ const PhotogOrModelModal = () => {
         entryType === 'Photographer'
           ? newEntryData.photographer_name = newEntryName
           : newEntryData.model_name = newEntryName;
-          console.log(newEntryData)
       }
 
       const endPoint = `${BASE_URL}/${entryType.toLowerCase()}s/${modalType.toLowerCase()}${modalType !== "Add" ? `/${id}` : ""}`
@@ -115,25 +105,30 @@ const PhotogOrModelModal = () => {
           } else if (entryType === "Models") {
             setShouldUpdateModels(true);
           }
-          
-          setShowPhotogOrModelModal({entryType: null});
-          setIsLoading(false);
+
         } else {
           // Handle error responses here
           // For example:
           // const errorData = await response.json();
           // console.error("Error:", errorData);
-          toast.error(`Failed to ${modalType.toLowerCase()} ${entryType} ${entryName}`);
-          setIsLoading(false);
+          if(response.status === 409) {
+            setIsLoading(false);
+            return toast.error(`${newEntryName} already exists in database`);
+          } else {
+            setIsLoading(false);
+            return toast.error(`Failed to ${modalType.toLowerCase()} ${entryType} ${newEntryName}`);
+          }
         }
       } catch(error) {
         console.error("Error:", error);
-        toast.error(`Error ${modalType.toLowerCase()}ing ${entryType} ${entryName}: ${error}`);
+        return toast.error(`Error ${modalType.toLowerCase()}ing ${entryType} ${entryName}: ${error}`);
+      } finally {
+        setSelectedPhotogOrModel({});
+        setShowPhotogOrModelModal({modalType: null});
         setIsLoading(false);
       }
     }
 };
-
   
   return (
     <>
@@ -151,9 +146,7 @@ const PhotogOrModelModal = () => {
 
               ? `${modalType} ${entryType} ${entryName} from the database?"`
               : `Enter new ${entryType} name below`
-
             }
-            {/* *{modalType} {entryType} {entryName}{modalType === "Delete" && " from the database?"} */}
           </h3>
 
           {modalType === "Delete"

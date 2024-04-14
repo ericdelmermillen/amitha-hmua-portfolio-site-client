@@ -22,17 +22,16 @@ const ShootDetails = () => {
   const [ photos, setPhotos ] = useState([]);
   const [ photographers, setPhotographers ] = useState([]);
   const [ models, setModels ] = useState([]);
-  const [ shootIsLoaded, setShootIsLoaded ] = useState(false);
-  
-  // text content
   const [ formattedDate, setFormattedDate ] = useState('');
-  const [ shootText, setShootText ] = useState("");
+
+  // state for when to render placeholders
+  const [ shootIsLoaded, setShootIsLoaded ] = useState(false);
 
   const handlePhotosLoaded = () => {
     setShootIsLoaded(true)
   }
 
-
+  // useEffect for when shoot_id changes
   useEffect(() => {
     scrollToTop();
     setIsLoading(true);

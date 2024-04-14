@@ -6,12 +6,13 @@ import './Login.scss';
 
 const Login = () => {
   const { 
+    isLoading, 
+    setIsLoading,
     showSideNav, 
     setShowSideNav,
-    isLoading, 
-    setIsLoading
   } = useContext(AppContext);
 
+  // initial load useEffect
   useEffect(() => {
     setIsLoading(true);
     scrollToTop();

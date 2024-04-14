@@ -93,7 +93,6 @@
   &__inner {
     display: flex;
     flex-direction: column;
-    // height: 100vh - (height of the nav + paddings and margins within the page)
     height: calc(100vh - (4rem + 4rem));
     gap: 2rem;
     margin-bottom: 2rem;

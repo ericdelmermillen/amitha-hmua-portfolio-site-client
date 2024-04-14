@@ -4,13 +4,9 @@ import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { scrollToTop } from './utils/utils.js';
 import AddShoot from './pages/AddShoot/AddShoot.jsx';
-import AddPhotogOrModelModal from '../src/components/AddPhotogOrModelModal/AddPhotogOrModelModal.jsx';
 import AppContext from './AppContext.jsx'; 
 import Bio from './pages/Bio/Bio.jsx';
 import Contact from './pages/Contact/Contact.jsx';
-import DeletePhotogOrModelModal from './components/DeletePhotogOrModelModal/DeletePhotogOrModelModal.jsx';
-import DeleteShootModal from './components/DeleteShootModal/DeleteShootModal.jsx';
-import EditPhotogOrModelModal from './components/EditPhotogOrModelModal/EditPhotogOrModelModal.jsx';
 import Footer from './components/Footer/Footer.jsx';
 import Home from './pages/Home/Home.jsx';
 import Login from './pages/Login/Login.jsx';
@@ -38,29 +34,8 @@ const App = () => {
     setScrollYPos,
     prevScrollYPos, 
     setPrevScrollYPos,
-
-    // modals start
-    showAddPhotographerModal, 
-    setShowAddPhotographerModal,
-    showDeleteShootModal, 
-    setShowDeleteShootModal,
-    
-    // delete photog or model modal and state
-    selectedPhotogOrModel, 
-    setSelectedPhotogOrModel,
-    showDeletePhotogOrModelModal, 
-    setShowDeletePhotogOrModelModal,
-
-    // 
-    showEditPhotogOrModelModal, 
-    setShowEditPhotogOrModelModal,
-    // 
-
     showPhotogOrModelModal, 
     setShowPhotogOrModelModal,
-
-    showAddPhotogOrModelModal, setShowAddPhotogOrModelModal,
-    // modals end
     isLoading, 
     setIsLoading
   } = useContext(AppContext);
@@ -172,35 +147,10 @@ const App = () => {
           theme="light"/>
       </div>
 
-      {/* {isLoggedIn && showAddPhotogOrModelModal.entryType 
-
-        ? <AddPhotogOrModelModal />
-        : null
-      } */}
-
-      {/* {isLoggedIn && showDeletePhotogOrModelModal
-      
-        ? <DeletePhotogOrModelModal />
-        : null
-      } */}
-
-      {/* {isLoggedIn && showDeleteShootModal
-        
-        ? <DeleteShootModal />
-        : null
-      } */}
-
-      {/* {isLoggedIn && showEditPhotogOrModelModal.entryType
-        
-        ? <EditPhotogOrModelModal />
-        : null
-      } */}
-
-      {showPhotogOrModelModal.modalType
+      {isLoggedIn && showPhotogOrModelModal.modalType
         ? <PhotogOrModelModal />
         : null
       }
-
       
       </div>
     </>

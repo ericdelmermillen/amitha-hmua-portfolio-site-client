@@ -4,8 +4,4 @@
 .contact {
   @include page;
   background-color: var(--background-color);
-  
-  &__h1 {
-    color: var(--text-color);
-  }
 }

@@ -1,12 +1,12 @@
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AppContext from '../../AppContext';
-import NewShootdatePicker from '../../components/NewShootDatePicker/NewShootDatePicker';
-// make this customer chooser component that can take either models or photographers
-import ModelChooser from '../../components/ModelChooser/ModelChooser';
-import PhotographerChooser from '../../components/PhotographerChooser/PhotographerChooser';
-//
-import { scrollToTop } from '../../utils/utils';
+import AppContext from '../../AppContext.jsx';
+import NewShootdatePicker from '../../components/NewShootDatePicker/NewShootDatePicker.jsx';
+// make this customer chooser component that can take either models or photographers --
+import ModelChooser from '../../components/ModelChooser/ModelChooser.jsx';
+import PhotographerChooser from '../../components/PhotographerChooser/PhotographerChooser.jsx';
+// --
+import { scrollToTop } from '../../utils/utils.js';
 import { toast } from 'react-toastify';
 import './AddShoot.scss';
 
@@ -15,7 +15,6 @@ import './AddShoot.scss';
 // chooser needs to accept an entryType prop
 // chooser needs to accept an editEntry function which uses the id of the option, the name value and the entryType to set the showEditPhotogOrModelModal's entryType and the id and entryName to set the selectedPhotogOrModel state
 // chooser needs to accept a deleteEntry function which uses the id of the option, the name value and the entryType to set the showEditPhotogOrModelModal's entryType and the id and entryName to set the selectedPhotogOrModel state
-
 
 const AddShoot = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -27,11 +26,10 @@ const AddShoot = () => {
     setIsLoading,
     isLoggedIn, 
     setIsLoggedIn,
-    // showAddPhotographerModal, 
-    // setShowAddPhotographerModal,
-    showAddPhotogOrModelModal, 
-    setShowAddPhotogOrModelModal,
-
+    showPhotogOrModelModal, 
+    setShowPhotogOrModelModal,
+    selectedPhotogOrModel, 
+    setSelectedPhotogOrModel,
     shouldUpdatePhotographers,
     setShouldUpdatePhotographers
   } = useContext(AppContext);
@@ -46,13 +44,17 @@ const AddShoot = () => {
   const [ photographers, setPhotographers ] = useState([]);
   const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([{ chooserIdx: 1, photographerID: null}]);
 
-  const handleShowAddPhotogOrModelModal = (entryType) => {
-    console.log({entryType: entryType})
-    setShowAddPhotogOrModelModal({entryType: entryType});
+  const handleShowAddPhotogOrModelModal = (modalType, entryType) => {
+    if(entryType === "photographer_name") {
+      setSelectedPhotogOrModel({id: null, photographer_name: null});
+    } else if(entryType === "model_name") {
+      setSelectedPhotogOrModel({id: null, model_name: null});
+    }
+    setShowPhotogOrModelModal({modalType: modalType});
   }
 
   const handleCancel = () => {
-    navigate('/home')
+    navigate('/home');
   }
 
   const handleSubmit = async () => {
@@ -293,7 +295,7 @@ const AddShoot = () => {
 
                 <h4 
                   className="addShoot__textButton"
-                  onClick={() => handleShowAddPhotogOrModelModal("Photographer")}
+                  onClick={() => handleShowAddPhotogOrModelModal("Add", "photographer_name")}
                 >
                   Add New Photographer
                 </h4>
@@ -322,7 +324,7 @@ const AddShoot = () => {
 
                 <h4 
                   className="addShoot__textButton"
-                  onClick={() => handleShowAddPhotogOrModelModal("Model")}
+                  onClick={() => handleShowAddPhotogOrModelModal("Add", "model_name")}
                 >
                   Add New Model
                 </h4>

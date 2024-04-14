@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { scrollToTop } from '../../utils/utils';
 import AppContext from '../../AppContext';
 import ContactForm from '../../components/ContactForm/ContactForm';
@@ -6,12 +6,13 @@ import './Contact.scss';
 
 const Contact = () => {
   const { 
-    showSideNav, 
-    setShowSideNav,
     isLoading, 
-    setIsLoading
+    setIsLoading,
+    showSideNav, 
+    setShowSideNav
   } = useContext(AppContext);
 
+  // initial load useEffect
   useEffect(() => {
     setIsLoading(true);
     setShowSideNav(false);
