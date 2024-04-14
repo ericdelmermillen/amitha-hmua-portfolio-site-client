@@ -21,6 +21,7 @@ import SideNav from './components/SideNav/SideNav.jsx';
 import AddIcon from './assets/icons/AddIcon.jsx';
 import UpIcon from './assets/icons/UpIcon.jsx';
 import './App.scss';
+import PhotogOrModelModal from './components/PhotogOrModelModal/PhotogOrModelModal.jsx';
 
 const App = () => {
   const navigate = useNavigate();
@@ -54,6 +55,9 @@ const App = () => {
     showEditPhotogOrModelModal, 
     setShowEditPhotogOrModelModal,
     // 
+
+    showPhotogOrModelModal, 
+    setShowPhotogOrModelModal,
 
     showAddPhotogOrModelModal, setShowAddPhotogOrModelModal,
     // modals end
@@ -168,29 +172,36 @@ const App = () => {
           theme="light"/>
       </div>
 
-      {isLoggedIn && showAddPhotogOrModelModal.entryType 
+      {/* {isLoggedIn && showAddPhotogOrModelModal.entryType 
 
         ? <AddPhotogOrModelModal />
         : null
-      }
+      } */}
 
-      {isLoggedIn && showDeletePhotogOrModelModal
+      {/* {isLoggedIn && showDeletePhotogOrModelModal
       
         ? <DeletePhotogOrModelModal />
         : null
-      }
+      } */}
 
-      {isLoggedIn && showDeleteShootModal
+      {/* {isLoggedIn && showDeleteShootModal
         
         ? <DeleteShootModal />
         : null
-      }
+      } */}
 
-      {isLoggedIn && showEditPhotogOrModelModal.entryType
+      {/* {isLoggedIn && showEditPhotogOrModelModal.entryType
         
         ? <EditPhotogOrModelModal />
         : null
+      } */}
+
+      {showPhotogOrModelModal.modalType
+        ? <PhotogOrModelModal />
+        : null
       }
+
+      
       </div>
     </>
   )};

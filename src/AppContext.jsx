@@ -21,14 +21,18 @@ export const AppProvider = ({ children }) => {
   // const [ selectedPhotogOrModel, setSelectedPhotogOrModel ] = useState({});
 
   const [ selectedPhotogOrModel, setSelectedPhotogOrModel ] = useState(
-    {
-      "id": 1,
-      "photographer_name": "Natasha Gerschon"
-    }
+    // {
+    //   "id": 1,
+    //   "photographer_name": "Natasha Gerschon"
+    // }
     // {
     //   "id": 1,
     //   "model_name": "Samira Salastname"
-    // },
+    // }
+    {
+      "id": 21,
+      "model_name": "Generic Erica"
+    }
   );
   // ---
 
@@ -46,14 +50,17 @@ export const AppProvider = ({ children }) => {
 
   // const [ showEditPhotogOrModelModal, setShowEditPhotogOrModelModal ] = useState({entryType: null});
   const [ showEditPhotogOrModelModal, setShowEditPhotogOrModelModal ] = useState(
-    // {
-    //   entryType: "Model"
-    // }
     {
-      entryType: "Photographer"
+      entryType: "Model"
     }
+    // {
+    //   entryType: "Photographer"
+    // }
   );
 
+  // PhotogOrModelModal
+  // const [ showPhotogOrModelModal, setShowPhotogOrModelModal ] = useState({modalType: null});
+  const [ showPhotogOrModelModal, setShowPhotogOrModelModal ] = useState({modalType: "Edit"});
 
   // modals end
   
@@ -150,6 +157,10 @@ export const AppProvider = ({ children }) => {
     // change to addPhotogOrModelModal --
     showAddPhotogOrModelModal,
     setShowAddPhotogOrModelModal,
+
+    // showPhotogOrModelModal: needs to use selectedPhotogOrModel
+    showPhotogOrModelModal, 
+    setShowPhotogOrModelModal,
     
 
     // modals end

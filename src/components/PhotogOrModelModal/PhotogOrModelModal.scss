@@ -1,13 +1,13 @@
 @import '../../partials/mixins';
 @import '../../partials/variables';
 
-.deletePhotogOrModelModal {
+.photogOrModelModal {
   background-color: var(--modalBg);
   height: 100%;
   left: 0;
   position: fixed;
   top: 0;
-  width: 100%;
+  width: 100%; 
   
   &__modal {
     background: var(--background-color);
@@ -33,14 +33,14 @@
     color: var(--text-color);
     font-size: 2rem;
     margin-block: auto;
-    text-align: left;
   }
-  
+
   &__explainer {
     color: var(--text-color);
     font-size: 1.25rem;
     text-align: left;
-    line-height: 1.5;
+    line-height: 1.75;
+    margin-bottom: 2rem;
   }
 
   &__input {
