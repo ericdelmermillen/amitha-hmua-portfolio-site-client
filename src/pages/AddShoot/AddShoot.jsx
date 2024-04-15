@@ -9,6 +9,7 @@ import PhotographerChooser from '../../components/PhotographerChooser/Photograph
 import { scrollToTop } from '../../utils/utils.js';
 import { toast } from 'react-toastify';
 import './AddShoot.scss';
+import CustomSelect from '../../components/CustomSelect/CustomSelect.jsx';
 
 
 // each option for chooser needs to have a delete/x icon and an edit icon
@@ -42,7 +43,11 @@ const AddShoot = () => {
   
   // photographers
   const [ photographers, setPhotographers ] = useState([]);
-  const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([{ chooserIdx: 1, photographerID: null}]);
+  // const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([{ chooserIdx: 1, photographerID: null }]);
+  const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([
+    { chooserNo: 1, photographerID: null },
+    // { chooserNo: 2, photographerID: null },
+  ]);
 
   const handleShowAddPhotogOrModelModal = (modalType, entryType) => {
     if(entryType === "photographer_name") {
@@ -300,19 +305,50 @@ const AddShoot = () => {
                   Add New Photographer
                 </h4>
 
+
+                <div className="addShoot__photographer-choosers">
+
                 {photographerChooserIDs.map((chooser, idx) => (
-                  <PhotographerChooser
-                    key={chooser.chooserIdx}
-                    photographerChooserIdx={chooser.chooserIdx}
-                    photographers={photographers}
-                    setPhotographers={setPhotographers}
-                    handleAddPhotographerChooser={handleAddPhotographerChooser}
-                    handleRemovePhotographerChooser={handleRemovePhotographerChooser}
-                    photographerChooserIDs={photographerChooserIDs}
-                    setPhotographerChooserIDs={setPhotographerChooserIDs}
-                    photographerID={chooser.photographerID}
-                  />
+                    // <PhotographerChooser
+                    //   key={chooser.chooserIdx}
+                    //   photographerChooserIdx={chooser.chooserIdx}
+                    //   photographers={photographers}
+                    //   setPhotographers={setPhotographers}
+                    //   handleAddPhotographerChooser={handleAddPhotographerChooser}
+                    //   handleRemovePhotographerChooser={handleRemovePhotographerChooser}
+                    //   photographerChooserIDs={photographerChooserIDs}
+                    //   setPhotographerChooserIDs={setPhotographerChooserIDs}
+                    //   photographerID={chooser.photographerID}
+                    // />
+                  <div 
+                    className="addShoot__photographer-chooser"
+                    key={chooser.chooserNo}
+                  >
+                    <CustomSelect 
+                      chooserNo={chooser.chooserNo}
+                      chooserType={"Photographer"}
+                      chooserIDs={photographerChooserIDs}
+                      setChooserIDs={setPhotographerChooserIDs}
+
+                      // for number of options --
+                      selectOptions={photographers}
+                      setSelectOptions={setPhotographers}
+                      // for number of choosers --
+                      handleAddPhotographerChooser={handleAddPhotographerChooser}
+
+                      handleRemovePhotographerChooser={handleRemovePhotographerChooser}
+                      // --
+
+
+                      selectEntry={photographerChooserIDs}
+                      setSelectedOption={setPhotographerChooserIDs}
+
+                      photographerIDchooserId={chooser.photographerID}
+                    />
+                  
+                  </div>
                 ))}
+                </div>
               </div>
 
               <div 

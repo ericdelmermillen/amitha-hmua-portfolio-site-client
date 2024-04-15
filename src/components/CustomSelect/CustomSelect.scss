@@ -3,19 +3,16 @@
 
 .customSelect {
   height: calc(2.5rem + 4px);
-  left: 50%;
-  position: fixed;
-  top: 2rem;
-  transform: translateX(-50%);
-  width: 20rem;
-  transition: height 0.5s ease;
-  border: 2px solid var(--text-color);
+  transition: height 0.25s ease;
+  // border: 1px solid var(--text-color);
   border-radius: $borderRadius;
   background: var(--background-color);
+  overflow-y: auto;
+  width: 100%;
   
   &.tall {
     height: 15rem;
-    transition: height 0.5s ease;
+    transition: height 0.25s ease;
   }
 
   &__select {
@@ -30,19 +27,31 @@
     position: absolute;
     top: 0;
     transform: translateX(-50%);
-    transition: height 0.5s ease-in-out;
+    transition: height 0.25s ease-in-out;
     width: 100%;
     scrollbar-width: none;
     
     &.tall {
       height: 100%;
       overflow-y: auto;
-      transition: height 1s ease-out;
+      transition: height 0.5s ease-out;
       
       /* Hide the scrollbar */
       &::-webkit-scrollbar {
         width: 0;
       }
+    }
+  }
+
+  &__default-option {
+
+    &.hide {
+      display: none;
+    }
+    
+    &.show {
+      display: block;
+
     }
   }
   
@@ -54,15 +63,8 @@
     justify-content: center;
     outline: 2px solid var(--text-color);
     z-index: 200;
-    // transition: border-bottom 1s ease;
-    // border-bottom: 2px solid rgba(0, 0, 0, 0);
     cursor: pointer;
     background: var(--background-color);
-    
-    &.short {
-      // transition: border-bottom 1.5s ease;
-      // border-bottom: 2px solid var(--text-color);
-    }
   }
 
   &__option {

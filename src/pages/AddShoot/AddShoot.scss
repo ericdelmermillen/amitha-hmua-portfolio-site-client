@@ -68,6 +68,19 @@
     text-decoration: underline;
   }
 
+  &__photographer-choosers {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  &__photographer-chooser {
+    position: relative;
+    // position: absolute;
+    width: 100%;
+    border: 1px solid var(--text-color);
+  }
+
   &__photographersAndModels-container {
     display: grid;
     gap: 1rem;
