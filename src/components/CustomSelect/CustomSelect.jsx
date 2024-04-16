@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useContext } from 'react';
+import AppContext from '../../AppContext.jsx';
 import DownIcon from '../../assets/icons/DownIcon.jsx';
 import EditIcon from '../../assets/icons/EditIcon.jsx';
 import DeleteIcon from '../../assets/icons/DeleteIcon.jsx'
@@ -12,7 +13,29 @@ const CustomSelect = ({
   chooserIDs,
   setChooserIDs,
   selectEntry, 
-  setSelectedOption }) => {
+  setSelectedOption,
+  modalType
+ }) => {
+
+
+  const { 
+    isLoggedIn, 
+    setIsLoggedIn,
+    colorMode, 
+    setColorMode,
+    showSideNav, 
+    setShowSideNav,
+    scrollYPos, 
+    setScrollYPos,
+    prevScrollYPos, 
+    setPrevScrollYPos,
+    showPhotogOrModelModal, 
+    setShowPhotogOrModelModal,
+    selectedPhotogOrModel, 
+    setSelectedPhotogOrModel,
+    isLoading, 
+    setIsLoading
+  } = useContext(AppContext);
 
   const [ selectValue, setSelectValue ] = useState(null);
   const [ showOptions, setShowOptions ] = useState(false);
@@ -31,15 +54,18 @@ const CustomSelect = ({
     }
   }
 
-  // need to make the edit and delete buttons trigger the PhotogOrModelModal
-  const handleEditOptionClick = (e, option) => {
-    console.log(`Edit ${option.photographer_name || option.model_name}?`)
-    e.stopPropagation();
-  }
 
-  const handleDeleteOptionClick = (e, option) => {
-    console.log(`Delete ${option.photographer_name || option.model_name}?`)
+  const handleEditOptionClick = (e, option) => {
     e.stopPropagation();
+    setShowPhotogOrModelModal({modalType: "Edit"});
+    setSelectedPhotogOrModel(option)
+  }
+  
+  const handleDeleteOptionClick = (e, option) => {
+    e.stopPropagation();
+    console.log(`Delete ${option.photographer_name || option.model_name}?`)
+    setShowPhotogOrModelModal({modalType: "Delete"});
+    setSelectedPhotogOrModel(option)
   }
 
   const handleUpdateSelectValue = (option) => {

@@ -3,6 +3,7 @@ import AppContext from '../../AppContext.jsx';
 import { useState, useContext } from 'react';
 import { toast } from "react-toastify";
 
+// fix handling for status 409 where entry being deleted exists in a shoot
 const PhotogOrModelModal = () => {
 
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -42,7 +43,10 @@ const PhotogOrModelModal = () => {
     ? selectedPhotogOrModel.photographer_name
     : selectedPhotogOrModel.model_name;
 
-  const [ newEntryName, setNewEntryName ] = useState('');
+  const [ newEntryName, setNewEntryName ] = useState(modalType === "Edit" 
+    ? entryName
+    : ''
+  );
 
   const handleEntryNameChange = (e) => {
     setNewEntryName(e.target.value);
@@ -140,12 +144,26 @@ const PhotogOrModelModal = () => {
           className="photogOrModelModal__modal"
           onClick={(e) => e.stopPropagation()}
         >
+          <h4 className="photogOrModelModal__modalType">
+            {modalType} {entryType}
+          </h4>
           <h3 className="photogOrModelModal__heading">
 
             {modalType === "Delete"
 
-              ? `${modalType} ${entryType} ${entryName} from the database?"`
-              : `Enter new ${entryType} name below`
+              ? `${modalType} `
+              : modalType === "Add"
+              ? `Enter name below:`
+              : `Update name below:`
+            }
+            {modalType === "Delete" 
+              ? 
+                <span 
+                  className='photogOrModelModal__entryName'
+                >
+                  "{entryName}"?
+                </span>
+              :  null
             }
           </h3>
 

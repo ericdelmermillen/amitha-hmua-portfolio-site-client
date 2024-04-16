@@ -326,6 +326,7 @@ const AddShoot = () => {
                     chooserType={"Photographer"}
                     chooserIDs={photographerChooserIDs}
                     setChooserIDs={setPhotographerChooserIDs}
+                    modalType={"Edit"}
 
                     // for number of options --
                     selectOptions={photographers}

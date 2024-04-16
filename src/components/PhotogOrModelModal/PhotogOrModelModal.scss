@@ -30,10 +30,22 @@
     }
   }
 
+  &__modalType {
+    color: var(--text-color);
+    font-size: 1.5rem;
+    margin-top: 2rem;
+  }
+  
   &__heading {
     color: var(--text-color);
     font-size: 2rem;
-    margin-block: auto;
+    margin-top: 1rem;
+    margin-bottom: auto;
+    line-height: 1.5;
+  }
+
+  &__entryName {
+    white-space: nowrap;
   }
 
   &__explainer {
