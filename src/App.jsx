@@ -7,6 +7,7 @@ import AddShoot from './pages/AddShoot/AddShoot.jsx';
 import AppContext from './AppContext.jsx'; 
 import Bio from './pages/Bio/Bio.jsx';
 import Contact from './pages/Contact/Contact.jsx';
+import DeleteShootModal from './components/DeleteShootModal/DeleteShootModal.jsx';
 import Footer from './components/Footer/Footer.jsx';
 import Home from './pages/Home/Home.jsx';
 import Login from './pages/Login/Login.jsx';
@@ -18,51 +19,6 @@ import AddIcon from './assets/icons/AddIcon.jsx';
 import UpIcon from './assets/icons/UpIcon.jsx';
 import './App.scss';
 import PhotogOrModelModal from './components/PhotogOrModelModal/PhotogOrModelModal.jsx';
-import CustomSelect from './components/CustomSelect/CustomSelect.jsx';
-import TestCustomSelect from './components/TestCustomSelect/TestCustomSelect.jsx';
-
-const modelOptions = [
-  {
-    "id": 1,
-    "model_name": "Samira Salastname"
-  },
-  {
-    "id": 2,
-    "model_name": "Madison Samadison"
-  },
-  {
-    "id": 3,
-    "model_name": "Sadie Sadieson"
-  },
-  {
-    "id": 4,
-    "model_name": "Gwen Gwendovish"
-  },
-  {
-    "id": 5,
-    "model_name": "Joan Smithers"
-  },
-  {
-    "id": 6,
-    "model_name": "Carey Burns"
-  },
-  {
-    "id": 7,
-    "model_name": "Anika Anikason"
-  },
-  {
-    "id": 8,
-    "model_name": "Young Jiayan"
-  },
-  {
-    "id": 9,
-    "model_name": "Jas Jasserson"
-  },
-  {
-    "id": 10,
-    "model_name": "Sage Saganaki"
-  }
-]
 
 const App = () => {
   const navigate = useNavigate();
@@ -192,7 +148,8 @@ const App = () => {
           pauseOnFocusLoss={false}
           draggable
           pauseOnHover={false}
-          theme="light"/>
+          theme="light"
+        />
       </div>
 
       {isLoggedIn && showPhotogOrModelModal.modalType

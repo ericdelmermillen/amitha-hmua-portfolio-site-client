@@ -8,8 +8,6 @@ const Shoot = ({
   thumbnail_url, 
   models, 
   photographers, 
-  // showDeleteShootModal,  
-  // setShowDeleteShootModal,
   isOnShootDetails,
   handleNewShootId}) => {
 

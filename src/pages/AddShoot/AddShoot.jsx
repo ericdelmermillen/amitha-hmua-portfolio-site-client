@@ -46,7 +46,7 @@ const AddShoot = () => {
   // const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([{ chooserIdx: 1, photographerID: null }]);
   const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([
     { chooserNo: 1, photographerID: null },
-    { chooserNo: 2, photographerID: null },
+    // { chooserNo: 2, photographerID: null },
   ]);
 
   const handleShowAddPhotogOrModelModal = (modalType, entryType) => {
