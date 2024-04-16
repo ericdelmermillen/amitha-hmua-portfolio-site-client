@@ -111,13 +111,11 @@ const PhotogOrModelModal = () => {
           }
 
         } else {
-          // Handle error responses here
-          // For example:
-          // const errorData = await response.json();
-          // console.error("Error:", errorData);
+          const errorData = await response.json();
+          console.error("Error:", errorData);
           if(response.status === 409) {
             setIsLoading(false);
-            return toast.error(`${newEntryName} already exists in database`);
+            return toast.error(errorData.message);
           } else {
             setIsLoading(false);
             return toast.error(`Failed to ${modalType.toLowerCase()} ${entryType} ${newEntryName}`);

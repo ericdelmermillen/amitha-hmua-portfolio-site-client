@@ -142,7 +142,7 @@ const CustomSelect = ({
                     : "hide"}
                 `}
               >
-                -- Select {chooserType} --
+                Select {chooserType}
               </span>
               <span 
                 className={`customSelect__default-option 
