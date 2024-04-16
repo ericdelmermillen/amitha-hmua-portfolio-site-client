@@ -46,7 +46,7 @@ const AddShoot = () => {
   // const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([{ chooserIdx: 1, photographerID: null }]);
   const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([
     { chooserNo: 1, photographerID: null },
-    // { chooserNo: 2, photographerID: null },
+    { chooserNo: 2, photographerID: null },
   ]);
 
   const handleShowAddPhotogOrModelModal = (modalType, entryType) => {
@@ -307,9 +307,6 @@ const AddShoot = () => {
                   Add New Photographer
                 </h4>
 
-
-                <div className="addShoot__photographer-choosers">
-
                 {photographerChooserIDs.map((chooser, idx) => (
                     // <PhotographerChooser
                     //   key={chooser.chooserIdx}
@@ -347,7 +344,6 @@ const AddShoot = () => {
                   />
                   
                 ))}
-                </div>
               </div>
 
               <div 

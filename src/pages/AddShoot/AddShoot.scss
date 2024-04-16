@@ -42,6 +42,7 @@
     flex-direction: column;
     gap: 0.5rem;
     left: 50%;
+    z-index: 3;
   }
 
   &__date-picker {

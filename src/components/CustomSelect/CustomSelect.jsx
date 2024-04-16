@@ -14,8 +14,6 @@ const CustomSelect = ({
   selectEntry, 
   setSelectedOption }) => {
 
-  // console.log(chooserNo)
-
   const [ selectValue, setSelectValue ] = useState(null);
   const [ showOptions, setShowOptions ] = useState(false);
   const innerRef = useRef(null);
@@ -33,6 +31,7 @@ const CustomSelect = ({
     }
   }
 
+  // need to make the edit and delete buttons trigger the PhotogOrModelModal
   const handleEditOptionClick = (e, option) => {
     console.log(`Edit ${option.photographer_name || option.model_name}?`)
     e.stopPropagation();
@@ -80,11 +79,6 @@ const CustomSelect = ({
     }
   }
   
-  // console.log(selectEntry)
-
-
-  // addChooser function: needs to push a new chooserId onto the photographerChooserIDs || modelChooserIDs with the chooserIdx of the next entry incremented and the photographerID || modeID as null
-
   return (
     <>
       <div 
@@ -172,8 +166,8 @@ const CustomSelect = ({
       </div>
       <div 
         className={`customSelect__touchOffDiv ${showOptions 
-          ? ""
-          : "show"}`
+          ? "show"
+          : ""}`
         }
         onClick={handleTouchOff}
       ></div>
