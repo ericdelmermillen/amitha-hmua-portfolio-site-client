@@ -19,6 +19,7 @@ import UpIcon from './assets/icons/UpIcon.jsx';
 import './App.scss';
 import PhotogOrModelModal from './components/PhotogOrModelModal/PhotogOrModelModal.jsx';
 import CustomSelect from './components/CustomSelect/CustomSelect.jsx';
+import TestCustomSelect from './components/TestCustomSelect/TestCustomSelect.jsx';
 
 const modelOptions = [
   {
@@ -162,6 +163,9 @@ const App = () => {
 
         <Nav handleLogOut={handleLogOut}/>
         <SideNav handleLogOut={handleLogOut}/>
+
+        {/* <TestCustomSelect /> */}
+
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
@@ -195,12 +199,6 @@ const App = () => {
         ? <PhotogOrModelModal />
         : null
       }
-      
-
-      {/* <CustomSelect 
-        selectOptions={modelOptions}
-        updateSelectedOption={null}
-      /> */}
       
       </div>
     </>

@@ -46,7 +46,7 @@ const AddShoot = () => {
   // const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([{ chooserIdx: 1, photographerID: null }]);
   const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([
     { chooserNo: 1, photographerID: null },
-    // { chooserNo: 2, photographerID: null },
+    { chooserNo: 2, photographerID: null },
   ]);
 
   const handleShowAddPhotogOrModelModal = (modalType, entryType) => {
@@ -56,6 +56,8 @@ const AddShoot = () => {
       setSelectedPhotogOrModel({id: null, model_name: null});
     }
     setShowPhotogOrModelModal({modalType: modalType});
+    console.log("handle")
+    console.log(showPhotogOrModelModal)
   }
 
   const handleCancel = () => {
@@ -320,33 +322,30 @@ const AddShoot = () => {
                     //   setPhotographerChooserIDs={setPhotographerChooserIDs}
                     //   photographerID={chooser.photographerID}
                     // />
-                  <div 
-                    className="addShoot__photographer-chooser"
+
+                  <CustomSelect 
                     key={chooser.chooserNo}
-                  >
-                    <CustomSelect 
-                      chooserNo={chooser.chooserNo}
-                      chooserType={"Photographer"}
-                      chooserIDs={photographerChooserIDs}
-                      setChooserIDs={setPhotographerChooserIDs}
+                    chooserNo={chooser.chooserNo}
+                    chooserType={"Photographer"}
+                    chooserIDs={photographerChooserIDs}
+                    setChooserIDs={setPhotographerChooserIDs}
 
-                      // for number of options --
-                      selectOptions={photographers}
-                      setSelectOptions={setPhotographers}
-                      // for number of choosers --
-                      handleAddPhotographerChooser={handleAddPhotographerChooser}
+                    // for number of options --
+                    selectOptions={photographers}
+                    setSelectOptions={setPhotographers}
+                    // for number of choosers --
+                    handleAddPhotographerChooser={handleAddPhotographerChooser}
 
-                      handleRemovePhotographerChooser={handleRemovePhotographerChooser}
-                      // --
+                    handleRemovePhotographerChooser={handleRemovePhotographerChooser}
+                    // --
 
 
-                      selectEntry={photographerChooserIDs}
-                      setSelectedOption={setPhotographerChooserIDs}
+                    selectEntry={photographerChooserIDs}
+                    setSelectedOption={setPhotographerChooserIDs}
 
-                      photographerIDchooserId={chooser.photographerID}
-                    />
+                    photographerIDchooserId={chooser.photographerID}
+                  />
                   
-                  </div>
                 ))}
                 </div>
               </div>

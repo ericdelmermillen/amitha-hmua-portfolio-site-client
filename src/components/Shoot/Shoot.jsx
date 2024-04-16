@@ -1,6 +1,6 @@
 import AppContext from '../../AppContext';
 import { useContext } from 'react';
-import Delete from '../../assets/icons/Delete';
+import DeleteIcon from '../../assets/icons/DeleteIcon.jsx';
 import './Shoot.scss';
 
 const Shoot = ({ 
@@ -42,7 +42,7 @@ const Shoot = ({
               className="shoot__delete-btn"
               onClick={(e) => handleDeleteClick(e)}
               >
-              <Delete 
+              <DeleteIcon
                 onClick={handleDeleteClick}
                 className={"shoot__delete-btn---icon"}
               />

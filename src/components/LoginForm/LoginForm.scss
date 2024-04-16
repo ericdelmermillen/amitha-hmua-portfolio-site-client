@@ -115,10 +115,4 @@
       width: 100%;
     }
   }
-
-  input {
-    @include input;
-    background: var(--background-color);
-    color: var(--text-color);
-  }
 }

@@ -72,7 +72,7 @@ const ModelChooser = ({
             </option>
           ))}
         </select>
-        <div className="modelChooser__button-container">
+        {/* <div className="modelChooser__button-container">
           <div
             className="modelChooser__button modelChooser__button--add"
             disabled={true}
@@ -91,7 +91,7 @@ const ModelChooser = ({
               className= {"modelChooser__button--remove-icon"} 
             />
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

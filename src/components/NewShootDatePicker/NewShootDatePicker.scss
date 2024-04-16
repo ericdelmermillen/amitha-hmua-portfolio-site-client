@@ -5,11 +5,13 @@
   
   &__selector {
     @include input;
+    cursor: pointer;
   }
   
   &__container {
     position: relative;
     width: 9rem;
+    z-index: 2;
   }
     
     &:focus, &:active {
