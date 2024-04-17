@@ -71,14 +71,17 @@ const AddShoot = () => {
   }
 
   const handleRemoveCustomSelector = (chooser) => {
-    const chooserType = chooser.photographerID
+    const chooserType = chooser.hasOwnProperty('photographerID')
       ? "Photographer"
       : "Model"
 
     const { chooserNo } = chooser;
+    console.log(chooserType)
     
-    if(chooserType === "Photographer" && photographerChooserIDs.length > 1) {
+    if(chooserType === "Photographer") {
+      console.log("firing")
       const filteredChoosers = photographerChooserIDs.filter(chooser => chooser.chooserNo !== chooserNo);
+      console.log(chooser)
 
       setPhotographerChooserIDs(filteredChoosers);
 
@@ -302,10 +305,10 @@ const AddShoot = () => {
                     />
 
                       <span 
-                        className={`addShoot__selector-removeIcon ${photographerChooserIDs.length > 1 && chooser.photographerID 
+                        className={`addShoot__selector-removeIcon ${photographerChooserIDs.length > 1
                           ? "show" 
                           : ""}`}
-                        onClick={photographerChooserIDs.length > 1 && chooser.photographerID 
+                        onClick={photographerChooserIDs.length > 1
                           ? () => handleRemoveCustomSelector(chooser)
                           : null
                         }
@@ -361,10 +364,10 @@ const AddShoot = () => {
                     />
 
                       <span 
-                        className={`addShoot__selector-removeIcon ${modelChooserIDs.length > 1 && chooser.modelID 
+                        className={`addShoot__selector-removeIcon ${modelChooserIDs.length > 1 
                           ? "show" 
                           : ""}`}
-                        onClick={modelChooserIDs.length > 1 && chooser.modelID 
+                        onClick={modelChooserIDs.length > 1
                           ? () => handleRemoveCustomSelector(chooser)
                           : null
                         }
