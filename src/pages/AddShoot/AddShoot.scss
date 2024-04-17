@@ -67,7 +67,7 @@
     opacity: 0;
     position: absolute;
     top: 0;
-    transition: all 1s ease;
+    opacity: 0;
     width: 0;
     
     &.show {
@@ -76,7 +76,7 @@
       height: 3rem;
       justify-content: center;
       opacity: 1;
-      transition: all 0.5s ease;
+      transition: opacity 0.25s ease;
       width: 3rem;
       z-index: 1;
     }

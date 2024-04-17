@@ -39,18 +39,63 @@ const AddShoot = () => {
   const [ photographers, setPhotographers ] = useState([]);
   const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([{ chooserNo: 1, photographerID: null }]);
 
-  const handleShowAddPhotogOrModelModal = (modalType, entryType) => {
-    if(entryType === "photographer_name") {
-      setSelectedPhotogOrModel({id: null, photographer_name: null});
-    } else if(entryType === "model_name") {
-      setSelectedPhotogOrModel({id: null, model_name: null});
-    }
-    setShowPhotogOrModelModal({modalType: modalType});
-  }
-
   const handleCancel = () => {
     navigate('/home');
   }
+
+
+  const handleAddCustomSelect = (selectedEntry) => {
+    const selectedEntryType = selectedEntry === "photographer_name"
+      ? "photographer"
+      : "model";
+
+    const hasNullPhotographerChooser = photographerChooserIDs.some(chooser => chooser.photographerID === null);
+
+    const hasNullModelChooser = modelChooserIDs.some(chooser => chooser.modelID === null);
+      
+    if(selectedEntryType === "photographer" && !hasNullPhotographerChooser) {
+
+      const maxChooserNo = Math.max(...photographerChooserIDs.map(chooser => chooser.chooserNo));
+
+      const newChooser = { chooserNo: maxChooserNo + 1, photographerID: null};
+      
+      setPhotographerChooserIDs([...photographerChooserIDs, newChooser]);
+      
+      return;
+      
+    } else if(selectedEntryType === "model" && !hasNullModelChooser) {
+
+      const maxChooserNo = Math.max(...modelChooserIDs.map(chooser => chooser.chooserNo));
+
+      const newChooser = { chooserNo: maxChooserNo + 1, modelID: null};
+
+      setModelChooserIDs([...modelChooserIDs, newChooser]);
+
+      return;
+    }
+
+    return toast.error(`Please select a ${selectedEntryType} before adding a new one`)
+  }
+
+  const handleRemoveCustomSelector = (chooser) => {
+    const chooserType = chooser.photographerID
+      ? "Photographer"
+      : "Model"
+
+    const { chooserNo } = chooser;
+    
+    if(chooserType === "Photographer" && photographerChooserIDs.length > 1) {
+      const filteredChoosers = photographerChooserIDs.filter(chooser => chooser.chooserNo !== chooserNo);
+
+      setPhotographerChooserIDs(filteredChoosers);
+
+    } else if(chooserType === "Model" && modelChooserIDs.length > 1) {
+      const filteredChoosers = modelChooserIDs.filter(chooser => chooser.chooserNo !== chooserNo);
+      
+      setModelChooserIDs(filteredChoosers);
+    }
+  }
+
 
   const handleSubmit = async () => {
     try {
@@ -130,67 +175,6 @@ const AddShoot = () => {
       setIsLoading(false);
     }
   };
-
-
-  const handleAddCustomSelect = (selectedEntry) => {
-    const selectedEntryType = selectedEntry === "photographer_name"
-      ? "photographer"
-      : "model";
-
-    const hasNullPhotographerChooser = photographerChooserIDs.some(chooser => chooser.photographerID === null);
-
-    const hasNullModelChooser = modelChooserIDs.some(chooser => chooser.modelID === null);
-      
-    if(selectedEntryType === "photographer" && !hasNullPhotographerChooser) {
-
-      const maxChooserNo = Math.max(...photographerChooserIDs.map(chooser => chooser.chooserNo));
-
-      const newChooser = { chooserNo: maxChooserNo + 1, photographerID: null};
-      
-      setPhotographerChooserIDs([...photographerChooserIDs, newChooser]);
-      
-      return;
-      
-    } else if(selectedEntryType === "model" && !hasNullModelChooser) {
-
-      const maxChooserNo = Math.max(...modelChooserIDs.map(chooser => chooser.chooserNo));
-
-      const newChooser = { chooserNo: maxChooserNo + 1, modelID: null};
-
-      setModelChooserIDs([...modelChooserIDs, newChooser]);
-
-      return;
-    }
-
-    return toast.error(`Please select a ${selectedEntryType} before adding a new one`)
-  }
-
-  const handleRemoveCustomSelector = () => {
-    console.log("remove selector")
-  }
-
-  // need handleRemoveCustomChooser function for model and photog choosers--
-  const handleRemoveModelChooser = (modelChooserIdx) => {
-    if(modelChooserIDs.length > 1) {
-      const filteredChoosers = modelChooserIDs.filter(chooser => chooser.chooserIdx !== modelChooserIdx);
-
-      setModelChooserIDs(filteredChoosers);
-    } else {
-      toast.error("Can't remove this. All shoots need at least one model. ");
-    }
-  };
-
-  const handleRemovePhotographerChooser = (photographerChooserIdx) => {
-    if(photographerChooserIDs.length > 1) {
-      const filteredChoosers = photographerChooserIDs.filter(chooser => chooser.chooserIdx !== photographerChooserIdx);
-
-      setPhotographerChooserIDs(filteredChoosers);
-    } else {
-      toast.error("Can't remove this. All shoots need at least one photographer. ");
-    }
-  };
-  // --
-
   
 
   // fetch models
@@ -319,7 +303,7 @@ const AddShoot = () => {
                     </span>
                 </h4>
 
-                {photographerChooserIDs.map((chooser, idx) => (
+                {photographerChooserIDs.map((chooser) => (
                   <div 
                     className="addShoot__selector addShoot__selector--photographer"
                     key={chooser.chooserNo}
@@ -331,14 +315,8 @@ const AddShoot = () => {
                       chooserIDs={photographerChooserIDs}
                       setChooserIDs={setPhotographerChooserIDs}
                       modalType={"Edit"}
-                      // for number of options --
                       selectOptions={photographers}
                       setSelectOptions={setPhotographers}
-                      
-                      // need handle remove custom chooser function--
-                      // handleRemovePhotographerChooser={handleRemovePhotographerChooser}
-                      // --
-                      
                       selectEntry={photographerChooserIDs}
                       setSelectedOption={setPhotographerChooserIDs}
                       
@@ -351,7 +329,7 @@ const AddShoot = () => {
                           ? "show" 
                           : ""}`}
                         onClick={photographerChooserIDs.length > 1 && chooser.photographerID 
-                          ? handleRemoveCustomSelector
+                          ? () => handleRemoveCustomSelector(chooser)
                           : null
                         }
                       >
@@ -387,27 +365,44 @@ const AddShoot = () => {
                 </h4>
                 
                 {modelChooserIDs.map((chooser) => (
-
-                  <CustomSelect
+                  <div 
+                    className="addShoot__selector addShoot__selector--model"
                     key={chooser.chooserNo}
-                    chooserNo={chooser.chooserNo}
-                    chooserType={"Model"}
-                    chooserIDs={modelChooserIDs}
-                    setChooserIDs={setModelChooserIDs}
-                    modalType={"Edit"}
-                    // for number of options --
-                    selectOptions={models}
-                    setSelectOptions={setModels}
+                  >
 
-                    // need handle remove custom chooser function--
-                    // handleRemovePhotographerChooser={handleRemovePhotographerChooser}
-                    // --
+                    <CustomSelect
+                      chooserNo={chooser.chooserNo}
+                      chooserType={"Model"}
+                      chooserIDs={modelChooserIDs}
+                      setChooserIDs={setModelChooserIDs}
+                      modalType={"Edit"}
+                      selectOptions={models}
+                      setSelectOptions={setModels}
+                      selectEntry={modelChooserIDs}
+                      setSelectedOption={setModelChooserIDs}
 
-                    selectEntry={modelChooserIDs}
-                    setSelectedOption={setModelChooserIDs}
-                    photographerIDchooserId={chooser.modelID}
-                    entryNameType={"model_name"}
-                  />
+                      modelIDchooserId={chooser.modelID}
+                      entryNameType={"model_name"}
+                    />
+
+
+                      <span 
+                        className={`addShoot__selector-removeIcon ${modelChooserIDs.length > 1 && chooser.modelID 
+                          ? "show" 
+                          : ""}`}
+                        onClick={modelChooserIDs.length > 1 && chooser.modelID 
+                          ? () => handleRemoveCustomSelector(chooser)
+                          : null
+                        }
+                      >
+                        <MinusIcon 
+                          className={"addShoot__minus-icon"}
+                        />
+                      </span>
+
+
+
+                    </div>
 
                 ))}
               </div>
