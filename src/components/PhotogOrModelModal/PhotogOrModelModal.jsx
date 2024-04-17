@@ -32,12 +32,6 @@ const PhotogOrModelModal = () => {
   // selectedPhotogOrModel values
   const { photographer_name, model_name, id } = selectedPhotogOrModel;
 
-  // console.log(`photographer: ${photographer_name || "undefined"}, model: ${model_name || "undefined"}, id: ${id}`)
-  // 
-
-  // const entryType = showPhotogOrModelModal.entryType;
-  // console.log(`modalType: ${modalType}, entryType: ${entryType}`)
-
   const entryName = entryType === "Photographer"
     ? selectedPhotogOrModel.photographer_name
     : selectedPhotogOrModel.model_name;
@@ -46,7 +40,7 @@ const PhotogOrModelModal = () => {
     ? entryName
     : ''
   );
-
+  
   const handleEntryNameChange = (e) => {
     setNewEntryName(e.target.value);
   }
@@ -54,6 +48,13 @@ const PhotogOrModelModal = () => {
   const handleCloseModal = () => {
     setShowPhotogOrModelModal(false);
   }
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleEntry();
+    }
+  };
+
 
   const handleEntry = async () => {
     // add handling for if the user is not authorized/token expired on server
@@ -64,6 +65,7 @@ const PhotogOrModelModal = () => {
       }
 
       let newEntryData;
+
       if(modalType !== "Delete") {
         newEntryData = {};
         entryType === 'Photographer'
@@ -105,7 +107,7 @@ const PhotogOrModelModal = () => {
 
           if(entryType === "Photographer") {
             setShouldUpdatePhotographers(true);
-          } else if (entryType === "Models") {
+          } else if (entryType === "Model") {
             setShouldUpdateModels(true);
           }
 
@@ -147,7 +149,6 @@ const PhotogOrModelModal = () => {
           <h3 className="photogOrModelModal__heading">
 
             {modalType === "Delete"
-
               ? `${modalType} `
               : modalType === "Add"
               ? `Enter name below:`
@@ -180,6 +181,7 @@ const PhotogOrModelModal = () => {
                 type="text" 
                 value={newEntryName}
                 onChange={(e) => handleEntryNameChange(e)}
+                onKeyDown={handleKeyPress}
                 autoFocus
               />
             : null

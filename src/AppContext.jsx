@@ -19,18 +19,6 @@ export const AppProvider = ({ children }) => {
   // state to show selectedPhotogOrModel ---
   const [ selectedPhotogOrModel, setSelectedPhotogOrModel ] = useState({});
 
-  // const [ selectedPhotogOrModel, setSelectedPhotogOrModel ] = useState(
-  //   {
-  //     "id": 1,
-  //     "photographer_name": "Natasha Gerschon"
-    // }
-    // {
-    //   "id": 1,
-    //   "model_name": "Samira Salastname"
-    // }
-  // );
-  // ---
-
   // modals start
   const [ showDeleteShootModal, setShowDeleteShootModal ] = useState(false);
 

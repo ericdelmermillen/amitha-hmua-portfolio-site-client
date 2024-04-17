@@ -23,7 +23,9 @@ const AddShoot = () => {
     selectedPhotogOrModel, 
     setSelectedPhotogOrModel,
     shouldUpdatePhotographers,
-    setShouldUpdatePhotographers
+    setShouldUpdatePhotographers,
+    shouldUpdateModels, 
+    setShouldUpdateModels
   } = useContext(AppContext);
 
   const [ newShootDate, setNewShootDate ] = useState(new Date());
@@ -217,8 +219,10 @@ const AddShoot = () => {
       }
     };
 
+    setShouldUpdateModels(false);
+
     fetchModels();
-  }, [BASE_URL, setIsLoading]);
+  }, [BASE_URL, shouldUpdateModels]);
   
   
   // fetch photographers
@@ -380,7 +384,7 @@ const AddShoot = () => {
                     photographerIDchooserId={chooser.modelID}
                     entryNameType={"model_name"}
                   />
-                  
+
                 ))}
               </div>
             

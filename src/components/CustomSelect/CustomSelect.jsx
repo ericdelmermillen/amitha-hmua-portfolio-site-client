@@ -1,9 +1,8 @@
 import { useState, useRef, useContext } from 'react';
 import AppContext from '../../AppContext.jsx';
+import DeleteIcon from '../../assets/icons/DeleteIcon.jsx'
 import DownIcon from '../../assets/icons/DownIcon.jsx';
 import EditIcon from '../../assets/icons/EditIcon.jsx';
-import DeleteIcon from '../../assets/icons/DeleteIcon.jsx'
-import AddIcon from '../../assets/icons/AddIcon.jsx';
 import './CustomSelect.scss';
 
 const CustomSelect = ({ 
@@ -13,31 +12,19 @@ const CustomSelect = ({
   setSelectOptions,
   chooserIDs,
   setChooserIDs,
-  selectEntry, 
-  setSelectedOption,
+  selectEntry, //
+  setSelectedOption,//
   modalType,
   entryNameType
  }) => {
 
-  console.log(chooserNo)
+  // console.log(selectEntry)
 
   const { 
-    isLoggedIn, 
-    setIsLoggedIn,
-    colorMode, 
-    setColorMode,
-    showSideNav, 
-    setShowSideNav,
-    scrollYPos, 
-    setScrollYPos,
-    prevScrollYPos, 
-    setPrevScrollYPos,
     showPhotogOrModelModal, 
     setShowPhotogOrModelModal,
     selectedPhotogOrModel, 
     setSelectedPhotogOrModel,
-    isLoading, 
-    setIsLoading
   } = useContext(AppContext);
 
   const [ selectValue, setSelectValue ] = useState(null);
@@ -58,14 +45,17 @@ const CustomSelect = ({
   }
 
   const handleEditOptionClick = (e, option) => {
+    console.log(option)
     e.stopPropagation();
     setShowPhotogOrModelModal({modalType: "Edit"});
     setSelectedPhotogOrModel(option)
   }
   
   const handleDeleteOptionClick = (e, option) => {
+    // console.log("Handle Delete Click")
+    // console.log(option)
+    // console.log(`Delete ${option.photographer_name || option.model_name}?`)
     e.stopPropagation();
-    console.log(`Delete ${option.photographer_name || option.model_name}?`)
     setShowPhotogOrModelModal({modalType: "Delete"});
     setSelectedPhotogOrModel(option)
   }
@@ -114,8 +104,6 @@ const CustomSelect = ({
       setSelectedPhotogOrModel({id: null, model_name: null});
     }
     setShowPhotogOrModelModal({modalType: modalType});
-    console.log("handle")
-    console.log(showPhotogOrModelModal)
   }
   
   return (
@@ -202,7 +190,6 @@ const CustomSelect = ({
             )}
             <div 
               className="customSelect__option customSelect__option--addNew"
-              // onClick={() => console.log("Add New Photographer Entry")}
               onClick={() => handleAddNewOption("Add", entryNameType)}
             >
               Add New Entry
