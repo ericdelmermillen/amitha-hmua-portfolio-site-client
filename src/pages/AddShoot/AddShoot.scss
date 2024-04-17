@@ -58,6 +58,34 @@
     display: none;
   }
 
+  &__selector {
+    position: relative;
+  }
+  
+  &__selector-removeIcon {
+    height: 0;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    transition: all 1s ease;
+    width: 0;
+    
+    &.show {
+      align-items: center;
+      display: flex;
+      height: 3rem;
+      justify-content: center;
+      opacity: 1;
+      transition: all 0.5s ease;
+      width: 3rem;
+      z-index: 1;
+    }
+  }
+  
+  &__minus-icon {
+    stroke: var(--text-color);
+  }
+
   &__textButton {
     align-items: center;
     display: flex;

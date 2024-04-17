@@ -4,8 +4,9 @@ import AppContext from '../../AppContext.jsx';
 import NewShootdatePicker from '../../components/NewShootDatePicker/NewShootDatePicker.jsx';
 import { scrollToTop } from '../../utils/utils.js';
 import { toast } from 'react-toastify';
-import CustomSelect from '../../components/CustomSelect/CustomSelect.jsx';
 import AddIcon from '../../assets/icons/AddIcon.jsx';
+import CustomSelect from '../../components/CustomSelect/CustomSelect.jsx';
+import MinusIcon from '../../assets/icons/MinusIcon.jsx';
 import './AddShoot.scss';
 
 const AddShoot = () => {
@@ -164,6 +165,10 @@ const AddShoot = () => {
     return toast.error(`Please select a ${selectedEntryType} before adding a new one`)
   }
 
+  const handleRemoveCustomSelector = () => {
+    console.log("remove selector")
+  }
+
   // need handleRemoveCustomChooser function for model and photog choosers--
   const handleRemoveModelChooser = (modelChooserIdx) => {
     if(modelChooserIDs.length > 1) {
@@ -315,29 +320,48 @@ const AddShoot = () => {
                 </h4>
 
                 {photographerChooserIDs.map((chooser, idx) => (
-
-                  <CustomSelect 
+                  <div 
+                    className="addShoot__selector addShoot__selector--photographer"
                     key={chooser.chooserNo}
-                    chooserNo={chooser.chooserNo}
-                    chooserType={"Photographer"}
-                    chooserIDs={photographerChooserIDs}
-                    setChooserIDs={setPhotographerChooserIDs}
-                    modalType={"Edit"}
-                    // for number of options --
-                    selectOptions={photographers}
-                    setSelectOptions={setPhotographers}
+                  >
 
-                    // need handle remove custom chooser function--
-                    // handleRemovePhotographerChooser={handleRemovePhotographerChooser}
-                    // --
+                    <CustomSelect 
+                      chooserNo={chooser.chooserNo}
+                      chooserType={"Photographer"}
+                      chooserIDs={photographerChooserIDs}
+                      setChooserIDs={setPhotographerChooserIDs}
+                      modalType={"Edit"}
+                      // for number of options --
+                      selectOptions={photographers}
+                      setSelectOptions={setPhotographers}
+                      
+                      // need handle remove custom chooser function--
+                      // handleRemovePhotographerChooser={handleRemovePhotographerChooser}
+                      // --
+                      
+                      selectEntry={photographerChooserIDs}
+                      setSelectedOption={setPhotographerChooserIDs}
+                      
+                      photographerIDchooserId={chooser.photographerID}
+                      entryNameType={"photographer_name"}
+                    />
 
-                    selectEntry={photographerChooserIDs}
-                    setSelectedOption={setPhotographerChooserIDs}
-
-                    photographerIDchooserId={chooser.photographerID}
-                    entryNameType={"photographer_name"}
-                  />
+                      <span 
+                        className={`addShoot__selector-removeIcon ${photographerChooserIDs.length > 1 && chooser.photographerID 
+                          ? "show" 
+                          : ""}`}
+                        onClick={photographerChooserIDs.length > 1 && chooser.photographerID 
+                          ? handleRemoveCustomSelector
+                          : null
+                        }
+                      >
+                        <MinusIcon 
+                          className={"addShoot__minus-icon"}
+                        />
+                      </span>
+                      
                   
+                  </div>
                 ))}
               </div>
 
