@@ -55,8 +55,6 @@ const PhotographerChooser = ({
     return photographerChooserIDs.some(({ photographerID }) => photographerID === photographer_id);
   };
 
-  // console.log(photographers)
-
   return (
     <div className="photographerChooser">
       <div className="photographerChooser__inner">

@@ -3,7 +3,6 @@ import AppContext from '../../AppContext.jsx';
 import { useState, useContext } from 'react';
 import { toast } from "react-toastify";
 
-// fix handling for status 409 where entry being deleted exists in a shoot
 const PhotogOrModelModal = () => {
 
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -181,6 +180,7 @@ const PhotogOrModelModal = () => {
                 type="text" 
                 value={newEntryName}
                 onChange={(e) => handleEntryNameChange(e)}
+                autoFocus
               />
             : null
           }

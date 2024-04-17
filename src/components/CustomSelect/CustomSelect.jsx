@@ -3,6 +3,7 @@ import AppContext from '../../AppContext.jsx';
 import DownIcon from '../../assets/icons/DownIcon.jsx';
 import EditIcon from '../../assets/icons/EditIcon.jsx';
 import DeleteIcon from '../../assets/icons/DeleteIcon.jsx'
+import AddIcon from '../../assets/icons/AddIcon.jsx';
 import './CustomSelect.scss';
 
 const CustomSelect = ({ 
@@ -14,9 +15,11 @@ const CustomSelect = ({
   setChooserIDs,
   selectEntry, 
   setSelectedOption,
-  modalType
+  modalType,
+  entryNameType
  }) => {
 
+  console.log(chooserNo)
 
   const { 
     isLoggedIn, 
@@ -53,7 +56,6 @@ const CustomSelect = ({
       innerRef.current.scrollTop = 0;
     }
   }
-
 
   const handleEditOptionClick = (e, option) => {
     e.stopPropagation();
@@ -104,6 +106,17 @@ const CustomSelect = ({
       innerRef.current.scrollTop = 0;
     }
   }
+
+  const handleAddNewOption = (modalType, entryType) => {
+    if(entryType === "photographer_name") {
+      setSelectedPhotogOrModel({id: null, photographer_name: null});
+    } else if(entryType === "model_name") {
+      setSelectedPhotogOrModel({id: null, model_name: null});
+    }
+    setShowPhotogOrModelModal({modalType: modalType});
+    console.log("handle")
+    console.log(showPhotogOrModelModal)
+  }
   
   return (
     <>
@@ -142,7 +155,7 @@ const CustomSelect = ({
                     : "hide"}
                 `}
               >
-                Select {chooserType}
+                --Select {chooserType}--
               </span>
               <span 
                 className={`customSelect__default-option 
@@ -187,6 +200,13 @@ const CustomSelect = ({
                 </div>
               </div>
             )}
+            <div 
+              className="customSelect__option customSelect__option--addNew"
+              // onClick={() => console.log("Add New Photographer Entry")}
+              onClick={() => handleAddNewOption("Add", entryNameType)}
+            >
+              Add New Entry
+            </div>
           </div>
         </div>
       </div>
