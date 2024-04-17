@@ -60,6 +60,7 @@ const App = () => {
       setTimeout(() => {
         setIsLoading(false);
       }, 250)
+      toast.error("Already on Add Shoot Page")
     }
   }
 

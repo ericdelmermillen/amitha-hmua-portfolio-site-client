@@ -19,30 +19,23 @@ const AddShoot = () => {
     setIsLoading,
     isLoggedIn, 
     setIsLoggedIn,
-    showPhotogOrModelModal, 
-    setShowPhotogOrModelModal,
-    selectedPhotogOrModel, 
-    setSelectedPhotogOrModel,
     shouldUpdatePhotographers,
     setShouldUpdatePhotographers,
     shouldUpdateModels, 
     setShouldUpdateModels
   } = useContext(AppContext);
 
+  const [ isInitialLoad, setIsInitialLoad ] = useState(true);
   const [ newShootDate, setNewShootDate ] = useState(new Date());
-  
-  // models
   const [ models, setModels ] = useState([]);
   const [ modelChooserIDs, setModelChooserIDs ] = useState([{ chooserNo: 1, modelID: null}]);
-  
-  // photographers
   const [ photographers, setPhotographers ] = useState([]);
   const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([{ chooserNo: 1, photographerID: null }]);
+
 
   const handleCancel = () => {
     navigate('/home');
   }
-
 
   const handleAddCustomSelect = (selectedEntry) => {
     const selectedEntryType = selectedEntry === "photographer_name"
@@ -95,7 +88,6 @@ const AddShoot = () => {
       setModelChooserIDs(filteredChoosers);
     }
   }
-
 
   const handleSubmit = async () => {
     try {
@@ -152,14 +144,12 @@ const AddShoot = () => {
         'Content-Type': 'application/json'
       };
 
-       // Make POST request
       const response = await fetch(`${BASE_URL}/shoots/add`, {
         method: 'POST',
         headers: headers,
         body: JSON.stringify(shoot)
       });
 
-      // Check if response is ok
       if(!response.ok) {
         throw new Error("Error creating shoot");
       } else {
@@ -176,56 +166,21 @@ const AddShoot = () => {
     }
   };
   
-
-  // fetch models
+  // fetch phtographers & models
   useEffect(() => {
     setIsLoading(true);
 
-    const fetchModels = async () => {
-      const token = localStorage.getItem('token');
-      const headers = {};
+    const token = localStorage.getItem('token');
+    const headers = {};
 
-      if(token) {
-        headers['Authorization'] = `Bearer ${token}`;
-      }
-
-      try {
-        const response = await fetch(`${BASE_URL}/models/all`, { headers });
-
-        if(!response.ok) {
-          throw new Error(`Failed to fetch models: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        setModels(data.models);
-      } catch (error) {
-        console.log(error);
-        toast.error(`Error fetching models: ${error.message}`);
-      } finally {
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 250);
-      }
-    };
-
-    setShouldUpdateModels(false);
-
-    fetchModels();
-  }, [BASE_URL, shouldUpdateModels]);
-  
-  
-  // fetch photographers
-  useEffect(() => {
-    setIsLoading(true);
+    if(token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    } else {
+      setIsLoggedIn(false);
+      return toast.error("Not logged in")
+    }
 
     const fetchPhotographers = async () => {
-      const token = localStorage.getItem('token');
-      const headers = {};
-
-      if(token) {
-        headers['Authorization'] = `Bearer ${token}`;
-      }
-
       try {
         const response = await fetch(`${BASE_URL}/photographers/all`, { headers });
 
@@ -238,25 +193,51 @@ const AddShoot = () => {
       } catch (error) {
         console.log(error);
         toast.error(`Error fetching photographers: ${error.message}`);
-      } finally {
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 250);
       }
     };
-    setShouldUpdatePhotographers(false);
 
-    fetchPhotographers();
-  }, [BASE_URL, setIsLoading, shouldUpdatePhotographers]);
+    const fetchModels = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}/models/all`, { headers });
+
+        if(!response.ok) {
+          throw new Error(`Failed to fetch models: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        setModels(data.models);
+      } catch (error) {
+        console.log(error);
+        toast.error(`Error fetching models: ${error.message}`);
+      } 
+    };
+    
+    if(isInitialLoad || shouldUpdatePhotographers) {
+      setShouldUpdatePhotographers(false);
+      fetchPhotographers();
+    } 
+    
+    if(isInitialLoad || shouldUpdateModels) {
+      setShouldUpdateModels(false);
+      fetchModels();
+    }
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 250);
+
+  }, [BASE_URL, shouldUpdatePhotographers, shouldUpdateModels])
 
 
   // initial load useEffect
   useEffect(() => {
     scrollToTop();
+
     setTimeout(() => {
       setIsLoading();
     }, 250);
-  }, []);
+
+    setIsInitialLoad(false);
+  }, [isInitialLoad]);
   
   return (
     <>
@@ -279,12 +260,9 @@ const AddShoot = () => {
                 />
             </div>
 
-            <div  
-              className="addShoot__photographersAndModels-container">
+            <div className="addShoot__photographersAndModels-container">
 
-              <div 
-                className="addShoot__photographerChoosers"
-              >
+              <div className="addShoot__photographerChoosers">
                 <h3 className='addShoot__label'>
                   Choose At Least One Photographer
                 </h3>
@@ -319,7 +297,6 @@ const AddShoot = () => {
                       setSelectOptions={setPhotographers}
                       selectEntry={photographerChooserIDs}
                       setSelectedOption={setPhotographerChooserIDs}
-                      
                       photographerIDchooserId={chooser.photographerID}
                       entryNameType={"photographer_name"}
                     />
@@ -338,7 +315,6 @@ const AddShoot = () => {
                         />
                       </span>
                       
-                  
                   </div>
                 ))}
               </div>
@@ -355,13 +331,12 @@ const AddShoot = () => {
                   onClick={() => handleAddCustomSelect("model_name")}
                 >
                   Add Model 
-                  <span     
-                      className='addShoot__textButton-icon'>
-                      <AddIcon 
-                        className={"addShoot__add-icon"}
-                        classNameStroke={"addShoot__add-stroke"}
-                      />
-                    </span>
+                  <span className='addShoot__textButton-icon'>
+                    <AddIcon 
+                      className={"addShoot__add-icon"}
+                      classNameStroke={"addShoot__add-stroke"}
+                    />
+                  </span>
                 </h4>
                 
                 {modelChooserIDs.map((chooser) => (
@@ -385,7 +360,6 @@ const AddShoot = () => {
                       entryNameType={"model_name"}
                     />
 
-
                       <span 
                         className={`addShoot__selector-removeIcon ${modelChooserIDs.length > 1 && chooser.modelID 
                           ? "show" 
@@ -400,11 +374,10 @@ const AddShoot = () => {
                         />
                       </span>
 
-
-
                     </div>
 
                 ))}
+                
               </div>
             
             </div>
