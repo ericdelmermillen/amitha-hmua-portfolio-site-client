@@ -35,7 +35,6 @@ const CustomSelect = ({
 
     for(const chooser of chooserIDs) {
       if(chooser[entryID] === chooserID) {
-        console.log(`entryID: ${chooser[entryID]}`)
         return true;
       }
     }
