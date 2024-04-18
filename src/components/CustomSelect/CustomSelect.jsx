@@ -12,13 +12,8 @@ const CustomSelect = ({
   setSelectOptions,
   chooserIDs,
   setChooserIDs,
-  selectEntry, //
-  setSelectedOption,//
-  modalType,
   entryNameType
  }) => {
-
-  // console.log(selectEntry)
 
   const { 
     showPhotogOrModelModal, 
@@ -34,6 +29,17 @@ const CustomSelect = ({
   const handleToggleShowOptions = () => {
     setShowOptions(!showOptions);
   }
+
+  const alreadySelected = (chooserID) => {
+    const entryID = `${chooserType.toLowerCase()}ID`;
+
+    for(const chooser of chooserIDs) {
+      if(chooser[entryID] === chooserID) {
+        console.log(`entryID: ${chooser[entryID]}`)
+        return true;
+      }
+    }
+  }
   
   const handleTouchOff = () => {
     setShowOptions(false);
@@ -45,16 +51,12 @@ const CustomSelect = ({
   }
 
   const handleEditOptionClick = (e, option) => {
-    console.log(option)
     e.stopPropagation();
     setShowPhotogOrModelModal({modalType: "Edit"});
     setSelectedPhotogOrModel(option)
   }
   
   const handleDeleteOptionClick = (e, option) => {
-    // console.log("Handle Delete Click")
-    // console.log(option)
-    // console.log(`Delete ${option.photographer_name || option.model_name}?`)
     e.stopPropagation();
     setShowPhotogOrModelModal({modalType: "Delete"});
     setSelectedPhotogOrModel(option)
@@ -115,12 +117,10 @@ const CustomSelect = ({
       >
         <div 
           ref={innerRef}
-          className={`customSelect__inner 
-            ${showOptions 
-                ? "tall" 
-                : ""
-            }`
-          }
+          className={`customSelect__inner ${showOptions 
+            ? "tall" 
+            : ""
+          }`}
         >
 
           <div 
@@ -136,12 +136,11 @@ const CustomSelect = ({
             >
               <span 
                 className={`customSelect__default-option 
-                ${
-                  (!showOptions && !selectValue) || (showOptions && !selectValue) ||
-                  (showOptions && selectValue)
+                ${(!showOptions && !selectValue) 
+                  || (showOptions && !selectValue) 
+                  || (showOptions && selectValue)
                     ? "show" 
-                    : "hide"}
-                `}
+                    : "hide"}`}
               >
                 --Select {chooserType}--
               </span>
@@ -163,11 +162,14 @@ const CustomSelect = ({
             </div>
             {selectOptions.map(option => 
               <div 
-                className={`customSelect__option ${showOptions 
-                  ? "show" 
+                className={`customSelect__option ${showOptions && alreadySelected(option.id)
+                  ? "show disabled"
+                  : showOptions
+                  ? "show"
                   : ""}`} 
-                key={option.id} onClick={() => handleUpdateSelectValue(option)}>
-                  {option.photographer_name || option.model_name}
+                key={option.id} onClick={() => handleUpdateSelectValue(option)}
+              >
+                {option.photographer_name || option.model_name}
                 <div 
                   className="customSelect__option--edit-icon"
                   onClick={(e) => handleEditOptionClick(e, option)}
@@ -200,8 +202,7 @@ const CustomSelect = ({
       <div 
         className={`customSelect__touchOffDiv ${showOptions 
           ? "show"
-          : ""}`
-        }
+          : ""}`}
         onClick={handleTouchOff}
       ></div>
     </>

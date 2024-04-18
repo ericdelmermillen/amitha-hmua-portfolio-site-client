@@ -15,10 +15,10 @@
   }
   
   &__inner {
-    border-radius: $borderRadius;
-    outline: 1px solid var(--text-color);
     background: var(--background-color);
+    border-radius: $borderRadius;
     max-height: 3rem; 
+    outline: 1px solid var(--text-color);
     overflow-y: auto; 
     position: absolute;
     scrollbar-width: none;
@@ -27,22 +27,17 @@
   }
   
   &.tall &__inner {
-    transition: max-height 0.5s ease;
-    max-height: 30rem;
     max-height: 21rem;
+    transition: max-height 0.5s ease;
   }
   
   &.short &__inner {
     overflow-y: hidden;
-    // display: none;
-
   }
 
-  // 
   &__select {
     color: var(--text-color);
     cursor: pointer;
-    // background: yellow;
   }
 
   &__default-option {
@@ -60,11 +55,23 @@
     align-items: center;
     background: var(--background-color);
     display: flex;
-    min-height: 3rem;
     justify-content: center;
-    // &.short {
+    min-height: 3rem;
+    outline: 2px solid var(--text-color);
+    position: relative;
 
-    // }
+    & .down {
+      height: 0.75rem;
+      position: absolute;
+      right: 0.75rem;
+      top: 50%;
+      transform: translateY(-95%);
+      width: 0.75rem;
+      
+      &__stroke {
+        stroke: var(--text-color);
+      }
+    }
   }
 
   
@@ -76,6 +83,12 @@
     justify-content: center;
     outline: none;
     position: relative;
+
+    &.show.disabled {
+      opacity: 0.25;
+      pointer-events: none;
+      user-select: none;
+    }
     
     &.show {
       border-top: none;
@@ -83,16 +96,15 @@
     }
 
     &--edit-icon {
-      // border: 2px solid red;
-      height: 1.75rem;
-      width: 1.75rem;
-      display: flex;
-      justify-content: center;
       align-items: center;
+      display: flex;
+      height: 1.75rem;
+      justify-content: center;
       position: absolute;
       right: 1rem;
       top: 25%;
       transform: translateY(-10%);
+      width: 1.75rem;
 
       // .editSvg {
       //   // display: none;
@@ -104,28 +116,21 @@
     }
     
     &--delete-icon {
-      // border: 2px solid red;
-      height: 1.75rem;
-      width: 1.75rem;
-      display: flex;
-      justify-content: center;
       align-items: center;
-      position: absolute;
+      display: flex;
+      height: 1.75rem;
+      justify-content: center;
       left: 1rem;
+      position: absolute;
       top: 25%;
       transform: translateY(-10%);
-      // border: 2px solid red;
+      width: 1.75rem;
 
-      .deleteSvg {
-        // display: none;
-        // stroke: var(--text-color);
-        fill: var(--text-color);
-
-      }
-
+      .deleteSvg,
       .deleteStroke {
         fill: var(--text-color);
       }
+
     }
 
     &--addNew {
@@ -140,36 +145,17 @@
   }
 
   &__touchOffDiv {
+    display: none;
     height: 100dvh;
     left: 0;
     opacity: 0.7;
     position: fixed;
     top: 0;
     width: 100vw;
-    display: none;
     
     &.show {
       display:block;
       z-index: 1;
-    }
-  }
-}
-
-.customSelect__selectValue {
-  position: relative;
-  outline: 2px solid var(--text-color);
-
-  .down {
-    width: 0.75rem;
-    height: 0.75rem;
-    position: absolute;
-    right: 0.75rem;
-    // top: 0.75rem;
-    top: 50%;
-    transform: translateY(-95%);
-    
-    &__stroke {
-      stroke: var(--text-color);
     }
   }
 }
