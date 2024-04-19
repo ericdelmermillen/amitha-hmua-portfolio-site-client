@@ -8,6 +8,7 @@ import AddIcon from '../../assets/icons/AddIcon.jsx';
 import CustomSelect from '../../components/CustomSelect/CustomSelect.jsx';
 import MinusIcon from '../../assets/icons/MinusIcon.jsx';
 import './AddShoot.scss';
+import PhotoInput from '../../components/PhotoInput/PhotoInput.jsx';
 
 const AddShoot = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -31,6 +32,8 @@ const AddShoot = () => {
   const [ modelChooserIDs, setModelChooserIDs ] = useState([{ chooserNo: 1, modelID: null}]);
   const [ photographers, setPhotographers ] = useState([]);
   const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([{ chooserNo: 1, photographerID: null }]);
+
+  const numberOfPhotoUploads = 10;
 
   const handleCancel = () => {
     navigate('/home');
@@ -258,6 +261,33 @@ const AddShoot = () => {
                   setNewShootDate={setNewShootDate}
                   className={"addShoot__calendarIcon"}
                 />
+            </div>
+
+            <div className="addShoot__photoUploads">
+              <h3 className="addShoot_photos-heading">
+                Select up to 10 Photos
+              </h3>
+
+              <div className="addShoot_photoInputs">              
+
+                {isLoggedIn 
+                  ? Array.from({ length: numberOfPhotoUploads }, (_, idx) => (
+                      <div 
+                        className="addShoot__photoUpload"
+                        key={idx} 
+                      >
+                        <PhotoInput 
+                        />
+                      </div>
+                    ))
+
+                  : null
+                }
+              </div>
+
+              <p className="addShoot__photos-explainer">
+                *All shoots need at least one photo
+              </p>
             </div>
 
             <div className="addShoot__photographersAndModels-container">

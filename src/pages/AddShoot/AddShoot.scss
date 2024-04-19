@@ -4,6 +4,7 @@
 .addShoot {
   background: var(--background-color);
   @include page;
+  color: var(--text-color);
   
   &__inner {
     border: 2px solid var(--text-color);
@@ -21,7 +22,7 @@
   }
 
   &__heading {
-    color: var(--text-color);
+    // color: var(--text-color);
     font-size: 1.75rem;
     font-weight: 600;
     margin-bottom: 1rem;
@@ -29,7 +30,7 @@
   }
   
   &__form {
-    color: var(--text-color);
+    // color: var(--text-color);
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -132,6 +133,83 @@
     gap: 1rem;
   }
 
+  // photos here --
+  &__photoUploads {
+    border: 2px solid red;
+    font-size: 1.5rem;;
+    display: grid;
+    justify-content: center;
+  }
+
+  &__photoUpload {
+    border: 2px solid green;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10rem;
+    height: 10rem;
+    
+    @media(min-width: $tablet) {
+      width: 12rem;
+      height: 12rem;
+    }
+    
+    @media(min-width: $largeTablet) {
+      width: 15rem;
+      height: 15rem;
+    }
+    
+    @media(min-width: $desktop) {
+      width: 10rem;
+      height: 10rem;
+    }
+  }
+  
+  &_photos-heading {
+    color: red;
+    width: 100%;
+    text-align: center;
+  }
+
+  &__photos-explainer {
+    color: blue;
+    text-align: center;
+    width: 100%;
+    font-size: 1.25rem;
+  }
+
+  &_photoInputs {
+    border: 2px solid yellow;
+    padding-block: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 1fr);
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+    margin-block: 1rem;
+    
+    @media(min-width: 500px) {
+      min-width: 20rem;
+      gap: 3rem;
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @media(min-width: $tablet) {
+      min-width: 30rem;
+      margin-block: 2rem;
+      padding-inline: 25%;
+      gap: 5rem;
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    @media(min-width: $desktop) {
+      gap: 2rem;
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+  
+  // 
+  
   &__button-container {
     display: flex;
     flex-direction: column;
