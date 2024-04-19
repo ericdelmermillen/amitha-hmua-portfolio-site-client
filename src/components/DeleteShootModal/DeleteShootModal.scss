@@ -2,7 +2,7 @@
 @import '../../partials/variables';
 
 .deleteShootModal {
-  background-color: var(--modalBg);
+  background-color: var(--modalOverlayBg);
   height: 100%;
   left: 0;
   position: fixed;
@@ -10,8 +10,8 @@
   width: 100%;
   
   &__modal {
-    background: #fff;
-    border-radius: $borderRadius;
+    background: var(--background-color);
+    border-radius: var(--borderRadius);
     display: flex;
     flex-direction: column;
     left: 50%;
@@ -30,6 +30,7 @@
   }
 
   &__heading {
+    color: var(--text-color);
     font-size: 2rem;
     margin-block: auto;
   }

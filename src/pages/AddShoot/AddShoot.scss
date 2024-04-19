@@ -1,5 +1,5 @@
-@import '../../partials/mixins';
-@import '../../partials/variables';
+@import '../../partials/mixins.scss';
+@import '../../partials/variables.scss';
 
 .addShoot {
   background: var(--background-color);
@@ -9,12 +9,11 @@
     border: 2px solid var(--text-color);
     padding-block: 2rem;
     padding-inline: 1rem;
-    margin-top: 2rem;
     width: 90%;
     
-    @media(min-width: $tablet) {
-      margin-top: 7rem;
-    }
+    // @media(min-width: $tablet) {
+    //   margin-top: 5rem;
+    // }
     
     @media(min-width: $desktop) {
       max-width: 1000px;
@@ -46,8 +45,8 @@
   }
 
   &__date-picker {
-    border-radius: $borderRadius;
     border: none;
+    border-radius: var(--borderRadius);
     display: block;
     height: 2rem;
     margin-inline: auto;
@@ -110,14 +109,6 @@
     stroke: var(--button-link);
   }
 
-
-
-  &__photographer-choosers {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
   &__photographersAndModels-container {
     display: grid;
     gap: 1rem;
@@ -134,19 +125,12 @@
     }
   }
 
-
-  &__photographerChoosers {
+  &__photographerChoosers,
+  &__modelChoosers  {
     display: flex;
     flex-direction: column;
     gap: 1rem;
   }
-  
-  &__modelChoosers {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
 
   &__button-container {
     display: flex;

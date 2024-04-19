@@ -1,7 +1,7 @@
 import AppContext from '../../AppContext';
 import { useState, useEffect, useContext } from 'react';
-import bioPic from '../../assets/images/bio-pic.jpg'
 import { scrollToTop } from '../../utils/utils';
+import bioPic from '../../assets/images/bio-pic.jpg';
 import './Bio.scss';
 
 const Bio = () => {

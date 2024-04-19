@@ -1,5 +1,5 @@
-@import '../../partials/mixins';
-@import '../../partials/variables';
+@import '../../partials/mixins.scss';
+@import '../../partials/variables.scss';
 
 .loginForm {
   align-items: center;
@@ -15,14 +15,14 @@
   
   &__modal {
     background-color: var(--background-color);
-    border-radius: $borderRadius;
+    border-radius: var(--borderRadius);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
     height: 80%;
+    margin-top: 3rem;
     max-height: 40rem;
     max-width: 40rem;
-    margin-top: 3rem;
     overflow-y: auto;;
     padding: 20px;
     width: 90%;
@@ -35,7 +35,6 @@
   &__title {
     color: var(--text-color);
     font-size: 1.75rem;
-
     margin-bottom: 1.5rem;
     margin-top: 20%;
     text-align: center;
@@ -109,7 +108,6 @@
     
   &__button {
     @include button;
-    
     
     &--cancel {
       width: 100%;

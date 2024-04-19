@@ -1,5 +1,5 @@
-@import '../../partials/mixins';
-@import '../../partials/variables';
+@import '../../partials/mixins.scss';
+@import '../../partials/variables.scss';
 
 .contactForm {
   align-items: center;
@@ -15,14 +15,14 @@
   
   &__modal {
     background-color: var(--background-color);
-    border-radius: $borderRadius;
+    border-radius: var(--borderRadius);
     box-shadow: var(--box-shadow);
     display: flex;
     flex-direction: column;
     height: 80%;
+    margin-top: 3rem;
     max-height: 40rem;
     max-width: 40rem;
-    margin-top: 3rem;
     overflow-y: auto;
     padding: 2rem;
     width: 90%;
@@ -112,7 +112,6 @@
   &__subject {
     position: relative;
     height: 3.85rem;
-    // border: 2px solid yellow;
   }
 
   &__subject-error {
@@ -130,8 +129,8 @@
 
   &__message-input {
     @include input;
-    resize: none;
     height: 6rem;
+    resize: none;
   }
 
   &__message-error {
@@ -155,6 +154,5 @@
     &--cancel {
       width: 100%;
     }
-
   }
 }

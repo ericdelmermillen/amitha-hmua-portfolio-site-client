@@ -1,5 +1,5 @@
-@import '../../partials/mixins';
-@import '../../partials/variables';
+@import '../../partials/mixins.scss';
+@import '../../partials/variables.scss';
 
 .home {
   background: var(--background-color);
@@ -11,7 +11,7 @@
   &__inner {
     @include page;
 
-    @media(min-width:$tablet) {
+    @media(min-width: var(--tablet)) {
       padding-top: 3rem;
     }
   }

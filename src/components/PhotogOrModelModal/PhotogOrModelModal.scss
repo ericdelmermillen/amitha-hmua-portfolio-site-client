@@ -1,8 +1,8 @@
-@import '../../partials/mixins';
-@import '../../partials/variables';
+@import '../../partials/mixins.scss';
+@import '../../partials/variables.scss';
 
 .photogOrModelModal {
-  background-color: var(--modalBg);
+  background-color: var(--modalOverlayBg);
   height: 100%;
   left: 0;
   position: fixed;
@@ -12,7 +12,7 @@
   
   &__modal {
     background: var(--background-color);
-    border-radius: $borderRadius;
+    border-radius: var(--borderRadius);
     display: flex;
     flex-direction: column;
     left: 50%;

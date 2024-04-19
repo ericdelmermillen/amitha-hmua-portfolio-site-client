@@ -32,7 +32,6 @@ const AddShoot = () => {
   const [ photographers, setPhotographers ] = useState([]);
   const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([{ chooserNo: 1, photographerID: null }]);
 
-
   const handleCancel = () => {
     navigate('/home');
   }
@@ -76,12 +75,9 @@ const AddShoot = () => {
       : "Model"
 
     const { chooserNo } = chooser;
-    console.log(chooserType)
     
     if(chooserType === "Photographer") {
-      console.log("firing")
       const filteredChoosers = photographerChooserIDs.filter(chooser => chooser.chooserNo !== chooserNo);
-      console.log(chooser)
 
       setPhotographerChooserIDs(filteredChoosers);
 
@@ -224,6 +220,7 @@ const AddShoot = () => {
       setShouldUpdateModels(false);
       fetchModels();
     }
+
     setTimeout(() => {
       setIsLoading(false);
     }, 250);
@@ -275,8 +272,7 @@ const AddShoot = () => {
                   onClick={() => handleAddCustomSelect("photographer_name")}
                 >
                   Add Photographer 
-                    <span     
-                      className='addShoot__textButton-icon'>
+                    <span className='addShoot__textButton-icon'>
                       <AddIcon 
                         className={"addShoot__add-icon"}
                         classNameStroke={"addShoot__add-stroke"}
@@ -295,7 +291,6 @@ const AddShoot = () => {
                       chooserType={"Photographer"}
                       chooserIDs={photographerChooserIDs}
                       setChooserIDs={setPhotographerChooserIDs}
-                      modalType={"Edit"}
                       selectOptions={photographers}
                       setSelectOptions={setPhotographers}
                       selectEntry={photographerChooserIDs}
@@ -353,12 +348,10 @@ const AddShoot = () => {
                       chooserType={"Model"}
                       chooserIDs={modelChooserIDs}
                       setChooserIDs={setModelChooserIDs}
-                      modalType={"Edit"}
                       selectOptions={models}
                       setSelectOptions={setModels}
                       selectEntry={modelChooserIDs}
                       setSelectedOption={setModelChooserIDs}
-
                       modelIDchooserId={chooser.modelID}
                       entryNameType={"model_name"}
                     />
@@ -378,7 +371,6 @@ const AddShoot = () => {
                       </span>
 
                     </div>
-
                 ))}
                 
               </div>

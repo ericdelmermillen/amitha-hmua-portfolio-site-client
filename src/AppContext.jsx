@@ -16,19 +16,11 @@ export const AppProvider = ({ children }) => {
 
   const [ selectedShoot, setSelectedShoot ] = useState(null);
   
-  // state to show selectedPhotogOrModel ---
   const [ selectedPhotogOrModel, setSelectedPhotogOrModel ] = useState({});
 
-  // modals start
   const [ showDeleteShootModal, setShowDeleteShootModal ] = useState(false);
 
-  // modals end
-
-  // PhotogOrModelModal
   const [ showPhotogOrModelModal, setShowPhotogOrModelModal ] = useState({modalType: null});
-  // const [ showPhotogOrModelModal, setShowPhotogOrModelModal ] = useState({modalType: "Edit"});
-
-  // modals end
   
   const [ shouldUpdateShoots, setShouldUpdateShoots ] = useState(false);
   const [ shouldUpdatePhotographers, setShouldUpdatePhotographers ] = useState(false);
@@ -38,7 +30,6 @@ export const AppProvider = ({ children }) => {
   const navigate = useNavigate(); 
 
   useEffect(() => {
-
     const checkTokenExpiration = () => {
       const token = localStorage.getItem('token');
 

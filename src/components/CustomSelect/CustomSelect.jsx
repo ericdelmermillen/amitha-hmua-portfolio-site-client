@@ -49,16 +49,18 @@ const CustomSelect = ({
     }
   }
 
-  const handleEditOptionClick = (e, option) => {
-    e.stopPropagation();
-    setShowPhotogOrModelModal({modalType: "Edit"});
-    setSelectedPhotogOrModel(option)
-  }
-  
-  const handleDeleteOptionClick = (e, option) => {
-    e.stopPropagation();
-    setShowPhotogOrModelModal({modalType: "Delete"});
-    setSelectedPhotogOrModel(option)
+  const handleOptionClick = (e, option, modalType, entryType) => {
+    if(modalType !== "Add") {
+      e.stopPropagation();
+      setSelectedPhotogOrModel(option);
+    } else {
+      if(entryType === "photographer_name") {
+        setSelectedPhotogOrModel({id: null, photographer_name: null});
+      } else if(entryType === "model_name") {
+        setSelectedPhotogOrModel({id: null, model_name: null});
+      }
+    }
+    setShowPhotogOrModelModal({modalType: modalType});
   }
 
   const handleUpdateSelectValue = (option) => {
@@ -89,22 +91,13 @@ const CustomSelect = ({
       }
     }
   
-    setChooserIDs(newChooserIDs)
+    setChooserIDs(newChooserIDs);
     setShowOptions(false);
 
     // Reset scroll position to top
     if(innerRef.current) {
       innerRef.current.scrollTop = 0;
     }
-  }
-
-  const handleAddNewOption = (modalType, entryType) => {
-    if(entryType === "photographer_name") {
-      setSelectedPhotogOrModel({id: null, photographer_name: null});
-    } else if(entryType === "model_name") {
-      setSelectedPhotogOrModel({id: null, model_name: null});
-    }
-    setShowPhotogOrModelModal({modalType: modalType});
   }
   
   return (
@@ -171,7 +164,7 @@ const CustomSelect = ({
                 {option.photographer_name || option.model_name}
                 <div 
                   className="customSelect__option--edit-icon"
-                  onClick={(e) => handleEditOptionClick(e, option)}
+                  onClick={(e) => handleOptionClick(e, option, "Edit")}
                 >
                   <EditIcon 
                     className={"editSvg"}
@@ -180,7 +173,7 @@ const CustomSelect = ({
                 </div>
                 <div 
                   className="customSelect__option--delete-icon"
-                  onClick={(e) => handleDeleteOptionClick(e, option)}
+                  onClick={(e) => handleOptionClick(e, option, "Delete")}
                 >
                   <DeleteIcon 
                     className={"deleteSvg"}
@@ -191,7 +184,7 @@ const CustomSelect = ({
             )}
             <div 
               className="customSelect__option customSelect__option--addNew"
-              onClick={() => handleAddNewOption("Add", entryNameType)}
+              onClick={(e) => handleOptionClick(e, null, "Add", entryNameType)}
             >
               Add New Entry
             </div>

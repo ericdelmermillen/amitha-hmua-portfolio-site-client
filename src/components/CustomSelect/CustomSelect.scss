@@ -1,5 +1,5 @@
-@import '../../partials/mixins';
-@import '../../partials/variables';
+@import '../../partials/mixins.scss';
+@import '../../partials/variables.scss';
 
 .customSelect {
   @include input;
@@ -16,7 +16,7 @@
   
   &__inner {
     background: var(--background-color);
-    border-radius: $borderRadius;
+    border-radius: var(--borderRadius);
     max-height: 3rem; 
     outline: 1px solid var(--text-color);
     overflow-y: auto; 
@@ -73,7 +73,6 @@
       }
     }
   }
-
   
   &__option {
     align-items: center;
@@ -130,7 +129,6 @@
       .deleteStroke {
         fill: var(--text-color);
       }
-
     }
 
     &--addNew {

@@ -1,9 +1,9 @@
 import AppContext from '../../AppContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
-import Shoots from '../../components/Shoots/Shoots.jsx';
 import { scrollToTop } from '../../utils/utils.js';
 import { toast } from 'react-toastify';
+import Shoots from '../../components/Shoots/Shoots.jsx';
 import './ShootDetails.scss';
 
 const ShootDetails = () => {
@@ -116,25 +116,22 @@ const ShootDetails = () => {
                             
                           }
                         
-                          {shootDetails &&
-                          
-                            models.length > 1 
+                          {shootDetails && models.length > 1 
                               ? models.join(", ") 
                               : models
-                          
                           }
                         </h3>
 
                         <h3   
-                          className={`shootDetails__photographers ${shootDetails && "show"}`}
+                          className={`shootDetails__photographers ${shootDetails 
+                            ? "show"
+                            : ""}`}
                         >
                           {photographers && 
 
-                          <span   
-                            className="shootDetails__photographers-label"
-                          >
-                            {"Photos: "}
-                          </span>              
+                            <span className="shootDetails__photographers-label">
+                              {"Photos: "}
+                            </span>              
 
                           }
 
@@ -146,8 +143,7 @@ const ShootDetails = () => {
                       </div>
                     </>
 
-                  )
-                }
+                  )}
               </div>
             )}
 

@@ -1,5 +1,4 @@
 @import './partials/mixins';
-@import './partials/variables';
 
 /* css reset */
 *, 
@@ -23,7 +22,8 @@ body {
   overflow-x: hidden;
 }
 
-ul, ol {
+ul, 
+ol {
   list-style: none;
 }
 
@@ -54,7 +54,7 @@ img {
     margin-top: 5rem;
     overflow-x: hidden;
     
-    @media(min-width: $tablet) {
+    @media(min-width: var(--tablet)) {
       margin-top: 0;
     }
   }

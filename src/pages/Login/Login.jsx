@@ -1,15 +1,13 @@
 import { useEffect, useContext } from 'react';
+import { scrollToTop } from '../../utils/utils';
 import AppContext from '../../AppContext';
 import LoginForm from '../../components/LoginForm/LoginForm';
-import { scrollToTop } from '../../utils/utils';
 import './Login.scss';
 
 const Login = () => {
   const { 
     isLoading, 
     setIsLoading,
-    showSideNav, 
-    setShowSideNav,
   } = useContext(AppContext);
 
   // initial load useEffect

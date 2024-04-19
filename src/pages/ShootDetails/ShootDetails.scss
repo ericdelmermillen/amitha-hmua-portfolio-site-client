@@ -1,5 +1,5 @@
-@import '../../partials/mixins';
-@import '../../partials/variables';
+@import '../../partials/mixins.scss';
+@import '../../partials/variables.scss';
 
 .shootDetails {
   @include page;
@@ -16,7 +16,7 @@
     margin-top: 1.5rem;
     
     @media(min-width: $tablet) {
-      margin-top: 7rem;
+      margin-top: 4rem;
     }
   }
 
@@ -102,10 +102,9 @@
     @include shootImg;
   }
 
-
   &__divider {
     background-color: var(--text-color);
-    border-radius: $borderRadius;
+    border-radius: var(--borderRadius);
     height: 0.25rem;
     margin-top: 3rem;
     width: 90%;

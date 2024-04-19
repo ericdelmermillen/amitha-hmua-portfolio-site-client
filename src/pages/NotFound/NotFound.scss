@@ -1,4 +1,5 @@
-@import '../../partials/mixins';
+@import '../../partials/mixins.scss';
+@import '../../partials/variables.scss';
 
 .notFound {
   @include page;

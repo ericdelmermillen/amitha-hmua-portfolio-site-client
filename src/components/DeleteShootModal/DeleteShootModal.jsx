@@ -1,7 +1,7 @@
-import './DeleteShootModal.scss';
-import AppContext from '../../AppContext';
 import { useContext } from 'react';
+import AppContext from '../../AppContext';
 import { toast } from "react-toastify";
+import './DeleteShootModal.scss';
 
 const DeleteShootModal = () => {
   
@@ -66,13 +66,15 @@ const DeleteShootModal = () => {
           <div className="deleteShootModal__button-container">
             <button
               className="deleteShootModal__button deleteShootModal__button--delete"
-              onClick={handleDeleteShoot}>
-                Confirm
+              onClick={handleDeleteShoot}
+            >
+              Confirm
             </button>
             <button
               className="deleteShootModal__button deleteShootModal__button--cancel"
-              onClick={handleCloseModal}>
-                Cancel
+              onClick={handleCloseModal}
+            >
+              Cancel
             </button>
           </div>
 

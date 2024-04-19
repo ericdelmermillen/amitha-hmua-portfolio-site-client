@@ -1,9 +1,21 @@
 
 const Hide = ({ className }) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25">
-      <g id="Group_402" data-name="Group 402" transform="translate(-287 -1103)">
-        <g id="baseline-visibility_off-24px" transform="translate(287.5 1104)">
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      width="25" 
+      height="25" 
+      viewBox="0 0 25 25"
+    >
+      <g 
+        id="Group_402" 
+        data-name="Group 402" 
+        transform="translate(-287 -1103)"
+      >
+        <g 
+          id="baseline-visibility_off-24px" 
+          transform="translate(287.5 1104)"
+        >
           <path
             id="Path_581"
             data-name="Path 581"
@@ -17,7 +29,14 @@ const Hide = ({ className }) => {
             className={className}
           />
         </g>
-        <rect id="Rectangle_235" data-name="Rectangle 235" width="25" height="25" transform="translate(287 1103)" fill="none" />
+        <rect 
+          id="Rectangle_235" 
+          data-name="Rectangle 235" 
+          width="25" 
+          height="25" 
+          transform="translate(287 1103)" 
+          fill="none" 
+        />
       </g>
     </svg>
   )};

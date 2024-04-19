@@ -1,7 +1,7 @@
 import { useEffect, useContext } from 'react';
+import { scrollToTop } from '../../utils/utils';
 import AppContext from '../../AppContext'; 
 import Shoots from '../../components/Shoots/Shoots';
-import { scrollToTop } from '../../utils/utils';
 import './Home.scss';
 
 const Home = () => {

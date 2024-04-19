@@ -1,11 +1,11 @@
 import { useState, useEffect, useContext } from 'react';
+import AppContext from '../../AppContext'; 
 import { Link, useNavigate } from 'react-router-dom';
 import { isValidEmail, isValidPassword } from '../../utils/utils';
-import AppContext from '../../AppContext'; 
 import { toast } from 'react-toastify';
-import './LoginForm.scss';
 import Hide from '../../assets/icons/Hide';
 import Show from '../../assets/icons/Show';
+import './LoginForm.scss';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -13,14 +13,6 @@ const LoginForm = () => {
   const { 
     isLoggedIn, 
     setIsLoggedIn,
-    showSideNav, 
-    setShowSideNav,
-    scrollYPos, 
-    setScrollYPos,
-    prevScrollYPos, 
-    setPrevScrollYPos,
-    selectedShoot, 
-    setSelectedShoot,
     isLoading, 
     setIsLoading
   } = useContext(AppContext);
@@ -60,7 +52,6 @@ const LoginForm = () => {
     if(shouldCheckPasswordIsValid) {
       handleCheckPasswordIsValid()
     }
-    
   };
 
   const handleCheckPasswordIsValid = () => {
@@ -124,79 +115,79 @@ const LoginForm = () => {
 
   return (
     <>
-      <div className="loginForm">
-        <div className="loginForm__modal">
-          <h1 className="loginForm__title">
+      <div className='loginForm'>
+        <div className='loginForm__modal'>
+          <h1 className='loginForm__title'>
             Admin Login
           </h1>
           <form 
-            className="loginForm__form" 
+            className='loginForm__form' 
             onSubmit={handleSubmit}>
-            <div className="loginForm__group">
+            <div className='loginForm__group'>
               <label 
-                htmlFor="email" className="loginForm__label">
+                htmlFor='email' className='loginForm__label'>
                   Email
               </label>
               <input
-                type="text"
-                id="email"
-                className="loginForm__input"
+                type='text'
+                id='email'
+                className='loginForm__input'
                 value={email}
-                placeholder="Email"
+                placeholder='Email'
                 onChange={handleEmailChange}
                 onBlur={handleCheckEmailIsValid}
               />
               <div 
-                className={`loginForm__error ${emailIsInvalid && "email-error"}`}
+                className={`loginForm__error ${emailIsInvalid && 'email-error'}`}
               >
                 Invalid Email
               </div>
             </div>
-            <div className="loginForm__group">
+            <div className='loginForm__group'>
               <label 
-                htmlFor="password" className="loginForm__label">
+                htmlFor='password' className='loginForm__label'>
                   Password
               </label>
-              <div className="passwordInput">
+              <div className='passwordInput'>
                 <input
-                  type={showPassword ? "text" : "password"}
-                  id="password"
-                  className="loginForm__input"
+                  type={showPassword ? 'text' : 'password'}
+                  id='password'
+                  className='loginForm__input'
                   value={password}
-                  placeholder="Password"
+                  placeholder='Password'
                   onChange={handlePasswordChange}
                   onBlur={handleCheckPasswordIsValid}
                 />
                 <div 
-                  className="passwordInput__icon"
-                  alt="password hide/show icon"
+                  className='passwordInput__icon'
+                  alt='password hide/show icon'
                   onClick={() => setShowPassword(!showPassword)}
                 >
 
                   {showPassword 
-                  ? <Hide 
-                      className={"passwordInput__icon--hide"}
-                    />
-                  : <Show 
-                      className={"passwordInput__icon--show"}
-                    />
+                    ? <Hide 
+                        className={'passwordInput__icon--hide'}
+                      />
+                    : <Show 
+                        className={'passwordInput__icon--show'}
+                      />
                   }
                 </div>
               </div>
               <div 
-                className={`loginForm__error ${passwordInvalid && "password-error"}`}
+                className={`loginForm__error ${passwordInvalid && 'password-error'}`}
               >
                 Password Incorrect
               </div>
             </div>
-            <div className="loginForm__button-container">
+            <div className='loginForm__button-container'>
               <button 
-                type="submit" className="loginForm__button loginForm__button--login">
+                type='submit' className='loginForm__button loginForm__button--login'>
                   Login
               </button>
               <Link to={'/'}>
                 <button 
-                  type="button" className="loginForm__button loginForm__button--cancel">
+                  type='button' className='loginForm__button loginForm__button--cancel'>
                     Cancel
                 </button>
               </Link>

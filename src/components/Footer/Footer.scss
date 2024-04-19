@@ -1,5 +1,5 @@
-@import '../../partials/mixins';
-@import '../../partials/variables';
+@import '../../partials/mixins.scss';
+@import '../../partials/variables.scss';
 
 .footer {
   box-shadow: var(--footer-boxShadow); 
@@ -7,16 +7,15 @@
 
   &__inner {
     align-items: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     background: var(--navAndFooterBG);
     color: var(--text-color);
+    display: flex;
+    flex-direction: column;
     height: 100%;
   }
 
   &__text {
-    margin-block: auto;
     font-size: 1.25rem;
+    margin-block: auto;
   }
 }

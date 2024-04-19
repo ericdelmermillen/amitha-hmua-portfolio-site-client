@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import AppContext from '../../AppContext';
 import { Link, useNavigate } from 'react-router-dom';
-import { isValidEmail, isValidPassword } from '../../utils/utils';
+import { isValidEmail } from '../../utils/utils';
 import { toast } from 'react-toastify';
 import './ContactForm.scss';
 
@@ -71,10 +71,6 @@ const ContactForm = () => {
   
   const handleMessageChange = (e) => {
     setMessage(e.target.value);
-
-    // if(shouldCheckMessage) {
-    //   console.log(e.target.value)
-    // }
   };
 
   const handleShouldCheckMessage = () => {
@@ -190,7 +186,8 @@ const ContactForm = () => {
                   onBlur={handleShouldCheckFirstName}
                 />
                 <p 
-                  className={`contactForm__firstName-error ${firstNameIsInvalid ? "error" : ""}`}>
+                  className={`contactForm__firstName-error ${firstNameIsInvalid ? "error" : ""}`}
+                >
                   First Name is invalid
                 </p>
               </div>
@@ -211,7 +208,8 @@ const ContactForm = () => {
                   onBlur={handleShouldCheckLastName}
                 />
                 <p 
-                  className={`contactForm__lastName-error ${lastNameIsInvalid ? "error" : ""}`}>
+                  className={`contactForm__lastName-error ${lastNameIsInvalid ? "error" : ""}`}
+                >
                   Last Name is invalid
                 </p>
               </div>
@@ -235,7 +233,8 @@ const ContactForm = () => {
                 onBlur={handleShouldCheckEmail}
               />
               <p 
-                className={`contactForm__email-error ${emailIsInvalid ? "error" : ""}`}>
+                className={`contactForm__email-error ${emailIsInvalid ? "error" : ""}`}
+              >
                   Invalid Email
               </p>
             </div>
@@ -257,7 +256,8 @@ const ContactForm = () => {
                 onBlur={handleShouldCheckSubject}
               />
               <p 
-                className={`contactForm__subject-error ${subjectIsInvalid ? "error" : ""}`}>
+                className={`contactForm__subject-error ${subjectIsInvalid ? "error" : ""}`}
+              >
                   Subject must be at least 10 characters long
               </p>
             </div>
@@ -279,7 +279,10 @@ const ContactForm = () => {
                 onBlur={handleShouldCheckMessage}
               ></textarea>
               <p 
-                className={`contactForm__message-error ${messageIsInvalid ? "error" : ""}`}>
+                className={`contactForm__message-error ${messageIsInvalid 
+                  ? "error" 
+                  : ""}`}
+                >
                   Message must be at least 25 characters long
               </p>
             </div>
@@ -287,7 +290,8 @@ const ContactForm = () => {
               
               <Link to={'/'}>
                 <button 
-                  type="button" className="contactForm__button contactForm__button--cancel">
+                  type="button" className="contactForm__button contactForm__button--cancel"
+                >
                     Cancel
                 </button>
               </Link>

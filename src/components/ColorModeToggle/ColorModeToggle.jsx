@@ -12,7 +12,9 @@ const ColorModeToggle = ({ inputId }) => {
   } = useContext(AppContext);
 
   const handleToggleColorMode = () => {
-    const currentMode = colorMode === 'light' ? 'dark' : 'light'
+    const currentMode = colorMode === 'light' 
+      ? 'dark' 
+      : 'light';
     setColorMode(currentMode);
   };
 
@@ -20,24 +22,24 @@ const ColorModeToggle = ({ inputId }) => {
     <>
       <div className='colorModeToggle'>
         <input 
+          className="colorModeToggle__checkbox" 
           type="checkbox" 
-          className="checkbox" 
           id={inputId} 
           onClick={handleToggleColorMode}
         />
         <label 
+          className="colorModeToggle__checkbox-label"
           htmlFor={inputId} 
-          className="checkbox-label"
           >
           <img 
             className='colorModeToggle__sun-icon'
             src={sun} 
-            alt="" />
+            alt="Color Mode Light sun icon" />
           <img 
             className='colorModeToggle__moon-icon'
             src={moon} 
-            alt="" />
-          <span className="ball"></span>
+            alt="Color Mode Dark sun icon" />
+          <span className="colorModeToggle__ball"></span>
         </label>
       </div>
     </>
