@@ -1,52 +1,88 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useRef } from 'react';
+import { toast } from 'react-toastify';
 import AppContext from '../../AppContext';
 import PhotoPlaceholder from '../../assets/icons/PhotoPlaceholder';
 import './PhotoInput.scss';
 
-const PhotoUpload = () => {
+const PhotoUpload = ({ shootPhoto, shootPhotos, setShootPhotos }) => {
   const { 
     isLoading,
     setIsLoading
   } = useContext(AppContext);
-  
-  const [ selectedFile, setSelectedFile ] = useState(null);
 
-  // const handleInputLoading = () => {
-  //   setIsLoading(true);
-  // }
+  const [ inputIsLoading, setInputIsLoading ] = useState(false);
+
+  const inputNo = shootPhoto.photoNo;
+
+  const fileInputRef = useRef(null);
+
+  const handleFileInputChange = () => {
+    fileInputRef.current.click();
+  };
 
   const handleFileChange = (e) => {
+    setInputIsLoading(true)
     const file = e.target.files[0];
 
-    if(file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
-      setSelectedFile(URL.createObjectURL(file));
+    if (file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
+      const selectedFile = URL.createObjectURL(file);
+
+      const newShootPhotos = [...shootPhotos];
+
+      newShootPhotos.forEach((shootPhoto) => {
+        if (shootPhoto.photoNo === inputNo) {
+          shootPhoto.photoData = selectedFile;
+        }
+      });
+      
+      setShootPhotos(newShootPhotos);
     } else {
-      setSelectedFile(null);
-      alert('Please select a valid JPEG or PNG file.');
+      toast.error('Please select a valid JPEG or PNG file.');
     }
     setIsLoading(false);
-  }
+  };
+
+  const handleClearInput = (e) => {
+    e.stopPropagation();
+    const newShootPhotos = [...shootPhotos];
+
+    newShootPhotos.forEach((shootPhoto) => {
+      if (shootPhoto.photoNo === inputNo) {
+        shootPhoto.photoData = null;
+      }
+    });
+
+    setShootPhotos(newShootPhotos);
+  };
   
   return (
     <>
       <div className="photoInput">
-        {selectedFile 
-          ? <img 
-              src={selectedFile} 
+        {shootPhoto.photoData ? (
+          <div className="photoInput__box disabled">
+            <img
+              src={shootPhoto.photoData}
               alt="Uploaded"
-              className="photoInput__image" 
+              className="photoInput__image"
             />
-          : <label 
-              htmlFor="fileInput"  className="photoInput__placeholderLabel"
-              // onClick={handleInputLoading}
+            <div
+              className="photoInput__clearButton"
+              onClick={handleClearInput}
             >
-              <PhotoPlaceholder
-                className="photoInput__placeholder"
-                strokeClassName="photoInput__placeholderStroke"
-              />
-            </label>
-        }
+              <div className="photoInput__close-icon"></div>
+              <div className="photoInput__close-icon"></div>
+            </div>
+          </div>
+        ) : (
+          <div className="photoInput__box" onClick={handleFileInputChange}>
+            <PhotoPlaceholder
+              className="photoInput__placeholder"
+              strokeClassName="photoInput__placeholderStroke"
+            />
+          </div>
+        )}
         <input
+          ref={fileInputRef}
           type="file"
           id="fileInput"
           accept="image/jpeg, image/png"
@@ -55,6 +91,7 @@ const PhotoUpload = () => {
         />
       </div>
     </>
-  )};
+  );
+};
 
 export default PhotoUpload;

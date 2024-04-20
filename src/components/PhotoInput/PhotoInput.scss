@@ -2,10 +2,70 @@
 @import '../../partials/variables';
 
 .photoInput {
-  align-items: center;
-  display: flex;
-  justify-content: center;
-  position: relative;
+  
+  &__box {
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    transition: scale 0.2s ease;
+    
+    &.disabled {
+      cursor: default;
+    }
+  }
+
+  &__clearButton {
+    align-items: center;
+    background: var(--background-color);
+    border-radius: 50%;
+    box-shadow: var(--boxShadow);
+    cursor: pointer;
+    display: flex;
+    height: 2rem;
+    justify-content: center;
+    left: 0.25rem;
+    padding: 0.5rem;
+    position: absolute;
+    top: 0.25rem;
+    width: 2rem;
+
+    @media(min-width: 500px) {
+      height: 2rem;
+      width: 2rem;
+    }
+
+    @media(min-width: $tablet) {
+      height: 2.25rem;
+      width: 2.25rem;
+    }
+
+    @media(min-width: $tablet) {
+      height: 2.5rem;
+      width: 2.5rem;
+    }
+  }
+
+  &__close-icon {
+    background-color: var(--text-color); 
+    border-radius: 2px;
+    height: 3px;
+    position: absolute;
+    transform-origin: center;
+    width: 70%;
+  }
+
+  &__close-icon:first-child {
+    transform: rotate(45deg);
+  }
+
+  &__close-icon:last-child {
+    transform: rotate(-45deg);
+  }
 
   &__placeholder {
     fill: var(--text-color);
@@ -14,34 +74,24 @@
   }
 
   &__image {
-    height: auto;
     max-height: 100%;
-    max-width: 100%;
-    min-height: 10rem;
+    min-width: 100%;
     object-fit: cover; 
-    object-position: center center;
-    width: auto;
-    cursor: pointer;
-
-    @media(min-width: $tablet) {
-      min-height: 15rem;
-    }
-
-    @media(min-width: $largeTablet) {
-      min-height: 10rem;
-    }
+    object-position: top center;
   }
 
-  &__placeholderLabel {
+  &__clear-button {
     cursor: pointer;
+    height: 2rem;
+    position: absolute;
+    top: 0;
+    width: 2rem;
   }
 
   &__fileInput {
-    position: absolute;
-    width: 5rem;
-    opacity: 0;
+    display: none;
   }
-  
+
   &__placeholderStroke {
     fill: none;
     stroke: var(--text-color);

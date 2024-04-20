@@ -134,6 +134,29 @@
     }
   }
 
+  &__photoInput {
+    height: 15rem;
+    max-height: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    width: 15rem;
+    
+    @media(min-width: 500px) {
+      height: 12rem;
+      width: 12rem;
+    }
+    
+    @media(min-width: $tablet) {
+      height: 15rem;
+      width: 15rem;
+    }
+    
+    @media(min-width: $largeTablet) {
+      height: 10rem;
+      width: 10rem;
+    }
+  }
+
   &__selector {
     position: relative;
   }
