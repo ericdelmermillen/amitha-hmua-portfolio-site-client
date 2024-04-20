@@ -247,13 +247,13 @@ const AddShoot = () => {
       <div className="addShoot">
         <div className="addShoot__inner">
           <h1 className="addShoot__heading">
-            Add A New Shoot
+            Add New Shoot
           </h1>
 
           <div className="addShoot__form">
             <div className="addShoot__date-container">
 
-              <label className='addShoot__label'>
+              <label className='addShoot__label addShoot__label--datePicker'>
                 Enter Shoot Date
               </label>
                 <NewShootdatePicker
