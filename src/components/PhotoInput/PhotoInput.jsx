@@ -2,6 +2,7 @@ import { useState, useContext, useRef } from 'react';
 import { toast } from 'react-toastify';
 import AppContext from '../../AppContext';
 import PhotoPlaceholder from '../../assets/icons/PhotoPlaceholder';
+import Compressor from 'compressorjs';
 import './PhotoInput.scss';
 
 const PhotoUpload = ({ shootPhoto, shootPhotos, setShootPhotos }) => {
@@ -9,8 +10,6 @@ const PhotoUpload = ({ shootPhoto, shootPhotos, setShootPhotos }) => {
     isLoading,
     setIsLoading
   } = useContext(AppContext);
-
-  const [ inputIsLoading, setInputIsLoading ] = useState(false);
 
   const inputNo = shootPhoto.photoNo;
 
@@ -20,27 +19,68 @@ const PhotoUpload = ({ shootPhoto, shootPhotos, setShootPhotos }) => {
     fileInputRef.current.click();
   };
 
-  const handleFileChange = (e) => {
-    setInputIsLoading(true)
+  // const handleFileChange = async (e) => {
+  //   const file = e.target.files[0];
+
+  //   if(file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
+  //     const selectedFile = URL.createObjectURL(file);
+
+  //     const newShootPhotos = [...shootPhotos];
+
+  //     newShootPhotos.forEach((shootPhoto) => {
+  //       if (shootPhoto.photoNo === inputNo) {
+  //         shootPhoto.photoData = selectedFile;
+  //       }
+  //     });
+      
+  //     setShootPhotos(newShootPhotos);
+  //   } else {
+  //     toast.error('Please select a valid JPEG or PNG file.');
+  //   }
+  // };
+  
+
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
 
-    if (file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
-      const selectedFile = URL.createObjectURL(file);
+    if(file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
+      try {
+        const compressedFile = await new Promise((resolve, reject) => {
+          new Compressor(file, {
+            quality: 8,
+            maxWidth: 1200,
+            maxHeight: 900,
+            mimeType: 'auto',
+            convertSize: 600000,
+            success(result) {
+              resolve(result);
+            },
+            error(error) {
+              reject(error);
+            },
+          });
+        });
 
-      const newShootPhotos = [...shootPhotos];
+        const selectedFile = URL.createObjectURL(compressedFile);
 
-      newShootPhotos.forEach((shootPhoto) => {
-        if (shootPhoto.photoNo === inputNo) {
-          shootPhoto.photoData = selectedFile;
-        }
-      });
-      
-      setShootPhotos(newShootPhotos);
+        const newShootPhotos = [...shootPhotos];
+
+        newShootPhotos.forEach((shootPhoto) => {
+          if (shootPhoto.photoNo === inputNo) {
+            shootPhoto.photoData = selectedFile;
+          }
+        });
+        
+        setShootPhotos(newShootPhotos);
+      } catch (error) {
+        console.error('Compression error:', error);
+        toast.error('Failed to compress image.');
+      }
     } else {
       toast.error('Please select a valid JPEG or PNG file.');
     }
-    setIsLoading(false);
   };
+  
 
   const handleClearInput = (e) => {
     e.stopPropagation();

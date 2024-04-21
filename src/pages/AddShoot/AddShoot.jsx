@@ -35,7 +35,6 @@ const AddShoot = () => {
 
   const numberOfPhotoUploads = 10;
 
-  // // shootPhotos: array of objects with photoNo and photoData properties
   const [shootPhotos, setShootPhotos] = useState(
     Array.from({ length: numberOfPhotoUploads }, (_, idx) => ({
       photoNo: idx + 1,
@@ -45,11 +44,11 @@ const AddShoot = () => {
   
   // const [ shootPhotos, setShootPhotos ] = useState(
   //   [
-  //     {photoNo: 1, photoData: null},
-  //     {photoNo: 2, photoData: null},
-  //     {photoNo: 3, photoData: null},
-  //     {photoNo: 4, photoData: null},
-  //     {photoNo: 5, photoData: null},
+  //     {photoNo: 1, photoData: "https://images.squarespace-cdn.com/content/v1/5c2b8497620b859e3110e2e9/1627601727660-BDMJVSOP3C6JUCVRUOQA/IMG_8389.JPG?format=1000w"},
+  //     {photoNo: 2, photoData: "https://images.squarespace-cdn.com/content/v1/5c2b8497620b859e3110e2e9/1627601764606-ATC169LN5RT0QP8C424N/IMG_8280.JPG?format=1000w"},
+  //     {photoNo: 3, photoData: "https://images.squarespace-cdn.com/content/v1/5c2b8497620b859e3110e2e9/1627601806737-L9CI06R5M8ELWDASOC0W/IMG_8281.JPG?format=1000w"},
+  //     {photoNo: 4, photoData: "https://images.squarespace-cdn.com/content/v1/5c2b8497620b859e3110e2e9/1627602367230-LB8ZNUQ5EMF6P9J4WCKW/IMG_8390.JPG?format=1000w"},
+  //     {photoNo: 5, photoData: "https://images.squarespace-cdn.com/content/v1/5c2b8497620b859e3110e2e9/1627602409500-KSPOFX7TCQ3PTM5V3SWJ/IMG_8282.JPG?format=1000w"},
   //     {photoNo: 6, photoData: null},
   //     {photoNo: 7, photoData: null},
   //     {photoNo: 8, photoData: null},
@@ -150,9 +149,13 @@ const AddShoot = () => {
       shoot.photographer_ids = selectedPhotographerIDs;
       shoot.photo_urls = [];
 
-      shootPhotos.forEach(shootPhoto => shoot.photo_urls.push(shootPhoto.photoData))
+      shootPhotos.forEach(shootPhoto => {
+        if(shootPhoto.photoData) {
+          shoot.photo_urls.push(shootPhoto.photoData);
+        }
+      })
 
-      // console.log(shoot.photo_urls)
+      console.log(shoot.photo_urls)
 
       const token = localStorage.getItem('token');
 
