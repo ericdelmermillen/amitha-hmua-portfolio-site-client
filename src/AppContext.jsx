@@ -1,8 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';
-import { toast } from 'react-toastify';
-import { checkTokenExpiration } from './utils/utils.js'
+import { checkTokenExpiration } from './utils/utils.js';
 
 const AppContext = createContext();
 
@@ -35,16 +33,11 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     checkTokenExpiration(setIsLoggedIn, navigate);
   }, []);
-  
 
   // color mode checking on initial mount
   useEffect(() => {
     const storedColorMode = localStorage.getItem('colorMode');  
-
-    if(storedColorMode) {
-      setColorMode(storedColorMode);
-    }
-
+    setColorMode(storedColorMode || "light");
   }, []);
 
   // Update local storage when color mode state changes

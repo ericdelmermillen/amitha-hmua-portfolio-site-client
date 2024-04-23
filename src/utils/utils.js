@@ -1,17 +1,20 @@
 import { jwtDecode } from 'jwt-decode';
+import { toast } from 'react-toastify';
+
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const checkTokenExpiration = async (setIsLoggedIn, navigate) => {
   const token = localStorage.getItem('token');
 
-  if (token) {
+  if(token) {
     try {
       const decodedToken = jwtDecode(token);
       const currentTime = Math.floor(Date.now() / 1000);
 
-      if (decodedToken.exp < currentTime) {
+      if(decodedToken.exp < currentTime) {
         const refreshToken = localStorage.getItem('refreshToken');
 
-        if (refreshToken) {
+        if(refreshToken) {
           const refreshResponse = await fetch(`${BASE_URL}/auth/refresh`, {
             method: 'POST',
             headers: {
@@ -22,38 +25,47 @@ const checkTokenExpiration = async (setIsLoggedIn, navigate) => {
             })
           });
 
-          console.log("token expired: attempting refresh")
+          console.log("Token expired: attempting refresh");
 
-          if (refreshResponse.ok) {
+          if(refreshResponse.ok) {
             const { accessToken } = await refreshResponse.json();
             localStorage.setItem('token', accessToken);
             setIsLoggedIn(true);
+            return false; // Token is refreshed successfully
           } else {
-            // Refresh token failed, log user out
             setIsLoggedIn(false);
             localStorage.removeItem('token');
             localStorage.removeItem('refreshToken');
             toast.error('Token expired. Logging you out...');
             navigate('/');
+            return true; // Token is expired and refresh failed
           }
         } else {
           // No refresh token available, log user out
           setIsLoggedIn(false);
           localStorage.removeItem('token');
-          toast.error('Token expired. Logging you out...');
           navigate('/');
+          toast.error('Token expired. Logging you out...');
+          return true;
         }
       } else {
         // Token is still valid
         setIsLoggedIn(true);
+        return false;
       }
     } catch (error) {
       console.error('Error decoding token:', error);
       setIsLoggedIn(false);
       localStorage.removeItem('token');
+      localStorage.removeItem('refreshToken');
+      navigate('/');
+      toast.error('Token expired. Logging you out...');
+      return true;
     }
   } else {
+    localStorage.removeItem('refreshToken');
     setIsLoggedIn(false);
+    return true; 
   }
 };
 

@@ -1,6 +1,8 @@
 import { useContext } from 'react';
 import AppContext from '../../AppContext';
 import { toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom';
+import { checkTokenExpiration } from '../../utils/utils.js';
 import './DeleteShootModal.scss';
 
 const DeleteShootModal = () => {
@@ -18,11 +20,19 @@ const DeleteShootModal = () => {
     setShowDeleteShootModal
   } = useContext(AppContext);
 
+  const navigate = useNavigate();
+
   const handleCloseModal = () => {
     setShowDeleteShootModal(false);
   };
 
   const handleDeleteShoot = async () => {
+    const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
+
+    if(tokenIsExpired) {
+      return
+    }
+    
     if(isLoggedIn) {
       try {
         const response = await fetch(`${BASE_URL}/shoots/delete/${selectedShoot}`, {
