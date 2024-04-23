@@ -1,12 +1,11 @@
-import './PhotogOrModelModal.scss';
 import AppContext from '../../AppContext.jsx';
 import { useState, useContext } from 'react';
 import { toast } from "react-toastify";
+import { useNavigate } from 'react-router-dom';
+import { checkTokenExpiration } from '../../utils/utils.js';
+import './PhotogOrModelModal.scss';
 
 const PhotogOrModelModal = () => {
-
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
   const { 
     isLoading, 
     setIsLoading,
@@ -22,7 +21,10 @@ const PhotogOrModelModal = () => {
     setShowPhotogOrModelModal,
   } = useContext(AppContext);
 
-  // modalType & entryType for UI as well as endpoint and request type
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+  const navigate = useNavigate();
+
   const { modalType } = showPhotogOrModelModal;
 
   const entryType = selectedPhotogOrModel.hasOwnProperty("photographer_name")
@@ -43,11 +45,11 @@ const PhotogOrModelModal = () => {
   
   const handleEntryNameChange = (e) => {
     setNewEntryName(e.target.value);
-  }
+  };
   
   const handleCloseModal = () => {
     setShowPhotogOrModelModal(false);
-  }
+  };
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
@@ -57,7 +59,12 @@ const PhotogOrModelModal = () => {
 
 
   const handleEntry = async () => {
-    // add handling for if the user is not authorized/token expired on server
+    const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
+
+    if(tokenIsExpired) {
+      return;
+    }
+  
     if(isLoggedIn) {
       
       if(modalType !== "Delete" && newEntryName.length < 2) {
