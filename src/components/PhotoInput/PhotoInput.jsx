@@ -66,7 +66,7 @@ const PhotoUpload = ({ shootPhoto, shootPhotos, setShootPhotos }) => {
         const newShootPhotos = [...shootPhotos];
 
         newShootPhotos.forEach((shootPhoto) => {
-          if (shootPhoto.photoNo === inputNo) {
+          if(shootPhoto.photoNo === inputNo) {
             shootPhoto.photoData = selectedFile;
           }
         });

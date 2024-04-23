@@ -155,7 +155,7 @@ const AddShoot = () => {
         }
       })
 
-      console.log(shoot.photo_urls)
+      // console.log(shoot.photo_urls)
 
       const token = localStorage.getItem('token');
 

@@ -19,6 +19,7 @@ import AddIcon from './assets/icons/AddIcon.jsx';
 import UpIcon from './assets/icons/UpIcon.jsx';
 import './App.scss';
 import DeleteShootModal from './components/DeleteShootModal/DeleteShootModal.jsx';
+import TestUploadComponent from './components/TestUploadComponent/TestUploadComponent.jsx';
 
 const App = () => {
   const navigate = useNavigate();
@@ -133,6 +134,7 @@ const App = () => {
         <SideNav handleLogOut={handleLogOut}/>
 
         <Routes>
+          <Route path="/testupload" element={<TestUploadComponent />} />
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/bio" element={<Bio />} />
