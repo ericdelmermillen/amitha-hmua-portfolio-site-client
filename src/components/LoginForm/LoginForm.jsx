@@ -44,7 +44,7 @@ const LoginForm = () => {
       setEmailIsInvalid(true);
       setShouldCheckEmailIsValid(true);
     }
-  }
+  };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
@@ -61,23 +61,21 @@ const LoginForm = () => {
       setPasswordInvalid(true)
       setShouldCheckPasswordIsValid(true)
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if(isValidEmail(email)) {
-      setEmailIsInvalid(false);
-    } else {
-      return setEmailIsInvalid(true);
-    }
   
-    if(isValidPassword(password)) {
-      setPasswordInvalid(false);
-    } else {
-     return setPasswordInvalid(true);
+    if(!isValidEmail(email)) {
+      setEmailIsInvalid(true);
+      return;
     }
     
+    if(!isValidPassword(password)) {
+      setPasswordInvalid(true);
+      return;
+    }
+  
     try {
       const response = await fetch(`${BASE_URL}/auth/login`, {
         method: 'POST',
@@ -92,13 +90,14 @@ const LoginForm = () => {
   
       if(response.ok) {
         const data = await response.json();
-        const token = data.token;
+        const { token, refreshToken } = data;
         localStorage.setItem('token', token);
+        localStorage.setItem('refreshToken', refreshToken); 
         setIsLoggedIn(true);
         setIsLoading(true);
         navigate('/');
         toast.success('Successfully logged in!');
-      } else {
+      } else if(response.status === 401) {
         toast.error('Login Failed. Check Email & Password')
       }
     } catch(error) {
@@ -106,12 +105,13 @@ const LoginForm = () => {
       console.error('Error:', error);
     }
   };
+  
 
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false)
     }, 500)
-  }, [])
+  }, []);
 
   return (
     <>
