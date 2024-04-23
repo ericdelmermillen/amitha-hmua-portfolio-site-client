@@ -2,6 +2,7 @@ import { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
+import { checkTokenExpiration } from './utils/utils.js'
 
 const AppContext = createContext();
 
@@ -29,40 +30,12 @@ export const AppProvider = ({ children }) => {
 
   const navigate = useNavigate(); 
 
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(() => {
-    const checkTokenExpiration = () => {
-      const token = localStorage.getItem('token');
-
-      if(token) {
-        try {
-          const decodedToken = jwtDecode(token);
-          const currentTime = Math.floor(Date.now() / 1000); 
-
-          if(decodedToken.exp < currentTime) {
-            setIsLoggedIn(false); 
-            localStorage.removeItem('token'); 
-            toast.error('Token expired. Logging you out...');
-            navigate('/');
-          } else {
-            setIsLoggedIn(true);
-          }
-
-        } catch(error) {
-          console.error('Error decoding token:', error);
-          setIsLoggedIn(false);
-          localStorage.removeItem('token'); 
-        }
-      } else {
-        setIsLoggedIn(false);
-      }
-    }
-
-    checkTokenExpiration();
-
-    const intervalId = setInterval(checkTokenExpiration, 60000);
-
-    return () => clearInterval(intervalId);
+    checkTokenExpiration(setIsLoggedIn, navigate);
   }, []);
+  
 
   // color mode checking on initial mount
   useEffect(() => {

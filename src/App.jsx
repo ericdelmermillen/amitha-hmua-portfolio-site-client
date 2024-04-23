@@ -21,6 +21,8 @@ import './App.scss';
 import DeleteShootModal from './components/DeleteShootModal/DeleteShootModal.jsx';
 import TestUploadComponent from './components/TestUploadComponent/TestUploadComponent.jsx';
 
+// don't forget token refreshing on editShoot and updateShootOrder
+
 const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -48,6 +50,7 @@ const App = () => {
     setIsLoading(true);
     setIsLoggedIn(false);
     localStorage.removeItem('token'); 
+    localStorage.removeItem('refreshToken'); 
     setTimeout(() => {
       setIsLoading(false);
     }, 250)

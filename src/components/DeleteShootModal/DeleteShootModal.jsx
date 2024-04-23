@@ -20,7 +20,7 @@ const DeleteShootModal = () => {
 
   const handleCloseModal = () => {
     setShowDeleteShootModal(false);
-  }
+  };
 
   const handleDeleteShoot = async () => {
     if(isLoggedIn) {
