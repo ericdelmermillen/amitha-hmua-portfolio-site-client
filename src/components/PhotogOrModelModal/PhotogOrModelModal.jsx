@@ -59,11 +59,11 @@ const PhotogOrModelModal = () => {
 
 
   const handleEntry = async () => {
-    const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
+    // const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
 
-    if(tokenIsExpired) {
-      return;
-    }
+    // if(tokenIsExpired) {
+    //   return;
+    // }
   
     if(isLoggedIn) {
       
@@ -124,6 +124,11 @@ const PhotogOrModelModal = () => {
           if(response.status === 409) {
             setIsLoading(false);
             return toast.error(errorData.message);
+          } else if(response.status === 401) {
+            setIsLoading(false);
+            setIsLoggedIn(false);
+            navigate("/home");
+            return toast.error("Please login again...");
           } else {
             setIsLoading(false);
             return toast.error(`Failed to ${modalType.toLowerCase()} ${entryType} ${newEntryName}`);

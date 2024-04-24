@@ -29,9 +29,9 @@ const DeleteShootModal = () => {
   const handleDeleteShoot = async () => {
     const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
 
-    if(tokenIsExpired) {
-      return;
-    }
+    // if(tokenIsExpired) {
+    //   return toast.error("Unathorised. Logging you out...");
+    // }
     
     if(isLoggedIn) {
       try {
@@ -49,14 +49,19 @@ const DeleteShootModal = () => {
           setShouldUpdateShoots(true);
           setShowDeleteShootModal(false);
           toast.success(`Shoot ${selectedShoot} successfully deleted.`); 
+        } else if(response.status === 401) {
+          setIsLoading(false);
+          setIsLoggedIn(false);
+          navigate("/home");
+          return toast.error("Please login again...");
         } else {
-          toast.error(`Failed to delete Shoot ${selectedShoot}`);
+          toast.error(`Failed to delete Shoot ${selectedShoot}.`);
           console.error(`Failed to delete Shoot ${selectedShoot}: ${response.statusText}`);
           setShowDeleteShootModal(false);
         }
       } catch (error) {
         console.error(`Error deleting Shoot ${selectedShoot}: ${error}`);
-        toast.error(`Error deleting Shoot ${selectedShoot}: ${error}`);
+        toast.error(`Error deleting Shoot ${selectedShoot}. Loggin you out...`);
       }
     } else {
       toast.error("Sorry please login again");

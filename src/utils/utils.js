@@ -31,17 +31,14 @@ const checkTokenExpiration = async (setIsLoggedIn, navigate) => {
             const { accessToken } = await refreshResponse.json();
             localStorage.setItem('token', accessToken);
             setIsLoggedIn(true);
-            return false; // Token is refreshed successfully
+            return false;
           } else {
             setIsLoggedIn(false);
             localStorage.removeItem('token');
             localStorage.removeItem('refreshToken');
-            toast.error('Token expired. Logging you out...');
-            navigate('/');
-            return true; // Token is expired and refresh failed
+            return true;
           }
         } else {
-          // No refresh token available, log user out
           setIsLoggedIn(false);
           localStorage.removeItem('token');
           navigate('/');
@@ -49,7 +46,7 @@ const checkTokenExpiration = async (setIsLoggedIn, navigate) => {
           return true;
         }
       } else {
-        // Token is still valid
+        navigate('/');
         setIsLoggedIn(true);
         return false;
       }

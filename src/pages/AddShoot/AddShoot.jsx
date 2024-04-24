@@ -183,7 +183,8 @@ const AddShoot = () => {
         });
 
         if(!response.ok) {
-          throw new Error("Error creating shoot");
+          setIsLoggedIn(false)
+          throw new Error("Error creating shoot. Logging you out...");
         } else {
           toast.success("Shoot added Successfully");
           setTimeout(() => {
@@ -193,8 +194,9 @@ const AddShoot = () => {
       
       } catch(error) {
         console.log(error)
-        toast.error('Error creating shoot');
+        toast.error('Error creating shoot. Logging you out...');
         setIsLoading(false);
+        navigate('/home');
       }
     }
   };
@@ -225,7 +227,6 @@ const AddShoot = () => {
         setPhotographers(data.photographers);
       } catch (error) {
         console.log(error);
-        toast.error(`Error fetching photographers: ${error.message}`);
       }
     };
 
@@ -241,7 +242,6 @@ const AddShoot = () => {
         setModels(data.models);
       } catch (error) {
         console.log(error);
-        toast.error(`Error fetching models: ${error.message}`);
       } 
     };
     
