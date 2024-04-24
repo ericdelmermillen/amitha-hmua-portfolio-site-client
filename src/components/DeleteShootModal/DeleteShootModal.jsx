@@ -39,8 +39,11 @@ const DeleteShootModal = () => {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
           },
         });
+
+        console.log(response)
 
         if(response.ok) {
           setShouldUpdateShoots(true);
