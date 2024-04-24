@@ -4,6 +4,7 @@ import AppContext from '../../AppContext.jsx';
 import NewShootdatePicker from '../../components/NewShootDatePicker/NewShootDatePicker.jsx';
 import { scrollToTop } from '../../utils/utils.js';
 import { toast } from 'react-toastify';
+import { checkTokenExpiration } from '../../utils/utils.js';
 import AddIcon from '../../assets/icons/AddIcon.jsx';
 import CustomSelect from '../../components/CustomSelect/CustomSelect.jsx';
 import MinusIcon from '../../assets/icons/MinusIcon.jsx';
@@ -114,80 +115,87 @@ const AddShoot = () => {
   }
 
   const handleSubmit = async () => {
-    try {
-      setIsLoading(true);
+    const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
 
-      const selectedPhotographerIDs = [];
+    if(tokenIsExpired) {
+      return
+    }
 
-      photographerChooserIDs.forEach(photographerChooser => {
-        if(photographerChooser.photographerID !== null) {
-          selectedPhotographerIDs.push(photographerChooser.photographerID);
+    if(isLoggedIn) {
+
+      try {
+        setIsLoading(true);
+
+        const selectedPhotographerIDs = [];
+
+        photographerChooserIDs.forEach(photographerChooser => {
+          if(photographerChooser.photographerID !== null) {
+            selectedPhotographerIDs.push(photographerChooser.photographerID);
+          }
+        });
+
+        if(!selectedPhotographerIDs.length) {
+          setIsLoading(false);
+          return toast.error("Select at least one photographer");
         }
-      });
 
-      if(!selectedPhotographerIDs.length) {
-        setIsLoading(false);
-        return toast.error("Select at least one photographer");
-      }
+        const selectedModelIDs = [];
 
-      const selectedModelIDs = [];
+        modelChooserIDs.forEach(modelChooser => {
+          if(modelChooser.modelID !== null) {
+            selectedModelIDs.push(modelChooser.modelID);
+          }
+        });
 
-      modelChooserIDs.forEach(modelChooser => {
-        if(modelChooser.modelID !== null) {
-          selectedModelIDs.push(modelChooser.modelID);
+        if(!selectedModelIDs.length) {
+          setIsLoading(false);
+          return toast.error("Select at least one model");
         }
-      });
+        
+        const shoot = {};
+        shoot.shoot_date = newShootDate.toISOString().split('T')[0];
+        shoot.model_ids = selectedModelIDs;
+        shoot.photographer_ids = selectedPhotographerIDs;
+        shoot.photo_urls = [];
 
-      if(!selectedModelIDs.length) {
-        setIsLoading(false);
-        return toast.error("Select at least one model");
-      }
-      
-      const shoot = {};
-      shoot.shoot_date = newShootDate.toISOString().split('T')[0];
-      shoot.model_ids = selectedModelIDs;
-      shoot.photographer_ids = selectedPhotographerIDs;
-      shoot.photo_urls = [];
+        shootPhotos.forEach(shootPhoto => {
+          if(shootPhoto.photoData) {
+            shoot.photo_urls.push(shootPhoto.photoData);
+          }
+        })
 
-      shootPhotos.forEach(shootPhoto => {
-        if(shootPhoto.photoData) {
-          shoot.photo_urls.push(shootPhoto.photoData);
-        }
-      })
+        const token = localStorage.getItem('token');
 
-      // console.log(shoot.photo_urls)
-
-      const token = localStorage.getItem('token');
-
-      if(!token) {
-        navigate('/home');
-        return toast.error("Sorry please login again");
-      }
-
-      const headers = {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      };
-
-      const response = await fetch(`${BASE_URL}/shoots/add`, {
-        method: 'POST',
-        headers: headers,
-        body: JSON.stringify(shoot)
-      });
-
-      if(!response.ok) {
-        throw new Error("Error creating shoot");
-      } else {
-        toast.success("Shoot added Successfully");
-        setTimeout(() => {
+        if(!token) {
           navigate('/home');
-        }, 500)
+          return toast.error("Sorry please login again");
+        }
+
+        const headers = {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        };
+
+        const response = await fetch(`${BASE_URL}/shoots/add`, {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify(shoot)
+        });
+
+        if(!response.ok) {
+          throw new Error("Error creating shoot");
+        } else {
+          toast.success("Shoot added Successfully");
+          setTimeout(() => {
+            navigate('/home');
+          }, 500)
+        }
+      
+      } catch(error) {
+        console.log(error)
+        toast.error('Error creating shoot');
+        setIsLoading(false);
       }
-    
-    } catch(error) {
-      console.log(error)
-      toast.error('Error creating shoot');
-      setIsLoading(false);
     }
   };
   

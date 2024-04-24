@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import AppContext from '../../AppContext';
 import sun from '../../assets/icons/sun.svg';
 import moon from '../../assets/icons/crescent_moon.svg';

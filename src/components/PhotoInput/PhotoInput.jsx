@@ -19,27 +19,6 @@ const PhotoUpload = ({ shootPhoto, shootPhotos, setShootPhotos }) => {
     fileInputRef.current.click();
   };
 
-  // const handleFileChange = async (e) => {
-  //   const file = e.target.files[0];
-
-  //   if(file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
-  //     const selectedFile = URL.createObjectURL(file);
-
-  //     const newShootPhotos = [...shootPhotos];
-
-  //     newShootPhotos.forEach((shootPhoto) => {
-  //       if (shootPhoto.photoNo === inputNo) {
-  //         shootPhoto.photoData = selectedFile;
-  //       }
-  //     });
-      
-  //     setShootPhotos(newShootPhotos);
-  //   } else {
-  //     toast.error('Please select a valid JPEG or PNG file.');
-  //   }
-  // };
-  
-
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
 

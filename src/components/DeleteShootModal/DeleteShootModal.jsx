@@ -30,7 +30,7 @@ const DeleteShootModal = () => {
     const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
 
     if(tokenIsExpired) {
-      return
+      return;
     }
     
     if(isLoggedIn) {

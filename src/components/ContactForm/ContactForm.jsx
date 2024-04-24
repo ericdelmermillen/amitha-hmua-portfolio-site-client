@@ -144,10 +144,10 @@ const ContactForm = () => {
       setIsLoading(false);
       setTimeout(() => {
         navigate('/home')
-      }, 1000)
+      }, 1000);
       
     } catch(error) {
-      toast.error(error.message)
+      toast.error(error.message);
       console.error('Error sending message:', error.message);
       setIsLoading(false);
     }
@@ -155,7 +155,7 @@ const ContactForm = () => {
   
   useEffect(() => {
     setTimeout(() => {
-      setIsLoading(false)
+      setIsLoading(false);
     }, 500);
   }, []);
 
