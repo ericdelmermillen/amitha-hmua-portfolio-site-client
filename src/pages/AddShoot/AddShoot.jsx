@@ -24,7 +24,9 @@ const AddShoot = () => {
     shouldUpdatePhotographers,
     setShouldUpdatePhotographers,
     shouldUpdateModels, 
-    setShouldUpdateModels
+    setShouldUpdateModels,
+    shouldUpdateShoots, 
+    setShouldUpdateShoots
   } = useContext(AppContext);
 
   const [ isInitialLoad, setIsInitialLoad ] = useState(true);
@@ -36,7 +38,7 @@ const AddShoot = () => {
 
   const numberOfPhotoUploads = 10;
 
-  const [shootPhotos, setShootPhotos] = useState(
+  const [ shootPhotos, setShootPhotos ] = useState(
     Array.from({ length: numberOfPhotoUploads }, (_, idx) => ({
       photoNo: idx + 1,
       photoData: null
@@ -92,7 +94,7 @@ const AddShoot = () => {
       return;
     }
 
-    return toast.error(`Please select a ${selectedEntryType} before adding a new one`)
+    return toast.error(`Please select a ${selectedEntryType} before adding a new one`);
   }
 
   const handleRemoveCustomSelector = (chooser) => {
@@ -183,23 +185,103 @@ const AddShoot = () => {
         });
 
         if(!response.ok) {
-          setIsLoggedIn(false)
+          setIsLoggedIn(false);
           throw new Error("Error creating shoot. Logging you out...");
         } else {
           toast.success("Shoot added Successfully");
+          setShouldUpdateShoots(true);
           setTimeout(() => {
             navigate('/home');
-          }, 500)
+          }, 500);
         }
       
       } catch(error) {
-        console.log(error)
+        console.log(error);
         toast.error('Error creating shoot. Logging you out...');
         setIsLoading(false);
         navigate('/home');
       }
     }
   };
+
+  // for when the server is able to post files to aws 
+  // const handleSubmit = async () => {
+  //   const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
+
+  //   if(tokenIsExpired) {
+  //     return
+  //   }
+
+  //   if(isLoggedIn) {
+
+  //     try {
+  //       setIsLoading(true);
+
+  //       const selectedPhotographerIDs = photographerChooserIDs
+  //         .filter(chooser => chooser.photographerID !== null)
+  //         .map(chooser => chooser.photographerID);
+
+  //       if(selectedPhotographerIDs.length === 0) {
+  //         setIsLoading(false);
+  //         return toast.error("Select at least one photographer");
+  //       }
+
+  //       const selectedModelIDs = modelChooserIDs
+  //         .filter(chooser => chooser.modelID !== null)
+  //         .map(chooser => chooser.modelID);
+
+  //       if(selectedModelIDs.length === 0) {
+  //         setIsLoading(false);
+  //         return toast.error("Select at least one model");
+  //       }
+        
+  //       const formData = new FormData();
+  //       formData.append('shoot_date', newShootDate.toISOString().split('T')[0]);
+  //       selectedPhotographerIDs.forEach(id => formData.append('photographer_ids', id));
+  //       selectedModelIDs.forEach(id => formData.append('model_ids', id));
+        
+  //       shootPhotos.forEach((shootPhoto, index) => {
+  //         if(shootPhoto.photoData) {
+  //           formData.append(`photos[${index}]`, shootPhoto.photoData);
+  //         }
+  //       });
+
+  //       const token = localStorage.getItem('token');
+
+  //       if(!token) {
+  //         navigate('/home');
+  //         return toast.error("Sorry please login again");
+  //       }
+
+  //       const headers = {
+  //         'Authorization': `Bearer ${token}`,
+  //       };
+
+  //       const response = await fetch(`${BASE_URL}/shoots/add`, {
+  //         method: 'POST',
+  //         headers: headers,
+  //         body: formData
+  //       });
+
+  //       if(!response.ok) {
+  //         setIsLoggedIn(false)
+  //         throw new Error("Error creating shoot. Logging you out...");
+  //       } else {
+  //         toast.success("Shoot added Successfully");
+  //          setShouldUpdateShoots(true);
+  //         setTimeout(() => {
+  //           navigate('/home');
+  //         }, 500)
+  //       }
+      
+  //     } catch(error) {
+  //       console.log(error)
+  //       toast.error('Error creating shoot. Logging you out...');
+  //       setIsLoading(false);
+  //       navigate('/home');
+  //     }
+  //   }
+  // };
   
   // fetch phtographers & models
   useEffect(() => {
