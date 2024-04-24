@@ -29,9 +29,9 @@ const DeleteShootModal = () => {
   const handleDeleteShoot = async () => {
     const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
 
-    // if(tokenIsExpired) {
-    //   return toast.error("Unathorised. Logging you out...");
-    // }
+    if(tokenIsExpired) {
+      return toast.error("Unathorised. Logging you out...");
+    }
     
     if(isLoggedIn) {
       try {

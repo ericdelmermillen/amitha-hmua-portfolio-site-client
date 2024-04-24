@@ -59,11 +59,11 @@ const PhotogOrModelModal = () => {
 
 
   const handleEntry = async () => {
-    // const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
+    const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
 
-    // if(tokenIsExpired) {
-    //   return;
-    // }
+    if(tokenIsExpired) {
+      return;
+    }
   
     if(isLoggedIn) {
       
