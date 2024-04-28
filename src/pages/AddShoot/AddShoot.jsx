@@ -10,6 +10,7 @@ import CustomSelect from '../../components/CustomSelect/CustomSelect.jsx';
 import MinusIcon from '../../assets/icons/MinusIcon.jsx';
 import './AddShoot.scss';
 import PhotoInput from '../../components/PhotoInput/PhotoInput.jsx';
+import FormData from 'form-data';
 
 const AddShoot = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -116,95 +117,6 @@ const AddShoot = () => {
     }
   }
 
-  const handleSubmit = async () => {
-    const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
-
-    if(tokenIsExpired) {
-      return
-    }
-
-    if(isLoggedIn) {
-
-      try {
-        setIsLoading(true);
-
-        const selectedPhotographerIDs = [];
-
-        photographerChooserIDs.forEach(photographerChooser => {
-          if(photographerChooser.photographerID !== null) {
-            selectedPhotographerIDs.push(photographerChooser.photographerID);
-          }
-        });
-
-        if(!selectedPhotographerIDs.length) {
-          setIsLoading(false);
-          return toast.error("Select at least one photographer");
-        }
-
-        const selectedModelIDs = [];
-
-        modelChooserIDs.forEach(modelChooser => {
-          if(modelChooser.modelID !== null) {
-            selectedModelIDs.push(modelChooser.modelID);
-          }
-        });
-
-        if(!selectedModelIDs.length) {
-          setIsLoading(false);
-          return toast.error("Select at least one model");
-        }
-        
-        const shoot = {};
-        shoot.shoot_date = newShootDate.toISOString().split('T')[0];
-        shoot.model_ids = selectedModelIDs;
-        shoot.photographer_ids = selectedPhotographerIDs;
-        shoot.photo_urls = [];
-
-        shootPhotos.forEach(shootPhoto => {
-          if(shootPhoto.photoData) {
-            shoot.photo_urls.push(shootPhoto.photoData);
-          }
-        })
-
-        const token = localStorage.getItem('token');
-
-        if(!token) {
-          navigate('/home');
-          return toast.error("Sorry please login again");
-        }
-
-        const headers = {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        };
-
-        const response = await fetch(`${BASE_URL}/shoots/add`, {
-          method: 'POST',
-          headers: headers,
-          body: JSON.stringify(shoot)
-        });
-
-        if(!response.ok) {
-          setIsLoggedIn(false);
-          throw new Error("Error creating shoot. Logging you out...");
-        } else {
-          toast.success("Shoot added Successfully");
-          setShouldUpdateShoots(true);
-          setTimeout(() => {
-            navigate('/home');
-          }, 500);
-        }
-      
-      } catch(error) {
-        console.log(error);
-        toast.error('Error creating shoot. Logging you out...');
-        setIsLoading(false);
-        navigate('/home');
-      }
-    }
-  };
-
-  // for when the server is able to post files to aws 
   // const handleSubmit = async () => {
   //   const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
 
@@ -217,34 +129,43 @@ const AddShoot = () => {
   //     try {
   //       setIsLoading(true);
 
-  //       const selectedPhotographerIDs = photographerChooserIDs
-  //         .filter(chooser => chooser.photographerID !== null)
-  //         .map(chooser => chooser.photographerID);
+  //       const selectedPhotographerIDs = [];
 
-  //       if(selectedPhotographerIDs.length === 0) {
+  //       photographerChooserIDs.forEach(photographerChooser => {
+  //         if(photographerChooser.photographerID !== null) {
+  //           selectedPhotographerIDs.push(photographerChooser.photographerID);
+  //         }
+  //       });
+
+  //       if(!selectedPhotographerIDs.length) {
   //         setIsLoading(false);
   //         return toast.error("Select at least one photographer");
   //       }
 
-  //       const selectedModelIDs = modelChooserIDs
-  //         .filter(chooser => chooser.modelID !== null)
-  //         .map(chooser => chooser.modelID);
+  //       const selectedModelIDs = [];
 
-  //       if(selectedModelIDs.length === 0) {
+  //       modelChooserIDs.forEach(modelChooser => {
+  //         if(modelChooser.modelID !== null) {
+  //           selectedModelIDs.push(modelChooser.modelID);
+  //         }
+  //       });
+
+  //       if(!selectedModelIDs.length) {
   //         setIsLoading(false);
   //         return toast.error("Select at least one model");
   //       }
         
-  //       const formData = new FormData();
-  //       formData.append('shoot_date', newShootDate.toISOString().split('T')[0]);
-  //       selectedPhotographerIDs.forEach(id => formData.append('photographer_ids', id));
-  //       selectedModelIDs.forEach(id => formData.append('model_ids', id));
-        
-  //       shootPhotos.forEach((shootPhoto, index) => {
+  //       const shoot = {};
+  //       shoot.shoot_date = newShootDate.toISOString().split('T')[0];
+  //       shoot.model_ids = selectedModelIDs;
+  //       shoot.photographer_ids = selectedPhotographerIDs;
+  //       shoot.photo_urls = [];
+
+  //       shootPhotos.forEach(shootPhoto => {
   //         if(shootPhoto.photoData) {
-  //           formData.append(`photos[${index}]`, shootPhoto.photoData);
+  //           shoot.photo_urls.push(shootPhoto.photoData);
   //         }
-  //       });
+  //       })
 
   //       const token = localStorage.getItem('token');
 
@@ -255,33 +176,143 @@ const AddShoot = () => {
 
   //       const headers = {
   //         'Authorization': `Bearer ${token}`,
+  //         'Content-Type': 'application/json'
   //       };
 
   //       const response = await fetch(`${BASE_URL}/shoots/add`, {
   //         method: 'POST',
   //         headers: headers,
-  //         body: formData
+  //         body: JSON.stringify(shoot)
   //       });
 
   //       if(!response.ok) {
-  //         setIsLoggedIn(false)
+  //         setIsLoggedIn(false);
   //         throw new Error("Error creating shoot. Logging you out...");
   //       } else {
   //         toast.success("Shoot added Successfully");
-  //          setShouldUpdateShoots(true);
+  //         setShouldUpdateShoots(true);
   //         setTimeout(() => {
   //           navigate('/home');
-  //         }, 500)
+  //         }, 500);
   //       }
       
   //     } catch(error) {
-  //       console.log(error)
+  //       console.log(error);
   //       toast.error('Error creating shoot. Logging you out...');
   //       setIsLoading(false);
   //       navigate('/home');
   //     }
   //   }
   // };
+
+  
+  // for when the server is able to post files to aws 
+  const handleSubmit = async () => {
+    const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
+
+    if(tokenIsExpired) {
+      return
+    }
+
+    if(isLoggedIn) {
+
+      try {
+        setIsLoading(true);
+
+        const selectedPhotographerIDs = photographerChooserIDs
+          .filter(chooser => chooser.photographerID !== null)
+          .map(chooser => chooser.photographerID);
+
+        if(selectedPhotographerIDs.length === 0) {
+          setIsLoading(false);
+          return toast.error("Select at least one photographer");
+        }
+
+        const selectedModelIDs = modelChooserIDs
+          .filter(chooser => chooser.modelID !== null)
+          .map(chooser => chooser.modelID);
+
+        if(selectedModelIDs.length === 0) {
+          setIsLoading(false);
+          return toast.error("Select at least one model");
+        }
+
+        const photographer_ids = selectedPhotographerIDs.join(", "); 
+        const model_ids = selectedModelIDs.join(", "); 
+
+        const formData = new FormData();
+        formData.append('shoot_date', newShootDate.toISOString().split('T')[0]);
+        formData.append("photographer_ids", photographer_ids);
+        formData.append("model_ids", model_ids);
+        
+        // shootPhotos.forEach((shootPhoto, index) => {
+        //   if(shootPhoto.photoData) {
+        //     formData.append(`files[${index}]`, shootPhoto.photoData);
+        //   }
+        // });
+
+        // shootPhotos.forEach((shootPhoto, index) => {
+        //   if(shootPhoto.photoData) {
+        //     fetch(shootPhoto.photoData) // Fetch the Blob URL
+        //       .then(response => response.blob()) // Convert the response to a Blob object
+        //       .then(blob => {
+        //         formData.append(`file${index}`, blob); // Append the Blob to FormData
+        //       })
+        //       .catch(error => {
+        //         console.error('Error fetching Blob data:', error);
+        //       });
+        //   }
+        // });
+
+        // shootPhotos.forEach((shootPhoto, index) => {
+        //   if (shootPhoto.photoData) {
+        //     formData.append('files', shootPhoto.photoData); // Append each photo individually
+        //   }
+        // });
+
+        // const formData = new FormData();
+        for (const photo of shootPhotos) {
+          formData.append('file', photo.photoData);
+        }
+
+        const token = localStorage.getItem('token');
+
+        if(!token) {
+          navigate('/home');
+          return toast.error("Sorry please login again");
+        }
+
+        const headers = {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data'
+        };
+        
+        
+        const response = await fetch(`${BASE_URL}/shoots/add`, {
+          method: 'POST',
+          headers: headers,
+          body: formData
+        });
+
+        if(!response.ok) {
+          setIsLoggedIn(false)
+          throw new Error("Error creating shoot. Logging you out...");
+        } else {
+          toast.success("Shoot added Successfully");
+           setShouldUpdateShoots(true);
+          setTimeout(() => {
+            navigate('/home');
+          }, 500)
+        }
+      
+      } catch(error) {
+        console.log(error)
+        toast.error('Error creating shoot. Logging you out...');
+        setIsLoading(false);
+        navigate('/home');
+      }
+    }
+  };
   
   // fetch phtographers & models
   useEffect(() => {
@@ -363,7 +394,7 @@ const AddShoot = () => {
             Add New Shoot
           </h1>
 
-          <div className="addShoot__form">
+          <form className="addShoot__form">
             <div className="addShoot__date-container">
 
               <label className='addShoot__label addShoot__label--datePicker'>
@@ -537,7 +568,7 @@ const AddShoot = () => {
               </div>
             </div>
       
-          </div>
+          </form>
         </div>
       </div>
     </>

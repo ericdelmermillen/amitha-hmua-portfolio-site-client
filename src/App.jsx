@@ -137,7 +137,6 @@ const App = () => {
         <SideNav handleLogOut={handleLogOut}/>
 
         <Routes>
-          <Route path="/testupload" element={<TestUploadComponent />} />
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/bio" element={<Bio />} />
@@ -176,6 +175,8 @@ const App = () => {
         ? <DeleteShootModal />
         : null
       }
+
+      <TestUploadComponent />
       
       </div>
     </>

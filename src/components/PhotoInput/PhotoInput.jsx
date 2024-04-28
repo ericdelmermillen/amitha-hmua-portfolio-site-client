@@ -5,13 +5,13 @@ import PhotoPlaceholder from '../../assets/icons/PhotoPlaceholder';
 import Compressor from 'compressorjs';
 import './PhotoInput.scss';
 
-const PhotoUpload = ({ shootPhoto, shootPhotos, setShootPhotos }) => {
+const PhotoInput = ({ shootPhoto, shootPhotos, setShootPhotos, handleImageChange }) => {
   const { 
     isLoading,
     setIsLoading
   } = useContext(AppContext);
 
-  const inputNo = shootPhoto.photoNo;
+  const inputNo = shootPhoto.photoNo
 
   const fileInputRef = useRef(null);
 
@@ -20,44 +20,7 @@ const PhotoUpload = ({ shootPhoto, shootPhotos, setShootPhotos }) => {
   };
 
   const handleFileChange = async (e) => {
-    const file = e.target.files[0];
-
-    if(file && (file.type === 'image/jpeg' || file.type === 'image/png')) {
-      try {
-        const compressedFile = await new Promise((resolve, reject) => {
-          new Compressor(file, {
-            quality: 8,
-            maxWidth: 1200,
-            maxHeight: 900,
-            mimeType: 'auto',
-            convertSize: 600000,
-            success(result) {
-              resolve(result);
-            },
-            error(error) {
-              reject(error);
-            },
-          });
-        });
-
-        const selectedFile = URL.createObjectURL(compressedFile);
-
-        const newShootPhotos = [...shootPhotos];
-
-        newShootPhotos.forEach((shootPhoto) => {
-          if(shootPhoto.photoNo === inputNo) {
-            shootPhoto.photoData = selectedFile;
-          }
-        });
-        
-        setShootPhotos(newShootPhotos);
-      } catch (error) {
-        console.error('Compression error:', error);
-        toast.error('Failed to compress image.');
-      }
-    } else {
-      toast.error('Please select a valid JPEG or PNG file.');
-    }
+    handleImageChange(e, shootPhoto.photoNo);
   };
   
 
@@ -66,7 +29,7 @@ const PhotoUpload = ({ shootPhoto, shootPhotos, setShootPhotos }) => {
     const newShootPhotos = [...shootPhotos];
 
     newShootPhotos.forEach((shootPhoto) => {
-      if (shootPhoto.photoNo === inputNo) {
+      if(shootPhoto.photoNo === inputNo) {
         shootPhoto.photoData = null;
       }
     });
@@ -103,14 +66,16 @@ const PhotoUpload = ({ shootPhoto, shootPhotos, setShootPhotos }) => {
         <input
           ref={fileInputRef}
           type="file"
-          id="fileInput"
+          id={`fileInput_${shootPhoto.photoNo}`}
           accept="image/jpeg, image/png"
           className="photoInput__fileInput"
-          onChange={handleFileChange}
+          // onChange={handleFileChange}
+          // onChange={(e, inputNo) => handleImageChange(e, inputNo)}
+          onChange={(e) => handleFileChange(e)}
         />
       </div>
     </>
   );
 };
 
-export default PhotoUpload;
+export default PhotoInput;
