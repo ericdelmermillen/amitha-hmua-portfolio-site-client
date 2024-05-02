@@ -1,9 +1,9 @@
 import { jwtDecode } from 'jwt-decode';
 import { toast } from 'react-toastify';
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const checkTokenExpiration = async (setIsLoggedIn, navigate) => {
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const token = localStorage.getItem('token');
 
   if(token) {
@@ -11,9 +11,24 @@ const checkTokenExpiration = async (setIsLoggedIn, navigate) => {
       const decodedToken = jwtDecode(token);
       const currentTime = Math.floor(Date.now() / 1000);
 
-      if(decodedToken.exp < currentTime) {
-        const refreshToken = localStorage.getItem('refreshToken');
+      const tokenExpTime = new Date(decodedToken.exp * 1000).toLocaleString('en-US');
+      const currentDateTime = new Date(currentTime * 1000).toLocaleString('en-US');
 
+      // console.log(`tokenExpTime: ${tokenExpTime}`)
+      // console.log(`currentDateTime: ${currentDateTime}`)
+
+      // console.log(tokenExpTime < currentDateTime)
+      
+      
+
+      // console.log(decodedToken.exp)
+      // console.log(decodedToken.exp)
+
+      if(decodedToken.exp > currentTime) {
+        return setIsLoggedIn(true);
+      } else if(decodedToken.exp < currentTime) {
+        const refreshToken = localStorage.getItem('refreshToken');
+        
         if(refreshToken) {
           const refreshResponse = await fetch(`${BASE_URL}/auth/refresh`, {
             method: 'POST',
@@ -25,7 +40,7 @@ const checkTokenExpiration = async (setIsLoggedIn, navigate) => {
             })
           });
 
-          console.log("Token expired: attempting refresh");
+          // console.log("Token expired: attempting refresh");
 
           if(refreshResponse.ok) {
             const { accessToken } = await refreshResponse.json();
@@ -46,8 +61,6 @@ const checkTokenExpiration = async (setIsLoggedIn, navigate) => {
           return true;
         }
       } else {
-        navigate('/');
-        setIsLoggedIn(true);
         return false;
       }
     } catch (error) {

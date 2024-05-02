@@ -4,7 +4,6 @@
 .shoots {
   margin-bottom: 1rem;
   max-width: 95%;
-  min-height: 100vh;
   min-width: 80%;
   
   &__inner {
@@ -28,6 +27,17 @@
     @media(min-width: $desktop) {
       grid-template-columns: repeat(3, 1fr);
     }
+  }
+
+  &__button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 5rem;
+  }
+
+  &__editShootOrder {
+    @include button;
+    margin-inline: auto;
   }
 }
 

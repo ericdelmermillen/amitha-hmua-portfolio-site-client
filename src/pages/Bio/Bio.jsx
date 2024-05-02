@@ -6,9 +6,7 @@ import './Bio.scss';
 
 const Bio = () => {
   const { 
-    isLoading, 
     setIsLoading,
-    showSideNav,
     setShowSideNav
   } = useContext(AppContext);
 
@@ -61,7 +59,7 @@ const Bio = () => {
           </div>
         </div>
 
-        <div 
+        {/* <div 
           className={`placeholder__inner ${componentIsLoaded 
             ? "hide" 
             : ""}`}
@@ -72,7 +70,7 @@ const Bio = () => {
             <div className="placeholder__text placeholder__text--2"></div>
             <div className="placeholder__text placeholder__text--3"></div>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   )};

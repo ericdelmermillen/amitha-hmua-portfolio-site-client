@@ -9,16 +9,13 @@ const CustomSelect = ({
   chooserNo,
   chooserType, 
   selectOptions, 
-  setSelectOptions,
   chooserIDs,
   setChooserIDs,
   entryNameType
  }) => {
 
   const { 
-    showPhotogOrModelModal, 
     setShowPhotogOrModelModal,
-    selectedPhotogOrModel, 
     setSelectedPhotogOrModel,
   } = useContext(AppContext);
 
@@ -152,6 +149,7 @@ const CustomSelect = ({
                 />
               </div>
             </div>
+
             {selectOptions.map(option => 
               <div 
                 className={`customSelect__option ${showOptions && alreadySelected(option.id)
@@ -182,6 +180,7 @@ const CustomSelect = ({
                 </div>
               </div>
             )}
+            
             <div 
               className="customSelect__option customSelect__option--addNew"
               onClick={(e) => handleOptionClick(e, null, "Add", entryNameType)}

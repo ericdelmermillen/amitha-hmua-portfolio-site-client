@@ -6,9 +6,7 @@ import './Contact.scss';
 
 const Contact = () => {
   const { 
-    isLoading, 
     setIsLoading,
-    showSideNav, 
     setShowSideNav
   } = useContext(AppContext);
 

@@ -15,18 +15,14 @@
   width: 100%;
   z-index: 4;
   
-  &.hide {
-    top: -6rem;
-  }
-  
-  @media(min-width: $tablet) {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    left: 0;
-    padding-block: 1rem;
-    position: fixed;
-    right: 0;
+    @media(min-width: $tablet) {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      left: 0;
+      padding-block: 1rem;
+      position: fixed;
+      right: 0;
     }
     
   &.hide {
@@ -118,10 +114,10 @@
       }
     }
     
-    &__toggle-icon {
-      border: 2px solid var(--text-color);
-      border-radius: 2px;
-      min-width: 100%;
-      width: 2rem;
+  &__toggle-icon {
+    border: 2px solid var(--text-color);
+    border-radius: 2px;
+    min-width: 100%;
+    width: 2rem;
   }
 }

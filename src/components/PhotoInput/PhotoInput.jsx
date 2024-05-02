@@ -1,17 +1,10 @@
-import { useState, useContext, useRef } from 'react';
-import { toast } from 'react-toastify';
-import AppContext from '../../AppContext';
+import { useRef } from 'react';
 import PhotoPlaceholder from '../../assets/icons/PhotoPlaceholder';
-import Compressor from 'compressorjs';
 import './PhotoInput.scss';
 
 const PhotoInput = ({ shootPhoto, shootPhotos, setShootPhotos, handleImageChange }) => {
-  const { 
-    isLoading,
-    setIsLoading
-  } = useContext(AppContext);
 
-  const inputNo = shootPhoto.photoNo
+  const inputNo = shootPhoto.photoNo;
 
   const fileInputRef = useRef(null);
 
@@ -20,9 +13,10 @@ const PhotoInput = ({ shootPhoto, shootPhotos, setShootPhotos, handleImageChange
   };
 
   const handleFileChange = async (e) => {
-    handleImageChange(e, shootPhoto.photoNo);
+    const file = e.target.files[0];
+
+    file && handleImageChange(e, shootPhoto.photoNo);
   };
-  
 
   const handleClearInput = (e) => {
     e.stopPropagation();
@@ -30,6 +24,7 @@ const PhotoInput = ({ shootPhoto, shootPhotos, setShootPhotos, handleImageChange
 
     newShootPhotos.forEach((shootPhoto) => {
       if(shootPhoto.photoNo === inputNo) {
+        shootPhoto.photoPreview = null;
         shootPhoto.photoData = null;
       }
     });
@@ -40,10 +35,10 @@ const PhotoInput = ({ shootPhoto, shootPhotos, setShootPhotos, handleImageChange
   return (
     <>
       <div className="photoInput">
-        {shootPhoto.photoData ? (
+        {shootPhoto.photoPreview ? (
           <div className="photoInput__box disabled">
             <img
-              src={shootPhoto.photoData}
+              src={shootPhoto.photoPreview}
               alt="Uploaded"
               className="photoInput__image"
             />
@@ -56,7 +51,10 @@ const PhotoInput = ({ shootPhoto, shootPhotos, setShootPhotos, handleImageChange
             </div>
           </div>
         ) : (
-          <div className="photoInput__box" onClick={handleFileInputChange}>
+          <div 
+            className="photoInput__box" 
+            onClick={handleFileInputChange}
+          >
             <PhotoPlaceholder
               className="photoInput__placeholder"
               strokeClassName="photoInput__placeholderStroke"
@@ -69,13 +67,10 @@ const PhotoInput = ({ shootPhoto, shootPhotos, setShootPhotos, handleImageChange
           id={`fileInput_${shootPhoto.photoNo}`}
           accept="image/jpeg, image/png"
           className="photoInput__fileInput"
-          // onChange={handleFileChange}
-          // onChange={(e, inputNo) => handleImageChange(e, inputNo)}
           onChange={(e) => handleFileChange(e)}
         />
       </div>
     </>
-  );
-};
+  )};
 
 export default PhotoInput;

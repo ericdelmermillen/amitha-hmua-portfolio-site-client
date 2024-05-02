@@ -16,7 +16,7 @@
   &__modal {
     background-color: var(--background-color);
     border-radius: var(--borderRadius);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 10px var(--box-shadow);
     display: flex;
     flex-direction: column;
     height: 80%;

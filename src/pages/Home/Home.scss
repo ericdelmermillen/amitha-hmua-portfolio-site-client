@@ -3,16 +3,18 @@
 
 .home {
   background: var(--background-color);
+  @include page;
   
   @media(min-width: $tablet) {
-    margin-top: 4rem;
   }
   
   &__inner {
-    @include page;
-
+    @include inner;
+    // padding-top: 2rem;
+    
     @media(min-width: var(--tablet)) {
-      padding-top: 3rem;
+      margin-top: 4rem;
+      // margin-top: 6rem;
     }
   }
 }

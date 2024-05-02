@@ -17,7 +17,6 @@
 
     @media(min-width: $largeTablet) {
       grid-template-columns: repeat(2, 1fr);
-      // margin-top: 6rem;
     }
   }
 
@@ -88,67 +87,67 @@
   }
 }
 
-.placeholder {
+// .placeholder {
 
-  &__inner {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    height: calc(100vh - (4rem + 4rem));
-    margin-bottom: 2rem;
-    width: 90%;
+//   &__inner {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 2rem;
+//     height: calc(100vh - (4rem + 4rem));
+//     margin-bottom: 2rem;
+//     width: 90%;
 
-    &.hide {
-      display: none;
-    }
+//     &.hide {
+//       display: none;
+//     }
     
-    @media(min-width: $tablet) {
-      gap: 0;
-      height: calc(100vh - (4rem + 12rem));
-      margin-top: 4rem;
-    }
+//     @media(min-width: $tablet) {
+//       gap: 0;
+//       height: calc(100vh - (4rem + 12rem));
+//       margin-top: 4rem;
+//     }
 
-    @media(min-width: $desktop) {
-      flex-direction: row;
-    }
-  }
+//     @media(min-width: $desktop) {
+//       flex-direction: row;
+//     }
+//   }
 
-  &__hero-img {
-    background-color: gray;
-    min-height: 60%;
+//   &__hero-img {
+//     background-color: gray;
+//     min-height: 60%;
     
-    @media(min-width: $tablet) {
-      min-height: 80%;
-    }
-  }
+//     @media(min-width: $tablet) {
+//       min-height: 80%;
+//     }
+//   }
 
-  &__text-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    min-height: 40vh;
-    padding-block: 1rem;
-    padding-inline: 2rem;
-    width: 100%;
+//   &__text-container {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 1rem;
+//     min-height: 40vh;
+//     padding-block: 1rem;
+//     padding-inline: 2rem;
+//     width: 100%;
     
-    @media(min-width: $tablet) {
-      margin-top: 0;
-    }
-  }
+//     @media(min-width: $tablet) {
+//       margin-top: 0;
+//     }
+//   }
 
-  &__text {
-    background: green;
+//   &__text {
+//     background: green;
     
-    &--1 {
-      height: 30%;
-    }
+//     &--1 {
+//       height: 30%;
+//     }
     
-    &--2 {
-      height: 25%;
-    }
+//     &--2 {
+//       height: 25%;
+//     }
     
-    &--3 {
-      height: 40%;
-    }
-  }
-}
+//     &--3 {
+//       height: 40%;
+//     }
+//   }
+// }

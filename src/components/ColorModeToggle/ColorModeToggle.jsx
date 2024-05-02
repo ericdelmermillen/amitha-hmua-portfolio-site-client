@@ -30,7 +30,7 @@ const ColorModeToggle = ({ inputId }) => {
         <label 
           className="colorModeToggle__checkbox-label"
           htmlFor={inputId} 
-          >
+        >
           <img 
             className='colorModeToggle__sun-icon'
             src={sun} 

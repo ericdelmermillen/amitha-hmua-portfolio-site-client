@@ -10,8 +10,6 @@ export const AppProvider = ({ children }) => {
   const [ showSideNav, setShowSideNav ] = useState(false);
   const [ scrollYPos, setScrollYPos ] = useState(window.scrollY);
   const [ prevScrollYPos, setPrevScrollYPos ] = useState(window.scrollY);
-  
-  // add state and handling for closing SideNav on width change
 
   const [ selectedShoot, setSelectedShoot ] = useState(null);
   
@@ -28,13 +26,10 @@ export const AppProvider = ({ children }) => {
 
   const navigate = useNavigate(); 
 
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
   useEffect(() => {
     checkTokenExpiration(setIsLoggedIn, navigate);
   }, []);
 
-  // color mode checking on initial mount
   useEffect(() => {
     const storedColorMode = localStorage.getItem('colorMode');  
     setColorMode(storedColorMode || "light");

@@ -5,11 +5,12 @@ import { isValidEmail } from '../../utils/utils';
 import { toast } from 'react-toastify';
 import './ContactForm.scss';
 
+// need background image for behind the form
+
 const ContactForm = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const { 
-    isLoading, 
     setIsLoading
   } = useContext(AppContext);
   
@@ -28,7 +29,6 @@ const ContactForm = () => {
   
   const [ message, setMessage ] = useState('');
   const [ messageIsInvalid, setMessageIsInvalid ] = useState(false);
-  const [ shouldCheckMessage, setShouldCheckMessage ] = useState(false);
 
   const navigate = useNavigate(); 
 
@@ -75,7 +75,6 @@ const ContactForm = () => {
 
   const handleShouldCheckMessage = () => {
     setMessageIsInvalid(message.length <= 25);
-    setShouldCheckMessage(true);
   }
 
   const handleSubmit = async (e) => {

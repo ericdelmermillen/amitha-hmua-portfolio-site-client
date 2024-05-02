@@ -10,13 +10,10 @@ import './Nav.scss';
 const Nav = ({ handleLogOut }) => {
   const { 
     isLoggedIn, 
-    setIsLoggedIn,
     showSideNav, 
     setShowSideNav,
     scrollYPos, 
-    setScrollYPos,
     prevScrollYPos, 
-    setPrevScrollYPos
    } = useContext(AppContext);
   
   return (
@@ -65,17 +62,16 @@ const Nav = ({ handleLogOut }) => {
             </li>
           </ul>
 
-          {
-          
-          isLoggedIn && 
+          {isLoggedIn 
+
+            ? <h4 
+                className={`nav__logout ${isLoggedIn && "loggedIn"}`}
+                onClick={handleLogOut}
+                >
+                  Logout
+              </h4>
             
-            <h4 
-              className={`nav__logout ${isLoggedIn && "loggedIn"}`}
-              onClick={handleLogOut}
-              >
-                Logout
-            </h4>
-            
+            : null
           }
           
           <div 

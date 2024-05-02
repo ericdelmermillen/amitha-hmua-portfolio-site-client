@@ -4,7 +4,7 @@ import AppContext from '../../AppContext.jsx';
 import { toast } from 'react-toastify';
 import { scrollToTop } from '../../utils/utils.js';
 import Shoot from '../Shoot/Shoot.jsx';
-import PlaceholderShoot from '../PlaceholderShoot/PlaceholderShoot.jsx';
+// import PlaceholderShoot from '../PlaceholderShoot/PlaceholderShoot.jsx';
 import './Shoots.scss';
 
 const Shoots = () => {
@@ -13,14 +13,11 @@ const Shoots = () => {
   const { shoot_id } = useParams();
   
   const { 
+    isLoggedIn,
+    setIsLoggedIn,
     scrollYPos, 
-    setScrollYPos,
-    prevScrollYPos, 
     setPrevScrollYPos,
-    selectedShoot, 
     setSelectedShoot,
-    showDeleteShootModal, 
-    setShowDeleteShootModal,
     shouldUpdateShoots, 
     setShouldUpdateShoots,
     isLoading, 
@@ -35,8 +32,12 @@ const Shoots = () => {
   const [ isLoadingInitial, setIsLoadingInitial ] = useState(true);
   const [ isOnShootDetails, setIsOnShootDetails ] = useState(location.pathname.includes('/shoot/'));
   const [ currentShootId, setCurrentShootId ] = useState(shoot_id);
+  const [ isOrderEditable, setIsOrderEditable ] = useState(false);
 
-  const itemsPerPage = 10;
+  const [ activeDragShoot, setActiveDragShoot ] = useState(null);
+  const [ dropTargetShoot, setDropTargetShoot ] = useState(null);
+
+  const itemsPerPage = 6;
   const isLoadingInterval = 250;
 
   const handleNewShootId = (shootId) => {
@@ -45,6 +46,59 @@ const Shoots = () => {
     setCurrentShootId(shootId);
     setShouldUpdate(true);
   }
+
+  const toggleIsOrderEditable = () => {
+    setIsOrderEditable(!isOrderEditable);
+    setActiveDragShoot(null);
+  }
+
+  const handleShootDragStart = (shoot_id) => {
+    const draggedShoot = shootsData.find(shoot => shoot.shoot_id === shoot_id);
+    setActiveDragShoot(draggedShoot);
+  }
+
+  const handleDropShootTarget = (shoot_id) => {
+    const droppedOntoShoot = shootsData.find(shoot => shoot.shoot_id === shoot_id);
+    setDropTargetShoot(droppedOntoShoot);
+
+    const newShootsData = [...shootsData];
+
+
+    for(const shoot of newShootsData) {
+
+      if(activeDragShoot.display_order > droppedOntoShoot.display_order) {
+        console.log("activeDragShoot.display_order > droppedOntoShoot.display_order")
+
+        if(shoot.shoot_id === activeDragShoot.shoot_id) {
+        shoot.display_order = droppedOntoShoot.display_order;
+        droppedOntoShoot.display_order = droppedOntoShoot.display_order + 1
+
+        } 
+        
+        if(shoot.display_order > droppedOntoShoot.display_order && shoot.shoot_id !== activeDragShoot.shoot_id && shoot.shoot_id !== droppedOntoShoot.shoot_id) {
+        shoot.display_order = shoot.display_order + 1;
+        }
+
+      } else if(activeDragShoot.display_order < droppedOntoShoot.display_order) {
+
+        if(shoot.shoot_id === activeDragShoot.shoot_id) {
+          console.log("shoot.shoot_id === activeDragShoot.shoot_id")
+          shoot.display_order = droppedOntoShoot.display_order;
+          droppedOntoShoot.display_order = droppedOntoShoot.display_order - 1
+        } 
+
+      }
+
+    }
+    console.log(newShootsData)
+    
+    newShootsData.sort((a, b) => a.display_order - b.display_order);
+
+    setShootsData(newShootsData)
+    setActiveDragShoot(null);
+    setDropTargetShoot(null);
+  }
+
 
   useEffect(() => {
     const fetchShoots = async () => {
@@ -135,7 +189,7 @@ const Shoots = () => {
 
   return (
     <>
-      <div className="placeholderShoots">
+      {/* <div className="placeholderShoots">
         <div className="placeholderShoots__inner">
 
           {Array.from({ length: itemsPerPage }).map((_, index) => (
@@ -146,10 +200,10 @@ const Shoots = () => {
           ))}
 
         </div>
-      </div>
+      </div> */}
       
       <div className="shoots">
-        <div className={`shoots__inner ${isOnShootDetails && "onShootDetails"}`}>
+        <div className={`shoots__inner ${isOnShootDetails ? "onShootDetails" : ""}`}>
           {shootsData.map(shoot => (
             <Link 
               to={`/shoot/${shoot.shoot_id}`} 
@@ -163,10 +217,42 @@ const Shoots = () => {
                 photographers={shoot.photographers}
                 isOnShootDetails={isOnShootDetails}
                 handleNewShootId={handleNewShootId}
+                isOrderEditable={isOrderEditable}
+                setIsOrderEditable={setIsOrderEditable}
+                handleShootDragStart={handleShootDragStart}
+                handleDropShootTarget={handleDropShootTarget}
               />
             </Link>
           ))}
         </div>
+
+        {!isOnShootDetails && isLoggedIn && !isOrderEditable ?
+
+            <div className="shoots__button-container">
+              <button
+                className="shoots__editShootOrder"
+                onClick={toggleIsOrderEditable}
+              >
+                Edit Order
+              </button>
+            </div>
+
+          : !isOnShootDetails && isLoggedIn && isOrderEditable ? 
+
+            <div className="shoots__button-container">
+              <button
+                className="shoots__editShootOrder"
+                onClick={toggleIsOrderEditable}
+              >
+                Save Order
+              </button>
+            </div>
+
+          : null
+        }
+
+        <h1>isOrderEditable: {isOrderEditable ? "true" : "false"}</h1>
+
       </div>
     </>
   )};

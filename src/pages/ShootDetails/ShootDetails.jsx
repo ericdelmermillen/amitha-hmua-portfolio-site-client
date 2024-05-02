@@ -14,7 +14,6 @@ const ShootDetails = () => {
   const { shoot_id } = useParams();
 
   const { 
-    isLoading, 
     setIsLoading
   } = useContext(AppContext);
 

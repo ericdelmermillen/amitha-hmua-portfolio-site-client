@@ -4,6 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import './NewShootDatePicker.scss';
 
 const NewShootdatePicker = ({ newShootDate, setNewShootDate, className }) => {
+  
   const handleChange = (date) => {
     setNewShootDate(date);
   };

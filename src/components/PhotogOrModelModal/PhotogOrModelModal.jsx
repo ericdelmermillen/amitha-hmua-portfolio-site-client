@@ -7,13 +7,10 @@ import './PhotogOrModelModal.scss';
 
 const PhotogOrModelModal = () => {
   const { 
-    isLoading, 
     setIsLoading,
     isLoggedIn, 
     setIsLoggedIn,
-    shouldUpdatePhotographers, 
     setShouldUpdatePhotographers,
-    shouldUpdateModels, 
     setShouldUpdateModels,
     selectedPhotogOrModel, 
     setSelectedPhotogOrModel,
@@ -56,7 +53,6 @@ const PhotogOrModelModal = () => {
       handleEntry();
     }
   };
-
 
   const handleEntry = async () => {
     const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);

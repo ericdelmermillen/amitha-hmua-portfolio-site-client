@@ -19,7 +19,6 @@ import AddIcon from './assets/icons/AddIcon.jsx';
 import UpIcon from './assets/icons/UpIcon.jsx';
 import './App.scss';
 import DeleteShootModal from './components/DeleteShootModal/DeleteShootModal.jsx';
-import TestUploadComponent from './components/TestUploadComponent/TestUploadComponent.jsx';
 
 // don't forget token refreshing on editShoot and updateShootOrder
 
@@ -175,8 +174,6 @@ const App = () => {
         ? <DeleteShootModal />
         : null
       }
-
-      <TestUploadComponent />
       
       </div>
     </>

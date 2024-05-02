@@ -12,11 +12,8 @@ const DeleteShootModal = () => {
   const { 
     isLoggedIn, 
     setIsLoggedIn,
-    shouldUpdateShoots,
     setShouldUpdateShoots,
     selectedShoot, 
-    setSelectedShoot,
-    showDeleteShootModal, 
     setShowDeleteShootModal
   } = useContext(AppContext);
 
@@ -42,8 +39,6 @@ const DeleteShootModal = () => {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           },
         });
-
-        console.log(response)
 
         if(response.ok) {
           setShouldUpdateShoots(true);

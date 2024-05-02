@@ -9,14 +9,16 @@ const Shoot = ({
   models, 
   photographers, 
   isOnShootDetails,
-  handleNewShootId}) => {
+  handleNewShootId,
+  isOrderEditable, 
+  setIsOrderEditable,
+  handleShootDragStart,
+  handleDropShootTarget
+}) => {
 
   const { 
     isLoggedIn, 
-    setIsLoggedIn,
-    selectedShoot, 
     setSelectedShoot,
-    showDeleteShootModal, 
     setShowDeleteShootModal
   } = useContext(AppContext);
   
@@ -27,23 +29,47 @@ const Shoot = ({
     setShowDeleteShootModal(true);
   }
 
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+
   return (
     <>
       <div 
-        className="shoot"
+        draggable={isOrderEditable}
+        className={isOrderEditable ? "shoot draggable" : "shoot"}
+        onDragStart={isOrderEditable
+          ? () => handleShootDragStart(shoot_id)
+          : null}
+        onDragOver={isOrderEditable
+          ? handleDragOver
+          : null}
+        onDrop={isOrderEditable
+          ? () => handleDropShootTarget(shoot_id)
+          : null}
         onClick={() => handleNewShootId(shoot_id)}
       >
         {isLoggedIn && !isOnShootDetails 
 
-          ?
-            <div 
+          ? <div 
               className="shoot__delete-btn"
               onClick={(e) => handleDeleteClick(e)}
-              >
+            >
               <DeleteIcon
                 onClick={handleDeleteClick}
                 className={"shoot__delete-btn---icon"}
               />
+            </div>
+
+          : null
+          
+        }
+
+        {isLoggedIn && !isOnShootDetails 
+
+          ? <div className="shoot__shoot_id">
+              {shoot_id}
             </div>
 
           : null

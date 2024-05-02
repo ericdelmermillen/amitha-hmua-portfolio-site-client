@@ -6,7 +6,6 @@ import './Home.scss';
 
 const Home = () => {
   const { 
-    showSideNav, 
     setShowSideNav,
   } = useContext(AppContext);
   

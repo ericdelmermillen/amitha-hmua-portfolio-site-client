@@ -62,6 +62,25 @@
   }
 }
 
+@mixin inner {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-inline: auto;
+  padding-block: 4rem;
+  padding-top: 0rem;
+  
+  @media(min-width: $tablet) {
+    padding-top: 2rem;
+    margin-top: 4rem;
+  }
+  
+  @media(min-width: 768px) {
+    margin-top: 0;
+  }
+}
+
 @mixin button {
   align-items: center;
   background: var(--button-background);

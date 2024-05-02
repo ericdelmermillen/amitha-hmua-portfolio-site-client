@@ -107,7 +107,7 @@
     width: 100%;
   }
 
-  &_photoInputs {
+  &__photoInputs {
     display: grid;
     gap: 2rem;
     grid-template-columns: repeat(auto-fit, 1fr);
@@ -142,8 +142,18 @@
     width: 15rem;
     
     @media(min-width: 500px) {
-      height: 12rem;
-      width: 12rem;
+      height: 11rem;
+      width: 11rem;
+    }
+    
+    @media(min-width: 600px) {
+      height: 12.5rem;
+      width: 12.5rem;
+    }
+    
+    @media(min-width: 700px) {
+      height: 13.5rem;
+      width: 13.5rem;
     }
     
     @media(min-width: $tablet) {

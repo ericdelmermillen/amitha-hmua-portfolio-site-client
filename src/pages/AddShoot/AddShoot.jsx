@@ -8,9 +8,10 @@ import { checkTokenExpiration } from '../../utils/utils.js';
 import AddIcon from '../../assets/icons/AddIcon.jsx';
 import CustomSelect from '../../components/CustomSelect/CustomSelect.jsx';
 import MinusIcon from '../../assets/icons/MinusIcon.jsx';
-import './AddShoot.scss';
 import PhotoInput from '../../components/PhotoInput/PhotoInput.jsx';
 import FormData from 'form-data';
+import Compressor from 'compressorjs';
+import './AddShoot.scss';
 
 const AddShoot = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -42,28 +43,47 @@ const AddShoot = () => {
   const [ shootPhotos, setShootPhotos ] = useState(
     Array.from({ length: numberOfPhotoUploads }, (_, idx) => ({
       photoNo: idx + 1,
+      photoPreview: null,
       photoData: null
     }))
   );
   
-  // const [ shootPhotos, setShootPhotos ] = useState(
-  //   [
-  //     {photoNo: 1, photoData: "https://images.squarespace-cdn.com/content/v1/5c2b8497620b859e3110e2e9/1627601727660-BDMJVSOP3C6JUCVRUOQA/IMG_8389.JPG?format=1000w"},
-  //     {photoNo: 2, photoData: "https://images.squarespace-cdn.com/content/v1/5c2b8497620b859e3110e2e9/1627601764606-ATC169LN5RT0QP8C424N/IMG_8280.JPG?format=1000w"},
-  //     {photoNo: 3, photoData: "https://images.squarespace-cdn.com/content/v1/5c2b8497620b859e3110e2e9/1627601806737-L9CI06R5M8ELWDASOC0W/IMG_8281.JPG?format=1000w"},
-  //     {photoNo: 4, photoData: "https://images.squarespace-cdn.com/content/v1/5c2b8497620b859e3110e2e9/1627602367230-LB8ZNUQ5EMF6P9J4WCKW/IMG_8390.JPG?format=1000w"},
-  //     {photoNo: 5, photoData: "https://images.squarespace-cdn.com/content/v1/5c2b8497620b859e3110e2e9/1627602409500-KSPOFX7TCQ3PTM5V3SWJ/IMG_8282.JPG?format=1000w"},
-  //     {photoNo: 6, photoData: null},
-  //     {photoNo: 7, photoData: null},
-  //     {photoNo: 8, photoData: null},
-  //     {photoNo: 9, photoData: null},
-  //     {photoNo: 10, photoData: null},
-  //   ]
-  // );
+  const handleImageChange = async (e, inputNo) => {
+    const file = e.target.files[0];
+    
+    try {
+      const compressedImage = await new Promise((resolve, reject) => {
+        new Compressor(file, {
+          quality: 0.8,
+          maxWidth: 1200,
+          maxHeight: 900,
+          mimeType: 'auto',
+          convertSize: 600000,
+          success(result) {
+            resolve(result);
+          },
+          error(error) {
+            reject(error);
+          }
+        });
+      });
 
-  const handleCancel = () => {
-    navigate('/home');
-  }
+      const newShootPhotos = [...shootPhotos];
+
+      const compressedImageUrl = URL.createObjectURL(compressedImage);
+    
+      newShootPhotos.forEach((shootPhoto) => {
+        if(shootPhoto.photoNo === inputNo) {
+          shootPhoto.photoPreview = compressedImageUrl;
+          shootPhoto.photoData = compressedImage;
+        }
+      });
+  
+      setShootPhotos(newShootPhotos);
+    } catch (error) {
+      console.error('Error compressing image:', error);
+    }
+  };
 
   const handleAddCustomSelect = (selectedEntry) => {
     const selectedEntryType = selectedEntry === "photographer_name"
@@ -110,112 +130,23 @@ const AddShoot = () => {
 
       setPhotographerChooserIDs(filteredChoosers);
 
-    } else if(chooserType === "Model" && modelChooserIDs.length > 1) {
+    } else if(chooserType === "Model") {
       const filteredChoosers = modelChooserIDs.filter(chooser => chooser.chooserNo !== chooserNo);
       
       setModelChooserIDs(filteredChoosers);
     }
   }
 
-  // const handleSubmit = async () => {
-  //   const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  //   if(tokenIsExpired) {
-  //     return
-  //   }
-
-  //   if(isLoggedIn) {
-
-  //     try {
-  //       setIsLoading(true);
-
-  //       const selectedPhotographerIDs = [];
-
-  //       photographerChooserIDs.forEach(photographerChooser => {
-  //         if(photographerChooser.photographerID !== null) {
-  //           selectedPhotographerIDs.push(photographerChooser.photographerID);
-  //         }
-  //       });
-
-  //       if(!selectedPhotographerIDs.length) {
-  //         setIsLoading(false);
-  //         return toast.error("Select at least one photographer");
-  //       }
-
-  //       const selectedModelIDs = [];
-
-  //       modelChooserIDs.forEach(modelChooser => {
-  //         if(modelChooser.modelID !== null) {
-  //           selectedModelIDs.push(modelChooser.modelID);
-  //         }
-  //       });
-
-  //       if(!selectedModelIDs.length) {
-  //         setIsLoading(false);
-  //         return toast.error("Select at least one model");
-  //       }
-        
-  //       const shoot = {};
-  //       shoot.shoot_date = newShootDate.toISOString().split('T')[0];
-  //       shoot.model_ids = selectedModelIDs;
-  //       shoot.photographer_ids = selectedPhotographerIDs;
-  //       shoot.photo_urls = [];
-
-  //       shootPhotos.forEach(shootPhoto => {
-  //         if(shootPhoto.photoData) {
-  //           shoot.photo_urls.push(shootPhoto.photoData);
-  //         }
-  //       })
-
-  //       const token = localStorage.getItem('token');
-
-  //       if(!token) {
-  //         navigate('/home');
-  //         return toast.error("Sorry please login again");
-  //       }
-
-  //       const headers = {
-  //         'Authorization': `Bearer ${token}`,
-  //         'Content-Type': 'application/json'
-  //       };
-
-  //       const response = await fetch(`${BASE_URL}/shoots/add`, {
-  //         method: 'POST',
-  //         headers: headers,
-  //         body: JSON.stringify(shoot)
-  //       });
-
-  //       if(!response.ok) {
-  //         setIsLoggedIn(false);
-  //         throw new Error("Error creating shoot. Logging you out...");
-  //       } else {
-  //         toast.success("Shoot added Successfully");
-  //         setShouldUpdateShoots(true);
-  //         setTimeout(() => {
-  //           navigate('/home');
-  //         }, 500);
-  //       }
-      
-  //     } catch(error) {
-  //       console.log(error);
-  //       toast.error('Error creating shoot. Logging you out...');
-  //       setIsLoading(false);
-  //       navigate('/home');
-  //     }
-  //   }
-  // };
-
-  
-  // for when the server is able to post files to aws 
-  const handleSubmit = async () => {
     const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
 
     if(tokenIsExpired) {
-      return
+      return;
     }
 
     if(isLoggedIn) {
-
       try {
         setIsLoading(true);
 
@@ -240,79 +171,67 @@ const AddShoot = () => {
         const photographer_ids = selectedPhotographerIDs.join(", "); 
         const model_ids = selectedModelIDs.join(", "); 
 
+        const photoInputImages = [];
+      
+        shootPhotos.forEach(photo => {
+          if(photo.photoData !== null) {
+            photoInputImages.push(photo.photoData)
+          }
+        });
+      
+        if(!photoInputImages.length) {
+          setIsLoading(false);
+          return toast.error('Select at least one image')
+        }
+      
         const formData = new FormData();
+      
+        for(const photo of photoInputImages) {
+          formData.append('file', photo);
+        }
+      
         formData.append('shoot_date', newShootDate.toISOString().split('T')[0]);
+        
         formData.append("photographer_ids", photographer_ids);
         formData.append("model_ids", model_ids);
-        
-        // shootPhotos.forEach((shootPhoto, index) => {
-        //   if(shootPhoto.photoData) {
-        //     formData.append(`files[${index}]`, shootPhoto.photoData);
-        //   }
-        // });
-
-        // shootPhotos.forEach((shootPhoto, index) => {
-        //   if(shootPhoto.photoData) {
-        //     fetch(shootPhoto.photoData) // Fetch the Blob URL
-        //       .then(response => response.blob()) // Convert the response to a Blob object
-        //       .then(blob => {
-        //         formData.append(`file${index}`, blob); // Append the Blob to FormData
-        //       })
-        //       .catch(error => {
-        //         console.error('Error fetching Blob data:', error);
-        //       });
-        //   }
-        // });
-
-        // shootPhotos.forEach((shootPhoto, index) => {
-        //   if (shootPhoto.photoData) {
-        //     formData.append('files', shootPhoto.photoData); // Append each photo individually
-        //   }
-        // });
-
-        // const formData = new FormData();
-        for (const photo of shootPhotos) {
-          formData.append('file', photo.photoData);
-        }
 
         const token = localStorage.getItem('token');
-
-        if(!token) {
-          navigate('/home');
-          return toast.error("Sorry please login again");
-        }
-
+        
         const headers = {
           'Authorization': `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data'
         };
-        
-        
+
         const response = await fetch(`${BASE_URL}/shoots/add`, {
           method: 'POST',
           headers: headers,
-          body: formData
+          body: formData,
         });
-
+      
         if(!response.ok) {
           setIsLoggedIn(false)
           throw new Error("Error creating shoot. Logging you out...");
         } else {
           toast.success("Shoot added Successfully");
-           setShouldUpdateShoots(true);
+          setShouldUpdateShoots(true);
           setTimeout(() => {
             navigate('/home');
           }, 500)
         }
-      
       } catch(error) {
         console.log(error)
         toast.error('Error creating shoot. Logging you out...');
         setIsLoading(false);
         navigate('/home');
-      }
+      } 
+    } else if(!isLoggedIn) {
+      toast.error("Not logged in...");
+      navigate('/home');
     }
   };
+
+  const handleCancel = () => {
+    navigate('/home');
+  }
   
   // fetch phtographers & models
   useEffect(() => {
@@ -412,7 +331,7 @@ const AddShoot = () => {
                 Select up to 10 Photos
               </h3>
 
-              <div className="addShoot_photoInputs">              
+              <div className="addShoot__photoInputs">              
 
                 {shootPhotos.map(shootPhoto => 
                   <div 
@@ -423,6 +342,7 @@ const AddShoot = () => {
                       shootPhoto={shootPhoto}
                       shootPhotos={shootPhotos}
                       setShootPhotos={setShootPhotos}
+                      handleImageChange={handleImageChange}
                     />
                   </div>
                 )}
@@ -466,7 +386,6 @@ const AddShoot = () => {
                       chooserIDs={photographerChooserIDs}
                       setChooserIDs={setPhotographerChooserIDs}
                       selectOptions={photographers}
-                      setSelectOptions={setPhotographers}
                       selectEntry={photographerChooserIDs}
                       setSelectedOption={setPhotographerChooserIDs}
                       photographerIDchooserId={chooser.photographerID}
@@ -523,7 +442,6 @@ const AddShoot = () => {
                       chooserIDs={modelChooserIDs}
                       setChooserIDs={setModelChooserIDs}
                       selectOptions={models}
-                      setSelectOptions={setModels}
                       selectEntry={modelChooserIDs}
                       setSelectedOption={setModelChooserIDs}
                       modelIDchooserId={chooser.modelID}
@@ -555,7 +473,7 @@ const AddShoot = () => {
 
               <div 
                 className="addShoot__button addShoot__button--submit" 
-                onClick={handleSubmit}
+                onClick={(e) => handleSubmit(e)}
               >
                 Submit
               </div>
