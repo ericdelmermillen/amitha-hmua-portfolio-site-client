@@ -67,15 +67,6 @@ const Shoot = ({
           
         }
 
-        {isLoggedIn && !isOnShootDetails 
-
-          ? <div className="shoot__shoot_id">
-              {shoot_id}
-            </div>
-
-          : null
-          
-        }
         <img 
           draggable={isOrderEditable}
           className='shoot__img'

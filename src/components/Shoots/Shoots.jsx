@@ -1,8 +1,8 @@
 import { useState, useEffect, useContext } from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams, useNavigate } from 'react-router-dom';
 import AppContext from '../../AppContext.jsx';
 import { toast } from 'react-toastify';
-import { scrollToTop } from '../../utils/utils.js';
+import { checkTokenExpiration, scrollToTop } from '../../utils/utils.js';
 import Shoot from '../Shoot/Shoot.jsx';
 // import PlaceholderShoot from '../PlaceholderShoot/PlaceholderShoot.jsx';
 import './Shoots.scss';
@@ -25,6 +25,7 @@ const Shoots = () => {
   } = useContext(AppContext);
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [ shootsData, setShootsData ] = useState([]);
   const [ currentPage, setCurrentPage ] = useState(1);
@@ -50,10 +51,57 @@ const Shoots = () => {
   const makeOrderEditable = () => {
     setIsOrderEditable(true);
     setActiveDragShoot(null);
-    toast.success("Drag shoots into desired order then Save to update")
+    toast.info("Drag shoots into desired order then Save to update")
   }
 
-  const saveNewOrder = () => {
+  const saveNewOrder = async () => {
+    setIsOrderEditable(false);
+    setIsLoading(true);
+
+    const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
+
+    if(tokenIsExpired) {
+      return;
+    }
+    
+    if(isLoggedIn) {      
+      toast.info("Updating database. One sec...");
+
+      const new_shoot_order = []
+  
+      for(const shoot of shootsData) {
+        const updateObj = {}
+        updateObj.shoot_id = shoot.shoot_id;
+        updateObj.display_order = shoot.display_order;
+        new_shoot_order.push(updateObj);
+      }
+  
+      console.log(new_shoot_order)
+
+      try {
+        const response = await fetch(`${BASE_URL}/shoots/updateorder`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          },
+          body: JSON.stringify({ new_shoot_order})
+        });
+
+        if(response.ok) {
+          toast.success("Database updated.");
+          setIsLoading(false)
+        }
+        
+        
+      } catch(error) {
+        console.log(error)
+        toast.error("Error updating database...")
+        setIsLoading(false);
+      }
+    }
+
+
     // add server call to update shoots order
     setIsOrderEditable(false);
     setActiveDragShoot(null);
@@ -64,74 +112,68 @@ const Shoots = () => {
     setActiveDragShoot(draggedShoot);
   }
 
-  const handleDropShootTarget = (shoot_id) => {
-    const droppedOntoShoot = shootsData.find(shoot => shoot.shoot_id === shoot_id);
+  const handleDropShootTarget = (dropTargetShootId) => {
+    const droppedOntoShoot = shootsData.find(shoot => shoot.shoot_id === dropTargetShootId);
     setDropTargetShoot(droppedOntoShoot);
-
-    const droppedOntoShootID = shoot_id;
-    const droppedOntoShootOldDisplayOrder = droppedOntoShoot.display_order;
-
-    const activeDraggedShootID = activeDragShoot.shoot_id;
+  
+    const droppedShootId = dropTargetShootId;
+    const droppedShootOldDisplayOrder = droppedOntoShoot.display_order;
+  
+    const activeDraggedShootId = activeDragShoot.shoot_id;
     const activeDraggedShootOldDisplayOrder = activeDragShoot.display_order;
-
+  
     const highestDisplayOrder = shootsData.reduce((maxDisplayOrder, shoot) => {
       return Math.max(maxDisplayOrder, shoot.display_order);
-  }, 0);
-
-  console.log(activeDraggedShootOldDisplayOrder)
-  console.log(droppedOntoShootOldDisplayOrder)
-  console.log(highestDisplayOrder)
+    }, 0);
   
-
-  const newShootsData = [...shootsData];
-
-  for(const shoot of newShootsData) {
-
-    if(activeDraggedShootOldDisplayOrder > droppedOntoShootOldDisplayOrder) {
-      
-      if(shoot.shoot_id === droppedOntoShootID) {
-        shoot.display_order = droppedOntoShootOldDisplayOrder + 1;
-      } else if(shoot.shoot_id === activeDraggedShootID) {
-        shoot.display_order = droppedOntoShootOldDisplayOrder;
-      } else if(shoot.display_order > droppedOntoShootOldDisplayOrder && shoot.display_order <= activeDraggedShootOldDisplayOrder) {
-        shoot.display_order++
-      }
-      
-    } else if(droppedOntoShootOldDisplayOrder > activeDraggedShootOldDisplayOrder && droppedOntoShootOldDisplayOrder !== highestDisplayOrder) {
-
-      console.log("lower to higher")
-
-      if(shoot.shoot_id === droppedOntoShootID) {
-        shoot.display_order = droppedOntoShootOldDisplayOrder - 1;
-      } else if(shoot.shoot_id === activeDraggedShootID) {
-        shoot.display_order = droppedOntoShootOldDisplayOrder;
-      } 
-
-      console.log("lower onto higher")
-
-    } else if(droppedOntoShootOldDisplayOrder === highestDisplayOrder) {
-
-      if(shoot.shoot_id === droppedOntoShootID) {
-        shoot.display_order = droppedOntoShootOldDisplayOrder - 1;
-      } else if(shoot.shoot_id === activeDraggedShootID) {
-        shoot.display_order = droppedOntoShootOldDisplayOrder;
-      } else if(shoot.display_order > droppedOntoShootOldDisplayOrder && shoot.display_order <= activeDraggedShootOldDisplayOrder) {
-        shoot.display_order--;
+    const updatedShootsData = [...shootsData];
+  
+    for(const shoot of updatedShootsData) {
+  
+      if(droppedShootId !== activeDraggedShootId) {
+  
+        if(droppedShootOldDisplayOrder === highestDisplayOrder) { // check
+  
+          if(shoot.shoot_id === droppedShootId) {
+            shoot.display_order = droppedShootOldDisplayOrder - 1;
+          } else if(shoot.shoot_id === activeDraggedShootId) {
+            shoot.display_order = droppedShootOldDisplayOrder;
+          } else if(shoot.display_order < droppedShootOldDisplayOrder && shoot.display_order >= activeDraggedShootOldDisplayOrder) {
+            shoot.display_order--;
+          }
+  
+        } else if(activeDraggedShootOldDisplayOrder > droppedShootOldDisplayOrder) { // check
+          
+          if(shoot.shoot_id === droppedShootId) {
+            shoot.display_order = droppedShootOldDisplayOrder + 1;
+          } else if(shoot.shoot_id === activeDraggedShootId) {
+            shoot.display_order = droppedShootOldDisplayOrder;
+          } else if(shoot.display_order > droppedShootOldDisplayOrder && shoot.display_order <= activeDraggedShootOldDisplayOrder) {
+            shoot.display_order++;
+          }
+          
+        } else if(droppedShootOldDisplayOrder > activeDraggedShootOldDisplayOrder) { // check
+          
+          if(shoot.shoot_id === droppedShootId) {
+            shoot.display_order = droppedShootOldDisplayOrder - 1;
+          } else if(shoot.shoot_id === activeDraggedShootId) {
+            shoot.display_order = droppedShootOldDisplayOrder;
+          } else if(shoot.display_order <= droppedShootOldDisplayOrder && shoot.display_order > activeDraggedShootOldDisplayOrder) {
+            shoot.display_order--;
+          }
+        } 
       }
     }
-
-  }
-
-
-    console.log(newShootsData)
+  
+    console.log(updatedShootsData)
     
-    newShootsData.sort((a, b) => a.display_order - b.display_order);
-
-    setShootsData(newShootsData)
+    updatedShootsData.sort((a, b) => a.display_order - b.display_order);
+  
+    setShootsData(updatedShootsData);
     setActiveDragShoot(null);
     setDropTargetShoot(null);
   }
-
+  
 
   useEffect(() => {
     const fetchShoots = async () => {
