@@ -5,8 +5,16 @@
   cursor: pointer;
   position: relative;
 
+  &__overlay {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 0;
+  }
+
   &.draggable {
-    border: 2px solid red;
+    // border: 2px solid red;
     cursor: grab;
   }
   
@@ -82,4 +90,52 @@
   .photographers__label {
     display: none;
   }
+}
+
+
+// @keyframes shake {
+//   0% { 
+//     transform: translateX(0); 
+//     transform: translateY(0); 
+//   }
+//   25% { 
+//     transform: translateX(-2px); 
+//     transform: translateY(-2px); 
+//   }
+//   50% { 
+//     transform: translateX(2px); 
+//     transform: translateY(2px); 
+//   }
+//   75% { 
+//     transform: translateX(-2px); 
+//     transform: translateY(-2px); 
+//   }
+//   100% { 
+//     transform: translateX(0); 
+//     transform: translateY(0); 
+//   }
+// }
+
+@keyframes shake {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0);
+    scale: 1;
+  }
+  25% {
+    transform: translate(-0.1px, -0.1px) rotate(-0.5deg);
+    scale: 0.999;
+  }
+  50% {
+    transform: translate(0.1px, 0.1px) rotate(0.5deg);
+    scale: 1;
+  }
+  75% {
+    transform: translate(-0.1px, -0.1px) rotate(-0.5deg);
+    scale: 0.999;
+  }
+}
+
+
+.shoot.draggable {
+  animation: shake 0.45s infinite;
 }

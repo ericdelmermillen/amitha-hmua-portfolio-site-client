@@ -47,12 +47,19 @@ const Shoots = () => {
     setShouldUpdate(true);
   }
 
-  const toggleIsOrderEditable = () => {
-    setIsOrderEditable(!isOrderEditable);
+  const makeOrderEditable = () => {
+    setIsOrderEditable(true);
+    setActiveDragShoot(null);
+    toast.success("Drag shoots into desired order then Save to update")
+  }
+
+  const saveNewOrder = () => {
+    // add server call to update shoots order
+    setIsOrderEditable(false);
     setActiveDragShoot(null);
   }
 
-  const handleShootDragStart = (shoot_id) => {
+  const handleShootDragStart = (e, shoot_id) => {
     const draggedShoot = shootsData.find(shoot => shoot.shoot_id === shoot_id);
     setActiveDragShoot(draggedShoot);
   }
@@ -61,35 +68,61 @@ const Shoots = () => {
     const droppedOntoShoot = shootsData.find(shoot => shoot.shoot_id === shoot_id);
     setDropTargetShoot(droppedOntoShoot);
 
-    const newShootsData = [...shootsData];
+    const droppedOntoShootID = shoot_id;
+    const droppedOntoShootOldDisplayOrder = droppedOntoShoot.display_order;
 
+    const activeDraggedShootID = activeDragShoot.shoot_id;
+    const activeDraggedShootOldDisplayOrder = activeDragShoot.display_order;
 
-    for(const shoot of newShootsData) {
+    const highestDisplayOrder = shootsData.reduce((maxDisplayOrder, shoot) => {
+      return Math.max(maxDisplayOrder, shoot.display_order);
+  }, 0);
 
-      if(activeDragShoot.display_order > droppedOntoShoot.display_order) {
-        console.log("activeDragShoot.display_order > droppedOntoShoot.display_order")
+  console.log(activeDraggedShootOldDisplayOrder)
+  console.log(droppedOntoShootOldDisplayOrder)
+  console.log(highestDisplayOrder)
+  
 
-        if(shoot.shoot_id === activeDragShoot.shoot_id) {
-        shoot.display_order = droppedOntoShoot.display_order;
-        droppedOntoShoot.display_order = droppedOntoShoot.display_order + 1
+  const newShootsData = [...shootsData];
 
-        } 
-        
-        if(shoot.display_order > droppedOntoShoot.display_order && shoot.shoot_id !== activeDragShoot.shoot_id && shoot.shoot_id !== droppedOntoShoot.shoot_id) {
-        shoot.display_order = shoot.display_order + 1;
-        }
+  for(const shoot of newShootsData) {
 
-      } else if(activeDragShoot.display_order < droppedOntoShoot.display_order) {
-
-        if(shoot.shoot_id === activeDragShoot.shoot_id) {
-          console.log("shoot.shoot_id === activeDragShoot.shoot_id")
-          shoot.display_order = droppedOntoShoot.display_order;
-          droppedOntoShoot.display_order = droppedOntoShoot.display_order - 1
-        } 
-
+    if(activeDraggedShootOldDisplayOrder > droppedOntoShootOldDisplayOrder) {
+      
+      if(shoot.shoot_id === droppedOntoShootID) {
+        shoot.display_order = droppedOntoShootOldDisplayOrder + 1;
+      } else if(shoot.shoot_id === activeDraggedShootID) {
+        shoot.display_order = droppedOntoShootOldDisplayOrder;
+      } else if(shoot.display_order > droppedOntoShootOldDisplayOrder && shoot.display_order <= activeDraggedShootOldDisplayOrder) {
+        shoot.display_order++
       }
+      
+    } else if(droppedOntoShootOldDisplayOrder > activeDraggedShootOldDisplayOrder && droppedOntoShootOldDisplayOrder !== highestDisplayOrder) {
 
+      console.log("lower to higher")
+
+      if(shoot.shoot_id === droppedOntoShootID) {
+        shoot.display_order = droppedOntoShootOldDisplayOrder - 1;
+      } else if(shoot.shoot_id === activeDraggedShootID) {
+        shoot.display_order = droppedOntoShootOldDisplayOrder;
+      } 
+
+      console.log("lower onto higher")
+
+    } else if(droppedOntoShootOldDisplayOrder === highestDisplayOrder) {
+
+      if(shoot.shoot_id === droppedOntoShootID) {
+        shoot.display_order = droppedOntoShootOldDisplayOrder - 1;
+      } else if(shoot.shoot_id === activeDraggedShootID) {
+        shoot.display_order = droppedOntoShootOldDisplayOrder;
+      } else if(shoot.display_order > droppedOntoShootOldDisplayOrder && shoot.display_order <= activeDraggedShootOldDisplayOrder) {
+        shoot.display_order--;
+      }
     }
+
+  }
+
+
     console.log(newShootsData)
     
     newShootsData.sort((a, b) => a.display_order - b.display_order);
@@ -231,7 +264,7 @@ const Shoots = () => {
             <div className="shoots__button-container">
               <button
                 className="shoots__editShootOrder"
-                onClick={toggleIsOrderEditable}
+                onClick={makeOrderEditable}
               >
                 Edit Order
               </button>
@@ -242,7 +275,7 @@ const Shoots = () => {
             <div className="shoots__button-container">
               <button
                 className="shoots__editShootOrder"
-                onClick={toggleIsOrderEditable}
+                onClick={saveNewOrder}
               >
                 Save Order
               </button>
@@ -250,8 +283,6 @@ const Shoots = () => {
 
           : null
         }
-
-        <h1>isOrderEditable: {isOrderEditable ? "true" : "false"}</h1>
 
       </div>
     </>

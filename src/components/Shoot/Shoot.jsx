@@ -40,7 +40,7 @@ const Shoot = ({
         draggable={isOrderEditable}
         className={isOrderEditable ? "shoot draggable" : "shoot"}
         onDragStart={isOrderEditable
-          ? () => handleShootDragStart(shoot_id)
+          ? (e) => handleShootDragStart(e, shoot_id)
           : null}
         onDragOver={isOrderEditable
           ? handleDragOver
@@ -50,7 +50,8 @@ const Shoot = ({
           : null}
         onClick={() => handleNewShootId(shoot_id)}
       >
-        {isLoggedIn && !isOnShootDetails 
+        <div className="shoot__overlay"></div>
+        {isLoggedIn && !isOnShootDetails && !isOrderEditable
 
           ? <div 
               className="shoot__delete-btn"
@@ -76,10 +77,13 @@ const Shoot = ({
           
         }
         <img 
+          draggable={isOrderEditable}
           className='shoot__img'
           src={thumbnail_url} 
-          alt={`Thumbnail for "${shoot_id}" shoot`} 
+          alt={`Thumbnail for "${shoot_id}" shoot`}
+          onDragStart={isOrderEditable ? (e) => handleShootDragStart(e, shoot_id) : null}
         />
+
         <div 
           className={`shoot__info ${isOnShootDetails && "smallText"}`}
         >
