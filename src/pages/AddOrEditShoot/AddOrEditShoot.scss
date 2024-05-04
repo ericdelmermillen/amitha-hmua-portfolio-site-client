@@ -1,7 +1,7 @@
 @import '../../partials/mixins.scss';
 @import '../../partials/variables.scss';
 
-.addShoot {
+.addOrEditShoot {
   @include page;
   background: var(--background-color);
   color: var(--text-color);

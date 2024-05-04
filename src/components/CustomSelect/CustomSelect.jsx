@@ -1,4 +1,4 @@
-import { useState, useRef, useContext } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import AppContext from '../../AppContext.jsx';
 import DeleteIcon from '../../assets/icons/DeleteIcon.jsx'
 import DownIcon from '../../assets/icons/DownIcon.jsx';
@@ -11,7 +11,8 @@ const CustomSelect = ({
   selectOptions, 
   chooserIDs,
   setChooserIDs,
-  entryNameType
+  entryNameType,
+  currentValue
  }) => {
 
   const { 
@@ -19,7 +20,9 @@ const CustomSelect = ({
     setSelectedPhotogOrModel,
   } = useContext(AppContext);
 
+  // const [ selectValue, setSelectValue ] = useState(null);
   const [ selectValue, setSelectValue ] = useState(null);
+  // console.log(selectValue)
   const [ showOptions, setShowOptions ] = useState(false);
   const innerRef = useRef(null);
 
@@ -96,6 +99,14 @@ const CustomSelect = ({
       innerRef.current.scrollTop = 0;
     }
   }
+
+  useEffect(() => {
+    if(currentValue) {
+      const currentSetValue = selectOptions.find(option => option.id === +currentValue);
+
+      setSelectValue(currentSetValue[entryNameType]);
+    }
+  }, [currentValue])
   
   return (
     <>

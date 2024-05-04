@@ -3,7 +3,7 @@ import { useEffect, useContext } from 'react';
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { scrollToTop } from './utils/utils.js';
-import AddShoot from './pages/AddShoot/AddShoot.jsx';
+import AddOrEditShoot from './pages/AddOrEditShoot/AddOrEditShoot.jsx';
 import AppContext from './AppContext.jsx'; 
 import Bio from './pages/Bio/Bio.jsx';
 import Contact from './pages/Contact/Contact.jsx';
@@ -144,7 +144,17 @@ const App = () => {
           <Route path="/shoot/:shoot_id" element={<ShootDetails />} />
           <Route path="/login" element={<Login />} />
           {isLoggedIn 
-            ? <Route path="/shoots/add" element={<AddShoot />} />
+            ? <Route 
+                path="/shoots/add" 
+                element={<AddOrEditShoot shootAction={"add"}/>} 
+              />
+            : null
+          }
+          {isLoggedIn 
+            ? <Route 
+                path="/shoots/edit/:shoot_id" 
+                element={<AddOrEditShoot shootAction={"edit"}/>} 
+              />
             : null
           }
           <Route path="*" element={<NotFound />} />

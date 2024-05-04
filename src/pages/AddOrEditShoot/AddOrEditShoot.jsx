@@ -1,9 +1,9 @@
-import { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import AppContext from '../../AppContext.jsx';
-import NewShootdatePicker from '../../components/NewShootDatePicker/NewShootDatePicker.jsx';
+import { useState, useEffect, useContext } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { scrollToTop } from '../../utils/utils.js';
 import { toast } from 'react-toastify';
+import NewShootdatePicker from '../../components/NewShootDatePicker/NewShootDatePicker.jsx';
 import { checkTokenExpiration } from '../../utils/utils.js';
 import AddIcon from '../../assets/icons/AddIcon.jsx';
 import CustomSelect from '../../components/CustomSelect/CustomSelect.jsx';
@@ -11,11 +11,13 @@ import MinusIcon from '../../assets/icons/MinusIcon.jsx';
 import PhotoInput from '../../components/PhotoInput/PhotoInput.jsx';
 import FormData from 'form-data';
 import Compressor from 'compressorjs';
-import './AddShoot.scss';
+import './AddOrEditShoot.scss';
 
-const AddShoot = () => {
+const AddOrEditShoot = ({ shootAction }) => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+  const { shoot_id } = useParams();
+  
   const navigate = useNavigate();
 
   const { 
@@ -33,10 +35,15 @@ const AddShoot = () => {
 
   const [ isInitialLoad, setIsInitialLoad ] = useState(true);
   const [ newShootDate, setNewShootDate ] = useState(new Date());
-  const [ models, setModels ] = useState([]);
-  const [ modelChooserIDs, setModelChooserIDs ] = useState([{ chooserNo: 1, modelID: null}]);
   const [ photographers, setPhotographers ] = useState([]);
   const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([{ chooserNo: 1, photographerID: null }]);
+  const [ models, setModels ] = useState([]);
+  const [ modelChooserIDs, setModelChooserIDs ] = useState([{ chooserNo: 1, modelID: null}]);
+
+  // edit shoot data
+  const [ shootDetails, setShootDetails ] = useState(null);
+  const [ photos, setPhotos ] = useState([]);
+  const [ formattedDate, setFormattedDate ] = useState('');
 
   const numberOfPhotoUploads = 10;
 
@@ -287,55 +294,123 @@ const AddShoot = () => {
       fetchModels();
     }
 
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 250);
+    setIsLoading(false);
 
   }, [BASE_URL, shouldUpdatePhotographers, shouldUpdateModels])
 
+
+  // edit fetch
+  useEffect(() => {
+    if(shoot_id) {
+      setIsLoading(true);
+      
+      const fetchShootDetails = async () => {
+        try {
+          const response = await fetch(`${BASE_URL}/shoots/shoot/${shoot_id}`);
+          if(response.ok) {
+            const data = await response.json();
+            setShootDetails(data);
+            setPhotos(data.photo_urls);
+            const fetchedShootPhotos = [...shootPhotos];
+          
+            for(const [idx, photoUrl] of data.photo_urls.entries()) {
+              fetchedShootPhotos[idx].photoPreview = photoUrl.photo_url;
+            }
+
+            setShootPhotos(fetchedShootPhotos)
+          
+            const date = new Date(data.shoot_date);
+            const formattedDate = `${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`;
+            setFormattedDate(formattedDate);
+
+            const photogIDs = data.photographer_ids.split(',')
+            const modelIDs = data.model_ids.split(',')
+
+            const fetchedPhotographerIDs = photogIDs.map((id, idx) => ({"chooserNo": idx + 1, "photographerID": id}));
+            const fetchedModelIDs = modelIDs.map((id, idx) => ({"chooserNo": idx + 1, "modelID": id}));
+
+            setPhotographerChooserIDs(fetchedPhotographerIDs);
+            setModelChooserIDs(fetchedModelIDs);
+            setIsLoading(false);
+          } else {
+            toast.error(response.statusText);
+            throw new Error(`Failed to fetch shoot details: ${response.statusText}`);
+          }
+          
+        } catch(error) {
+          console.log(error)
+          setIsLoading(false);
+          navigate('/notfound')
+        }
+      }
+      fetchShootDetails();
+    }
+
+    setIsLoading(false);
+  }, [shoot_id, photographers, models]);
+  
+
+  // useEffect to call shoots/shoot/:id for data to load editShoot
 
   // initial load useEffect
   useEffect(() => {
     scrollToTop();
 
-    setTimeout(() => {
+    // setTimeout(() => {
       setIsLoading();
-    }, 250);
+    // }, 250);
 
     setIsInitialLoad(false);
   }, [isInitialLoad]);
   
   return (
     <>
-      <div className="addShoot">
-        <div className="addShoot__inner">
-          <h1 className="addShoot__heading">
-            Add New Shoot
-          </h1>
+      <div className="addOrEditShoot">
+        <div className="addOrEditShoot__inner">
 
-          <form className="addShoot__form">
-            <div className="addShoot__date-container">
+          {shootAction === "add"
 
-              <label className='addShoot__label addShoot__label--datePicker'>
-                Enter Shoot Date
-              </label>
+            ? <h1 className="addOrEditShoot__heading">
+                Add New Shoot
+              </h1>
+
+            : <h1 className="addOrEditShoot__heading">
+                Edit Shoot {shoot_id}
+              </h1>
+          }
+          
+          <form className="addOrEditShoot__form">
+            <div className="addOrEditShoot__date-container">
+
+              {shootAction === "add"
+
+                ? <label className='addOrEditShoot__label addOrEditShoot__label--datePicker'>
+                    Enter Shoot Date
+                  </label>
+
+                : <label className='addOrEditShoot__label addOrEditShoot__label--datePicker'>
+                    Edit Shoot Date
+                  </label>
+              }
+
                 <NewShootdatePicker
                   newShootDate={newShootDate}
                   setNewShootDate={setNewShootDate}
-                  className={"addShoot__calendarIcon"}
+                  className={"addOrEditShoot__calendarIcon"}
+                  formattedDate={formattedDate}
                 />
             </div>
 
-            <div className="addShoot__photoUploads">
-              <h3 className="addShoot_photos-heading">
+            <div className="addOrEditShoot__photoUploads">
+              <h3 className="addOrEditShoot_photos-heading">
                 Select up to 10 Photos
               </h3>
 
-              <div className="addShoot__photoInputs">              
+              <div className="addOrEditShoot__photoInputs">              
 
                 {shootPhotos.map(shootPhoto => 
                   <div 
-                    className="addShoot__photoInput"
+                    className="addOrEditShoot__photoInput"
                     key={shootPhoto.photoNo}
                   >                  
                     <PhotoInput 
@@ -349,34 +424,34 @@ const AddShoot = () => {
 
               </div>
 
-              <p className="addShoot__photos-explainer">
+              <p className="addOrEditShoot__photos-explainer">
                 *All shoots need at least one photo
               </p>
             </div>
 
-            <div className="addShoot__photographersAndModels-container">
+            <div className="addOrEditShoot__photographersAndModels-container">
 
-              <div className="addShoot__photographerChoosers">
-                <h3 className='addShoot__label'>
+              <div className="addOrEditShoot__photographerChoosers">
+                <h3 className='addOrEditShoot__label'>
                   Choose At Least One Photographer
                 </h3>
 
                 <h4 
-                  className="addShoot__textButton"
+                  className="addOrEditShoot__textButton"
                   onClick={() => handleAddCustomSelect("photographer_name")}
                 >
                   Add Photographer 
-                    <span className='addShoot__textButton-icon'>
+                    <span className='addOrEditShoot__textButton-icon'>
                       <AddIcon 
-                        className={"addShoot__add-icon"}
-                        classNameStroke={"addShoot__add-stroke"}
+                        className={"addOrEditShoot__add-icon"}
+                        classNameStroke={"addOrEditShoot__add-stroke"}
                       />
                     </span>
                 </h4>
 
                 {photographerChooserIDs.map((chooser) => (
                   <div 
-                    className="addShoot__selector addShoot__selector--photographer"
+                    className="addOrEditShoot__selector addOrEditShoot__selector--photographer"
                     key={chooser.chooserNo}
                   >
 
@@ -390,10 +465,11 @@ const AddShoot = () => {
                       setSelectedOption={setPhotographerChooserIDs}
                       photographerIDchooserId={chooser.photographerID}
                       entryNameType={"photographer_name"}
+                      currentValue={chooser.photographerID}
                     />
 
                       <span 
-                        className={`addShoot__selector-removeIcon ${photographerChooserIDs.length > 1
+                        className={`addOrEditShoot__selector-removeIcon ${photographerChooserIDs.length > 1
                           ? "show" 
                           : ""}`}
                         onClick={photographerChooserIDs.length > 1
@@ -402,7 +478,7 @@ const AddShoot = () => {
                         }
                       >
                         <MinusIcon 
-                          className={"addShoot__minus-icon"}
+                          className={"addOrEditShoot__minus-icon"}
                         />
                       </span>
                       
@@ -411,28 +487,28 @@ const AddShoot = () => {
               </div>
 
               <div 
-                className="addShoot__modelChoosers"
+                className="addOrEditShoot__modelChoosers"
               >
-                <h3 className='addShoot__label'>
+                <h3 className='addOrEditShoot__label'>
                   Choose At Least One Model
                 </h3>
 
                 <h4 
-                  className="addShoot__textButton"
+                  className="addOrEditShoot__textButton"
                   onClick={() => handleAddCustomSelect("model_name")}
                 >
                   Add Model 
-                  <span className='addShoot__textButton-icon'>
+                  <span className='addOrEditShoot__textButton-icon'>
                     <AddIcon 
-                      className={"addShoot__add-icon"}
-                      classNameStroke={"addShoot__add-stroke"}
+                      className={"addOrEditShoot__add-icon"}
+                      classNameStroke={"addOrEditShoot__add-stroke"}
                     />
                   </span>
                 </h4>
                 
                 {modelChooserIDs.map((chooser) => (
                   <div 
-                    className="addShoot__selector addShoot__selector--model"
+                    className="addOrEditShoot__selector addOrEditShoot__selector--model"
                     key={chooser.chooserNo}
                   >
 
@@ -446,10 +522,11 @@ const AddShoot = () => {
                       setSelectedOption={setModelChooserIDs}
                       modelIDchooserId={chooser.modelID}
                       entryNameType={"model_name"}
+                      currentValue={chooser.modelID}
                     />
 
                       <span 
-                        className={`addShoot__selector-removeIcon ${modelChooserIDs.length > 1 
+                        className={`addOrEditShoot__selector-removeIcon ${modelChooserIDs.length > 1 
                           ? "show" 
                           : ""}`}
                         onClick={modelChooserIDs.length > 1
@@ -458,7 +535,7 @@ const AddShoot = () => {
                         }
                       >
                         <MinusIcon 
-                          className={"addShoot__minus-icon"}
+                          className={"addOrEditShoot__minus-icon"}
                         />
                       </span>
 
@@ -469,17 +546,17 @@ const AddShoot = () => {
             
             </div>
           
-            <div className="addShoot__button-container">
+            <div className="addOrEditShoot__button-container">
 
               <div 
-                className="addShoot__button addShoot__button--submit" 
+                className="addOrEditShoot__button addOrEditShoot__button--submit" 
                 onClick={(e) => handleSubmit(e)}
               >
                 Submit
               </div>
 
               <div 
-                className="addShoot__button addShoot__button--cancel" 
+                className="addOrEditShoot__button addOrEditShoot__button--cancel" 
                 onClick={handleCancel}
               >
                 Cancel
@@ -492,4 +569,4 @@ const AddShoot = () => {
     </>
   )};
 
-export default AddShoot;
+export default AddOrEditShoot;
