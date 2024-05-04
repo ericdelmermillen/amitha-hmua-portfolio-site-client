@@ -14,7 +14,6 @@
   }
 
   &.draggable {
-    // border: 2px solid red;
     cursor: grab;
   }
   
@@ -62,6 +61,31 @@
   }
 
   &__delete-btn---icon {
+    fill: var(--text-color);
+  }
+
+  &__edit-btn {
+    align-items: center;
+    background: var(--background-color);
+    border-radius: 50%;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    height: 2.5rem;
+    justify-content: center;
+    outline: 1px solid var(--text-color);
+    position: absolute;
+    right: 0.75rem;
+    top: 0.75rem;
+    padding: 0.55rem;
+    width: 2.5rem;
+    
+    &:hover {
+      scale: 1.05;
+    }
+  }
+
+
+  &__edit-btn---icon {
     fill: var(--text-color);
   }
 

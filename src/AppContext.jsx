@@ -7,24 +7,26 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const [ isLoggedIn, setIsLoggedIn ] = useState(false);
   const [ colorMode, setColorMode ] = useState(localStorage.getItem('colorMode') || "light");
-  const [ showSideNav, setShowSideNav ] = useState(false);
-  const [ scrollYPos, setScrollYPos ] = useState(window.scrollY);
-  const [ prevScrollYPos, setPrevScrollYPos ] = useState(window.scrollY);
-
-  const [ selectedShoot, setSelectedShoot ] = useState(null);
-  
-  const [ selectedPhotogOrModel, setSelectedPhotogOrModel ] = useState({});
-
-  const [ showDeleteShootModal, setShowDeleteShootModal ] = useState(false);
-
-  const [ showPhotogOrModelModal, setShowPhotogOrModelModal ] = useState({modalType: null});
-  
-  const [ shouldUpdateShoots, setShouldUpdateShoots ] = useState(false);
-  const [ shouldUpdatePhotographers, setShouldUpdatePhotographers ] = useState(false);
-  const [ shouldUpdateModels, setShouldUpdateModels ] = useState(false);
   const [ isLoading, setIsLoading ] = useState(false); 
   const [ isFirefox, setIsFirefox ] = useState(navigator.userAgent.toLowerCase().indexOf('firefox') > -1);
 
+  const [ scrollYPos, setScrollYPos ] = useState(window.scrollY);
+  const [ prevScrollYPos, setPrevScrollYPos ] = useState(window.scrollY);
+  
+  const [ showSideNav, setShowSideNav ] = useState(false);
+
+  const [ selectedShoot, setSelectedShoot ] = useState(null);
+  const [ shouldUpdateShoots, setShouldUpdateShoots ] = useState(false);
+  
+  const [ selectedPhotogOrModel, setSelectedPhotogOrModel ] = useState({});
+
+  
+  const [ showDeleteShootModal, setShowDeleteShootModal ] = useState(false);
+  const [ showPhotogOrModelModal, setShowPhotogOrModelModal ] = useState({modalType: null});
+  
+  const [ shouldUpdatePhotographers, setShouldUpdatePhotographers ] = useState(false);
+  const [ shouldUpdateModels, setShouldUpdateModels ] = useState(false);
+  
   const navigate = useNavigate(); 
 
   useEffect(() => {
