@@ -19,7 +19,9 @@ const Shoot = ({
   const { 
     isLoggedIn, 
     setSelectedShoot,
-    setShowDeleteShootModal
+    setShowDeleteShootModal,
+    isFirefox, 
+    setIsFirefox
   } = useContext(AppContext);
   
   const handleDeleteClick = (e) => {
@@ -33,13 +35,15 @@ const Shoot = ({
     e.preventDefault();
   };
 
-
   return (
     <>
       <div 
         draggable={isOrderEditable}
         className={isOrderEditable ? "shoot draggable" : "shoot"}
-        onDragStart={isOrderEditable
+        onDragStart={isOrderEditable && !isFirefox
+          ? (e) => handleShootDragStart(e, shoot_id)
+          : null}
+        onMouseDown={isOrderEditable && isFirefox
           ? (e) => handleShootDragStart(e, shoot_id)
           : null}
         onDragOver={isOrderEditable

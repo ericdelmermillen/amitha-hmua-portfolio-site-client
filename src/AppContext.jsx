@@ -23,6 +23,7 @@ export const AppProvider = ({ children }) => {
   const [ shouldUpdatePhotographers, setShouldUpdatePhotographers ] = useState(false);
   const [ shouldUpdateModels, setShouldUpdateModels ] = useState(false);
   const [ isLoading, setIsLoading ] = useState(false); 
+  const [ isFirefox, setIsFirefox ] = useState(navigator.userAgent.toLowerCase().indexOf('firefox') > -1);
 
   const navigate = useNavigate(); 
 
@@ -66,7 +67,9 @@ export const AppProvider = ({ children }) => {
     shouldUpdateShoots, 
     setShouldUpdateShoots,
     isLoading, 
-    setIsLoading
+    setIsLoading,
+    isFirefox, 
+    setIsFirefox
    }
   
   return (

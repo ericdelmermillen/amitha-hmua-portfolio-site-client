@@ -301,7 +301,7 @@ const Shoots = () => {
           ))}
         </div>
 
-        {!isOnShootDetails && isLoggedIn && !isOrderEditable ?
+        {!isOnShootDetails && isLoggedIn && !isOrderEditable && !shouldUpdate?
 
             <div className="shoots__button-container">
               <button
