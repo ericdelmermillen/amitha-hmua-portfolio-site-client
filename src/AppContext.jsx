@@ -21,6 +21,8 @@ export const AppProvider = ({ children }) => {
   const [ selectedPhotogOrModel, setSelectedPhotogOrModel ] = useState({});
 
   const [ showDeleteOrEditShootModal, setShowDeleteOrEditShootModal ] = useState(false);
+
+  const [ deleteOrEditClickAction, setDeleteOrEditClickAction ] = useState('')
   const [ showPhotogOrModelModal, setShowPhotogOrModelModal ] = useState({modalType: null});
   
   const [ shouldUpdatePhotographers, setShouldUpdatePhotographers ] = useState(false);
@@ -57,6 +59,8 @@ export const AppProvider = ({ children }) => {
     setSelectedShoot,
     showDeleteOrEditShootModal, 
     setShowDeleteOrEditShootModal,
+    deleteOrEditClickAction, 
+    setDeleteOrEditClickAction,
     showPhotogOrModelModal, 
     setShowPhotogOrModelModal,
     selectedPhotogOrModel, 
@@ -72,6 +76,8 @@ export const AppProvider = ({ children }) => {
     isFirefox, 
     setIsFirefox
    }
+
+   console.log(deleteOrEditClickAction)
   
   return (
     <>

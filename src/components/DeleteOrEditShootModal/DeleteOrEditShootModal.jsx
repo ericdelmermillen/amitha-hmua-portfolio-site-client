@@ -16,12 +16,15 @@ const DeleteShootModal = () => {
     selectedShoot, 
     showDeleteOrEditShootModal,
     setShowDeleteOrEditShootModal,
+    deleteOrEditClickAction, 
+    setDeleteOrEditClickAction
   } = useContext(AppContext);
 
   const navigate = useNavigate();
 
   const handleCloseModal = () => {
     setShowDeleteOrEditShootModal(false);
+    setDeleteOrEditClickAction('');
   };
 
   const handleDeleteShoot = async () => {
@@ -43,7 +46,6 @@ const DeleteShootModal = () => {
 
         if(response.ok) {
           setShouldUpdateShoots(true);
-          setShowDeleteOrEditShootModal(false);
           toast.success(`Shoot ${selectedShoot} successfully deleted.`); 
         } else if(response.status === 401) {
           setIsLoading(false);
@@ -53,7 +55,6 @@ const DeleteShootModal = () => {
         } else {
           toast.error(`Failed to delete Shoot ${selectedShoot}.`);
           console.error(`Failed to delete Shoot ${selectedShoot}: ${response.statusText}`);
-          setShowDeleteOrEditShootModal(false);
         }
       } catch (error) {
         console.error(`Error deleting Shoot ${selectedShoot}: ${error}`);
@@ -62,7 +63,15 @@ const DeleteShootModal = () => {
     } else {
       toast.error("Sorry please login again");
     }
+    setShowDeleteOrEditShootModal(false);
+    setDeleteOrEditClickAction('');
   };
+
+  const handleNavigateToEditShoot = () => {
+    setShowDeleteOrEditShootModal(false);
+    setDeleteOrEditClickAction('');
+    return navigate(`/shoots/edit/${selectedShoot}`);
+  }
   
   return (
     <>
@@ -75,14 +84,18 @@ const DeleteShootModal = () => {
           onClick={(e) => e.stopPropagation()}
         >
           <h3 className="deleteOrEditShootModal__heading">
-            Delete Shoot Number {selectedShoot}?
+            {deleteOrEditClickAction} Shoot Number {selectedShoot}?
           </h3>
           <div className="deleteOrEditShootModal__button-container">
             <button
               className="deleteOrEditShootModal__button deleteOrEditShootModal__button--delete"
-              onClick={handleDeleteShoot}
+              onClick={deleteOrEditClickAction === "Delete"
+                ? handleDeleteShoot
+                : handleNavigateToEditShoot}
             >
-              Confirm
+              {deleteOrEditClickAction === "Delete"
+                ? "Confirm"
+                : "Edit Shoot"}
             </button>
             <button
               className="deleteOrEditShootModal__button deleteOrEditShootModal__button--cancel"
