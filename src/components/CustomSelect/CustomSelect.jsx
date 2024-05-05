@@ -7,22 +7,20 @@ import './CustomSelect.scss';
 
 const CustomSelect = ({ 
   chooserNo,
+  chooserName,
   chooserType, 
-  selectOptions, 
   chooserIDs,
   setChooserIDs,
-  entryNameType,
-  currentValue
+  selectOptions, 
+  entryNameType
  }) => {
-
+  
   const { 
     setShowPhotogOrModelModal,
     setSelectedPhotogOrModel,
   } = useContext(AppContext);
 
-  // const [ selectValue, setSelectValue ] = useState(null);
   const [ selectValue, setSelectValue ] = useState(null);
-  // console.log(selectValue)
   const [ showOptions, setShowOptions ] = useState(false);
   const innerRef = useRef(null);
 
@@ -31,7 +29,10 @@ const CustomSelect = ({
   }
 
   const alreadySelected = (chooserID) => {
+    // console.log("alreadySelected")
     const entryID = `${chooserType.toLowerCase()}ID`;
+    // console.log(entryID)
+    // console.log(chooserID)
 
     for(const chooser of chooserIDs) {
       if(chooser[entryID] === chooserID) {
@@ -64,12 +65,16 @@ const CustomSelect = ({
   }
 
   const handleUpdateSelectValue = (option) => {
+    // console.log("updateSelectValue")
+    // console.log(option)
     setSelectValue(option.photographer_name || option.model_name);
 
     const newChooserIDs = [...chooserIDs];
   
     if(chooserType === "Photographer") {
       const found = chooserIDs.find(chooserID => chooserID.photographerID === option.id);
+
+      // console.log(found)
       
       if(!found) {
         newChooserIDs.forEach(chooserID => chooserID.chooserNo === chooserNo 
@@ -101,12 +106,12 @@ const CustomSelect = ({
   }
 
   useEffect(() => {
-    if(currentValue) {
-      const currentSetValue = selectOptions.find(option => option.id === +currentValue);
+    if(chooserName) {
+      // console.log(chooserName)
 
-      setSelectValue(currentSetValue[entryNameType]);
+      setSelectValue(chooserName)
     }
-  }, [currentValue])
+  }, [chooserName])
   
   return (
     <>

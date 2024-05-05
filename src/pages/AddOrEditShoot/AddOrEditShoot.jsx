@@ -36,9 +36,9 @@ const AddOrEditShoot = ({ shootAction }) => {
   const [ isInitialLoad, setIsInitialLoad ] = useState(true);
   const [ newShootDate, setNewShootDate ] = useState(new Date());
   const [ photographers, setPhotographers ] = useState([]);
-  const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([{ chooserNo: 1, photographerID: null }]);
+  const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([{ chooserNo: 1, photographerID: null, photographerName: null }]);
   const [ models, setModels ] = useState([]);
-  const [ modelChooserIDs, setModelChooserIDs ] = useState([{ chooserNo: 1, modelID: null}]);
+  const [ modelChooserIDs, setModelChooserIDs ] = useState([{ chooserNo: 1, modelID: null, modelName: null}]);
 
   // edit shoot data
   const [ shootDetails, setShootDetails ] = useState(null);
@@ -105,8 +105,8 @@ const AddOrEditShoot = ({ shootAction }) => {
 
       const maxChooserNo = Math.max(...photographerChooserIDs.map(chooser => chooser.chooserNo));
 
-      const newChooser = { chooserNo: maxChooserNo + 1, photographerID: null};
-      
+      const newChooser = { chooserNo: maxChooserNo + 1, photographerID: null, photographerName: null};
+
       setPhotographerChooserIDs([...photographerChooserIDs, newChooser]);
       
       return;
@@ -115,7 +115,7 @@ const AddOrEditShoot = ({ shootAction }) => {
 
       const maxChooserNo = Math.max(...modelChooserIDs.map(chooser => chooser.chooserNo));
 
-      const newChooser = { chooserNo: maxChooserNo + 1, modelID: null};
+      const newChooser = { chooserNo: maxChooserNo + 1, modelID: null, modelName: null};
 
       setModelChooserIDs([...modelChooserIDs, newChooser]);
 
@@ -236,6 +236,11 @@ const AddOrEditShoot = ({ shootAction }) => {
     }
   };
 
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    console.log(`Update Ad ${shoot_id}`)
+  }
+
   const handleCancel = () => {
     navigate('/home');
   }
@@ -299,7 +304,7 @@ const AddOrEditShoot = ({ shootAction }) => {
   }, [BASE_URL, shouldUpdatePhotographers, shouldUpdateModels])
 
 
-  // edit fetch
+  // useEffect to call shoots/shoot/:id for data to load editShoot
   useEffect(() => {
     if(shoot_id) {
       setIsLoading(true);
@@ -323,14 +328,31 @@ const AddOrEditShoot = ({ shootAction }) => {
             const formattedDate = `${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`;
             setFormattedDate(formattedDate);
 
-            const photogIDs = data.photographer_ids.split(',')
-            const modelIDs = data.model_ids.split(',')
+            const fetchedShootPhotographers = data.photographers;
+            const fetchedShootModels = data.models;
+            
+            const fetchedPhotogIDs = data.photographer_ids.split(',');
+            const fetchedModelIDs = data.model_ids.split(',');
+            const fetchedPhotographerChooserIDs = [];
+            for(let idx = 0; idx < fetchedPhotogIDs.length; idx++) {
+              const chooser = {};
+              chooser.chooserNo =idx + 1;
+              chooser.photographerID = +fetchedPhotogIDs[idx];
+              chooser.photographerName = fetchedShootPhotographers[idx];
+              fetchedPhotographerChooserIDs.push(chooser);
+            }
 
-            const fetchedPhotographerIDs = photogIDs.map((id, idx) => ({"chooserNo": idx + 1, "photographerID": id}));
-            const fetchedModelIDs = modelIDs.map((id, idx) => ({"chooserNo": idx + 1, "modelID": id}));
+            const fetchedModelChooserIDs = [];
+            for(let idx = 0; idx < fetchedModelIDs.length; idx++) {
+              const chooser = {}
+              chooser.chooserNo = idx + 1;
+              chooser.modelID = +fetchedModelIDs[idx]
+              chooser.modelName = fetchedShootModels[idx]
+              fetchedModelChooserIDs.push(chooser);
+            }
 
-            setPhotographerChooserIDs(fetchedPhotographerIDs);
-            setModelChooserIDs(fetchedModelIDs);
+            setPhotographerChooserIDs(fetchedPhotographerChooserIDs);
+            setModelChooserIDs(fetchedModelChooserIDs);
             setIsLoading(false);
           } else {
             toast.error(response.statusText);
@@ -347,19 +369,15 @@ const AddOrEditShoot = ({ shootAction }) => {
     }
 
     setIsLoading(false);
-  }, [shoot_id, photographers, models]);
+  }, [shoot_id]);
   
-
-  // useEffect to call shoots/shoot/:id for data to load editShoot
 
   // initial load useEffect
   useEffect(() => {
-    scrollToTop();
-
-    // setTimeout(() => {
-      setIsLoading();
-    // }, 250);
-
+    if(!shoot_id) {
+      scrollToTop();
+    }
+    setIsLoading();
     setIsInitialLoad(false);
   }, [isInitialLoad]);
   
@@ -457,15 +475,12 @@ const AddOrEditShoot = ({ shootAction }) => {
 
                     <CustomSelect 
                       chooserNo={chooser.chooserNo}
+                      chooserName={chooser.photographerName}
                       chooserType={"Photographer"}
                       chooserIDs={photographerChooserIDs}
                       setChooserIDs={setPhotographerChooserIDs}
                       selectOptions={photographers}
-                      selectEntry={photographerChooserIDs}
-                      setSelectedOption={setPhotographerChooserIDs}
-                      photographerIDchooserId={chooser.photographerID}
                       entryNameType={"photographer_name"}
-                      currentValue={chooser.photographerID}
                     />
 
                       <span 
@@ -514,15 +529,12 @@ const AddOrEditShoot = ({ shootAction }) => {
 
                     <CustomSelect
                       chooserNo={chooser.chooserNo}
+                      chooserName={chooser.modelName}
                       chooserType={"Model"}
                       chooserIDs={modelChooserIDs}
                       setChooserIDs={setModelChooserIDs}
                       selectOptions={models}
-                      selectEntry={modelChooserIDs}
-                      setSelectedOption={setModelChooserIDs}
-                      modelIDchooserId={chooser.modelID}
                       entryNameType={"model_name"}
-                      currentValue={chooser.modelID}
                     />
 
                       <span 
@@ -541,19 +553,29 @@ const AddOrEditShoot = ({ shootAction }) => {
 
                     </div>
                 ))}
-                
+
               </div>
             
             </div>
           
             <div className="addOrEditShoot__button-container">
 
-              <div 
-                className="addOrEditShoot__button addOrEditShoot__button--submit" 
-                onClick={(e) => handleSubmit(e)}
-              >
-                Submit
-              </div>
+              {shoot_id
+
+                ? <div 
+                    className="addOrEditShoot__button addOrEditShoot__button--submit" 
+                    onClick={(e) => handleUpdate(e)}
+                  >
+                    Update
+                  </div>
+
+                : <div 
+                    className="addOrEditShoot__button addOrEditShoot__button--submit" 
+                    onClick={(e) => handleSubmit(e)}
+                  >
+                    Submit
+                  </div>
+              }
 
               <div 
                 className="addOrEditShoot__button addOrEditShoot__button--cancel" 
