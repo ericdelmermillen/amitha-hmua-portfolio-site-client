@@ -18,7 +18,7 @@ import SideNav from './components/SideNav/SideNav.jsx';
 import AddIcon from './assets/icons/AddIcon.jsx';
 import UpIcon from './assets/icons/UpIcon.jsx';
 import './App.scss';
-import DeleteShootModal from './components/DeleteShootModal/DeleteShootModal.jsx';
+import DeleteOrEditShootModal from './components/DeleteOrEditShootModal/DeleteOrEditShootModal.jsx';
 
 // don't forget token refreshing on editShoot and updateShootOrder
 
@@ -39,8 +39,8 @@ const App = () => {
     setPrevScrollYPos,
     showPhotogOrModelModal, 
     setShowPhotogOrModelModal,
-    showDeleteShootModal, 
-    setShowDeleteShootModal,
+    showDeleteOrEditShootModal, 
+    setShowDeleteOrEditShootModal,
     isLoading, 
     setIsLoading
   } = useContext(AppContext);
@@ -180,8 +180,8 @@ const App = () => {
         : null
       }
 
-      {isLoggedIn && showDeleteShootModal 
-        ? <DeleteShootModal />
+      {isLoggedIn && showDeleteOrEditShootModal 
+        ? <DeleteOrEditShootModal />
         : null
       }
       

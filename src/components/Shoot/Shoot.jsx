@@ -20,7 +20,7 @@ const Shoot = ({
   const { 
     isLoggedIn, 
     setSelectedShoot,
-    setShowDeleteShootModal,
+    setShowDeleteOrEditShootModal,
     isFirefox
   } = useContext(AppContext);
   
@@ -28,7 +28,7 @@ const Shoot = ({
     setSelectedShoot(shoot_id)
     e.preventDefault();
     e.stopPropagation();
-    setShowDeleteShootModal(true);
+    setShowDeleteOrEditShootModal(true);
   }
 
   const handleDragOver = (e) => {

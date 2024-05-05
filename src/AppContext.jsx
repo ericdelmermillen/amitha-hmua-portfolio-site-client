@@ -20,8 +20,7 @@ export const AppProvider = ({ children }) => {
   
   const [ selectedPhotogOrModel, setSelectedPhotogOrModel ] = useState({});
 
-  
-  const [ showDeleteShootModal, setShowDeleteShootModal ] = useState(false);
+  const [ showDeleteOrEditShootModal, setShowDeleteOrEditShootModal ] = useState(false);
   const [ showPhotogOrModelModal, setShowPhotogOrModelModal ] = useState({modalType: null});
   
   const [ shouldUpdatePhotographers, setShouldUpdatePhotographers ] = useState(false);
@@ -56,8 +55,8 @@ export const AppProvider = ({ children }) => {
     setPrevScrollYPos,
     selectedShoot, 
     setSelectedShoot,
-    showDeleteShootModal, 
-    setShowDeleteShootModal,
+    showDeleteOrEditShootModal, 
+    setShowDeleteOrEditShootModal,
     showPhotogOrModelModal, 
     setShowPhotogOrModelModal,
     selectedPhotogOrModel, 

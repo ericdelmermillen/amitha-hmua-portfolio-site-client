@@ -1,9 +1,9 @@
 import { useContext } from 'react';
-import AppContext from '../../AppContext';
+import AppContext from '../../AppContext.jsx';
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 import { checkTokenExpiration } from '../../utils/utils.js';
-import './DeleteShootModal.scss';
+import './DeleteOrEditShootModal.scss';
 
 const DeleteShootModal = () => {
   
@@ -14,13 +14,14 @@ const DeleteShootModal = () => {
     setIsLoggedIn,
     setShouldUpdateShoots,
     selectedShoot, 
-    setShowDeleteShootModal
+    showDeleteOrEditShootModal,
+    setShowDeleteOrEditShootModal,
   } = useContext(AppContext);
 
   const navigate = useNavigate();
 
   const handleCloseModal = () => {
-    setShowDeleteShootModal(false);
+    setShowDeleteOrEditShootModal(false);
   };
 
   const handleDeleteShoot = async () => {
@@ -42,7 +43,7 @@ const DeleteShootModal = () => {
 
         if(response.ok) {
           setShouldUpdateShoots(true);
-          setShowDeleteShootModal(false);
+          setShowDeleteOrEditShootModal(false);
           toast.success(`Shoot ${selectedShoot} successfully deleted.`); 
         } else if(response.status === 401) {
           setIsLoading(false);
@@ -52,7 +53,7 @@ const DeleteShootModal = () => {
         } else {
           toast.error(`Failed to delete Shoot ${selectedShoot}.`);
           console.error(`Failed to delete Shoot ${selectedShoot}: ${response.statusText}`);
-          setShowDeleteShootModal(false);
+          setShowDeleteOrEditShootModal(false);
         }
       } catch (error) {
         console.error(`Error deleting Shoot ${selectedShoot}: ${error}`);
@@ -66,25 +67,25 @@ const DeleteShootModal = () => {
   return (
     <>
       <div 
-        className="deleteShootModal"
+        className="deleteOrEditShootModal"
         onClick={handleCloseModal}
       >
         <div 
-          className="deleteShootModal__modal"
+          className="deleteOrEditShootModal__modal"
           onClick={(e) => e.stopPropagation()}
         >
-          <h3 className="deleteShootModal__heading">
+          <h3 className="deleteOrEditShootModal__heading">
             Delete Shoot Number {selectedShoot}?
           </h3>
-          <div className="deleteShootModal__button-container">
+          <div className="deleteOrEditShootModal__button-container">
             <button
-              className="deleteShootModal__button deleteShootModal__button--delete"
+              className="deleteOrEditShootModal__button deleteOrEditShootModal__button--delete"
               onClick={handleDeleteShoot}
             >
               Confirm
             </button>
             <button
-              className="deleteShootModal__button deleteShootModal__button--cancel"
+              className="deleteOrEditShootModal__button deleteOrEditShootModal__button--cancel"
               onClick={handleCloseModal}
             >
               Cancel
