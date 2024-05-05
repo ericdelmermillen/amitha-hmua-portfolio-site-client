@@ -74,8 +74,6 @@ const Shoots = () => {
         updateObj.display_order = shoot.display_order;
         new_shoot_order.push(updateObj);
       }
-  
-      // console.log(new_shoot_order)
 
       try {
         const response = await fetch(`${BASE_URL}/shoots/updateorder`, {
@@ -132,6 +130,7 @@ const Shoots = () => {
             shoot.display_order--;
           }
   
+
         } else if(activeDraggedShootOldDisplayOrder > dropTargetShootDisplayOrder) {
           
           if(shoot.shoot_id === dropTargetShootId) {

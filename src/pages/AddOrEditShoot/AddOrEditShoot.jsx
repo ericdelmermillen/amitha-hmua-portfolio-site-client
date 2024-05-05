@@ -51,9 +51,16 @@ const AddOrEditShoot = ({ shootAction }) => {
     Array.from({ length: numberOfPhotoUploads }, (_, idx) => ({
       photoNo: idx + 1,
       photoPreview: null,
-      photoData: null
+      photoData: null,
+      displayOrder: idx + 1
     }))
   );
+
+  // for drag and drop
+  const [ activeDragInput, setActiveDragInput ] = useState(null); 
+
+
+  // --
   
   const handleImageChange = async (e, inputNo) => {
     const file = e.target.files[0];
@@ -91,6 +98,78 @@ const AddOrEditShoot = ({ shootAction }) => {
       console.error('Error compressing image:', error);
     }
   };
+
+  // drag handlers --
+  const handleInputDragStart = (photoNo) => {
+    // console.log(`dragging input number ${photoNo}`)
+    const draggedInput = shootPhotos.find(photo => photo.photoNo === photoNo);
+    setActiveDragInput(draggedInput);
+  }
+
+
+  const handleDropInputTarget = (dropTargetInputNo, dropTargetInputDisplayOrder) => {
+    // console.log(`dropTargetInputNo: ${dropTargetInputNo}`)
+    // console.log(`dropTargetInputDisplayOrder: ${dropTargetInputDisplayOrder}`)
+    // console.log(activeDragInput)
+    const activeDraggedInputNo = activeDragInput.photoNo;
+
+    const activeDraggedInputOldDisplayOrder = activeDragInput.displayOrder;
+  
+    const highestDisplayOrder = shootPhotos.reduce((maxDisplayOrder, photo) => {
+      return Math.max(maxDisplayOrder, photo.displayOrder);
+    }, 0);
+  
+    const updatedShootPhotos = [...shootPhotos];
+  
+    for(const photo of updatedShootPhotos) {
+  
+      if(dropTargetInputNo !== activeDraggedInputNo) {
+
+        if(dropTargetInputDisplayOrder === highestDisplayOrder) {
+          if(photo.photoNo === dropTargetInputNo) {
+            photo.displayOrder = dropTargetInputDisplayOrder - 1;
+          } else if(photo.photoNo === activeDraggedInputNo) {
+            photo.displayOrder = dropTargetInputDisplayOrder;
+          } else if(photo.displayOrder < dropTargetInputDisplayOrder && photo.displayOrder >= activeDraggedInputOldDisplayOrder) {
+            photo.displayOrder--;
+          }
+
+
+        } else if(activeDraggedInputOldDisplayOrder > dropTargetInputDisplayOrder) {      
+          
+
+          if(photo.photoNo === dropTargetInputNo) {
+            photo.displayOrder = dropTargetInputDisplayOrder + 1;
+          } else if(photo.photoNo === activeDraggedInputNo) {
+            photo.displayOrder = dropTargetInputDisplayOrder;
+          } else if(photo.displayOrder > dropTargetInputDisplayOrder && photo.displayOrder <= activeDraggedInputOldDisplayOrder) {
+            photo.displayOrder++;
+          }
+        
+        } else if(dropTargetInputDisplayOrder > activeDraggedInputOldDisplayOrder) {
+          
+          if(photo.photoNo === dropTargetInputNo) {
+            photo.displayOrder = dropTargetInputDisplayOrder - 1;
+          } else if(photo.photoNo === activeDraggedInputNo) {
+            photo.displayOrder = dropTargetInputDisplayOrder;
+          } else if(photo.displayOrder <= dropTargetInputDisplayOrder && photo.displayOrder > activeDraggedInputOldDisplayOrder) {
+            photo.displayOrder--;
+          }
+        } 
+      }
+    }
+
+    updatedShootPhotos.sort((a, b) => a.displayOrder - b.displayOrder);
+
+    console.log(updatedShootPhotos)
+  
+    setShootPhotos(updatedShootPhotos);
+    setActiveDragInput(null);
+  }
+  
+
+
+  // --
 
   const handleAddCustomSelect = (selectedEntry) => {
     const selectedEntryType = selectedEntry === "photographer_name"
@@ -374,9 +453,7 @@ const AddOrEditShoot = ({ shootAction }) => {
 
   // initial load useEffect
   useEffect(() => {
-    if(!shoot_id) {
-      scrollToTop();
-    }
+    scrollToTop();
     setIsLoading();
     setIsInitialLoad(false);
   }, [isInitialLoad]);
@@ -432,10 +509,14 @@ const AddOrEditShoot = ({ shootAction }) => {
                     key={shootPhoto.photoNo}
                   >                  
                     <PhotoInput 
+                      key={shootPhoto.photoNo}
                       shootPhoto={shootPhoto}
                       shootPhotos={shootPhotos}
                       setShootPhotos={setShootPhotos}
                       handleImageChange={handleImageChange}
+
+                      handleInputDragStart={handleInputDragStart}
+                      handleDropInputTarget={handleDropInputTarget}
                     />
                   </div>
                 )}

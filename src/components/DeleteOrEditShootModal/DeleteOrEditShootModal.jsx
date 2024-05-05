@@ -12,6 +12,8 @@ const DeleteShootModal = () => {
   const { 
     isLoggedIn, 
     setIsLoggedIn,
+    isLoading,
+    setIsLoading,
     setShouldUpdateShoots,
     selectedShoot, 
     showDeleteOrEditShootModal,
@@ -70,6 +72,7 @@ const DeleteShootModal = () => {
   const handleNavigateToEditShoot = () => {
     setShowDeleteOrEditShootModal(false);
     setDeleteOrEditClickAction('');
+    setIsLoading(true);
     return navigate(`/shoots/edit/${selectedShoot}`);
   }
   

@@ -2,9 +2,19 @@ import { useRef } from 'react';
 import PhotoPlaceholder from '../../assets/icons/PhotoPlaceholder';
 import './PhotoInput.scss';
 
-const PhotoInput = ({ shootPhoto, shootPhotos, setShootPhotos, handleImageChange }) => {
+const PhotoInput = ({ 
+  isFirefox, 
+  setIsFirefox,
+  shootPhoto, 
+  shootPhotos, 
+  setShootPhotos, 
+  handleImageChange,
+  handleInputDragStart,
+  handleDropInputTarget
+}) => {
 
   const inputNo = shootPhoto.photoNo;
+  const displayOrder = shootPhoto.displayOrder;
 
   const fileInputRef = useRef(null);
 
@@ -31,10 +41,25 @@ const PhotoInput = ({ shootPhoto, shootPhotos, setShootPhotos, handleImageChange
 
     setShootPhotos(newShootPhotos);
   };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
   
   return (
     <>
-      <div className="photoInput">
+      <div 
+        draggable={true}
+        className="photoInput"
+        onDragStart={!isFirefox 
+          ? () => handleInputDragStart(inputNo)
+          : null}
+        onMouseDown={isFirefox
+          ? () => handleInputDragStart(inputNo)
+          : null}
+          onDragOver={(handleDragOver)}
+        onDrop={() => handleDropInputTarget(inputNo, displayOrder)}
+      >
         {shootPhoto.photoPreview ? (
           <div className="photoInput__box disabled">
             <img

@@ -76,8 +76,6 @@ export const AppProvider = ({ children }) => {
     isFirefox, 
     setIsFirefox
    }
-
-   console.log(deleteOrEditClickAction)
   
   return (
     <>
