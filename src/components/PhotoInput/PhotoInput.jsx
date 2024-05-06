@@ -24,7 +24,6 @@ const PhotoInput = ({
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
-
     file && handleImageChange(e, shootPhoto.photoNo);
   };
 
@@ -57,15 +56,19 @@ const PhotoInput = ({
         onMouseDown={isFirefox
           ? () => handleInputDragStart(inputNo)
           : null}
-          onDragOver={(handleDragOver)}
+        onDragOver={handleDragOver}
         onDrop={() => handleDropInputTarget(inputNo, displayOrder)}
       >
         {shootPhoto.photoPreview ? (
-          <div className="photoInput__box disabled">
+          <div 
+            className="photoInput__box disabled"
+            draggable={true}
+          >
             <img
               src={shootPhoto.photoPreview}
               alt="Uploaded"
               className="photoInput__image"
+              draggable={true}
             />
             <div
               className="photoInput__clearButton"

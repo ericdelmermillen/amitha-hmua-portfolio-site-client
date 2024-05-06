@@ -3,9 +3,7 @@ import CalendarIcon from '../../assets/icons/CalendarIcon';
 import 'react-datepicker/dist/react-datepicker.css';
 import './NewShootDatePicker.scss';
 
-const NewShootdatePicker = ({ newShootDate, setNewShootDate, className, formattedDate }) => {
-
-  // console.log(formattedDate)
+const NewShootdatePicker = ({ newShootDate, setNewShootDate, className, rawDate }) => {
   
   const handleChange = (date) => {
     setNewShootDate(date);
@@ -16,8 +14,8 @@ const NewShootdatePicker = ({ newShootDate, setNewShootDate, className, formatte
     <div className="datePicker__container">
 
       <DatePicker
-        selected={formattedDate.length
-          ? formattedDate
+        selected={rawDate
+          ? rawDate
           : newShootDate}
         onChange={handleChange}
         className='datePicker__selector'

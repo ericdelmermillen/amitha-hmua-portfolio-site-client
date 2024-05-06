@@ -17,7 +17,6 @@ const AddOrEditShoot = ({ shootAction }) => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const { shoot_id } = useParams();
-  
   const navigate = useNavigate();
 
   const { 
@@ -40,10 +39,26 @@ const AddOrEditShoot = ({ shootAction }) => {
   const [ models, setModels ] = useState([]);
   const [ modelChooserIDs, setModelChooserIDs ] = useState([{ chooserNo: 1, modelID: null, modelName: null}]);
 
-  // edit shoot data
+  // tags --
+  const [ tags, setTags ] = useState(
+    [
+      {id: 1, tag_name: '#Bridal'},
+      {id: 2, tag_name: '#Editorial'},
+      {id: 3, tag_name: '#Commercial'},
+      {id: 4, tag_name: '#Beauty'},
+      {id: 5, tag_name: '#Hair'},
+      {id: 6, tag_name: '#Wig'}
+    ]
+  );
+
+  const [ tagChooserIDs, setTagChooserIDs ] = useState([{ chooserNo: 1, tagID: null, tagName: null}]);
+
+  // 
+
   const [ shootDetails, setShootDetails ] = useState(null);
   const [ photos, setPhotos ] = useState([]);
   const [ formattedDate, setFormattedDate ] = useState('');
+  const [ rawDate, setRawDate ] = useState('');
 
   const numberOfPhotoUploads = 10;
 
@@ -56,11 +71,7 @@ const AddOrEditShoot = ({ shootAction }) => {
     }))
   );
 
-  // for drag and drop
   const [ activeDragInput, setActiveDragInput ] = useState(null); 
-
-
-  // --
   
   const handleImageChange = async (e, inputNo) => {
     const file = e.target.files[0];
@@ -99,20 +110,13 @@ const AddOrEditShoot = ({ shootAction }) => {
     }
   };
 
-  // drag handlers --
   const handleInputDragStart = (photoNo) => {
-    // console.log(`dragging input number ${photoNo}`)
     const draggedInput = shootPhotos.find(photo => photo.photoNo === photoNo);
     setActiveDragInput(draggedInput);
   }
 
-
   const handleDropInputTarget = (dropTargetInputNo, dropTargetInputDisplayOrder) => {
-    // console.log(`dropTargetInputNo: ${dropTargetInputNo}`)
-    // console.log(`dropTargetInputDisplayOrder: ${dropTargetInputDisplayOrder}`)
-    // console.log(activeDragInput)
     const activeDraggedInputNo = activeDragInput.photoNo;
-
     const activeDraggedInputOldDisplayOrder = activeDragInput.displayOrder;
   
     const highestDisplayOrder = shootPhotos.reduce((maxDisplayOrder, photo) => {
@@ -134,10 +138,8 @@ const AddOrEditShoot = ({ shootAction }) => {
             photo.displayOrder--;
           }
 
-
         } else if(activeDraggedInputOldDisplayOrder > dropTargetInputDisplayOrder) {      
           
-
           if(photo.photoNo === dropTargetInputNo) {
             photo.displayOrder = dropTargetInputDisplayOrder + 1;
           } else if(photo.photoNo === activeDraggedInputNo) {
@@ -160,25 +162,29 @@ const AddOrEditShoot = ({ shootAction }) => {
     }
 
     updatedShootPhotos.sort((a, b) => a.displayOrder - b.displayOrder);
-
-    console.log(updatedShootPhotos)
   
     setShootPhotos(updatedShootPhotos);
     setActiveDragInput(null);
   }
   
-
-
-  // --
-
   const handleAddCustomSelect = (selectedEntry) => {
     const selectedEntryType = selectedEntry === "photographer_name"
       ? "photographer"
-      : "model";
+      : selectedEntry === "model_name"
+      ? "model"
+      : "tag"
+
+    // console.log(selectedEntryType)
+    console.log(tagChooserIDs)
 
     const hasNullPhotographerChooser = photographerChooserIDs.some(chooser => chooser.photographerID === null);
 
     const hasNullModelChooser = modelChooserIDs.some(chooser => chooser.modelID === null);
+
+    const hasNullTagChooser = tagChooserIDs.some(chooser => chooser.tagID === null);
+
+    // console.log(hasNullTagChooser)
+    // console.log(tagChooserIDs)
       
     if(selectedEntryType === "photographer" && !hasNullPhotographerChooser) {
 
@@ -199,15 +205,32 @@ const AddOrEditShoot = ({ shootAction }) => {
       setModelChooserIDs([...modelChooserIDs, newChooser]);
 
       return;
+
+    } else if(selectedEntryType === "tag" && !hasNullTagChooser) {
+      console.log("no null")
+
+      const maxChooserNo = Math.max(...tagChooserIDs.map(chooser => chooser.chooserNo));
+
+      const newChooser = { chooserNo: maxChooserNo + 1, tagID: null, tagName: null};
+
+      setTagChooserIDs([...tagChooserIDs, newChooser]);
+
+      return;
     }
 
     return toast.error(`Please select a ${selectedEntryType} before adding a new one`);
   }
 
   const handleRemoveCustomSelector = (chooser) => {
-    const chooserType = chooser.hasOwnProperty('photographerID')
-      ? "Photographer"
-      : "Model"
+    let chooserType;
+
+    if(chooser.hasOwnProperty('photographerID')) {
+      chooserType = "Photographer"
+    } else if(chooser.hasOwnProperty('modelID')) {
+      chooserType = "Model"
+    } else if(chooser.hasOwnProperty('tagID')) {
+      chooserType = "Tag"
+    }
 
     const { chooserNo } = chooser;
     
@@ -220,6 +243,10 @@ const AddOrEditShoot = ({ shootAction }) => {
       const filteredChoosers = modelChooserIDs.filter(chooser => chooser.chooserNo !== chooserNo);
       
       setModelChooserIDs(filteredChoosers);
+    } else if(chooserType === "Tag") {
+      const filteredChoosers = tagChooserIDs.filter(chooser => chooser.chooserNo !== chooserNo);
+      
+      setTagChooserIDs(filteredChoosers);
     }
   }
 
@@ -324,6 +351,7 @@ const AddOrEditShoot = ({ shootAction }) => {
     navigate('/home');
   }
   
+  // add fetch tags in here
   // fetch phtographers & models
   useEffect(() => {
     setIsLoading(true);
@@ -404,6 +432,7 @@ const AddOrEditShoot = ({ shootAction }) => {
             setShootPhotos(fetchedShootPhotos)
           
             const date = new Date(data.shoot_date);
+            setRawDate(date)
             const formattedDate = `${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`;
             setFormattedDate(formattedDate);
 
@@ -492,8 +521,60 @@ const AddOrEditShoot = ({ shootAction }) => {
                   newShootDate={newShootDate}
                   setNewShootDate={setNewShootDate}
                   className={"addOrEditShoot__calendarIcon"}
-                  formattedDate={formattedDate}
+                  rawDate={rawDate}
                 />
+            </div>
+
+            <div className="addOrEditShoot__tagChoosers">
+              <h3 className='addOrEditShoot__label'>
+                Choose At Least One Tag
+              </h3>
+
+              <h4 
+                className="addOrEditShoot__textButton"
+                onClick={() => handleAddCustomSelect("tag_name")}
+              >
+                Add Tag 
+                  <span className='addOrEditShoot__textButton-icon'>
+                    <AddIcon 
+                      className={"addOrEditShoot__add-icon"}
+                      classNameStroke={"addOrEditShoot__add-stroke"}
+                    />
+                  </span>
+              </h4>
+            
+              {tagChooserIDs.map((chooser) => (
+                <div 
+                  className="addOrEditShoot__selector addOrEditShoot__selector--photographer"
+                  key={chooser.chooserNo}
+                >
+
+                  <CustomSelect 
+                    chooserNo={chooser.chooserNo}
+                    chooserName={chooser.tagName}
+                    chooserType={"Tag"}
+                    chooserIDs={tagChooserIDs}
+                    setChooserIDs={setTagChooserIDs}
+                    selectOptions={tags}
+                    entryNameType={"tag_name"}
+                  />
+
+                    <span 
+                      className={`addOrEditShoot__selector-removeIcon ${tagChooserIDs.length > 1
+                        ? "show" 
+                        : ""}`}
+                      onClick={tagChooserIDs.length > 1
+                        ? () => handleRemoveCustomSelector(chooser)
+                        : null
+                      }
+                    >
+                      <MinusIcon 
+                        className={"addOrEditShoot__minus-icon"}
+                      />
+                    </span>
+                    
+                </div>
+              ))}
             </div>
 
             <div className="addOrEditShoot__photoUploads">
@@ -528,7 +609,7 @@ const AddOrEditShoot = ({ shootAction }) => {
               </p>
             </div>
 
-            <div className="addOrEditShoot__photographersAndModels-container">
+            {/* <div className="addOrEditShoot__photographersAndModels-container">
 
               <div className="addOrEditShoot__photographerChoosers">
                 <h3 className='addOrEditShoot__label'>
@@ -637,7 +718,7 @@ const AddOrEditShoot = ({ shootAction }) => {
 
               </div>
             
-            </div>
+            </div> */}
           
             <div className="addOrEditShoot__button-container">
 

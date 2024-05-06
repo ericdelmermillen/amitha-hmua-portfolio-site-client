@@ -14,6 +14,14 @@ const CustomSelect = ({
   selectOptions, 
   entryNameType
  }) => {
+
+  // console.log(chooserNo)
+  // console.log(chooserName)
+  // console.log(chooserType)
+  console.log(chooserIDs)
+  // console.log(setChooserIDs)
+  // console.log(selectOptions)
+  // console.log(entryNameType)
   
   const { 
     setShowPhotogOrModelModal,
@@ -29,10 +37,7 @@ const CustomSelect = ({
   }
 
   const alreadySelected = (chooserID) => {
-    // console.log("alreadySelected")
     const entryID = `${chooserType.toLowerCase()}ID`;
-    // console.log(entryID)
-    // console.log(chooserID)
 
     for(const chooser of chooserIDs) {
       if(chooser[entryID] === chooserID) {
@@ -50,6 +55,7 @@ const CustomSelect = ({
     }
   }
 
+  // tag change here --
   const handleOptionClick = (e, option, modalType, entryType) => {
     if(modalType !== "Add") {
       e.stopPropagation();
@@ -65,16 +71,15 @@ const CustomSelect = ({
   }
 
   const handleUpdateSelectValue = (option) => {
-    // console.log("updateSelectValue")
-    // console.log(option)
-    setSelectValue(option.photographer_name || option.model_name);
+    console.log(chooserIDs)
+    setSelectValue(option.photographer_name || option.model_name || option.tag_name);
 
     const newChooserIDs = [...chooserIDs];
+
+    // console.log(newChooserIDs)
   
     if(chooserType === "Photographer") {
       const found = chooserIDs.find(chooserID => chooserID.photographerID === option.id);
-
-      // console.log(found)
       
       if(!found) {
         newChooserIDs.forEach(chooserID => chooserID.chooserNo === chooserNo 
@@ -94,6 +99,17 @@ const CustomSelect = ({
           )
         }
       }
+    } else if(chooserType === "Tag") {
+      const found = chooserIDs.find(chooserID => chooserID.tagID === option.id);
+
+      if(!found) {
+        if(!found) {
+          newChooserIDs.forEach(chooserID => chooserID.chooserNo === chooserNo 
+            ? chooserID.tagID = option.id
+            : null
+          )
+        }
+      }
     }
   
     setChooserIDs(newChooserIDs);
@@ -107,8 +123,6 @@ const CustomSelect = ({
 
   useEffect(() => {
     if(chooserName) {
-      // console.log(chooserName)
-
       setSelectValue(chooserName)
     }
   }, [chooserName])
@@ -175,7 +189,7 @@ const CustomSelect = ({
                   : ""}`} 
                 key={option.id} onClick={() => handleUpdateSelectValue(option)}
               >
-                {option.photographer_name || option.model_name}
+                {option.photographer_name || option.model_name || option.tag_name}
                 <div 
                   className="customSelect__option--edit-icon"
                   onClick={(e) => handleOptionClick(e, option, "Edit")}
