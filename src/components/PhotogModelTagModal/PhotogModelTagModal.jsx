@@ -12,6 +12,7 @@ const PhotogOrModelModal = () => {
     setIsLoggedIn,
     setShouldUpdatePhotographers,
     setShouldUpdateModels,
+    setShouldUpdateTags,
     selectedPhotogModelTag, 
     setSelectedPhotogModelTag,
     showPhotogModelTagModal,
@@ -23,7 +24,7 @@ const PhotogOrModelModal = () => {
   const navigate = useNavigate();
 
   const { modalType } = showPhotogModelTagModal;
-
+  
   let entryType;
 
   if(selectedPhotogModelTag.hasOwnProperty("photographer_name")) {
@@ -34,8 +35,9 @@ const PhotogOrModelModal = () => {
     entryType = "Tag";
   }
   
-  // selectedPhotogOrModel values
+  // selectedPhotogModelTag values
   const { photographer_name, model_name, tag_name, id } = selectedPhotogModelTag;
+
 
   let entryName;
   
@@ -61,7 +63,7 @@ const PhotogOrModelModal = () => {
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if(e.key === 'Enter') {
       handleEntry();
     }
   };
@@ -85,8 +87,12 @@ const PhotogOrModelModal = () => {
         newEntryData = {};
         entryType === 'Photographer'
           ? newEntryData.photographer_name = newEntryName
-          : newEntryData.model_name = newEntryName;
+          : entryType === 'Model'
+          ? newEntryData.model_name = newEntryName
+          : newEntryData.tag_name = newEntryName
       }
+
+      console.log(newEntryData)
 
       const endPoint = `${BASE_URL}/${entryType.toLowerCase()}s/${modalType.toLowerCase()}${modalType !== "Add" ? `/${id}` : ""}`
 
@@ -124,6 +130,8 @@ const PhotogOrModelModal = () => {
             setShouldUpdatePhotographers(true);
           } else if (entryType === "Model") {
             setShouldUpdateModels(true);
+          } else if (entryType === "Tag") {
+            setShouldUpdateTags(true);
           }
 
         } else {

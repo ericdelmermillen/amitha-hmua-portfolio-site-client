@@ -48,7 +48,8 @@
   justify-content: center;
   margin-inline: auto;
   max-width: 1920px;
-  min-height: 100vh;
+  // min-height: 100vh;
+  min-height: calc(100vh - 10rem);
   padding-block: 4rem;
   padding-top: 0rem;
   width: 100%;

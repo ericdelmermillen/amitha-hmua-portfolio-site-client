@@ -6,6 +6,7 @@ import EditIcon from '../../assets/icons/EditIcon.jsx';
 import './CustomSelect.scss';
 
 const CustomSelect = ({ 
+  chooser,
   chooserNo,
   chooserName,
   chooserType, 
@@ -19,7 +20,6 @@ const CustomSelect = ({
     showPhotogModelTagModal, 
     setShowPhotogModelTagModal,
     setSelectedPhotogOrModel,
-
     selectedPhotogModelTag, 
     setSelectedPhotogModelTag,
   } = useContext(AppContext);
@@ -53,14 +53,18 @@ const CustomSelect = ({
 
   // tag change here --
   const handleOptionClick = (e, option, modalType, entryType) => {
+  
+    // console.log(option)
     if(modalType !== "Add") {
       e.stopPropagation();
       setSelectedPhotogModelTag(option);
     } else {
       if(entryType === "photographer_name") {
-        setSelectedPhotogOrModel({id: null, photographer_name: null});
+        setSelectedPhotogModelTag({id: null, photographer_name: null});
       } else if(entryType === "model_name") {
-        setSelectedPhotogOrModel({id: null, model_name: null});
+        setSelectedPhotogModelTag({id: null, model_name: null});
+      } else if(entryType === "tag_name") {
+        setSelectedPhotogModelTag({id: null, tag_name: null});
       } 
     }
     setShowPhotogModelTagModal({modalType: modalType});

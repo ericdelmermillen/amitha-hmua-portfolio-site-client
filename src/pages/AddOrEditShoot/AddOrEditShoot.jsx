@@ -21,7 +21,7 @@ const AddOrEditShoot = ({ shootAction }) => {
   const location = useLocation();
 
   // console.log(location.pathname === '/shoots/add')
-  console.log(location.pathname)
+  // console.log(location.pathname)
 
   const { 
     isLoading,
@@ -630,6 +630,7 @@ const AddOrEditShoot = ({ shootAction }) => {
                 >
 
                   <CustomSelect 
+                    chooser={chooser}
                     chooserNo={chooser.chooserNo}
                     chooserName={chooser.tagName}
                     chooserType={"Tag"}
@@ -716,6 +717,7 @@ const AddOrEditShoot = ({ shootAction }) => {
                   >
 
                     <CustomSelect 
+                    chooser={chooser}
                       chooserNo={chooser.chooserNo}
                       chooserName={chooser.photographerName}
                       chooserType={"Photographer"}

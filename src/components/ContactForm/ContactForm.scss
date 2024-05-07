@@ -19,8 +19,10 @@
     box-shadow: var(--box-shadow);
     display: flex;
     flex-direction: column;
-    height: 80%;
-    margin-top: 3rem;
+    height: 70%;
+    min-height: 70%;
+    min-height: 70%;
+    // margin-top: 2rem;
     max-height: 40rem;
     max-width: 40rem;
     overflow-y: auto;
