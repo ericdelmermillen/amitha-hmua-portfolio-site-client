@@ -1,6 +1,6 @@
 import AppContext from '../../AppContext.jsx';
 import { useState, useEffect, useContext } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { scrollToTop } from '../../utils/utils.js';
 import { toast } from 'react-toastify';
 import NewShootdatePicker from '../../components/NewShootDatePicker/NewShootDatePicker.jsx';
@@ -18,6 +18,10 @@ const AddOrEditShoot = ({ shootAction }) => {
 
   const { shoot_id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // console.log(location.pathname === '/shoots/add')
+  console.log(location.pathname)
 
   const { 
     isLoading,
@@ -31,7 +35,9 @@ const AddOrEditShoot = ({ shootAction }) => {
     shouldUpdateTags, 
     setShouldUpdateTags,
     shouldUpdateShoots, 
-    setShouldUpdateShoots
+    setShouldUpdateShoots,
+    showFloatingButton, 
+    setShowfloatingButton
   } = useContext(AppContext);
 
   const [ isInitialLoad, setIsInitialLoad ] = useState(true);
@@ -42,16 +48,7 @@ const AddOrEditShoot = ({ shootAction }) => {
   const [ modelChooserIDs, setModelChooserIDs ] = useState([{ chooserNo: 1, modelID: null, modelName: null}]);
 
   // tags --
-  const [ tags, setTags ] = useState(
-    [
-      {id: 1, tag_name: '#Bridal'},
-      {id: 2, tag_name: '#Editorial'},
-      {id: 3, tag_name: '#Commercial'},
-      {id: 4, tag_name: '#Beauty'},
-      {id: 5, tag_name: '#Hair'},
-      {id: 6, tag_name: '#Wig'}
-    ]
-  );
+  const [ tags, setTags ] = useState([]);
 
   const [ tagChooserIDs, setTagChooserIDs ] = useState([{ chooserNo: 1, tagID: null, tagName: null}]);
 
@@ -177,7 +174,7 @@ const AddOrEditShoot = ({ shootAction }) => {
       : "tag"
 
     // console.log(selectedEntryType)
-    console.log(tagChooserIDs)
+    // console.log(tagChooserIDs)
 
     const hasNullPhotographerChooser = photographerChooserIDs.some(chooser => chooser.photographerID === null);
 
@@ -206,7 +203,7 @@ const AddOrEditShoot = ({ shootAction }) => {
       return;
 
     } else if(selectedEntryType === "tag" && !hasNullTagChooser) {
-      console.log("no null")
+      // console.log("no null")
 
       const maxChooserNo = Math.max(...tagChooserIDs.map(chooser => chooser.chooserNo));
 
@@ -262,6 +259,15 @@ const AddOrEditShoot = ({ shootAction }) => {
       try {
         setIsLoading(true);
 
+        const selectedTagIDs = tagChooserIDs
+        .filter(chooser => chooser.tagID !== null)
+        .map(chooser => chooser.tagID);
+
+        if(selectedTagIDs.length === 0) {
+          setIsLoading(false);
+          return toast.error("Select at least one tag");
+        }
+
         const selectedPhotographerIDs = photographerChooserIDs
           .filter(chooser => chooser.photographerID !== null)
           .map(chooser => chooser.photographerID);
@@ -280,6 +286,7 @@ const AddOrEditShoot = ({ shootAction }) => {
           return toast.error("Select at least one model");
         }
 
+        const tag_ids = selectedTagIDs.join(", "); 
         const photographer_ids = selectedPhotographerIDs.join(", "); 
         const model_ids = selectedModelIDs.join(", "); 
 
@@ -306,6 +313,7 @@ const AddOrEditShoot = ({ shootAction }) => {
         
         formData.append("photographer_ids", photographer_ids);
         formData.append("model_ids", model_ids);
+        formData.append("tag_ids", tag_ids);
 
         const token = localStorage.getItem('token');
         
@@ -427,42 +435,41 @@ const AddOrEditShoot = ({ shootAction }) => {
   }, [BASE_URL, shouldUpdateModels])
 
   // fetch tags
-  // useEffect(() => {
-  //   setIsLoading(true);
+  useEffect(() => {
+    setIsLoading(true);
 
-  //   const token = localStorage.getItem('token');
-  //   const headers = {};
+    const token = localStorage.getItem('token');
+    const headers = {};
 
-  //   if(token) {
-  //     headers['Authorization'] = `Bearer ${token}`;
-  //   } else {
-  //     setIsLoggedIn(false);
-  //     return toast.error("Not logged in")
-  //   }
+    if(token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    } else {
+      setIsLoggedIn(false);
+      return toast.error("Not logged in")
+    }
 
-  //   const fetchTags = async () => {
-  //     try {
-  //       const response = await fetch(`${BASE_URL}/tags/all`, { headers });
+    const fetchTags = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}/tags/all`, { headers });
+        
+        if(!response.ok) {
+          throw new Error(`Failed to fetch tags: ${response.statusText}`);
+        }
 
-  //       if(!response.ok) {
-  //         throw new Error(`Failed to fetch tags: ${response.statusText}`);
-  //       }
-
-  //       const data = await response.json();
-  //       setTags(data.tags);
-  //     } catch (error) {
-  //       console.log(error);
-  //     } 
-  //   };
+        const data = await response.json();
+        setTags(data.tags);
+      } catch (error) {
+        console.log(error);
+      } 
+    };
     
-  //   if(isInitialLoad || shouldUpdateTags) {
-  //     setShouldUpdateTags(false);
-  //     fetchTags();
-  //   }
+    if(isInitialLoad || shouldUpdateTags) {
+      setShouldUpdateTags(false);
+      fetchTags();
+    }
 
-  //   setIsLoading(false);
-
-  // }, [BASE_URL, shouldUpdateTags])
+    setIsLoading(false);
+  }, [BASE_URL, shouldUpdateTags])
 
 
   // useEffect to call shoots/shoot/:id for data to load editShoot
@@ -492,9 +499,12 @@ const AddOrEditShoot = ({ shootAction }) => {
 
             const fetchedShootPhotographers = data.photographers;
             const fetchedShootModels = data.models;
+            const fetchedShootTags = data.tags;
             
             const fetchedPhotogIDs = data.photographer_ids;
             const fetchedModelIDs = data.model_ids;
+            const fetchedTagIDs = data.tag_ids;
+
             const fetchedPhotographerChooserIDs = [];
             for(let idx = 0; idx < fetchedPhotogIDs.length; idx++) {
               const chooser = {};
@@ -513,8 +523,18 @@ const AddOrEditShoot = ({ shootAction }) => {
               fetchedModelChooserIDs.push(chooser);
             }
 
+            const fetchedTagChooserIDs = [];
+            for(let idx = 0; idx < fetchedTagIDs.length; idx++) {
+              const chooser = {}
+              chooser.chooserNo = idx + 1;
+              chooser.tagID = +fetchedTagIDs[idx]
+              chooser.tagName = fetchedShootTags[idx]
+              fetchedTagChooserIDs.push(chooser);
+            }
+
             setPhotographerChooserIDs(fetchedPhotographerChooserIDs);
             setModelChooserIDs(fetchedModelChooserIDs);
+            setTagChooserIDs(fetchedTagChooserIDs);
             setIsLoading(false);
           } else {
             toast.error(response.statusText);
@@ -536,6 +556,12 @@ const AddOrEditShoot = ({ shootAction }) => {
 
   // initial load useEffect
   useEffect(() => {
+    const isEditing = location.pathname.includes("edit");
+    const isAdding = location.pathname.includes("add");
+
+    if(isAdding || isEditing) {
+      setShowfloatingButton(false)
+    }
     scrollToTop();
     setIsLoading();
     setIsInitialLoad(false);

@@ -1,11 +1,12 @@
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { scrollToTop } from '../../utils/utils';
 import AppContext from '../../AppContext';
 import ColorModeToggle from '../ColorModeToggle/ColorModeToggle';
 import Logo from '../../assets/icons/Logo';
 import Instagram from '../../assets/icons/Instagram';
 import './Nav.scss';
+import { toast } from 'react-toastify';
 
 const Nav = ({ handleLogOut }) => {
   const { 
@@ -14,7 +15,22 @@ const Nav = ({ handleLogOut }) => {
     setShowSideNav,
     scrollYPos, 
     prevScrollYPos, 
+    setShowfloatingButton
    } = useContext(AppContext);
+
+   const location = useLocation();
+
+   const handleHomeClick = () => {
+    if(location.pathname === "/" || location.pathname === "/home") {
+      toast.info("Already on Home");
+    }
+    handleNavClick();
+   }
+
+   const handleNavClick = () => {
+    scrollToTop()
+    setShowfloatingButton(true)
+   }
   
   return (
     <>
@@ -23,7 +39,7 @@ const Nav = ({ handleLogOut }) => {
 
           <Link 
             to={'/home'}
-            onClick={() => scrollToTop()}
+            onClick={handleHomeClick}
           >
             <div 
               className="nav__logo"
@@ -35,16 +51,19 @@ const Nav = ({ handleLogOut }) => {
           <ul className="nav__links">
             <Link 
               to={'/home'}
+              onClick={handleHomeClick}
             >
               <li className="nav__link">WORK</li>
             </Link>
             <Link 
               to={'/bio'}
+              onClick={handleNavClick}
             >
               <li className="nav__link">BIO</li>
             </Link>
             <Link 
               to={'/contact'}
+              onClick={handleNavClick}
             >
               <li className="nav__link">CONTACT</li>
             </Link>

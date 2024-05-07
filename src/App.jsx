@@ -37,11 +37,14 @@ const App = () => {
     setScrollYPos,
     prevScrollYPos, 
     setPrevScrollYPos,
-    showPhotogModelTagModal, setShowPhotogModelTagModal,
+    showPhotogModelTagModal, 
+    setShowPhotogModelTagModal,
     showDeleteOrEditShootModal, 
     setShowDeleteOrEditShootModal,
     isLoading, 
-    setIsLoading
+    setIsLoading,
+    showFloatingButton, 
+    setShowfloatingButton
   } = useContext(AppContext);
   
   const handleLogOut = () => {
@@ -111,8 +114,10 @@ const App = () => {
           </div>
 
             <div 
-              className={`floatingButton ${isLoggedIn 
+              className={`floatingButton ${isLoggedIn && showFloatingButton
                 ? "toTop" 
+                : !showFloatingButton
+                ? "hide"
                 : "add_Shoot"}`}
                 onClick={isLoggedIn 
                   ? handleNavigateToAddShoot

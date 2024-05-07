@@ -9,6 +9,7 @@ export const AppProvider = ({ children }) => {
   const [ colorMode, setColorMode ] = useState(localStorage.getItem('colorMode') || "light");
   const [ isLoading, setIsLoading ] = useState(false); 
   const [ isFirefox, setIsFirefox ] = useState(navigator.userAgent.toLowerCase().indexOf('firefox') > -1);
+  const [ showFloatingButton, setShowfloatingButton ] = useState(!location.pathname.includes("edit") || !location.pathname.includes("add"));
 
   const [ scrollYPos, setScrollYPos ] = useState(window.scrollY);
   const [ prevScrollYPos, setPrevScrollYPos ] = useState(window.scrollY);
@@ -77,7 +78,9 @@ export const AppProvider = ({ children }) => {
     isLoading, 
     setIsLoading,
     isFirefox, 
-    setIsFirefox
+    setIsFirefox,
+    showFloatingButton, 
+    setShowfloatingButton
    }
   
   return (

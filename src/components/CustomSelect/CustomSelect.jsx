@@ -14,14 +14,6 @@ const CustomSelect = ({
   selectOptions, 
   entryNameType
  }) => {
-
-  // console.log(chooserNo)
-  // console.log(chooserName)
-  // console.log(chooserType)
-  // console.log(chooserIDs)
-  // console.log(setChooserIDs)
-  // console.log(selectOptions)
-  // console.log(entryNameType)
   
   const {
     showPhotogModelTagModal, 
@@ -61,8 +53,6 @@ const CustomSelect = ({
 
   // tag change here --
   const handleOptionClick = (e, option, modalType, entryType) => {
-    // console.log(option)
-    console.log(modalType)
     if(modalType !== "Add") {
       e.stopPropagation();
       setSelectedPhotogModelTag(option);
@@ -71,13 +61,13 @@ const CustomSelect = ({
         setSelectedPhotogOrModel({id: null, photographer_name: null});
       } else if(entryType === "model_name") {
         setSelectedPhotogOrModel({id: null, model_name: null});
-      }
+      } 
     }
     setShowPhotogModelTagModal({modalType: modalType});
   }
 
   const handleUpdateSelectValue = (option) => {
-    console.log(chooserIDs)
+    // console.log(chooserIDs)
     setSelectValue(option.photographer_name || option.model_name || option.tag_name);
 
     const newChooserIDs = [...chooserIDs];

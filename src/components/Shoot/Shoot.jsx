@@ -36,7 +36,6 @@ const Shoot = ({
     setSelectedShoot(shoot_id)
     setShowDeleteOrEditShootModal(true);
     setDeleteOrEditClickAction(action)
-    console.log(`${action} shoot ${shoot_id}?`)
   }
 
   return (

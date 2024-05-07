@@ -4,13 +4,16 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { scrollToTop } from '../../utils/utils';
 import ColorModeToggle from '../ColorModeToggle/ColorModeToggle';
 import './SideNav.scss';
+import { toast } from 'react-toastify';
 
 const SideNav = ({ handleLogOut }) => {
   const { 
     isLoggedIn, 
     setIsLoggedIn,
     showSideNav, 
-    setShowSideNav
+    setShowSideNav,
+    showfloatingButton,
+    setShowfloatingButton
    } = useContext(AppContext);
 
   const location = useLocation();
@@ -19,41 +22,47 @@ const SideNav = ({ handleLogOut }) => {
   const timeOutValue = 300;
 
   const handleNavLinkHome = () => {
+    setShowfloatingButton(true);
+
     if(location.pathname === "/" || location.pathname === "/home") {
+      toast.info("Already on Home");
       setShowSideNav(false);
       scrollToTop();
     }
      else {
       setShowSideNav(false);
       setTimeout(() => {
-        navigate('/')
-      }, timeOutValue)
+        navigate('/');
+      }, timeOutValue);
     }
   };
   
   const handleNavLinkBio = () => {
+    setShowfloatingButton(true);
     if(location.pathname === "/bio") {
       setShowSideNav(false);
     } else {
       setShowSideNav(false);
       setTimeout(() => {
-        navigate('/bio')
-      }, timeOutValue)
+        navigate('/bio');
+      }, timeOutValue);
     }
   };
   
   const handleNavLinkContact = () => { 
+    setShowfloatingButton(true);
     if(location.pathname === "/contact") {
       setShowSideNav(false);
     } else {
       setShowSideNav(false);
       setTimeout(() => {
-        navigate('/contact')
-      }, timeOutValue)
+        navigate('/contact');
+      }, timeOutValue);
     }
   };
   
   const handleSideNavLogout = () => {
+    setShowfloatingButton(true);
     setTimeout(() => {
       handleLogOut();
     }, 500);
