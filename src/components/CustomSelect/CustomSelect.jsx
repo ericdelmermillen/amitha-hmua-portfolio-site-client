@@ -18,14 +18,18 @@ const CustomSelect = ({
   // console.log(chooserNo)
   // console.log(chooserName)
   // console.log(chooserType)
-  console.log(chooserIDs)
+  // console.log(chooserIDs)
   // console.log(setChooserIDs)
   // console.log(selectOptions)
   // console.log(entryNameType)
   
-  const { 
-    setShowPhotogOrModelModal,
+  const {
+    showPhotogModelTagModal, 
+    setShowPhotogModelTagModal,
     setSelectedPhotogOrModel,
+
+    selectedPhotogModelTag, 
+    setSelectedPhotogModelTag,
   } = useContext(AppContext);
 
   const [ selectValue, setSelectValue ] = useState(null);
@@ -57,9 +61,11 @@ const CustomSelect = ({
 
   // tag change here --
   const handleOptionClick = (e, option, modalType, entryType) => {
+    // console.log(option)
+    console.log(modalType)
     if(modalType !== "Add") {
       e.stopPropagation();
-      setSelectedPhotogOrModel(option);
+      setSelectedPhotogModelTag(option);
     } else {
       if(entryType === "photographer_name") {
         setSelectedPhotogOrModel({id: null, photographer_name: null});
@@ -67,7 +73,7 @@ const CustomSelect = ({
         setSelectedPhotogOrModel({id: null, model_name: null});
       }
     }
-    setShowPhotogOrModelModal({modalType: modalType});
+    setShowPhotogModelTagModal({modalType: modalType});
   }
 
   const handleUpdateSelectValue = (option) => {
@@ -75,8 +81,6 @@ const CustomSelect = ({
     setSelectValue(option.photographer_name || option.model_name || option.tag_name);
 
     const newChooserIDs = [...chooserIDs];
-
-    // console.log(newChooserIDs)
   
     if(chooserType === "Photographer") {
       const found = chooserIDs.find(chooserID => chooserID.photographerID === option.id);

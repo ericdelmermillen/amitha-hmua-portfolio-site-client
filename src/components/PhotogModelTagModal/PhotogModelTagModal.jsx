@@ -3,7 +3,7 @@ import { useState, useContext } from 'react';
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 import { checkTokenExpiration } from '../../utils/utils.js';
-import './PhotogOrModelModal.scss';
+import './PhotogModelTagModal.scss';
 
 const PhotogOrModelModal = () => {
   const { 
@@ -12,28 +12,40 @@ const PhotogOrModelModal = () => {
     setIsLoggedIn,
     setShouldUpdatePhotographers,
     setShouldUpdateModels,
-    selectedPhotogOrModel, 
-    setSelectedPhotogOrModel,
-    showPhotogOrModelModal, 
-    setShowPhotogOrModelModal,
+    selectedPhotogModelTag, 
+    setSelectedPhotogModelTag,
+    showPhotogModelTagModal,
+    setShowPhotogModelTagModal,
   } = useContext(AppContext);
 
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const navigate = useNavigate();
 
-  const { modalType } = showPhotogOrModelModal;
+  const { modalType } = showPhotogModelTagModal;
 
-  const entryType = selectedPhotogOrModel.hasOwnProperty("photographer_name")
-    ? "Photographer"
-    : "Model"
+  let entryType;
 
+  if(selectedPhotogModelTag.hasOwnProperty("photographer_name")) {
+    entryType = "Photographer";
+  } else if(selectedPhotogModelTag.hasOwnProperty("model_name")) {
+    entryType = "Model";
+  } else if(selectedPhotogModelTag.hasOwnProperty("tag_name")) {
+    entryType = "Tag";
+  }
+  
   // selectedPhotogOrModel values
-  const { photographer_name, model_name, id } = selectedPhotogOrModel;
+  const { photographer_name, model_name, tag_name, id } = selectedPhotogModelTag;
 
-  const entryName = entryType === "Photographer"
-    ? selectedPhotogOrModel.photographer_name
-    : selectedPhotogOrModel.model_name;
+  let entryName;
+  
+  if(selectedPhotogModelTag.photographer_name) {
+    entryName = selectedPhotogModelTag.photographer_name;
+  } else if(selectedPhotogModelTag.model_name) {
+    entryName = selectedPhotogModelTag.model_name;
+  } else if(selectedPhotogModelTag.tag_name) {
+    entryName = selectedPhotogModelTag.tag_name;
+  }
 
   const [ newEntryName, setNewEntryName ] = useState(modalType === "Edit" 
     ? entryName
@@ -45,7 +57,7 @@ const PhotogOrModelModal = () => {
   };
   
   const handleCloseModal = () => {
-    setShowPhotogOrModelModal(false);
+    setShowPhotogModelTagModal(false);
   };
 
   const handleKeyPress = (e) => {
@@ -134,8 +146,8 @@ const PhotogOrModelModal = () => {
         console.error("Error:", error);
         return toast.error(`Error ${modalType.toLowerCase()}ing ${entryType} ${entryName}: ${error}`);
       } finally {
-        setSelectedPhotogOrModel({});
-        setShowPhotogOrModelModal({modalType: null});
+        setSelectedPhotogModelTag({});
+        setShowPhotogModelTagModal({modalType: null});
         setIsLoading(false);
       }
     }
@@ -160,7 +172,7 @@ const PhotogOrModelModal = () => {
               ? `${modalType} `
               : modalType === "Add"
               ? `Enter name below:`
-              : `Update name below:`
+              : `Update entry below:`
             }
             {modalType === "Delete" 
               ? 
@@ -177,7 +189,7 @@ const PhotogOrModelModal = () => {
             ? <p 
                 className="photogOrModelModal__explainer"
               >
-                You will have to add them back if you want to use them in a new Shoot. 
+                You will have to add {entryType === "Tag" ? "it" : "them"} back if you want to use {entryType === "Tag" ? "it" : "them"} in a new Shoot. 
               </p>
             : null
           }

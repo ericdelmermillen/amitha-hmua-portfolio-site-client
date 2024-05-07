@@ -28,6 +28,8 @@ const AddOrEditShoot = ({ shootAction }) => {
     setShouldUpdatePhotographers,
     shouldUpdateModels, 
     setShouldUpdateModels,
+    shouldUpdateTags, 
+    setShouldUpdateTags,
     shouldUpdateShoots, 
     setShouldUpdateShoots
   } = useContext(AppContext);
@@ -182,9 +184,6 @@ const AddOrEditShoot = ({ shootAction }) => {
     const hasNullModelChooser = modelChooserIDs.some(chooser => chooser.modelID === null);
 
     const hasNullTagChooser = tagChooserIDs.some(chooser => chooser.tagID === null);
-
-    // console.log(hasNullTagChooser)
-    // console.log(tagChooserIDs)
       
     if(selectedEntryType === "photographer" && !hasNullPhotographerChooser) {
 
@@ -351,8 +350,7 @@ const AddOrEditShoot = ({ shootAction }) => {
     navigate('/home');
   }
   
-  // add fetch tags in here
-  // fetch phtographers & models
+  // fetch photographers
   useEffect(() => {
     setIsLoading(true);
 
@@ -380,6 +378,29 @@ const AddOrEditShoot = ({ shootAction }) => {
         console.log(error);
       }
     };
+    
+    if(isInitialLoad || shouldUpdatePhotographers) {
+      setShouldUpdatePhotographers(false);
+      fetchPhotographers();
+    } 
+
+    setIsLoading(false);
+
+  }, [BASE_URL, shouldUpdatePhotographers])
+
+  // fetch models
+  useEffect(() => {
+    setIsLoading(true);
+
+    const token = localStorage.getItem('token');
+    const headers = {};
+
+    if(token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    } else {
+      setIsLoggedIn(false);
+      return toast.error("Not logged in")
+    }
 
     const fetchModels = async () => {
       try {
@@ -396,11 +417,6 @@ const AddOrEditShoot = ({ shootAction }) => {
       } 
     };
     
-    if(isInitialLoad || shouldUpdatePhotographers) {
-      setShouldUpdatePhotographers(false);
-      fetchPhotographers();
-    } 
-    
     if(isInitialLoad || shouldUpdateModels) {
       setShouldUpdateModels(false);
       fetchModels();
@@ -408,7 +424,45 @@ const AddOrEditShoot = ({ shootAction }) => {
 
     setIsLoading(false);
 
-  }, [BASE_URL, shouldUpdatePhotographers, shouldUpdateModels])
+  }, [BASE_URL, shouldUpdateModels])
+
+  // fetch tags
+  // useEffect(() => {
+  //   setIsLoading(true);
+
+  //   const token = localStorage.getItem('token');
+  //   const headers = {};
+
+  //   if(token) {
+  //     headers['Authorization'] = `Bearer ${token}`;
+  //   } else {
+  //     setIsLoggedIn(false);
+  //     return toast.error("Not logged in")
+  //   }
+
+  //   const fetchTags = async () => {
+  //     try {
+  //       const response = await fetch(`${BASE_URL}/tags/all`, { headers });
+
+  //       if(!response.ok) {
+  //         throw new Error(`Failed to fetch tags: ${response.statusText}`);
+  //       }
+
+  //       const data = await response.json();
+  //       setTags(data.tags);
+  //     } catch (error) {
+  //       console.log(error);
+  //     } 
+  //   };
+    
+  //   if(isInitialLoad || shouldUpdateTags) {
+  //     setShouldUpdateTags(false);
+  //     fetchTags();
+  //   }
+
+  //   setIsLoading(false);
+
+  // }, [BASE_URL, shouldUpdateTags])
 
 
   // useEffect to call shoots/shoot/:id for data to load editShoot
@@ -439,8 +493,8 @@ const AddOrEditShoot = ({ shootAction }) => {
             const fetchedShootPhotographers = data.photographers;
             const fetchedShootModels = data.models;
             
-            const fetchedPhotogIDs = data.photographer_ids.split(',');
-            const fetchedModelIDs = data.model_ids.split(',');
+            const fetchedPhotogIDs = data.photographer_ids;
+            const fetchedModelIDs = data.model_ids;
             const fetchedPhotographerChooserIDs = [];
             for(let idx = 0; idx < fetchedPhotogIDs.length; idx++) {
               const chooser = {};
@@ -609,7 +663,7 @@ const AddOrEditShoot = ({ shootAction }) => {
               </p>
             </div>
 
-            {/* <div className="addOrEditShoot__photographersAndModels-container">
+            <div className="addOrEditShoot__photographersAndModels-container">
 
               <div className="addOrEditShoot__photographerChoosers">
                 <h3 className='addOrEditShoot__label'>
@@ -718,7 +772,7 @@ const AddOrEditShoot = ({ shootAction }) => {
 
               </div>
             
-            </div> */}
+            </div>
           
             <div className="addOrEditShoot__button-container">
 

@@ -18,15 +18,16 @@ export const AppProvider = ({ children }) => {
   const [ selectedShoot, setSelectedShoot ] = useState(null);
   const [ shouldUpdateShoots, setShouldUpdateShoots ] = useState(false);
   
-  const [ selectedPhotogOrModel, setSelectedPhotogOrModel ] = useState({});
+  const [ selectedPhotogModelTag, setSelectedPhotogModelTag ] = useState({});
 
   const [ showDeleteOrEditShootModal, setShowDeleteOrEditShootModal ] = useState(false);
 
   const [ deleteOrEditClickAction, setDeleteOrEditClickAction ] = useState('')
-  const [ showPhotogOrModelModal, setShowPhotogOrModelModal ] = useState({modalType: null});
+  const [ showPhotogModelTagModal, setShowPhotogModelTagModal ] = useState({modalType: null});
   
   const [ shouldUpdatePhotographers, setShouldUpdatePhotographers ] = useState(false);
   const [ shouldUpdateModels, setShouldUpdateModels ] = useState(false);
+  const [ shouldUpdateTags, setShouldUpdateTags ] = useState(false);
   
   const navigate = useNavigate(); 
 
@@ -61,16 +62,18 @@ export const AppProvider = ({ children }) => {
     setShowDeleteOrEditShootModal,
     deleteOrEditClickAction, 
     setDeleteOrEditClickAction,
-    showPhotogOrModelModal, 
-    setShowPhotogOrModelModal,
-    selectedPhotogOrModel, 
-    setSelectedPhotogOrModel,
+    showPhotogModelTagModal, 
+    setShowPhotogModelTagModal,
+    selectedPhotogModelTag, 
+    setSelectedPhotogModelTag,
     shouldUpdatePhotographers, 
     setShouldUpdatePhotographers,
     shouldUpdateModels, 
     setShouldUpdateModels,
     shouldUpdateShoots, 
     setShouldUpdateShoots,
+    shouldUpdateTags, 
+    setShouldUpdateTags,
     isLoading, 
     setIsLoading,
     isFirefox, 

@@ -12,7 +12,7 @@ import Home from './pages/Home/Home.jsx';
 import Login from './pages/Login/Login.jsx';
 import Nav from './components/Nav/Nav.jsx';
 import NotFound from './pages/NotFound/NotFound.jsx';
-import PhotogOrModelModal from './components/PhotogOrModelModal/PhotogOrModelModal.jsx';
+import PhotogModelTagModal from './components/PhotogModelTagModal/PhotogModelTagModal.jsx';
 import ShootDetails from './pages/ShootDetails/ShootDetails.jsx';
 import SideNav from './components/SideNav/SideNav.jsx';
 import AddIcon from './assets/icons/AddIcon.jsx';
@@ -37,8 +37,7 @@ const App = () => {
     setScrollYPos,
     prevScrollYPos, 
     setPrevScrollYPos,
-    showPhotogOrModelModal, 
-    setShowPhotogOrModelModal,
+    showPhotogModelTagModal, setShowPhotogModelTagModal,
     showDeleteOrEditShootModal, 
     setShowDeleteOrEditShootModal,
     isLoading, 
@@ -175,8 +174,8 @@ const App = () => {
         />
       </div>
 
-      {isLoggedIn && showPhotogOrModelModal.modalType
-        ? <PhotogOrModelModal />
+      {isLoggedIn && showPhotogModelTagModal.modalType
+        ? <PhotogModelTagModal />
         : null
       }
 
