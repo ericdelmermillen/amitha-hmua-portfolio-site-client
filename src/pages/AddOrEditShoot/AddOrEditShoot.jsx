@@ -9,7 +9,6 @@ import AddIcon from '../../assets/icons/AddIcon.jsx';
 import CustomSelect from '../../components/CustomSelect/CustomSelect.jsx';
 import MinusIcon from '../../assets/icons/MinusIcon.jsx';
 import PhotoInput from '../../components/PhotoInput/PhotoInput.jsx';
-import FormData from 'form-data';
 import Compressor from 'compressorjs';
 import './AddOrEditShoot.scss';
 
@@ -22,10 +21,8 @@ const AddOrEditShoot = ({ shootAction }) => {
   const location = useLocation();
 
   const { 
-    isLoading,
     setIsLoading,
     minLoadingInterval, 
-    setMinLoadingInterval,
     isLoggedIn, 
     setIsLoggedIn,
     shouldUpdatePhotographers,
@@ -34,9 +31,7 @@ const AddOrEditShoot = ({ shootAction }) => {
     setShouldUpdateModels,
     shouldUpdateTags, 
     setShouldUpdateTags,
-    shouldUpdateShoots, 
     setShouldUpdateShoots,
-    showFloatingButton, 
     setShowfloatingButton
   } = useContext(AppContext);
 
@@ -166,7 +161,7 @@ const AddOrEditShoot = ({ shootAction }) => {
       ? "photographer"
       : selectedEntry === "model_name"
       ? "model"
-      : "tag"
+      : "tag";
 
     const hasNullPhotographerChooser = photographerChooserIDs.some(chooser => chooser.photographerID === null);
 
@@ -237,126 +232,16 @@ const AddOrEditShoot = ({ shootAction }) => {
     }
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmitShoot = async (e) => {
+  e.preventDefault();
 
-    const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
-
-    if(tokenIsExpired) {
-      return;
-    }
-
-    if(isLoggedIn) {
-      try {
-        setIsLoading(true);
-
-        const selectedTagIDs = tagChooserIDs
-        .filter(chooser => chooser.tagID !== null)
-        .map(chooser => chooser.tagID);
-
-        if(selectedTagIDs.length === 0) {
-          setTimeout(() => {
-            setIsLoading(false);
-          }, minLoadingInterval);
-          return toast.error("Select at least one tag");
-        }
-
-        const selectedPhotographerIDs = photographerChooserIDs
-          .filter(chooser => chooser.photographerID !== null)
-          .map(chooser => chooser.photographerID);
-
-        if(selectedPhotographerIDs.length === 0) {
-          setTimeout(() => {
-            setIsLoading(false);
-          }, minLoadingInterval);
-          return toast.error("Select at least one photographer");
-        }
-
-        const selectedModelIDs = modelChooserIDs
-          .filter(chooser => chooser.modelID !== null)
-          .map(chooser => chooser.modelID);
-
-        if(selectedModelIDs.length === 0) {
-          setTimeout(() => {
-            setIsLoading(false);
-          }, minLoadingInterval);
-          return toast.error("Select at least one model");
-        }
-
-        const tag_ids = selectedTagIDs.join(", "); 
-        const photographer_ids = selectedPhotographerIDs.join(", "); 
-        const model_ids = selectedModelIDs.join(", "); 
-
-        const photoInputImages = [];
-      
-        shootPhotos.forEach(photo => {
-          if(photo.photoData !== null) {
-            photoInputImages.push(photo.photoData)
-          }
-        });
-      
-        if(!photoInputImages.length) {
-          setTimeout(() => {
-            setIsLoading(false);
-          }, minLoadingInterval);
-          return toast.error('Select at least one image')
-        }
-      
-        const formData = new FormData();
-      
-        for(const photo of photoInputImages) {
-          formData.append('file', photo);
-        }
-      
-        formData.append('shoot_date', newShootDate.toISOString().split('T')[0]);
-        
-        formData.append("photographer_ids", photographer_ids);
-        formData.append("model_ids", model_ids);
-        formData.append("tag_ids", tag_ids);
-
-        const token = localStorage.getItem('token');
-        
-        const headers = {
-          'Authorization': `Bearer ${token}`,
-        };
-
-        const response = await fetch(`${BASE_URL}/shoots/add`, {
-          method: 'POST',
-          headers: headers,
-          body: formData,
-        });
-      
-        if(!response.ok) {
-          setIsLoggedIn(false)
-          throw new Error("Error creating shoot. Logging you out...");
-        } else {
-          toast.success("Shoot added Successfully");
-          setShouldUpdateShoots(true);
-          setTimeout(() => {
-            navigate('/home');
-          }, minLoadingInterval)
-        }
-      } catch(error) {
-        console.log(error)
-        toast.error('Error creating shoot. Logging you out...');
-        // setIsLoading(false);
-        navigate('/home');
-      } 
-    } else if(!isLoggedIn) {
-      toast.error("Not logged in...");
-      navigate('/home');
-    }
-  };
-
-const handleUpdate = async () => {
   const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
 
   if(tokenIsExpired) {
-    return
+    return;
   }
 
   if(isLoggedIn) {
-
     try {
       setIsLoading(true);
 
@@ -367,6 +252,13 @@ const handleUpdate = async () => {
           selectedTagIDs.push(tagChooser.tagID);
         }
       });
+
+      if(selectedTagIDs.length === 0) {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, minLoadingInterval);
+        return toast.error("Select at least one tag");
+      }
 
       const selectedPhotographerIDs = [];
 
@@ -406,19 +298,16 @@ const handleUpdate = async () => {
       for(const shootPhoto of shootPhotos) {
         if(shootPhoto.photoPreview && !shootPhoto.photoData) {
           shoot.photo_urls.push(shootPhoto.photoPreview);
-        } else if (shootPhoto.photoData) {
+        } else if(shootPhoto.photoData) {
           const { url } = await fetch(`${AWS_SIGNED_URL_ROUTE}`).then(res => res.json());
           awsURL = url;
 
           try {
             await fetch(awsURL, {
               method: "PUT",
-              headers: {
-                "Content-Type": "multipart/form-data"
-              },
               body: shootPhoto.photoData
-            })
-            
+            });
+
             const imageUrl = `${awsURL.split('?')[0]}`;
             shoot.photo_urls.push(imageUrl);
           } catch(error) {
@@ -429,46 +318,70 @@ const handleUpdate = async () => {
       
       const token = localStorage.getItem('token');
 
-      if(!token) {
-        navigate('/home');
-        return toast.error("Sorry please login again");
-      }
-
       const headers = {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json'
       };
 
-      const response = await fetch(`${BASE_URL}/shoots/edit/${shoot_id}`, {
-        method: 'PUT',
-        headers: headers,
-        body: JSON.stringify(shoot)
-      });
-
+      let response;
+      
+      if(shoot_id) {
+        response = await fetch(`${BASE_URL}/shoots/edit/${shoot_id}`, {
+          method: 'PUT',
+          headers: headers,
+          body: JSON.stringify(shoot)
+        });
+      } else if(!shoot_id) {
+        response = await fetch(`${BASE_URL}/shoots/add`, {
+          method: 'POST',
+          headers: headers,
+          body: JSON.stringify(shoot)
+        });
+      }
+        
       if(!response.ok) {
-        throw new Error("Error creating shoot");
+        setIsLoggedIn(false)
+        throw new Error("Error creating shoot. Logging you out...");
       } else {
-        toast.success("Shoot updated Successfully");
+
+        if(shoot_id) {
+          toast.success("Shoot updated Successfully");
+        } else if(!shoot_id) {
+          toast.success("Shoot added Successfully");
+        }
+
+        setShouldUpdateShoots(true);
         setTimeout(() => {
           navigate('/home');
-        }, 500)
+          setShowfloatingButton(true);
+        }, minLoadingInterval);
       }
-    
+      
     } catch(error) {
-      console.log(error)
-      toast.error('Error creating shoot');
+      console.log(error);
+
+      if(shoot_id) {
+        toast.error('Error updating shoot. Logging you out...');
+      } else if (!shoot_id) {
+        toast.error('Error creating shoot. Logging you out...');
+      }
+
       setIsLoading(false);
+      navigate('/home');
+      setShowfloatingButton(true);
     }
-  }
+  } else if(!isLoggedIn) {
+    toast.error("Not logged in...");
+    navigate('/home');
+    setShowfloatingButton(true);
+  } 
 };
 
-// --
-
-  // --
 
   const handleCancel = () => {
     navigate('/home');
-  }
+    setShowfloatingButton(true);
+  };
   
   // fetch photographers
   useEffect(() => {
@@ -479,7 +392,7 @@ const handleUpdate = async () => {
       headers['Authorization'] = `Bearer ${token}`;
     } else {
       setIsLoggedIn(false);
-      return toast.error("Not logged in")
+      return toast.error("Not logged in");
     }
 
     const fetchPhotographers = async () => {
@@ -501,7 +414,7 @@ const handleUpdate = async () => {
       setShouldUpdatePhotographers(false);
       fetchPhotographers();
     } 
-  }, [BASE_URL, shouldUpdatePhotographers])
+  }, [BASE_URL, shouldUpdatePhotographers]);
 
   // fetch models
   useEffect(() => {
@@ -512,7 +425,7 @@ const handleUpdate = async () => {
       headers['Authorization'] = `Bearer ${token}`;
     } else {
       setIsLoggedIn(false);
-      return toast.error("Not logged in")
+      return toast.error("Not logged in");
     }
 
     const fetchModels = async () => {
@@ -534,7 +447,7 @@ const handleUpdate = async () => {
       setShouldUpdateModels(false);
       fetchModels();
     }
-  }, [BASE_URL, shouldUpdateModels])
+  }, [BASE_URL, shouldUpdateModels]);
 
   // fetch tags
   useEffect(() => {
@@ -545,7 +458,7 @@ const handleUpdate = async () => {
       headers['Authorization'] = `Bearer ${token}`;
     } else {
       setIsLoggedIn(false);
-      return toast.error("Not logged in")
+      return toast.error("Not logged in");
     }
 
     const fetchTags = async () => {
@@ -571,14 +484,14 @@ const handleUpdate = async () => {
         setIsLoading(false);
       })
     }
-  }, [BASE_URL, shouldUpdateTags])
+  }, [BASE_URL, shouldUpdateTags]);
 
 
   // useEffect to call shoots/shoot/:id for data to load editShoot
   useEffect(() => {
     setIsLoading(true);
+
     if(shoot_id) {
-      
       const fetchShootDetails = async () => {
         try {
           const response = await fetch(`${BASE_URL}/shoots/shoot/${shoot_id}`);
@@ -592,7 +505,7 @@ const handleUpdate = async () => {
               fetchedShootPhotos[idx].photoPreview = photoUrl.photo_url;
             }
 
-            setShootPhotos(fetchedShootPhotos)
+            setShootPhotos(fetchedShootPhotos);
           
             const date = new Date(data.shoot_date);
             setRawDate(date)
@@ -618,26 +531,25 @@ const handleUpdate = async () => {
 
             const fetchedModelChooserIDs = [];
             for(let idx = 0; idx < fetchedModelIDs.length; idx++) {
-              const chooser = {}
+              const chooser = {};
               chooser.chooserNo = idx + 1;
-              chooser.modelID = +fetchedModelIDs[idx]
-              chooser.modelName = fetchedShootModels[idx]
+              chooser.modelID = +fetchedModelIDs[idx];
+              chooser.modelName = fetchedShootModels[idx];
               fetchedModelChooserIDs.push(chooser);
             }
 
             const fetchedTagChooserIDs = [];
             for(let idx = 0; idx < fetchedTagIDs.length; idx++) {
-              const chooser = {}
+              const chooser = {};
               chooser.chooserNo = idx + 1;
-              chooser.tagID = +fetchedTagIDs[idx]
-              chooser.tagName = fetchedShootTags[idx]
+              chooser.tagID = +fetchedTagIDs[idx];
+              chooser.tagName = fetchedShootTags[idx];
               fetchedTagChooserIDs.push(chooser);
             }
 
             setPhotographerChooserIDs(fetchedPhotographerChooserIDs);
             setModelChooserIDs(fetchedModelChooserIDs);
             setTagChooserIDs(fetchedTagChooserIDs);
-            // setIsLoading(false);
           } else {
             toast.error(response.statusText);
             throw new Error(`Failed to fetch shoot details: ${response.statusText}`);
@@ -645,8 +557,8 @@ const handleUpdate = async () => {
           
         } catch(error) {
           console.log(error)
-          // setIsLoading(false);
           navigate('/notfound')
+          setShowfloatingButton(true);
         }
       }
       fetchShootDetails();
@@ -654,26 +566,26 @@ const handleUpdate = async () => {
 
     setTimeout(() => {
       setIsLoading(false);
-    }, minLoadingInterval)
+    }, minLoadingInterval);
   }, [shoot_id]);
   
 
   // initial load useEffect
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
     const isEditing = location.pathname.includes("edit");
     const isAdding = location.pathname.includes("add");
 
     if(isAdding || isEditing) {
-      setShowfloatingButton(false)
+      setShowfloatingButton(false);
     }
+    
     scrollToTop();
     setIsInitialLoad(false);
 
-
     setTimeout(() => {
       setIsLoading(false);
-    }, minLoadingInterval)
+    }, minLoadingInterval);
   }, [isInitialLoad]);
   
   return (
@@ -681,16 +593,9 @@ const handleUpdate = async () => {
       <div className="addOrEditShoot">
         <div className="addOrEditShoot__inner">
 
-          {shootAction === "add"
-
-            ? <h1 className="addOrEditShoot__heading">
-                Add New Shoot
-              </h1>
-
-            : <h1 className="addOrEditShoot__heading">
-                Edit Shoot {shoot_id}
-              </h1>
-          }
+          <h1 className="addOrEditShoot__heading">
+            {shootAction === "add" ? "Add New Shoot" : `Edit Shoot ${shoot_id}`}
+          </h1>
           
           <form className="addOrEditShoot__form">
             <div className="addOrEditShoot__date-container">
@@ -913,23 +818,12 @@ const handleUpdate = async () => {
           
             <div className="addOrEditShoot__button-container">
 
-              {shoot_id
-
-                ? <div 
-                    className="addOrEditShoot__button addOrEditShoot__button--submit" 
-                    onClick={(e) => handleUpdate(e)}
-                  >
-                    Update
-                  </div>
-
-                : <div 
-                    className="addOrEditShoot__button addOrEditShoot__button--submit" 
-                    onClick={(e) => handleSubmit(e)}
-                  >
-                    Submit
-                  </div>
-              }
-
+              <div 
+                className="addOrEditShoot__button addOrEditShoot__button--submit" 
+                onClick={(e) => handleSubmitShoot(e)}
+              >
+                {shoot_id ? "Update" : "Submit"}      
+              </div>
               <div 
                 className="addOrEditShoot__button addOrEditShoot__button--cancel" 
                 onClick={handleCancel}
