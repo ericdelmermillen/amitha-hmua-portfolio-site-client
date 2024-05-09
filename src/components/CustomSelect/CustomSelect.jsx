@@ -54,7 +54,6 @@ const CustomSelect = ({
   // tag change here --
   const handleOptionClick = (e, option, modalType, entryType) => {
   
-    // console.log(option)
     if(modalType !== "Add") {
       e.stopPropagation();
       setSelectedPhotogModelTag(option);

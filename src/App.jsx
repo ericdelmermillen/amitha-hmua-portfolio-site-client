@@ -43,6 +43,8 @@ const App = () => {
     setShowDeleteOrEditShootModal,
     isLoading, 
     setIsLoading,
+    minLoadingInterval, 
+    setMinLoadingInterval,
     showFloatingButton, 
     setShowfloatingButton
   } = useContext(AppContext);
@@ -54,21 +56,13 @@ const App = () => {
     localStorage.removeItem('refreshToken'); 
     setTimeout(() => {
       setIsLoading(false);
-    }, 250)
+    }, minLoadingInterval)
     navigate('/home');
     toast.success("Successfully logged out!");
   };
 
   const handleNavigateToAddShoot = () => {
     navigate('/shoots/add');
-    setIsLoading(true);
-
-    if(location.pathname === '/shoots/add') {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 250)
-      toast.error("Already on Add Shoot Page")
-    }
   }
 
   useEffect(() => {

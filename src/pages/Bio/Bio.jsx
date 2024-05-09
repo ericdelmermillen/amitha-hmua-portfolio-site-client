@@ -7,6 +7,8 @@ import './Bio.scss';
 const Bio = () => {
   const { 
     setIsLoading,
+    minLoadingInterval, 
+    setMinLoadingInterval,
     setShowSideNav,
     showfloatingButton,
     setShowfloatingButton
@@ -18,7 +20,7 @@ const Bio = () => {
     setTimeout(() => {
       setIsLoading(false);
       setIsComponentLoaded(true);
-    }, 1000)
+    }, minLoadingInterval)
   }
 
   // initial load useEffect

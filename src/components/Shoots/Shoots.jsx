@@ -21,7 +21,9 @@ const Shoots = () => {
     shouldUpdateShoots, 
     setShouldUpdateShoots,
     isLoading, 
-    setIsLoading
+    setIsLoading,
+    minLoadingInterval, 
+    setMinLoadingInterval,
   } = useContext(AppContext);
 
   const location = useLocation();
@@ -38,7 +40,6 @@ const Shoots = () => {
   const [ activeDragShoot, setActiveDragShoot ] = useState(null); 
 
   const itemsPerPage = 6;
-  const isLoadingInterval = 250;
 
   const handleNewShootId = (shootId) => {
     setShootsData([]);
@@ -193,19 +194,19 @@ const Shoots = () => {
 
             setTimeout(() => {
               setIsLoading(false); 
-            }, isLoadingInterval);
+            }, minLoadingInterval);
             
             if(isLoadingInitial) {
               setTimeout(() => {
                 setIsLoadingInitial(false);
-              }, isLoadingInterval);
+              }, minLoadingInterval);
             }
 
             if(data.length === 0) {
               setTimeout(() => {
                 setShouldUpdate(false);
                 setIsLoading(false)
-              }, isLoadingInterval);
+              }, minLoadingInterval);
             }
           }
         } catch(error) {
@@ -213,7 +214,7 @@ const Shoots = () => {
           toast.error(`Failed to fetch shoots:, ${error}`);
           setTimeout(() => {
             setIsLoading(false);
-          }, isLoadingInterval);
+          }, minLoadingInterval);
         }
       }
     }

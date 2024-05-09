@@ -7,6 +7,8 @@ import './Contact.scss';
 const Contact = () => {
   const { 
     setIsLoading,
+    minLoadingInterval, 
+    setMinLoadingInterval,
     setShowSideNav
   } = useContext(AppContext);
 
@@ -15,6 +17,9 @@ const Contact = () => {
     setIsLoading(true);
     setShowSideNav(false);
     scrollToTop();
+    setTimeout(() => {
+      setIsLoading(false);
+    }, minLoadingInterval)
   }, []); 
 
   return (

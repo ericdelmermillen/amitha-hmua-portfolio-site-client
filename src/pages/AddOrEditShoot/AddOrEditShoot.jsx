@@ -1,6 +1,6 @@
 import AppContext from '../../AppContext.jsx';
 import { useState, useEffect, useContext } from 'react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useParams, useLocation, json } from 'react-router-dom';
 import { scrollToTop } from '../../utils/utils.js';
 import { toast } from 'react-toastify';
 import NewShootdatePicker from '../../components/NewShootDatePicker/NewShootDatePicker.jsx';
@@ -15,17 +15,17 @@ import './AddOrEditShoot.scss';
 
 const AddOrEditShoot = ({ shootAction }) => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const AWS_SIGNED_URL_ROUTE = import.meta.env.VITE_AWS_SIGNED_URL_ROUTE;
 
   const { shoot_id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
 
-  // console.log(location.pathname === '/shoots/add')
-  // console.log(location.pathname)
-
   const { 
     isLoading,
     setIsLoading,
+    minLoadingInterval, 
+    setMinLoadingInterval,
     isLoggedIn, 
     setIsLoggedIn,
     shouldUpdatePhotographers,
@@ -42,17 +42,12 @@ const AddOrEditShoot = ({ shootAction }) => {
 
   const [ isInitialLoad, setIsInitialLoad ] = useState(true);
   const [ newShootDate, setNewShootDate ] = useState(new Date());
+  const [ tags, setTags ] = useState([]);
+  const [ tagChooserIDs, setTagChooserIDs ] = useState([{ chooserNo: 1, tagID: null, tagName: null}]);
   const [ photographers, setPhotographers ] = useState([]);
   const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([{ chooserNo: 1, photographerID: null, photographerName: null }]);
   const [ models, setModels ] = useState([]);
   const [ modelChooserIDs, setModelChooserIDs ] = useState([{ chooserNo: 1, modelID: null, modelName: null}]);
-
-  // tags --
-  const [ tags, setTags ] = useState([]);
-
-  const [ tagChooserIDs, setTagChooserIDs ] = useState([{ chooserNo: 1, tagID: null, tagName: null}]);
-
-  // 
 
   const [ shootDetails, setShootDetails ] = useState(null);
   const [ photos, setPhotos ] = useState([]);
@@ -173,9 +168,6 @@ const AddOrEditShoot = ({ shootAction }) => {
       ? "model"
       : "tag"
 
-    // console.log(selectedEntryType)
-    // console.log(tagChooserIDs)
-
     const hasNullPhotographerChooser = photographerChooserIDs.some(chooser => chooser.photographerID === null);
 
     const hasNullModelChooser = modelChooserIDs.some(chooser => chooser.modelID === null);
@@ -203,7 +195,6 @@ const AddOrEditShoot = ({ shootAction }) => {
       return;
 
     } else if(selectedEntryType === "tag" && !hasNullTagChooser) {
-      // console.log("no null")
 
       const maxChooserNo = Math.max(...tagChooserIDs.map(chooser => chooser.chooserNo));
 
@@ -264,7 +255,9 @@ const AddOrEditShoot = ({ shootAction }) => {
         .map(chooser => chooser.tagID);
 
         if(selectedTagIDs.length === 0) {
-          setIsLoading(false);
+          setTimeout(() => {
+            setIsLoading(false);
+          }, minLoadingInterval);
           return toast.error("Select at least one tag");
         }
 
@@ -273,7 +266,9 @@ const AddOrEditShoot = ({ shootAction }) => {
           .map(chooser => chooser.photographerID);
 
         if(selectedPhotographerIDs.length === 0) {
-          setIsLoading(false);
+          setTimeout(() => {
+            setIsLoading(false);
+          }, minLoadingInterval);
           return toast.error("Select at least one photographer");
         }
 
@@ -282,7 +277,9 @@ const AddOrEditShoot = ({ shootAction }) => {
           .map(chooser => chooser.modelID);
 
         if(selectedModelIDs.length === 0) {
-          setIsLoading(false);
+          setTimeout(() => {
+            setIsLoading(false);
+          }, minLoadingInterval);
           return toast.error("Select at least one model");
         }
 
@@ -299,7 +296,9 @@ const AddOrEditShoot = ({ shootAction }) => {
         });
       
         if(!photoInputImages.length) {
-          setIsLoading(false);
+          setTimeout(() => {
+            setIsLoading(false);
+          }, minLoadingInterval);
           return toast.error('Select at least one image')
         }
       
@@ -335,12 +334,12 @@ const AddOrEditShoot = ({ shootAction }) => {
           setShouldUpdateShoots(true);
           setTimeout(() => {
             navigate('/home');
-          }, 500)
+          }, minLoadingInterval)
         }
       } catch(error) {
         console.log(error)
         toast.error('Error creating shoot. Logging you out...');
-        setIsLoading(false);
+        // setIsLoading(false);
         navigate('/home');
       } 
     } else if(!isLoggedIn) {
@@ -349,10 +348,123 @@ const AddOrEditShoot = ({ shootAction }) => {
     }
   };
 
-  const handleUpdate = async (e) => {
-    e.preventDefault();
-    console.log(`Update Ad ${shoot_id}`)
+const handleUpdate = async () => {
+  const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
+
+  if(tokenIsExpired) {
+    return
   }
+
+  if(isLoggedIn) {
+
+    try {
+      setIsLoading(true);
+
+      const selectedTagIDs = [];
+
+      tagChooserIDs.forEach(tagChooser => {
+        if(tagChooser.tagID !== null) {
+          selectedTagIDs.push(tagChooser.tagID);
+        }
+      });
+
+      const selectedPhotographerIDs = [];
+
+      photographerChooserIDs.forEach(photographerChooser => {
+        if(photographerChooser.photographerID !== null) {
+          selectedPhotographerIDs.push(photographerChooser.photographerID);
+        }
+      });
+
+      if(!selectedPhotographerIDs.length) {
+        setIsLoading(false);
+        return toast.error("Select at least one photographer");
+      }
+
+      const selectedModelIDs = [];
+
+      modelChooserIDs.forEach(modelChooser => {
+        if(modelChooser.modelID !== null) {
+          selectedModelIDs.push(modelChooser.modelID);
+        }
+      });
+
+      if(!selectedModelIDs.length) {
+        setIsLoading(false);
+        return toast.error("Select at least one model");
+      }
+      
+      const shoot = {};
+      shoot.shoot_date = newShootDate.toISOString().split('T')[0];
+      shoot.model_ids = selectedModelIDs;
+      shoot.tag_ids = selectedTagIDs;
+      shoot.photographer_ids = selectedPhotographerIDs;
+      shoot.photo_urls = [];
+
+      let awsURL;
+
+      for(const shootPhoto of shootPhotos) {
+        if(shootPhoto.photoPreview && !shootPhoto.photoData) {
+          shoot.photo_urls.push(shootPhoto.photoPreview);
+        } else if (shootPhoto.photoData) {
+          const { url } = await fetch(`${AWS_SIGNED_URL_ROUTE}`).then(res => res.json());
+          awsURL = url;
+
+          try {
+            await fetch(awsURL, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "multipart/form-data"
+              },
+              body: shootPhoto.photoData
+            })
+            
+            const imageUrl = `${awsURL.split('?')[0]}`;
+            shoot.photo_urls.push(imageUrl);
+          } catch(error) {
+            console.log(error);
+          }
+        }
+      }
+      
+      const token = localStorage.getItem('token');
+
+      if(!token) {
+        navigate('/home');
+        return toast.error("Sorry please login again");
+      }
+
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      };
+
+      const response = await fetch(`${BASE_URL}/shoots/edit/${shoot_id}`, {
+        method: 'PUT',
+        headers: headers,
+        body: JSON.stringify(shoot)
+      });
+
+      if(!response.ok) {
+        throw new Error("Error creating shoot");
+      } else {
+        toast.success("Shoot updated Successfully");
+        setTimeout(() => {
+          navigate('/home');
+        }, 500)
+      }
+    
+    } catch(error) {
+      console.log(error)
+      toast.error('Error creating shoot');
+      setIsLoading(false);
+    }
+  }
+};
+
+// --
+
+  // --
 
   const handleCancel = () => {
     navigate('/home');
@@ -360,8 +472,6 @@ const AddOrEditShoot = ({ shootAction }) => {
   
   // fetch photographers
   useEffect(() => {
-    setIsLoading(true);
-
     const token = localStorage.getItem('token');
     const headers = {};
 
@@ -391,15 +501,10 @@ const AddOrEditShoot = ({ shootAction }) => {
       setShouldUpdatePhotographers(false);
       fetchPhotographers();
     } 
-
-    setIsLoading(false);
-
   }, [BASE_URL, shouldUpdatePhotographers])
 
   // fetch models
   useEffect(() => {
-    setIsLoading(true);
-
     const token = localStorage.getItem('token');
     const headers = {};
 
@@ -429,15 +534,10 @@ const AddOrEditShoot = ({ shootAction }) => {
       setShouldUpdateModels(false);
       fetchModels();
     }
-
-    setIsLoading(false);
-
   }, [BASE_URL, shouldUpdateModels])
 
   // fetch tags
   useEffect(() => {
-    setIsLoading(true);
-
     const token = localStorage.getItem('token');
     const headers = {};
 
@@ -464,18 +564,20 @@ const AddOrEditShoot = ({ shootAction }) => {
     };
     
     if(isInitialLoad || shouldUpdateTags) {
+      setIsLoading(true);
       setShouldUpdateTags(false);
       fetchTags();
+      setTimeout(() => {
+        setIsLoading(false);
+      })
     }
-
-    setIsLoading(false);
   }, [BASE_URL, shouldUpdateTags])
 
 
   // useEffect to call shoots/shoot/:id for data to load editShoot
   useEffect(() => {
+    setIsLoading(true);
     if(shoot_id) {
-      setIsLoading(true);
       
       const fetchShootDetails = async () => {
         try {
@@ -535,7 +637,7 @@ const AddOrEditShoot = ({ shootAction }) => {
             setPhotographerChooserIDs(fetchedPhotographerChooserIDs);
             setModelChooserIDs(fetchedModelChooserIDs);
             setTagChooserIDs(fetchedTagChooserIDs);
-            setIsLoading(false);
+            // setIsLoading(false);
           } else {
             toast.error(response.statusText);
             throw new Error(`Failed to fetch shoot details: ${response.statusText}`);
@@ -543,19 +645,22 @@ const AddOrEditShoot = ({ shootAction }) => {
           
         } catch(error) {
           console.log(error)
-          setIsLoading(false);
+          // setIsLoading(false);
           navigate('/notfound')
         }
       }
       fetchShootDetails();
     }
 
-    setIsLoading(false);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, minLoadingInterval)
   }, [shoot_id]);
   
 
   // initial load useEffect
   useEffect(() => {
+    setIsLoading(true)
     const isEditing = location.pathname.includes("edit");
     const isAdding = location.pathname.includes("add");
 
@@ -563,8 +668,12 @@ const AddOrEditShoot = ({ shootAction }) => {
       setShowfloatingButton(false)
     }
     scrollToTop();
-    setIsLoading();
     setIsInitialLoad(false);
+
+
+    setTimeout(() => {
+      setIsLoading(false);
+    }, minLoadingInterval)
   }, [isInitialLoad]);
   
   return (

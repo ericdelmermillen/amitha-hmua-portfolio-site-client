@@ -8,6 +8,8 @@ import './PhotogModelTagModal.scss';
 const PhotogOrModelModal = () => {
   const { 
     setIsLoading,
+    minLoadingInterval, 
+    setMinLoadingInterval,
     isLoggedIn, 
     setIsLoggedIn,
     setShouldUpdatePhotographers,
@@ -37,7 +39,6 @@ const PhotogOrModelModal = () => {
   
   // selectedPhotogModelTag values
   const { photographer_name, model_name, tag_name, id } = selectedPhotogModelTag;
-
 
   let entryName;
   
@@ -121,7 +122,11 @@ const PhotogOrModelModal = () => {
 
         if(response.ok) {
           if(method === "DELETE") {
+            console.log("Here")
             toast.success(`${entryName} successfully deleted`);
+            setTimeout(() => {
+              setIsLoading(false);
+            }, minLoadingInterval)
           } else {
             toast.success(`${newEntryName} successfully ${modalType.toLowerCase()}ed`);
           }
@@ -141,12 +146,16 @@ const PhotogOrModelModal = () => {
             setIsLoading(false);
             return toast.error(errorData.message);
           } else if(response.status === 401) {
-            setIsLoading(false);
+            setTimeout(() => {
+              setIsLoading(false);
+            }, minLoadingInterval)
             setIsLoggedIn(false);
             navigate("/home");
             return toast.error("Please login again...");
           } else {
-            setIsLoading(false);
+            setTimeout(() => {
+              setIsLoading(false);
+            }, minLoadingInterval)
             return toast.error(`Failed to ${modalType.toLowerCase()} ${entryType} ${newEntryName}`);
           }
         }

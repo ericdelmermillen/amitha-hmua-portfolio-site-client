@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 import AppContext from '../../AppContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { isValidEmail } from '../../utils/utils';
@@ -11,7 +11,9 @@ const ContactForm = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const { 
-    setIsLoading
+    setIsLoading,
+    minLoadingInterval, 
+    setMinLoadingInterval,
   } = useContext(AppContext);
   
   const [ firstName, setFirstName ] = useState('');
@@ -143,7 +145,7 @@ const ContactForm = () => {
       setIsLoading(false);
       setTimeout(() => {
         navigate('/home')
-      }, 1000);
+      }, minLoadingInterval);
       
     } catch(error) {
       toast.error(error.message);
@@ -151,12 +153,6 @@ const ContactForm = () => {
       setIsLoading(false);
     }
   };
-  
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-  }, []);
 
   return (
     <>

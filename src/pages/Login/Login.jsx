@@ -9,12 +9,17 @@ import './Login.scss';
 const Login = () => {
   const { 
     setIsLoading,
+    minLoadingInterval, 
+    setMinLoadingInterval,
   } = useContext(AppContext);
 
   // initial load useEffect
   useEffect(() => {
     setIsLoading(true);
     scrollToTop();
+    setTimeout(() => {
+      setIsLoading(false);
+    }, minLoadingInterval)
   }, []); 
   
   return (

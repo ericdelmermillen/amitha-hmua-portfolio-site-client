@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import AppContext from '../../AppContext'; 
 import { Link, useNavigate } from 'react-router-dom';
-import { isValidEmail, isValidPassword } from '../../utils/utils';
+import { scrollToTop,isValidEmail, isValidPassword } from '../../utils/utils';
 import { toast } from 'react-toastify';
 import Hide from '../../assets/icons/Hide';
 import Show from '../../assets/icons/Show';
@@ -106,9 +106,7 @@ const LoginForm = () => {
   
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 500)
+    scrollToTop();
   }, []);
 
   return (
