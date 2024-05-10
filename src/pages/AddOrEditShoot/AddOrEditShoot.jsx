@@ -293,14 +293,29 @@ const handleSubmitShoot = async (e) => {
       shoot.photographer_ids = selectedPhotographerIDs;
       shoot.photo_urls = [];
 
+      const token = localStorage.getItem('token');
+
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      };
+
       let awsURL;
 
       for(const shootPhoto of shootPhotos) {
         if(shootPhoto.photoPreview && !shootPhoto.photoData) {
           shoot.photo_urls.push(shootPhoto.photoPreview);
         } else if(shootPhoto.photoData) {
-          const { url } = await fetch(`${AWS_SIGNED_URL_ROUTE}`).then(res => res.json());
-          awsURL = url;
+
+          try {
+            const { url } = await fetch(`${AWS_SIGNED_URL_ROUTE}`, {
+              headers: headers
+            }).then(res => res.json());
+            
+            awsURL = url;
+          } catch(error) {
+            console.log(error);
+          }
 
           try {
             await fetch(awsURL, {
@@ -315,13 +330,6 @@ const handleSubmitShoot = async (e) => {
           }
         }
       }
-      
-      const token = localStorage.getItem('token');
-
-      const headers = {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      };
 
       let response;
       
