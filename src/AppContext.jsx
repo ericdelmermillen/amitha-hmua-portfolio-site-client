@@ -5,6 +5,8 @@ import { checkTokenExpiration } from './utils/utils.js';
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const [ isLoggedIn, setIsLoggedIn ] = useState(false);
   const [ colorMode, setColorMode ] = useState(localStorage.getItem('colorMode') || "light");
   const [ isLoading, setIsLoading ] = useState(false); 
@@ -29,9 +31,44 @@ export const AppProvider = ({ children }) => {
   
   const [ shouldUpdatePhotographers, setShouldUpdatePhotographers ] = useState(false);
   const [ shouldUpdateModels, setShouldUpdateModels ] = useState(false);
+  const [ tags, setTags ] = useState([]);
   const [ shouldUpdateTags, setShouldUpdateTags ] = useState(false);
   
   const navigate = useNavigate(); 
+
+  // fetch tags
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const headers = {};
+
+    headers['Authorization'] = `Bearer ${token}`;
+
+    const fetchTags = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}/tags/all`, { headers });
+        
+        if(!response.ok) {
+          throw new Error(`Failed to fetch tags: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        setTags(data.tags);
+      } catch (error) {
+        console.log(error);
+      } 
+    };
+    
+    // if(isInitialLoad || shouldUpdateTags) {
+    if(shouldUpdateTags) {
+      setIsLoading(true);
+      setShouldUpdateTags(false);
+      fetchTags();
+      setTimeout(() => {
+        setIsLoading(false);
+      })
+    }
+    fetchTags();
+  }, [BASE_URL, shouldUpdateTags]);
 
   useEffect(() => {
     checkTokenExpiration(setIsLoggedIn, navigate);
@@ -83,7 +120,9 @@ export const AppProvider = ({ children }) => {
     isFirefox, 
     setIsFirefox,
     showFloatingButton, 
-    setShowfloatingButton
+    setShowfloatingButton,
+    tags, 
+    setTags
    }
   
   return (

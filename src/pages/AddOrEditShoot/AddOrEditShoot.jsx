@@ -32,12 +32,14 @@ const AddOrEditShoot = ({ shootAction }) => {
     shouldUpdateTags, 
     setShouldUpdateTags,
     setShouldUpdateShoots,
-    setShowfloatingButton
+    setShowfloatingButton,
+    tags, 
+    setTags
   } = useContext(AppContext);
 
   const [ isInitialLoad, setIsInitialLoad ] = useState(true);
   const [ newShootDate, setNewShootDate ] = useState(new Date());
-  const [ tags, setTags ] = useState([]);
+  // const [ tags, setTags ] = useState([]);
   const [ tagChooserIDs, setTagChooserIDs ] = useState([{ chooserNo: 1, tagID: null, tagName: null}]);
   const [ photographers, setPhotographers ] = useState([]);
   const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([{ chooserNo: 1, photographerID: null, photographerName: null }]);
@@ -389,44 +391,6 @@ const handleSubmitShoot = async (e) => {
     navigate('/home');
     setShowfloatingButton(true);
   };
-
-
-  // fetch tags
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    const headers = {};
-
-    if(token) {
-      headers['Authorization'] = `Bearer ${token}`;
-    } else {
-      setIsLoggedIn(false);
-      return toast.error("Not logged in");
-    }
-
-    const fetchTags = async () => {
-      try {
-        const response = await fetch(`${BASE_URL}/tags/all`, { headers });
-        
-        if(!response.ok) {
-          throw new Error(`Failed to fetch tags: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        setTags(data.tags);
-      } catch (error) {
-        console.log(error);
-      } 
-    };
-    
-    if(isInitialLoad || shouldUpdateTags) {
-      setIsLoading(true);
-      setShouldUpdateTags(false);
-      fetchTags();
-      setTimeout(() => {
-        setIsLoading(false);
-      })
-    }
-  }, [BASE_URL, shouldUpdateTags]);
   
   // fetch photographers
   useEffect(() => {
