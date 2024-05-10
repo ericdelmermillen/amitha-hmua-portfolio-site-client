@@ -14,16 +14,6 @@ const checkTokenExpiration = async (setIsLoggedIn, navigate) => {
       const tokenExpTime = new Date(decodedToken.exp * 1000).toLocaleString('en-US');
       const currentDateTime = new Date(currentTime * 1000).toLocaleString('en-US');
 
-      // console.log(`tokenExpTime: ${tokenExpTime}`)
-      // console.log(`currentDateTime: ${currentDateTime}`)
-
-      // console.log(tokenExpTime < currentDateTime)
-      
-      
-
-      // console.log(decodedToken.exp)
-      // console.log(decodedToken.exp)
-
       if(decodedToken.exp > currentTime) {
         return setIsLoggedIn(true);
       } else if(decodedToken.exp < currentTime) {
@@ -40,7 +30,7 @@ const checkTokenExpiration = async (setIsLoggedIn, navigate) => {
             })
           });
 
-          // console.log("Token expired: attempting refresh");
+          console.log("Token expired: attempting refresh");
 
           if(refreshResponse.ok) {
             const { accessToken } = await refreshResponse.json();
