@@ -5,8 +5,9 @@ import AppContext from '../../AppContext';
 import ColorModeToggle from '../ColorModeToggle/ColorModeToggle';
 import Logo from '../../assets/icons/Logo';
 import Instagram from '../../assets/icons/Instagram';
-import './Nav.scss';
 import { toast } from 'react-toastify';
+import NavSelect from '../NavSelect/NavSelect.jsx'
+import './Nav.scss';
 
 const Nav = ({ handleLogOut }) => {
   const { 
@@ -15,14 +16,23 @@ const Nav = ({ handleLogOut }) => {
     setShowSideNav,
     scrollYPos, 
     prevScrollYPos, 
-    setShowfloatingButton
+    setShowfloatingButton,
+    selectedTag, 
+    setSelectedTag,
+    shouldUpdate,
+    setShouldUpdate,
+    tags, 
+    setTags
    } = useContext(AppContext);
 
    const location = useLocation();
 
    const handleHomeClick = () => {
-    if(location.pathname === "/" || location.pathname === "/home") {
+    if(location.pathname === "/" || location.pathname === "/work" && !selectedTag) {
       toast.info("Already on Work");
+      setSelectedTag(null);
+    } else {
+      setShouldUpdate(true);
     }
     handleNavClick();
    }
@@ -46,20 +56,26 @@ const Nav = ({ handleLogOut }) => {
               alt="navbar logo" 
             >
               <Logo className={"nav__logo--icon"}/>
-            </div>
+            </div> 
           </Link>
           <ul className="nav__links">
-            <Link 
+            <li className="nav__link nav__link--work">
+              <NavSelect
+                chooserType={"navLink"} 
+                selectOptions={tags}
+              />
+            </li>
+            {/* <Link 
               to={'/work'}
               onClick={handleHomeClick}
             >
               <li className="nav__link">WORK</li>
-            </Link>
+            </Link> */}
             <Link 
               to={'/bio'}
               onClick={handleNavClick}
             >
-              <li className="nav__link">BIO</li>
+              <li className="nav__link nav__link--bio">BIO</li>
             </Link>
             <Link 
               to={'/contact'}
@@ -76,7 +92,7 @@ const Nav = ({ handleLogOut }) => {
                 />
               </li>
             </a>
-            <li className="nav__link">
+            <li className="nav__link nav__link--colorMode">
               <ColorModeToggle inputId={"navColorModeToggle"}/>
             </li>
           </ul>

@@ -1,0 +1,123 @@
+@import '../../partials/mixins.scss';
+@import '../../partials/variables.scss';
+
+.navSelect {
+  height: 3rem;
+  padding: 0;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+  
+  &.tall {
+    z-index: 2;
+  }
+  
+  &__inner {
+    max-height: 3rem; 
+    overflow-y: auto; 
+    position: absolute;
+    scrollbar-width: none;
+    transition: max-height 0.25s ease;
+    width: 100%;
+  }
+  
+  &.tall &__inner {
+    max-height: 30rem;
+    transition: max-height 0.5s ease;
+  }
+  
+  &.short &__inner {
+    overflow-y: hidden;
+  }
+
+  &__select {
+    color: var(--text-color);
+    cursor: pointer;
+  }
+
+  &__default-option {
+
+    &.hide {
+      display: none;
+    }
+    
+    &.show {
+      display: block;
+    }
+  }
+  
+  &__selectValue {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    min-height: 3rem;
+    position: relative;
+
+    // & .down {
+    //   height: 0.75rem;
+    //   position: absolute;
+    //   right: 0.75rem;
+    //   top: 50%;
+    //   transform: translateY(-95%);
+    //   width: 0.75rem;
+      
+    //   &__stroke {
+    //     stroke: var(--text-color);
+    //   }
+    // }
+  }
+  
+  &__option {
+    align-items: center;
+    background: var(--navAndFooterBG);
+    display: flex;
+    height: 3rem;
+    justify-content: center;
+    outline: none;
+    position: relative;
+  }
+
+  /* Hide the scrollbar */
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+
+  &__touchOffDiv {
+    display: none;
+    height: 100dvh;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    
+    &.show {
+      display:block;
+      z-index: 1;
+    }
+  }
+}
+
+.navSelect__down {
+  height: 0.75rem;
+  position: absolute;
+  right: 0.75rem;
+  right: 0.65rem;
+  top: 50%;
+  transform: translateY(-85%);
+  transform: translateY(-90%);
+  width: 0.75rem;
+  
+  &__stroke {
+    stroke: var(--text-color);
+  }
+}
+
+.navSelect__down-icon {
+  height: 14px;
+  width: 14px;
+}
+
+.navSelect__down-stroke {
+  stroke: var(--text-color);
+  stroke-width: 20px;
+}

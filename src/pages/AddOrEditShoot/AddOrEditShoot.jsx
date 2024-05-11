@@ -3,8 +3,8 @@ import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams, useLocation, json } from 'react-router-dom';
 import { scrollToTop } from '../../utils/utils.js';
 import { toast } from 'react-toastify';
-import NewShootdatePicker from '../../components/NewShootDatePicker/NewShootDatePicker.jsx';
 import { checkTokenExpiration } from '../../utils/utils.js';
+import NewShootdatePicker from '../../components/NewShootDatePicker/NewShootDatePicker.jsx';
 import AddIcon from '../../assets/icons/AddIcon.jsx';
 import CustomSelect from '../../components/CustomSelect/CustomSelect.jsx';
 import MinusIcon from '../../assets/icons/MinusIcon.jsx';
@@ -616,13 +616,14 @@ const handleSubmitShoot = async (e) => {
                 >
 
                   <CustomSelect 
-                    chooser={chooser}
                     chooserNo={chooser.chooserNo}
-                    chooserName={chooser.tagName}
+
                     chooserType={"Tag"}
+                    selectOptions={tags}
+
+                    chooserName={chooser.tagName}
                     chooserIDs={tagChooserIDs}
                     setChooserIDs={setTagChooserIDs}
-                    selectOptions={tags}
                     entryNameType={"tag_name"}
                   />
 
@@ -702,8 +703,7 @@ const handleSubmitShoot = async (e) => {
                     key={chooser.chooserNo}
                   >
 
-                    <CustomSelect 
-                    chooser={chooser}
+                    {/* <CustomSelect 
                       chooserNo={chooser.chooserNo}
                       chooserName={chooser.photographerName}
                       chooserType={"Photographer"}
@@ -711,7 +711,7 @@ const handleSubmitShoot = async (e) => {
                       setChooserIDs={setPhotographerChooserIDs}
                       selectOptions={photographers}
                       entryNameType={"photographer_name"}
-                    />
+                    /> */}
 
                       <span 
                         className={`addOrEditShoot__selector-removeIcon ${photographerChooserIDs.length > 1
@@ -757,7 +757,7 @@ const handleSubmitShoot = async (e) => {
                     key={chooser.chooserNo}
                   >
 
-                    <CustomSelect
+                    {/* <CustomSelect
                       chooserNo={chooser.chooserNo}
                       chooserName={chooser.modelName}
                       chooserType={"Model"}
@@ -765,7 +765,7 @@ const handleSubmitShoot = async (e) => {
                       setChooserIDs={setModelChooserIDs}
                       selectOptions={models}
                       entryNameType={"model_name"}
-                    />
+                    /> */}
 
                       <span 
                         className={`addOrEditShoot__selector-removeIcon ${modelChooserIDs.length > 1 

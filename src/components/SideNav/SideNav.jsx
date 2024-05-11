@@ -13,7 +13,11 @@ const SideNav = ({ handleLogOut }) => {
     showSideNav, 
     setShowSideNav,
     showfloatingButton,
-    setShowfloatingButton
+    setShowfloatingButton,
+    selectedTag,
+    setSelectedTag,
+    shouldUpdate,
+    setShouldUpdate
    } = useContext(AppContext);
 
   const location = useLocation();
@@ -24,12 +28,14 @@ const SideNav = ({ handleLogOut }) => {
   const handleNavLinkHome = () => {
     setShowfloatingButton(true);
 
-    if(location.pathname === "/" || location.pathname === "/work") {
+    
+    if((location.pathname === "/" && !selectedTag) || (location.pathname === "/work" && !selectedTag)) {
       toast.info("Already on Work");
       setShowSideNav(false);
       scrollToTop();
     }
      else {
+      console.log(shouldUpdate)
       setShowSideNav(false);
       setTimeout(() => {
         navigate('/');

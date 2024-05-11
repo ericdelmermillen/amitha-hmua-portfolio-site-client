@@ -1,20 +1,24 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import AppContext from '../../AppContext.jsx';
-import DeleteIcon from '../../assets/icons/DeleteIcon.jsx'
+import DeleteIcon from '../../assets/icons/DeleteIcon.jsx';
 import DownIcon from '../../assets/icons/DownIcon.jsx';
 import EditIcon from '../../assets/icons/EditIcon.jsx';
 import './CustomSelect.scss';
 
 const CustomSelect = ({ 
-  chooser,
   chooserNo,
+
   chooserName,
+
   chooserType, 
   chooserIDs,
   setChooserIDs,
   selectOptions, 
   entryNameType
  }) => {
+  
+  // console.log(chooserName)
+  // console.log(selectOptions)
   
   const {
     showPhotogModelTagModal, 
@@ -51,7 +55,6 @@ const CustomSelect = ({
     }
   }
 
-  // tag change here --
   const handleOptionClick = (e, option, modalType, entryType) => {
   
     if(modalType !== "Add") {

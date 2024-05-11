@@ -48,10 +48,6 @@ const Shoots = () => {
   // const itemsPerPage = 6;
   const itemsPerPage = 12;
 
-  // console.log(selectedTag)
-  // console.log(shootsData)
-
-
   const [ searchTerm, setSearchTerm ] = useState(location.search.split("=")[1] || null);
     
   const handleNewShootId = (shootId) => {
@@ -128,9 +124,7 @@ const Shoots = () => {
       return Math.max(maxDisplayOrder, shoot.display_order);
     }, 0);
   
-    // const updatedShootsData = [...shootsData];
-    setShootsData(prevShootsData => [...prevShootsData, ...filteredData]);
-
+    const updatedShootsData = [...shootsData];
   
     for(const shoot of updatedShootsData) {
   
@@ -146,7 +140,6 @@ const Shoots = () => {
             shoot.display_order--;
           }
   
-
         } else if(activeDraggedShootOldDisplayOrder > dropTargetShootDisplayOrder) {
           
           if(shoot.shoot_id === dropTargetShootId) {
@@ -179,18 +172,19 @@ const Shoots = () => {
     // fetch shoots
     useEffect(() => {
       const fetchShoots = async () => {
-
+        
         if(!location.search.includes('tag')) {
+          // console.log("from work")
           // console.log(`selectedTag: ${selectedTag}`)
           
-          if(shouldUpdateShoots) {
-            setShootsData([]);
-            scrollToTop();
-            setCurrentPage(1);
-            setShouldUpdate(true);
-            setShouldUpdateShoots(false);
-            return;
-          }
+          // if(shouldUpdateShoots) {
+          //   setShootsData([]);
+          //   scrollToTop();
+          //   setCurrentPage(1);
+          //   setShouldUpdate(true);
+          //   setShouldUpdateShoots(false);
+          //   return;
+          // }
           
           if(shouldUpdate) {
             setIsLoading(true);

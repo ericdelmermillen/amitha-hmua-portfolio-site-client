@@ -47,6 +47,8 @@ const App = () => {
     setMinLoadingInterval,
     showFloatingButton, 
     setShowfloatingButton,
+    tags,
+    setTags,
     selectedTag, 
     setSelectedTag
   } = useContext(AppContext);
@@ -59,7 +61,7 @@ const App = () => {
     setTimeout(() => {
       setIsLoading(false);
     }, minLoadingInterval)
-    navigate('/home');
+    navigate('/work');
     toast.success("Successfully logged out!");
   };
 
