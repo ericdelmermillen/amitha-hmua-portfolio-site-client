@@ -24,8 +24,8 @@ const SideNav = ({ handleLogOut }) => {
   const handleNavLinkHome = () => {
     setShowfloatingButton(true);
 
-    if(location.pathname === "/" || location.pathname === "/home") {
-      toast.info("Already on Home");
+    if(location.pathname === "/" || location.pathname === "/work") {
+      toast.info("Already on Work");
       setShowSideNav(false);
       scrollToTop();
     }

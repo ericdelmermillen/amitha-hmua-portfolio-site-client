@@ -31,7 +31,12 @@ export const AppProvider = ({ children }) => {
   
   const [ shouldUpdatePhotographers, setShouldUpdatePhotographers ] = useState(false);
   const [ shouldUpdateModels, setShouldUpdateModels ] = useState(false);
+
+  // for filter by tag
   const [ tags, setTags ] = useState([]);
+  const [ selectedTag, setSelectedTag ] = useState(null);
+  // const [ selectedTag, setSelectedTag ] = useState({id: 3, tag_name: 'Bridal'});
+
   const [ shouldUpdateTags, setShouldUpdateTags ] = useState(false);
   
   const navigate = useNavigate(); 
@@ -70,10 +75,12 @@ export const AppProvider = ({ children }) => {
     fetchTags();
   }, [BASE_URL, shouldUpdateTags]);
 
+  // check loggedIn on mount
   useEffect(() => {
     checkTokenExpiration(setIsLoggedIn, navigate);
   }, []);
 
+  // check colorMode
   useEffect(() => {
     const storedColorMode = localStorage.getItem('colorMode');  
     setColorMode(storedColorMode || "light");
@@ -122,7 +129,9 @@ export const AppProvider = ({ children }) => {
     showFloatingButton, 
     setShowfloatingButton,
     tags, 
-    setTags
+    setTags,
+    selectedTag, 
+    setSelectedTag
    }
   
   return (

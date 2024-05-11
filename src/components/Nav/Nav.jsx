@@ -22,7 +22,7 @@ const Nav = ({ handleLogOut }) => {
 
    const handleHomeClick = () => {
     if(location.pathname === "/" || location.pathname === "/home") {
-      toast.info("Already on Home");
+      toast.info("Already on Work");
     }
     handleNavClick();
    }
@@ -38,7 +38,7 @@ const Nav = ({ handleLogOut }) => {
         <div className="nav__inner">
 
           <Link 
-            to={'/home'}
+            to={'/work'}
             onClick={handleHomeClick}
           >
             <div 
@@ -50,7 +50,7 @@ const Nav = ({ handleLogOut }) => {
           </Link>
           <ul className="nav__links">
             <Link 
-              to={'/home'}
+              to={'/work'}
               onClick={handleHomeClick}
             >
               <li className="nav__link">WORK</li>

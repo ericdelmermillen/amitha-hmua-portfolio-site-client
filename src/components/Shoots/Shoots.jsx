@@ -24,8 +24,12 @@ const Shoots = () => {
     setIsLoading,
     minLoadingInterval, 
     setMinLoadingInterval,
+    selectedTag, 
+    setSelectedTag,
+    tags,
+    setTags
   } = useContext(AppContext);
-
+  
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -39,8 +43,17 @@ const Shoots = () => {
 
   const [ activeDragShoot, setActiveDragShoot ] = useState(null); 
 
-  const itemsPerPage = 6;
+  // const itemsPerPage = 2;
+  // const itemsPerPage = 4;
+  // const itemsPerPage = 6;
+  const itemsPerPage = 12;
 
+  // console.log(selectedTag)
+  // console.log(shootsData)
+
+
+  const [ searchTerm, setSearchTerm ] = useState(location.search.split("=")[1] || null);
+    
   const handleNewShootId = (shootId) => {
     setShootsData([]);
     setCurrentPage(1);
@@ -115,7 +128,9 @@ const Shoots = () => {
       return Math.max(maxDisplayOrder, shoot.display_order);
     }, 0);
   
-    const updatedShootsData = [...shootsData];
+    // const updatedShootsData = [...shootsData];
+    setShootsData(prevShootsData => [...prevShootsData, ...filteredData]);
+
   
     for(const shoot of updatedShootsData) {
   
@@ -160,67 +175,114 @@ const Shoots = () => {
     setShootsData(updatedShootsData);
     setActiveDragShoot(null);
   }
-  
-  useEffect(() => {
-    const fetchShoots = async () => {
 
-      if(shouldUpdateShoots) {
-        setShootsData([]);
-        scrollToTop();
-        setCurrentPage(1);
-        setShouldUpdate(true);
-        setShouldUpdateShoots(false);
-        return;
-      }
+    // fetch shoots
+    useEffect(() => {
+      const fetchShoots = async () => {
 
-      if(shouldUpdate) {
-        setIsLoading(true);
+        if(!location.search.includes('tag')) {
+          // console.log(`selectedTag: ${selectedTag}`)
           
+          if(shouldUpdateShoots) {
+            setShootsData([]);
+            scrollToTop();
+            setCurrentPage(1);
+            setShouldUpdate(true);
+            setShouldUpdateShoots(false);
+            return;
+          }
+          
+          if(shouldUpdate) {
+            setIsLoading(true);
+            
+            try {
+              
+              const response = await fetch(`${BASE_URL}/shoots/all?page=${currentPage}&limit=${itemsPerPage}`);
+              
+              if(response.ok) {
+                const data = await response.json();
+                
+                let filteredData = [...data];
+                
+                if(isOnShootDetails) {
+                  const currentShoot = shoot_id;
+                  filteredData = data.filter(shoot => shoot.shoot_id !== +currentShoot);
+                }            
+                
+                setShootsData([...shootsData, ...filteredData]);
+                
+                setTimeout(() => {
+                  setIsLoading(false); 
+                  }, minLoadingInterval);
+                  
+                if(isLoadingInitial) {
+                  setIsLoadingInitial(false);
+                }
+                
+                if(data.length === 0) {
+                  setShouldUpdate(false);
+                  setTimeout(() => {
+                    setIsLoading(false)
+                  }, minLoadingInterval);
+                }
+              }
+            } catch(error) {
+              console.log(`Error fetching shoots: ${error}`)
+              toast.error(`Failed to fetch shoots:, ${error}`);
+              setTimeout(() => {
+                setIsLoading(false);
+              }, minLoadingInterval);
+                      
+            }
+          }
+        } 
+      }
+      fetchShoots();
+    }, [currentPage, currentShootId, selectedTag, shouldUpdateShoots, shootsData]);
+
+
+  // fetch shoots by tag
+  useEffect(() => {
+    if(selectedTag) {
+      setIsLoading(true);
+      
+      const fetchShootsByTag = async () => {
+        
+        console.log(selectedTag)
+        
         try {
 
-          const response = await fetch(`${BASE_URL}/shoots/all?page=${currentPage}&limit=${itemsPerPage}`);
+          const response = await fetch(`${BASE_URL}/shoots/all?tag_id=${selectedTag.id}`);
 
           if(response.ok) {
             const data = await response.json();
 
-            let filteredData = [...data];
-
-            if(isOnShootDetails) {
-              const currentShoot = shoot_id;
-              filteredData = data.filter(shoot => shoot.shoot_id !== +currentShoot);
-            }            
+            setShootsData(data)
             
-            setShootsData([...shootsData, ...filteredData]);
+            let filteredData = [...data];
+            
+              if(isOnShootDetails) {
+                console.log("is on shoot details")
+                const currentShoot = shoot_id;
+                filteredData = data.filter(shoot => shoot.shoot_id !== +currentShoot);
+              }            
+            }      
 
             setTimeout(() => {
-              setIsLoading(false); 
+              setIsLoading(false);
             }, minLoadingInterval);
-            
-            if(isLoadingInitial) {
-              setTimeout(() => {
-                setIsLoadingInitial(false);
-              }, minLoadingInterval);
-            }
 
-            if(data.length === 0) {
-              setTimeout(() => {
-                setShouldUpdate(false);
-                setIsLoading(false)
-              }, minLoadingInterval);
-            }
-          }
         } catch(error) {
-          console.log(`Error fetching shoots: ${error}`)
-          toast.error(`Failed to fetch shoots:, ${error}`);
-          setTimeout(() => {
-            setIsLoading(false);
-          }, minLoadingInterval);
+          console.log(error);
+          toast.error(`Error fetching shoots...`)
         }
       }
+      fetchShootsByTag()
     }
-    fetchShoots();
-  }, [currentPage, currentShootId, shouldUpdateShoots]);
+
+  }, [selectedTag])
   
+  // pagination useEffect
   useEffect(() => {
     if(shouldUpdate) {
 
@@ -247,6 +309,24 @@ const Shoots = () => {
       };
     } 
   }, [scrollYPos, isLoading]);
+
+
+  // initial load useEffect
+  useEffect(() => {
+    let searchedTerm;
+
+    if(tags && searchTerm) {
+      searchedTerm = tags.find(tag => tag.tag_name.toLowerCase() === searchTerm);
+    }
+
+    if(searchedTerm) {
+      // console.log(searchedTerm)
+      setSelectedTag(searchedTerm)
+      setShouldUpdateShoots(true)
+    }
+
+    scrollToTop();
+  }, [searchTerm, tags])
 
   return (
     <>

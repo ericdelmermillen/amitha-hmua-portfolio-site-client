@@ -46,7 +46,9 @@ const App = () => {
     minLoadingInterval, 
     setMinLoadingInterval,
     showFloatingButton, 
-    setShowfloatingButton
+    setShowfloatingButton,
+    selectedTag, 
+    setSelectedTag
   } = useContext(AppContext);
   
   const handleLogOut = () => {
@@ -135,7 +137,11 @@ const App = () => {
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
+          <Route path="/work" element={<Home />} />
+          {selectedTag 
+            ? <Route path={`/work?tag=${selectedTag.tag_name}`} element={<Home />} />
+            : null
+          }
           <Route path="/bio" element={<Bio />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/contact" element={<Contact />} />

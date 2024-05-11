@@ -14,7 +14,9 @@ const ShootDetails = () => {
   const { shoot_id } = useParams();
 
   const { 
-    setIsLoading
+    setIsLoading,
+    selectedTag,
+    setSelectedTag
   } = useContext(AppContext);
 
   const [ shootDetails, setShootDetails ] = useState(null);
@@ -152,7 +154,7 @@ const ShootDetails = () => {
         <div className="shootDetails__divider"></div>
         <div className="shootDetails__bottom">
           <h3 className='shootDetails__bottom-text'>
-            Other Shoots
+            Other {selectedTag ? selectedTag.tag_name : null} Shoots
           </h3>
           <Shoots />
         </div>
