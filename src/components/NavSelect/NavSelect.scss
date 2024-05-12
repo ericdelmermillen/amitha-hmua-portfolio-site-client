@@ -23,7 +23,7 @@
   
   &.tall &__inner {
     max-height: 40rem;
-    max-height: 80vh;
+    // max-height: 80vh;
 
     @media(min-width: $largeTablet) {
 
@@ -63,7 +63,7 @@
     justify-content: center;
     min-height: 3rem;
     position: relative;
-    
+
     // & .down {
     //   height: 0.75rem;
     //   position: absolute;

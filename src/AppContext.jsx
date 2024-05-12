@@ -21,6 +21,11 @@ export const AppProvider = ({ children }) => {
 
   const [ selectedShoot, setSelectedShoot ] = useState(null);
   const [ shouldUpdateShoots, setShouldUpdateShoots ] = useState(false);
+
+  // experiment ---
+  const [ shouldUpdateAllShoots, setShouldUpdateAllShoots ] = useState(false);
+  const [ shouldUpdateFilteredShoots, setShouldUpdateFilteredShoots ] = useState(false);
+  
   
   const [ selectedPhotogModelTag, setSelectedPhotogModelTag ] = useState({});
 
@@ -32,14 +37,31 @@ export const AppProvider = ({ children }) => {
   const [ shouldUpdatePhotographers, setShouldUpdatePhotographers ] = useState(false);
   const [ shouldUpdateModels, setShouldUpdateModels ] = useState(false);
 
-  // for filter by tag
+
   const [ tags, setTags ] = useState([]);
   const [ selectedTag, setSelectedTag ] = useState(null);
-  // const [ selectedTag, setSelectedTag ] = useState({id: 3, tag_name: 'Bridal'});
-
   const [ shouldUpdateTags, setShouldUpdateTags ] = useState(false);
   
   const navigate = useNavigate(); 
+
+  const handleNavigateHome = (updateAllShoots, updateFilteredShoots, tagObj) => {
+    if(updateAllShoots && !updateFilteredShoots && !tagObj) {
+      console.log("update all shoots")
+      setTimeout(() => {
+        navigate('/work');
+      }, minLoadingInterval)
+
+      // update setShouldUpdateAllShoots earlier or later? wait until on page to call for shoots or start before arriving?
+      setShouldUpdateAllShoots(true);
+      // ---
+    } else if(!updateAllShoots && updateFilteredShoots && tagObj) {
+      console.log(`update ${tagObj.tag_name} shoots`);
+      navigate(`/work?tag=${tagObj.tag_name}`);
+
+      // ---
+      setShouldUpdateFilteredShoots(true);
+    }
+  }
 
   // fetch tags
   useEffect(() => {
@@ -63,7 +85,6 @@ export const AppProvider = ({ children }) => {
       } 
     };
     
-    // if(isInitialLoad || shouldUpdateTags) {
     if(shouldUpdateTags) {
       setIsLoading(true);
       setShouldUpdateTags(false);
@@ -131,7 +152,14 @@ export const AppProvider = ({ children }) => {
     tags, 
     setTags,
     selectedTag, 
-    setSelectedTag
+    setSelectedTag,
+
+
+    shouldUpdateAllShoots, 
+    setShouldUpdateAllShoots, 
+    shouldUpdateFilteredShoots, 
+    setShouldUpdateFilteredShoots,
+    handleNavigateHome
    }
   
   return (

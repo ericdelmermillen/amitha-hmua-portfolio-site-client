@@ -27,7 +27,12 @@ const Shoots = () => {
     selectedTag, 
     setSelectedTag,
     tags,
-    setTags
+    setTags,
+
+    shouldUpdateAllShoots, 
+    setShouldUpdateAllShoots, 
+    shouldUpdateFilteredShoots, 
+    setShouldUpdateFilteredShoots
   } = useContext(AppContext);
   
   const location = useLocation();
@@ -173,7 +178,7 @@ const Shoots = () => {
     useEffect(() => {
       const fetchShoots = async () => {
         
-        console.log("fetchShoots ")
+        // console.log("fetchShoots ")
         if(!location.search.includes('tag')) {
           
           if(shouldUpdate) {

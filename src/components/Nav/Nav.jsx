@@ -25,6 +25,9 @@ const Nav = ({ handleLogOut }) => {
     setTags,
     shouldUpdateShoots,
     setShouldUpdateShoots,
+
+    // ---
+    handleNavigateHome
    } = useContext(AppContext);
 
    const location = useLocation();

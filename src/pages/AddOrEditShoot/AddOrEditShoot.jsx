@@ -1,15 +1,15 @@
-import AppContext from '../../AppContext.jsx';
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams, useLocation, json } from 'react-router-dom';
-import { scrollToTop } from '../../utils/utils.js';
 import { toast } from 'react-toastify';
 import { checkTokenExpiration } from '../../utils/utils.js';
-import NewShootdatePicker from '../../components/NewShootDatePicker/NewShootDatePicker.jsx';
+import { scrollToTop } from '../../utils/utils.js';
 import AddIcon from '../../assets/icons/AddIcon.jsx';
+import AppContext from '../../AppContext.jsx';
+import Compressor from 'compressorjs';
 import CustomSelect from '../../components/CustomSelect/CustomSelect.jsx';
 import MinusIcon from '../../assets/icons/MinusIcon.jsx';
+import NewShootdatePicker from '../../components/NewShootDatePicker/NewShootDatePicker.jsx';
 import PhotoInput from '../../components/PhotoInput/PhotoInput.jsx';
-import Compressor from 'compressorjs';
 import './AddOrEditShoot.scss';
 
 const AddOrEditShoot = ({ shootAction }) => {
@@ -17,8 +17,8 @@ const AddOrEditShoot = ({ shootAction }) => {
   const AWS_SIGNED_URL_ROUTE = import.meta.env.VITE_AWS_SIGNED_URL_ROUTE;
 
   const { shoot_id } = useParams();
-  const navigate = useNavigate();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const { 
     setIsLoading,
@@ -29,17 +29,13 @@ const AddOrEditShoot = ({ shootAction }) => {
     setShouldUpdatePhotographers,
     shouldUpdateModels, 
     setShouldUpdateModels,
-    shouldUpdateTags, 
-    setShouldUpdateTags,
     setShouldUpdateShoots,
     setShowfloatingButton,
     tags, 
-    setTags
   } = useContext(AppContext);
 
   const [ isInitialLoad, setIsInitialLoad ] = useState(true);
   const [ newShootDate, setNewShootDate ] = useState(new Date());
-  // const [ tags, setTags ] = useState([]);
   const [ tagChooserIDs, setTagChooserIDs ] = useState([{ chooserNo: 1, tagID: null, tagName: null}]);
   const [ photographers, setPhotographers ] = useState([]);
   const [ photographerChooserIDs, setPhotographerChooserIDs ] = useState([{ chooserNo: 1, photographerID: null, photographerName: null }]);
@@ -53,6 +49,8 @@ const AddOrEditShoot = ({ shootAction }) => {
 
   const numberOfPhotoUploads = 10;
 
+  const [ activeDragInput, setActiveDragInput ] = useState(null); 
+
   const [ shootPhotos, setShootPhotos ] = useState(
     Array.from({ length: numberOfPhotoUploads }, (_, idx) => ({
       photoNo: idx + 1,
@@ -61,8 +59,6 @@ const AddOrEditShoot = ({ shootAction }) => {
       displayOrder: idx + 1
     }))
   );
-
-  const [ activeDragInput, setActiveDragInput ] = useState(null); 
   
   const handleImageChange = async (e, inputNo) => {
     const file = e.target.files[0];
@@ -427,6 +423,7 @@ const handleSubmitShoot = async (e) => {
 
   // fetch models
   useEffect(() => {
+    console.log("fetch models")
     const token = localStorage.getItem('token');
     const headers = {};
 
@@ -459,7 +456,7 @@ const handleSubmitShoot = async (e) => {
   }, [BASE_URL, shouldUpdateModels]);
 
 
-  // useEffect to call shoots/shoot/:id for data to load editShoot
+  // fetch existing shoot
   useEffect(() => {
     setIsLoading(true);
 

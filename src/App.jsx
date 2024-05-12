@@ -1,13 +1,14 @@
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { useEffect, useContext } from 'react';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
 import { scrollToTop } from './utils/utils.js';
+import AddIcon from './assets/icons/AddIcon.jsx';
 import AddOrEditShoot from './pages/AddOrEditShoot/AddOrEditShoot.jsx';
 import AppContext from './AppContext.jsx'; 
 import Bio from './pages/Bio/Bio.jsx';
 import Contact from './pages/Contact/Contact.jsx';
 import Footer from './components/Footer/Footer.jsx';
+import DeleteOrEditShootModal from './components/DeleteOrEditShootModal/DeleteOrEditShootModal.jsx';
 import Home from './pages/Home/Home.jsx';
 import Login from './pages/Login/Login.jsx';
 import Nav from './components/Nav/Nav.jsx';
@@ -15,16 +16,14 @@ import NotFound from './pages/NotFound/NotFound.jsx';
 import PhotogModelTagModal from './components/PhotogModelTagModal/PhotogModelTagModal.jsx';
 import ShootDetails from './pages/ShootDetails/ShootDetails.jsx';
 import SideNav from './components/SideNav/SideNav.jsx';
-import AddIcon from './assets/icons/AddIcon.jsx';
 import UpIcon from './assets/icons/UpIcon.jsx';
 import './App.scss';
-import DeleteOrEditShootModal from './components/DeleteOrEditShootModal/DeleteOrEditShootModal.jsx';
+import 'react-toastify/dist/ReactToastify.css';
 
-// don't forget token refreshing on editShoot and updateShootOrder
 
 const App = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
   
   const { 
     isLoggedIn, 
@@ -69,6 +68,7 @@ const App = () => {
     navigate('/shoots/add');
   }
 
+  // handle scroll position for show hide of menu
   useEffect(() => {
     const handleScrollY = () => {
       const newScrollYPos = window.scrollY;

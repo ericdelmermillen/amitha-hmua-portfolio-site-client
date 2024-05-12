@@ -17,8 +17,13 @@ const NavSelect = ({
     minLoadingInterval, 
     setMinLoadingInterval,
     shouldUpdateShoots,
-    setShouldUpdateShoots
+    setShouldUpdateShoots,
+
+    // ---
+    handleNavigateHome
   } = useContext(AppContext);
+
+  // console.log(selectOptions)
 
   const [ selectValue, setSelectValue ] = useState(null);
   const [ showOptions, setShowOptions ] = useState(false);
@@ -31,9 +36,10 @@ const NavSelect = ({
   };
 
   const handleHomeLinkClick = () => {
-    if(selectValue) {
-      handleHomeClick()
-    }
+    // if(selectValue) {
+    //   handleHomeClick()
+    // }
+    handleNavigateHome(true, false)
 
     setSelectValue(null);
     setSelectedTag(null);
@@ -53,8 +59,11 @@ const NavSelect = ({
     setShowOptions(false);
 
     setTimeout(() => {
+      handleNavigateHome(false, true, option)
       setSelectedTag(option);
-      navigate(`/work?tag=${option.tag_name}`);
+      // navigate(`/work?tag=${option.tag_name}`);
+      handleNavigateHome(true, false)
+      
     }, minLoadingInterval);
 
     // Reset scroll position to top
@@ -102,7 +111,9 @@ const NavSelect = ({
                   || (showOptions && selectValue)
                   ? "show" 
                   : "hide"}`}
-                  onClick={handleHomeLinkClick}
+                  onClick={showOptions 
+                    ? handleHomeLinkClick
+                    : null}
                   >
                 Work
               </span>
@@ -129,7 +140,8 @@ const NavSelect = ({
             {selectOptions.map(option => 
               <div 
                 className={`navSelect__option`} 
-                key={option.id} onClick={() => handleUpdateSelectValue(option)}
+                key={option.id} 
+                onClick={() => handleUpdateSelectValue(option)}
               >
                 {`# ${option.tag_name}`}
               </div>
