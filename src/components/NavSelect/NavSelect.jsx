@@ -1,36 +1,42 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import AppContext from '../../AppContext.jsx';
 import DownIcon from '../../assets/icons/DownIcon.jsx';
+import { useNavigate } from 'react-router-dom';
 import './NavSelect.scss';
 
 const NavSelect = ({ 
-  // chooserType, 
   selectOptions, 
-
-
-  chooserName
-
+  // chooserName,
+  handleHomeClick
  }) => {
 
   
   const {
-    // showPhotogModelTagModal, 
-    // setShowPhotogModelTagModal,
-    // setSelectedPhotogOrModel,
-    // selectedPhotogModelTag, 
-    // setSelectedPhotogModelTag,
+    selectedTag,
+    setSelectedTag,
+    minLoadingInterval, 
+    setMinLoadingInterval,
+    shouldUpdateShoots,
+    setShouldUpdateShoots
   } = useContext(AppContext);
 
   const [ selectValue, setSelectValue ] = useState(null);
   const [ showOptions, setShowOptions ] = useState(false);
   const innerRef = useRef(null);
 
+  const navigate = useNavigate();
+
   const handleToggleShowOptions = () => {
     setShowOptions(!showOptions);
   };
 
-  const handleHomeClick = () => {
+  const handleHomeLinkClick = () => {
+    if(selectValue) {
+      handleHomeClick()
+    }
+
     setSelectValue(null);
+    setSelectedTag(null);
   }
   
   const handleTouchOff = () => {
@@ -46,17 +52,22 @@ const NavSelect = ({
     setSelectValue(option.tag_name);
     setShowOptions(false);
 
+    setTimeout(() => {
+      setSelectedTag(option);
+      navigate(`/work?tag=${option.tag_name}`);
+    }, minLoadingInterval);
+
     // Reset scroll position to top
     if(innerRef.current) {
       innerRef.current.scrollTop = 0;
     }
   }
 
-  useEffect(() => {
-    if(chooserName) {
-      setSelectValue(chooserName)
-    }
-  }, [chooserName])
+  // useEffect(() => {
+  //   if(chooserName) {
+  //     setSelectValue(chooserName)
+  //   }
+  // }, [chooserName])
   
   return (
     <>
@@ -91,9 +102,9 @@ const NavSelect = ({
                   || (showOptions && selectValue)
                   ? "show" 
                   : "hide"}`}
-                  onClick={handleHomeClick}
+                  onClick={handleHomeLinkClick}
                   >
-                WORK
+                Work
               </span>
               <span 
                 className={`navSelect__default-option 
@@ -102,7 +113,7 @@ const NavSelect = ({
                   ? "show" 
                   : "hide"}`}
                   >
-                {selectValue && `# ${selectValue.toUpperCase()}`}
+                {selectValue && `# ${selectValue}`}
               </span>
               <div className="navSelect__down">
 
@@ -120,7 +131,7 @@ const NavSelect = ({
                 className={`navSelect__option`} 
                 key={option.id} onClick={() => handleUpdateSelectValue(option)}
               >
-                {`# ${option.tag_name.toUpperCase()}`}
+                {`# ${option.tag_name}`}
               </div>
             )}
           </div>

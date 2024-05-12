@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { scrollToTop } from '../../utils/utils';
 import AppContext from '../../AppContext';
 import ColorModeToggle from '../ColorModeToggle/ColorModeToggle';
@@ -22,17 +22,23 @@ const Nav = ({ handleLogOut }) => {
     shouldUpdate,
     setShouldUpdate,
     tags, 
-    setTags
+    setTags,
+    shouldUpdateShoots,
+    setShouldUpdateShoots,
    } = useContext(AppContext);
 
    const location = useLocation();
+   const navigate = useNavigate();
 
    const handleHomeClick = () => {
+    console.log("home click")
     if(location.pathname === "/" || location.pathname === "/work" && !selectedTag) {
       toast.info("Already on Work");
       setSelectedTag(null);
     } else {
-      setShouldUpdate(true);
+      navigate("/work");
+      setShouldUpdateShoots(true);
+      setSelectedTag(null);
     }
     handleNavClick();
    }
@@ -59,18 +65,14 @@ const Nav = ({ handleLogOut }) => {
             </div> 
           </Link>
           <ul className="nav__links">
-            <li className="nav__link nav__link--work">
+            <li 
+              className="nav__link nav__link--work"
+            >
               <NavSelect
-                chooserType={"navLink"} 
                 selectOptions={tags}
+                handleHomeClick={handleHomeClick}
               />
             </li>
-            {/* <Link 
-              to={'/work'}
-              onClick={handleHomeClick}
-            >
-              <li className="nav__link">WORK</li>
-            </Link> */}
             <Link 
               to={'/bio'}
               onClick={handleNavClick}

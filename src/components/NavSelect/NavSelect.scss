@@ -22,8 +22,14 @@
   }
   
   &.tall &__inner {
-    max-height: 30rem;
-    transition: max-height 0.5s ease;
+    max-height: 40rem;
+    max-height: 80vh;
+
+    @media(min-width: $largeTablet) {
+
+      max-height: 30rem;
+      transition: max-height 0.5s ease;
+    }
   }
   
   &.short &__inner {
@@ -36,6 +42,11 @@
   }
 
   &__default-option {
+    
+    @media(min-width: $largeTablet) {
+      text-transform: uppercase;
+    }
+
 
     &.hide {
       display: none;
@@ -52,7 +63,7 @@
     justify-content: center;
     min-height: 3rem;
     position: relative;
-
+    
     // & .down {
     //   height: 0.75rem;
     //   position: absolute;
@@ -69,12 +80,20 @@
   
   &__option {
     align-items: center;
-    background: var(--navAndFooterBG);
     display: flex;
-    height: 3rem;
+    height: 4rem;
     justify-content: center;
     outline: none;
     position: relative;
+    background: var(--background-color);
+    border-bottom: 2px solid var(--text-color);
+    
+    @media(min-width: $largeTablet) {
+      border-bottom: none;
+      height: 3rem;
+      text-transform: uppercase;
+      background: var(--navAndFooterBG);
+    }
   }
 
   /* Hide the scrollbar */
@@ -98,14 +117,19 @@
 }
 
 .navSelect__down {
-  height: 0.75rem;
   position: absolute;
-  right: 0.75rem;
+  height: 0.75rem;
   right: 0.65rem;
-  top: 50%;
   transform: translateY(-85%);
-  transform: translateY(-90%);
-  width: 0.75rem;
+
+  @media(min-width: $largeTablet) {
+
+    right: 0.65rem;
+    top: 50%;
+    transform: translateY(-85%);
+    transform: translateY(-90%);
+    width: 0.75rem;
+  }
   
   &__stroke {
     stroke: var(--text-color);

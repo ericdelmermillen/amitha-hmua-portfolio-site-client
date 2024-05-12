@@ -3,8 +3,9 @@ import { useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { scrollToTop } from '../../utils/utils';
 import ColorModeToggle from '../ColorModeToggle/ColorModeToggle';
-import './SideNav.scss';
 import { toast } from 'react-toastify';
+import NavSelect from '../NavSelect/NavSelect.jsx';
+import './SideNav.scss';
 
 const SideNav = ({ handleLogOut }) => {
   const { 
@@ -17,7 +18,9 @@ const SideNav = ({ handleLogOut }) => {
     selectedTag,
     setSelectedTag,
     shouldUpdate,
-    setShouldUpdate
+    setShouldUpdate,
+    tags,
+    setTags
    } = useContext(AppContext);
 
   const location = useLocation();
@@ -97,9 +100,12 @@ const SideNav = ({ handleLogOut }) => {
             <ul className='sideNav__links'>
               <li 
                 className='sideNav__link'
-                onClick={handleNavLinkHome}
+                // onClick={handleNavLinkHome}
               >
-                Work
+                {/* Work */}
+              <NavSelect 
+                selectOptions={tags}
+              />
               </li>
               <li 
                 className='sideNav__link'

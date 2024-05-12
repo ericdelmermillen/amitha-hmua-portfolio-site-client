@@ -173,18 +173,8 @@ const Shoots = () => {
     useEffect(() => {
       const fetchShoots = async () => {
         
+        console.log("fetchShoots ")
         if(!location.search.includes('tag')) {
-          // console.log("from work")
-          // console.log(`selectedTag: ${selectedTag}`)
-          
-          // if(shouldUpdateShoots) {
-          //   setShootsData([]);
-          //   scrollToTop();
-          //   setCurrentPage(1);
-          //   setShouldUpdate(true);
-          //   setShouldUpdateShoots(false);
-          //   return;
-          // }
           
           if(shouldUpdate) {
             setIsLoading(true);
@@ -241,8 +231,6 @@ const Shoots = () => {
       setIsLoading(true);
       
       const fetchShootsByTag = async () => {
-        
-        console.log(selectedTag)
         
         try {
 

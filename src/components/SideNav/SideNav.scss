@@ -23,7 +23,6 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    justify-content: center;
     position: relative;
   }
 
@@ -40,7 +39,15 @@
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    gap: 3rem;
+    gap: 25%;
+    gap: 8vh;
     text-align: center;
+    height: 100%;
+    margin-top: 10rem;
+    margin-top: max(15vh, 6rem);
+    width: 100%;
+    width: 15rem;
   }
 
   &__link {
@@ -69,11 +76,19 @@
 
   &__logout {
     @include buttonRounded;
+    position: absolute;
+    bottom: 20vh;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   &__colorModeToggler {
     align-items: center;
     display: flex;
     justify-content: center;
+    position: absolute;
+    bottom: 10vh;
+    transform: translateX(-50%);
+    left: 50%;
   }
 }

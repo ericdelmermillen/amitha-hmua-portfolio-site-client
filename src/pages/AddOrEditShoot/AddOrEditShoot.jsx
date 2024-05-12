@@ -362,7 +362,7 @@ const handleSubmitShoot = async (e) => {
 
         setShouldUpdateShoots(true);
         setTimeout(() => {
-          navigate('/home');
+          navigate('/work');
           setShowfloatingButton(true);
         }, minLoadingInterval);
       }
@@ -377,18 +377,18 @@ const handleSubmitShoot = async (e) => {
       }
 
       setIsLoading(false);
-      navigate('/home');
+      navigate('/work');
       setShowfloatingButton(true);
     }
   } else if(!isLoggedIn) {
     toast.error("Not logged in...");
-    navigate('/home');
+    navigate('/work');
     setShowfloatingButton(true);
   } 
 };
 
   const handleCancel = () => {
-    navigate('/home');
+    navigate('/work');
     setShowfloatingButton(true);
   };
   
@@ -617,13 +617,11 @@ const handleSubmitShoot = async (e) => {
 
                   <CustomSelect 
                     chooserNo={chooser.chooserNo}
-
-                    chooserType={"Tag"}
-                    selectOptions={tags}
-
                     chooserName={chooser.tagName}
+                    chooserType={"Tag"}
                     chooserIDs={tagChooserIDs}
                     setChooserIDs={setTagChooserIDs}
+                    selectOptions={tags}
                     entryNameType={"tag_name"}
                   />
 
@@ -703,7 +701,7 @@ const handleSubmitShoot = async (e) => {
                     key={chooser.chooserNo}
                   >
 
-                    {/* <CustomSelect 
+                    <CustomSelect 
                       chooserNo={chooser.chooserNo}
                       chooserName={chooser.photographerName}
                       chooserType={"Photographer"}
@@ -711,7 +709,7 @@ const handleSubmitShoot = async (e) => {
                       setChooserIDs={setPhotographerChooserIDs}
                       selectOptions={photographers}
                       entryNameType={"photographer_name"}
-                    /> */}
+                    />
 
                       <span 
                         className={`addOrEditShoot__selector-removeIcon ${photographerChooserIDs.length > 1
@@ -757,7 +755,7 @@ const handleSubmitShoot = async (e) => {
                     key={chooser.chooserNo}
                   >
 
-                    {/* <CustomSelect
+                    <CustomSelect
                       chooserNo={chooser.chooserNo}
                       chooserName={chooser.modelName}
                       chooserType={"Model"}
@@ -765,7 +763,7 @@ const handleSubmitShoot = async (e) => {
                       setChooserIDs={setModelChooserIDs}
                       selectOptions={models}
                       entryNameType={"model_name"}
-                    /> */}
+                    />
 
                       <span 
                         className={`addOrEditShoot__selector-removeIcon ${modelChooserIDs.length > 1 

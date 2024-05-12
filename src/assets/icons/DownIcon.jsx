@@ -11,7 +11,7 @@ const DownIcon = ({ className, classNameStroke }) => {
           data-name="Path 1" 
           d="M1530.436,80.478l39.486,38.427-39.486,41.453" transform="translate(162.082 -1528.625) rotate(90)" fill="none" 
           strokeLinecap="round" 
-          strokeWidth="120"
+          strokeWidth="12"
           className={classNameStroke}
         />
       </svg>
