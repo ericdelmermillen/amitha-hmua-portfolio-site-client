@@ -239,3 +239,15 @@
     }
   }
 }
+
+@mixin navLink {
+  color: var(--text-color);
+  cursor: pointer;
+  display: flex;
+  font-size: 1.25rem;
+  font-weight: 600;
+  justify-content: center;
+  letter-spacing: 1px;
+  letter-spacing: 2px;
+  letter-spacing: 3px;
+}

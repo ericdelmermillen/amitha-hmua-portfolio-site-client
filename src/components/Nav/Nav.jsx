@@ -5,7 +5,6 @@ import AppContext from '../../AppContext';
 import ColorModeToggle from '../ColorModeToggle/ColorModeToggle';
 import Logo from '../../assets/icons/Logo';
 import Instagram from '../../assets/icons/Instagram';
-import { toast } from 'react-toastify';
 import NavSelect from '../NavSelect/NavSelect.jsx'
 import './Nav.scss';
 
@@ -16,39 +15,19 @@ const Nav = ({ handleLogOut }) => {
     setShowSideNav,
     scrollYPos, 
     prevScrollYPos, 
-    setShowfloatingButton,
-    selectedTag, 
-    setSelectedTag,
-    shouldUpdate,
-    setShouldUpdate,
+    setShowFloatingButton,
     tags, 
-    setTags,
-    shouldUpdateShoots,
-    setShouldUpdateShoots,
-
-    // ---
     handleNavigateHome
    } = useContext(AppContext);
 
-   const location = useLocation();
-   const navigate = useNavigate();
-
    const handleHomeClick = () => {
-    console.log("home click")
-    if(location.pathname === "/" || location.pathname === "/work" && !selectedTag) {
-      toast.info("Already on Work");
-      setSelectedTag(null);
-    } else {
-      navigate("/work");
-      setShouldUpdateShoots(true);
-      setSelectedTag(null);
-    }
+    handleNavigateHome(true);
     handleNavClick();
    }
 
    const handleNavClick = () => {
     scrollToTop()
-    setShowfloatingButton(true)
+    setShowFloatingButton(true)
    }
   
   return (
@@ -73,7 +52,6 @@ const Nav = ({ handleLogOut }) => {
             >
               <NavSelect
                 selectOptions={tags}
-                handleHomeClick={handleHomeClick}
               />
             </li>
             <Link 

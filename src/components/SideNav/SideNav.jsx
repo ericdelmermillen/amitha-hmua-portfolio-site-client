@@ -1,7 +1,6 @@
 import AppContext from '../../AppContext';
 import { useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { scrollToTop } from '../../utils/utils';
 import ColorModeToggle from '../ColorModeToggle/ColorModeToggle';
 import { toast } from 'react-toastify';
 import NavSelect from '../NavSelect/NavSelect.jsx';
@@ -10,68 +9,44 @@ import './SideNav.scss';
 const SideNav = ({ handleLogOut }) => {
   const { 
     isLoggedIn, 
-    setIsLoggedIn,
     showSideNav, 
     setShowSideNav,
-    showfloatingButton,
-    setShowfloatingButton,
-    selectedTag,
-    setSelectedTag,
-    shouldUpdate,
-    setShouldUpdate,
+    setShowFloatingButton,
     tags,
-    setTags
+    minLoadingInterval
    } = useContext(AppContext);
 
   const location = useLocation();
   const navigate = useNavigate();
-
-  const timeOutValue = 300;
-
-  const handleNavLinkHome = () => {
-    setShowfloatingButton(true);
-
-    
-    if((location.pathname === "/" && !selectedTag) || (location.pathname === "/work" && !selectedTag)) {
-      toast.info("Already on Work");
-      setShowSideNav(false);
-      scrollToTop();
-    }
-     else {
-      console.log(shouldUpdate)
-      setShowSideNav(false);
-      setTimeout(() => {
-        navigate('/');
-      }, timeOutValue);
-    }
-  };
   
   const handleNavLinkBio = () => {
-    setShowfloatingButton(true);
+    setShowFloatingButton(true);
     if(location.pathname === "/bio") {
       setShowSideNav(false);
+      toast.info("Already on Bio");
     } else {
       setShowSideNav(false);
       setTimeout(() => {
         navigate('/bio');
-      }, timeOutValue);
+      }, minLoadingInterval);
     }
   };
   
   const handleNavLinkContact = () => { 
-    setShowfloatingButton(true);
+    setShowFloatingButton(true);
     if(location.pathname === "/contact") {
       setShowSideNav(false);
+      toast.info("Already on Contact");
     } else {
       setShowSideNav(false);
       setTimeout(() => {
         navigate('/contact');
-      }, timeOutValue);
+      }, minLoadingInterval);
     }
   };
   
   const handleSideNavLogout = () => {
-    setShowfloatingButton(true);
+    setShowFloatingButton(true);
     setTimeout(() => {
       handleLogOut();
     }, 500);
@@ -100,12 +75,10 @@ const SideNav = ({ handleLogOut }) => {
             <ul className='sideNav__links'>
               <li 
                 className='sideNav__link'
-                // onClick={handleNavLinkHome}
               >
-                {/* Work */}
-              <NavSelect 
-                selectOptions={tags}
-              />
+                <NavSelect 
+                  selectOptions={tags}
+                />
               </li>
               <li 
                 className='sideNav__link'

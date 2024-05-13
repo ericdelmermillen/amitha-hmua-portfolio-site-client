@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { checkTokenExpiration } from './utils/utils.js';
+import { toast } from 'react-toastify';
 
 const AppContext = createContext();
 
@@ -12,7 +13,7 @@ export const AppProvider = ({ children }) => {
   const [ isLoading, setIsLoading ] = useState(false); 
   const [ minLoadingInterval, setMinLoadingInterval ] = useState(250); 
   const [ isFirefox, setIsFirefox ] = useState(navigator.userAgent.toLowerCase().indexOf('firefox') > -1);
-  const [ showFloatingButton, setShowfloatingButton ] = useState(!location.pathname.includes("edit") || !location.pathname.includes("add"));
+  const [ showFloatingButton, setShowFloatingButton ] = useState(!location.pathname.includes("edit") || !location.pathname.includes("add"));
 
   const [ scrollYPos, setScrollYPos ] = useState(window.scrollY);
   const [ prevScrollYPos, setPrevScrollYPos ] = useState(window.scrollY);
@@ -44,24 +45,29 @@ export const AppProvider = ({ children }) => {
   
   const navigate = useNavigate(); 
 
-  const handleNavigateHome = (updateAllShoots, updateFilteredShoots, tagObj) => {
-    if(updateAllShoots && !updateFilteredShoots && !tagObj) {
-      console.log("update all shoots")
-      setTimeout(() => {
-        navigate('/work');
-      }, minLoadingInterval)
+  const handleNavigateHome = (updateAllShoots, updateFilteredShoots, tagObj) => {    
 
-      // update setShouldUpdateAllShoots earlier or later? wait until on page to call for shoots or start before arriving?
-      setShouldUpdateAllShoots(true);
-      // ---
+    if(updateAllShoots && !updateFilteredShoots) {
+      console.log("update all shoots")
+      if(location.pathname === "/" || location.pathname === "/work" && !selectedTag) {
+        setSelectedTag(null);
+        return toast.info("Already on Work");
+    } 
+
+    navigate('/work');
+    setShouldUpdateAllShoots(true);
+    setShouldUpdateFilteredShoots(false);
+
     } else if(!updateAllShoots && updateFilteredShoots && tagObj) {
       console.log(`update ${tagObj.tag_name} shoots`);
+
       navigate(`/work?tag=${tagObj.tag_name}`);
 
-      // ---
+      setShouldUpdateAllShoots(false);
       setShouldUpdateFilteredShoots(true);
     }
-  }
+    setShowFloatingButton(true);
+  };
 
   // fetch tags
   useEffect(() => {
@@ -148,7 +154,7 @@ export const AppProvider = ({ children }) => {
     isFirefox, 
     setIsFirefox,
     showFloatingButton, 
-    setShowfloatingButton,
+    setShowFloatingButton,
     tags, 
     setTags,
     selectedTag, 

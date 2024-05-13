@@ -45,13 +45,13 @@ const App = () => {
     minLoadingInterval, 
     setMinLoadingInterval,
     showFloatingButton, 
-    setShowfloatingButton,
+    setShowFloatingButton,
     tags,
     setTags,
     selectedTag, 
     setSelectedTag
   } = useContext(AppContext);
-  
+
   const handleLogOut = () => {
     setIsLoading(true);
     setIsLoggedIn(false);

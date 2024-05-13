@@ -23,10 +23,8 @@
   
   &.tall &__inner {
     max-height: 40rem;
-    // max-height: 80vh;
 
     @media(min-width: $largeTablet) {
-
       max-height: 30rem;
       transition: max-height 0.5s ease;
     }
@@ -47,7 +45,6 @@
       text-transform: uppercase;
     }
 
-
     &.hide {
       display: none;
     }
@@ -63,30 +60,17 @@
     justify-content: center;
     min-height: 3rem;
     position: relative;
-
-    // & .down {
-    //   height: 0.75rem;
-    //   position: absolute;
-    //   right: 0.75rem;
-    //   top: 50%;
-    //   transform: translateY(-95%);
-    //   width: 0.75rem;
-      
-    //   &__stroke {
-    //     stroke: var(--text-color);
-    //   }
-    // }
   }
   
   &__option {
     align-items: center;
+    background: var(--background-color);
+    border-bottom: 2px solid var(--text-color);
     display: flex;
     height: 4rem;
     justify-content: center;
     outline: none;
     position: relative;
-    background: var(--background-color);
-    border-bottom: 2px solid var(--text-color);
     
     @media(min-width: $largeTablet) {
       border-bottom: none;
@@ -101,6 +85,35 @@
     width: 0;
   }
 
+  &__down {
+    height: 0.75rem;
+    position: absolute;
+    right: 0.60rem;
+    top: 42.5%;
+    transform: translateY(-85%);
+    
+    @media(min-width: $largeTablet) {
+      right: 0.65rem;
+      top: 50%;
+      transform: translateY(-90%);
+      width: 0.75rem;
+    }
+    
+    &__stroke {
+      stroke: var(--text-color);
+    }
+  }
+  
+  &__down-icon {
+    height: 14px;
+    width: 14px;
+  }
+  
+  &__down-stroke {
+    stroke: var(--text-color);
+    stroke-width: 20px;
+  }
+
   &__touchOffDiv {
     display: none;
     height: 100dvh;
@@ -111,37 +124,8 @@
     
     &.show {
       display:block;
+      cursor: auto;
       z-index: 1;
     }
   }
-}
-
-.navSelect__down {
-  position: absolute;
-  height: 0.75rem;
-  right: 0.65rem;
-  transform: translateY(-85%);
-
-  @media(min-width: $largeTablet) {
-
-    right: 0.65rem;
-    top: 50%;
-    transform: translateY(-85%);
-    transform: translateY(-90%);
-    width: 0.75rem;
-  }
-  
-  &__stroke {
-    stroke: var(--text-color);
-  }
-}
-
-.navSelect__down-icon {
-  height: 14px;
-  width: 14px;
-}
-
-.navSelect__down-stroke {
-  stroke: var(--text-color);
-  stroke-width: 20px;
 }

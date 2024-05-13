@@ -68,13 +68,7 @@
   }
   
   &__link {
-    color: var(--text-color);
-    display: flex;
-    font-size: 1.25rem;
-    font-weight: 600;
-    justify-content: center;
-    letter-spacing: 1px;
-    // border: 2px dotted #333;
+    @include navLink;
     
     @media(min-width: $tablet) {
       min-width: 8rem;
@@ -93,9 +87,8 @@
     }
     
     &--work {
-      min-width: 14rem;
-      max-width: 14rem;
-      width: 100%;
+      min-width: 15.5rem;
+      max-width: 15.5rem;
     }
     
     &--bio {
@@ -120,6 +113,7 @@
         min-width: 6rem;
         max-width: 6rem;
       }
+
       @media(min-width: $largeTablet) {
         border: none;
         min-width: 8rem;

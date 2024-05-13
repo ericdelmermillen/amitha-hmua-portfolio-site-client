@@ -1,49 +1,54 @@
 import { useState, useEffect, useRef, useContext } from 'react';
 import AppContext from '../../AppContext.jsx';
 import DownIcon from '../../assets/icons/DownIcon.jsx';
-import { useNavigate } from 'react-router-dom';
 import './NavSelect.scss';
 
 const NavSelect = ({ 
   selectOptions, 
-  // chooserName,
-  handleHomeClick
  }) => {
-
   
   const {
-    selectedTag,
     setSelectedTag,
     minLoadingInterval, 
-    setMinLoadingInterval,
-    shouldUpdateShoots,
-    setShouldUpdateShoots,
-
-    // ---
-    handleNavigateHome
+    handleNavigateHome,
+    scrollYPos, 
+    prevScrollYPos,
+    setShowSideNav
   } = useContext(AppContext);
-
-  // console.log(selectOptions)
 
   const [ selectValue, setSelectValue ] = useState(null);
   const [ showOptions, setShowOptions ] = useState(false);
   const innerRef = useRef(null);
-
-  const navigate = useNavigate();
 
   const handleToggleShowOptions = () => {
     setShowOptions(!showOptions);
   };
 
   const handleHomeLinkClick = () => {
-    // if(selectValue) {
-    //   handleHomeClick()
-    // }
-    handleNavigateHome(true, false)
-
     setSelectValue(null);
     setSelectedTag(null);
-  }
+    setShowSideNav(false);
+    
+    setTimeout(() => {
+      handleNavigateHome(true, false, null);
+    }, minLoadingInterval);
+  };
+
+  const handleUpdateSelectValue = (option) => {
+    setSelectValue(option.tag_name);
+    setShowOptions(false);
+    setShowSideNav(false);
+
+    setTimeout(() => {
+      setSelectedTag(option);
+      handleNavigateHome(false, true, option);
+    }, minLoadingInterval);
+
+    // Reset scroll position to top
+    if(innerRef.current) {
+      innerRef.current.scrollTop = 0;
+    }
+  };
   
   const handleTouchOff = () => {
     setShowOptions(false);
@@ -52,31 +57,14 @@ const NavSelect = ({
     if(innerRef.current) {
       innerRef.current.scrollTop = 0;
     }
-  }
+  };
 
-  const handleUpdateSelectValue = (option) => {
-    setSelectValue(option.tag_name);
-    setShowOptions(false);
-
-    setTimeout(() => {
-      handleNavigateHome(false, true, option)
-      setSelectedTag(option);
-      // navigate(`/work?tag=${option.tag_name}`);
-      handleNavigateHome(true, false)
-      
-    }, minLoadingInterval);
-
-    // Reset scroll position to top
-    if(innerRef.current) {
-      innerRef.current.scrollTop = 0;
+  useEffect(() => {
+    if(scrollYPos > prevScrollYPos) {
+      setShowOptions(false);
     }
-  }
 
-  // useEffect(() => {
-  //   if(chooserName) {
-  //     setSelectValue(chooserName)
-  //   }
-  // }, [chooserName])
+  }, [scrollYPos, prevScrollYPos]);
   
   return (
     <>
@@ -129,8 +117,6 @@ const NavSelect = ({
               <div className="navSelect__down">
 
                 <DownIcon 
-                  // className={"down__icon"}
-                  // classNameStroke={"down__stroke"}
                   className={"navSelect__down-icon"}
                   classNameStroke={"navSelect__down-stroke"}
                   />
