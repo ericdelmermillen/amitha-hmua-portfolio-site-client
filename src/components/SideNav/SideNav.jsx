@@ -1,8 +1,8 @@
 import AppContext from '../../AppContext';
 import { useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import ColorModeToggle from '../ColorModeToggle/ColorModeToggle';
 import { toast } from 'react-toastify';
+import ColorModeToggle from '../ColorModeToggle/ColorModeToggle';
 import NavSelect from '../NavSelect/NavSelect.jsx';
 import './SideNav.scss';
 
@@ -11,9 +11,9 @@ const SideNav = ({ handleLogOut }) => {
     isLoggedIn, 
     showSideNav, 
     setShowSideNav,
-    setShowFloatingButton,
-    tags,
     minLoadingInterval,
+    tags,
+    setShowFloatingButton,
     handleNavLinkClick
    } = useContext(AppContext);
 
@@ -65,9 +65,7 @@ const SideNav = ({ handleLogOut }) => {
           ? "show" 
           : ""}`}
       >
-        <div 
-          className="sideNav__inner"
-        >
+        <div className="sideNav__inner">
           <div 
             className="sideNav__close-button"
             onClick={() => setShowSideNav(false)}
@@ -78,12 +76,8 @@ const SideNav = ({ handleLogOut }) => {
           
           <div className="sideNav__menu">
             <ul className='sideNav__links'>
-              <li 
-                className='sideNav__link'
-              >
-                <NavSelect 
-                  selectOptions={tags}
-                />
+              <li className='sideNav__link'>
+                <NavSelect selectOptions={tags} />
               </li>
               <li 
                 className='sideNav__link'
@@ -116,9 +110,7 @@ const SideNav = ({ handleLogOut }) => {
                 </li>
               }
               <li className="sideNav__colorModeToggler">
-                <ColorModeToggle 
-                  inputId={"sideNavColorModeToggle"}
-                />
+                <ColorModeToggle inputId={"sideNavColorModeToggle"} />
               </li>
             </ul>
 

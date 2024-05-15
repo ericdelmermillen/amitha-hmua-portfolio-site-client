@@ -8,6 +8,7 @@ const NavSelect = ({
  }) => {
   
   const {
+    setIsLoading,
     setSelectedTag,
     minLoadingInterval, 
     handleNavigateHome,
@@ -21,31 +22,11 @@ const NavSelect = ({
   const [ showOptions, setShowOptions ] = useState(false);
   const innerRef = useRef(null);
 
-  const handleToggleShowOptions = () => {
-    setShowOptions(!showOptions);
-  };
-
-  // --
-
-  const handleDownArrowClicked = (e) => {
+  const handleDownArrowClick = (e) => {
     e.stopPropagation();
-
-    if(showOptions) {
-      setShowOptions(false);
-    } else if(!showOptions) {
-      setShowOptions(true);
-    }
-    console.log("downArrow clicked")
+    showOptions ? setShowOptions(false) : setShowOptions(true);
   }
 
-  const handleHomeLinkClick = () => {
-    setSelectValue(null);
-    setSelectedTag(null);
-    setShowSideNav(false);
-    handleNavigateHome(true, false, null);
-  };
-
-  // --
   const handleUpdateSelectValue = (option) => {
     setSelectValue(option.tag_name);
     setShowOptions(false);
@@ -62,48 +43,28 @@ const NavSelect = ({
     }
   };
 
-  // --
-
-
-  const handleTopOptionClicked = () => {
+  const handleTopOptionClick = () => {
     setShowSideNav(false);
-    if(showOptions) {
-      setShowOptions(false);
-      console.log("work clicked with menu open");
-      setSelectValue(null);
+    setShowOptions(false);
 
+    if(showOptions) {
+      setSelectValue(null);
       setTimeout(() => {
         handleNavigateHome(true, false, null);
       }, minLoadingInterval);
-
     } else if(!showOptions) {
-      setShowOptions(false);
-
       if(selectValue) {
-        const foundOption = selectOptions.find(option => option.tag_name.toLowerCase() === selectValue.toLowerCase());
-        handleUpdateSelectValue(foundOption);  
-
-
-
+        setIsLoading(true);
         setTimeout(() => {
+          setIsLoading(false);
         }, minLoadingInterval);
-
-          console.log(foundOption)
-        }
-
-      if(!selectValue) {
+      } else if(!selectValue) {
         setTimeout(() => {
           handleNavigateHome(true, false, null);
         }, minLoadingInterval);
       }
-
-      console.log(selectValue)
-
-      console.log("work clicked with menu closed")
     }
-  }
-
-  // --
+  };
   
   const handleTouchOff = () => {
     setShowOptions(false);
@@ -118,7 +79,6 @@ const NavSelect = ({
     if(scrollYPos > prevScrollYPos) {
       setShowOptions(false);
     }
-
   }, [scrollYPos, prevScrollYPos]);
   
   return (
@@ -127,7 +87,7 @@ const NavSelect = ({
         className={`navSelect ${showOptions 
           ? "tall" 
           : "short"}`}
-          >
+      >
         <div 
           ref={innerRef}
           className={`navSelect__inner ${showOptions 
@@ -135,18 +95,16 @@ const NavSelect = ({
             : ""
           }`}
         >
-
           <div 
             className={`navSelect__select ${showOptions 
               ? "tall" 
               : ""}`} 
-              >
+          >
             <div 
               className={`navSelect__selectValue ${!showOptions 
                 ? "short" 
                 : ""}`} 
-                // onClick={handleToggleShowOptions}
-                onClick={handleTopOptionClicked}
+                onClick={handleTopOptionClick}
             >
               <span 
                 className={`navSelect__default-option 
@@ -155,10 +113,7 @@ const NavSelect = ({
                   || (showOptions && selectValue)
                   ? "show" 
                   : "hide"}`}
-                  // onClick={showOptions 
-                  //   ? handleHomeLinkClick
-                  //   : null}
-                  >
+              >
                 Work
               </span>
               <span 
@@ -167,19 +122,17 @@ const NavSelect = ({
                   (showOptions && !selectValue) || (!showOptions && selectValue) 
                   ? "show" 
                   : "hide"}`}
-                  >
-                {selectValue && `# ${selectValue}`}
+              >
+                {selectValue ? `# ${selectValue}` : null}
               </span>
               <div 
                 className="navSelect__down"
-                // onClick={handleToggleShowOptions}
-                onClick={(e) => handleDownArrowClicked(e)}
+                onClick={(e) => handleDownArrowClick(e)}
               >
-
                 <DownIcon 
                   className={"navSelect__down-icon"}
                   classNameStroke={"navSelect__down-stroke"}
-                  />
+                />
               </div>
             </div>
 

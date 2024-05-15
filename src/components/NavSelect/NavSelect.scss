@@ -11,10 +11,6 @@
   width: 100%;
   z-index: 1;
   
-  @media(min-width: $largeTablet) {
-    margin-inline-end: 3rem;
-  }
-  
   &.tall {
     z-index: 2;
   }
@@ -67,7 +63,6 @@
     justify-content: center;
     min-height: 3rem;
     position: relative;
-    // border: 2px solid yellow;
   }
   
   &__option {
@@ -79,7 +74,6 @@
     justify-content: center;
     outline: none;
     position: relative;
-    border: 2px solid blue;
     
     @media(min-width: $largeTablet) {
       border-bottom: none;
@@ -96,22 +90,13 @@
 
   &__down {
     align-items: center;
-    // border: 2px solid red;
     display: flex;
     height: 3rem;
     position: absolute;
-    // right: 0.60rem;
     right: 0;
     top: 0;
     justify-content: center;
     width: 3rem;
-    
-    @media(min-width: $largeTablet) {
-      // right: 0.65rem;
-      // top: 50%;
-      // transform: translateY(-90%);
-      // width: 0.75rem;
-    }
     
     &__stroke {
       stroke: var(--text-color);
@@ -137,8 +122,8 @@
     width: 100vw;
     
     &.show {
-      display:block;
       cursor: auto;
+      display:block;
       z-index: 1;
     }
   }

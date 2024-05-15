@@ -63,7 +63,7 @@ export const AppProvider = ({ children }) => {
     setShouldUpdateFilteredShoots(false);
 
     } else if(!updateAllShoots && updateFilteredShoots && tagObj) {
-      // console.log(`update ${tagObj.tag_name} shoots`);
+      console.log(`update ${tagObj.tag_name} shoots`);
 
       navigate(`/work?tag=${tagObj.tag_name}`);
 
@@ -75,6 +75,7 @@ export const AppProvider = ({ children }) => {
 
   const handleNavLinkClick = () => {
     setSelectValue(null);
+    setSelectedTag(null)
   }
 
   // fetch tags

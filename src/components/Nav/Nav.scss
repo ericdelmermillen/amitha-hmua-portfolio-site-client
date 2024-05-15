@@ -26,7 +26,6 @@
     }
     
   &.hide {
-    top: 0;
     top: -5rem;
   }
   
@@ -70,20 +69,12 @@
   &__link {
     @include navLink;
     
-    @media(min-width: $tablet) {
-      min-width: 8rem;
-      max-width: 8rem;
-    }
-    
     @media(min-width: $largeTablet) {
+      align-items: center;
       border: none;
-      min-width: 10rem;
-      max-width: 10rem;
-    }
-    
-    @media(min-width: $desktop) {
-      min-width: 10rem;
-      max-width: 10rem;
+      display: flex;
+      height: 3rem;
+      width: 10rem;
     }
     
     &--work {
@@ -93,8 +84,8 @@
     &--bio {
       
       @media(min-width: $largeTablet) {
-        max-width: 9rem;
-        min-width: 9rem;
+        // max-width: 9rem;
+        // min-width: 9rem;
       }
     }
 
@@ -103,13 +94,11 @@
       display: flex;
       fill: var(--text-color);
       justify-content: center;
-      min-width: 4rem;
       max-width: 4rem;
     }
 
     &--colorMode {
       @media(min-width: $tablet) {
-        min-width: 6rem;
         max-width: 6rem;
       }
 
@@ -123,13 +112,9 @@
 
   &__logout {
     display: none;
-  }
-  
-  &__logout.loggedIn {
-    @include buttonRounded;
-    display: none;
-
+    
     @media(min-width: $largeTablet) {
+      @include buttonRounded;
       display: block;
     }
   }

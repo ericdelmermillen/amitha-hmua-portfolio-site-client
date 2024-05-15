@@ -24,19 +24,18 @@ const Nav = ({ handleLogOut }) => {
    const handleHomeClick = () => {
     handleNavigateHome(true);
     handleNavClick();
-   }
+   };
 
    const handleNavClick = () => {
     scrollToTop()
     setShowFloatingButton(true)
     handleNavLinkClick()
-   }
+   };
   
   return (
     <>
       <nav className={`nav ${prevScrollYPos < scrollYPos ? "hide": ""}`}>
         <div className="nav__inner">
-
           <Link 
             to={'/work'}
             onClick={handleHomeClick}
@@ -49,32 +48,28 @@ const Nav = ({ handleLogOut }) => {
             </div> 
           </Link>
           <ul className="nav__links">
-            <li 
-              className="nav__link nav__link--work"
-            >
-              <NavSelect
-                selectOptions={tags}
-              />
+            <li className="nav__link nav__link--work">
+              <NavSelect selectOptions={tags} />
             </li>
             <Link 
               to={'/bio'}
               onClick={handleNavClick}
             >
-              <li className="nav__link nav__link--bio">BIO</li>
+              <li className="nav__link nav__link--bio">
+                BIO
+              </li>
             </Link>
             <Link 
               to={'/contact'}
               onClick={handleNavClick}
             >
-              <li className="nav__link">CONTACT</li>
+              <li className="nav__link">
+                CONTACT
+              </li>
             </Link>
             <a href="https://www.instagram.com/amitha_hmua/" target="_blank">
-              <li 
-                className="nav__link nav__link--instagram"
-              >
-                <Instagram    
-                  className="nav__link--instagram"
-                />
+              <li className="nav__link nav__link--instagram">
+                <Instagram className="nav__link--instagram" />
               </li>
             </a>
             <li className="nav__link nav__link--colorMode">
@@ -85,12 +80,12 @@ const Nav = ({ handleLogOut }) => {
           {isLoggedIn 
 
             ? <h4 
-                className={`nav__logout ${isLoggedIn && "loggedIn"}`}
+                className="nav__logout"
                 onClick={handleLogOut}
-                >
-                  Logout
+              >
+                Logout
               </h4>
-            
+
             : null
           }
           
