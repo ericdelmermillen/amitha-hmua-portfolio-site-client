@@ -3,10 +3,17 @@
 
 .navSelect {
   height: 3rem;
+  margin-inline-end: 0;
+  max-width: 17.25rem;
+  min-width: 17.25rem;
   padding: 0;
   position: relative;
   width: 100%;
   z-index: 1;
+  
+  @media(min-width: $largeTablet) {
+    margin-inline-end: 1rem;
+  }
   
   &.tall {
     z-index: 2;
@@ -86,17 +93,21 @@
   }
 
   &__down {
-    height: 0.75rem;
+    align-items: center;
+    border: 2px solid red;
+    display: flex;
+    height: 3rem;
     position: absolute;
     right: 0.60rem;
-    top: 42.5%;
-    transform: translateY(-85%);
+    top: 0;
+    justify-content: center;
+    width: 3rem;
     
     @media(min-width: $largeTablet) {
       right: 0.65rem;
-      top: 50%;
-      transform: translateY(-90%);
-      width: 0.75rem;
+      // top: 50%;
+      // transform: translateY(-90%);
+      // width: 0.75rem;
     }
     
     &__stroke {
