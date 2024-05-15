@@ -13,7 +13,8 @@ const SideNav = ({ handleLogOut }) => {
     setShowSideNav,
     setShowFloatingButton,
     tags,
-    minLoadingInterval
+    minLoadingInterval,
+    handleNavLinkClick
    } = useContext(AppContext);
 
   const location = useLocation();
@@ -21,6 +22,8 @@ const SideNav = ({ handleLogOut }) => {
   
   const handleNavLinkBio = () => {
     setShowFloatingButton(true);
+    handleNavLinkClick();
+
     if(location.pathname === "/bio") {
       setShowSideNav(false);
       toast.info("Already on Bio");
@@ -34,6 +37,8 @@ const SideNav = ({ handleLogOut }) => {
   
   const handleNavLinkContact = () => { 
     setShowFloatingButton(true);
+    handleNavLinkClick();
+    
     if(location.pathname === "/contact") {
       setShowSideNav(false);
       toast.info("Already on Contact");

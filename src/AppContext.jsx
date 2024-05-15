@@ -42,6 +42,9 @@ export const AppProvider = ({ children }) => {
   const [ tags, setTags ] = useState([]);
   const [ selectedTag, setSelectedTag ] = useState(null);
   const [ shouldUpdateTags, setShouldUpdateTags ] = useState(false);
+
+  // --
+  const [ selectValue, setSelectValue ] = useState(null);
   
   const navigate = useNavigate(); 
 
@@ -55,11 +58,12 @@ export const AppProvider = ({ children }) => {
     } 
 
     navigate('/work');
+    setSelectValue(null);
     setShouldUpdateAllShoots(true);
     setShouldUpdateFilteredShoots(false);
 
     } else if(!updateAllShoots && updateFilteredShoots && tagObj) {
-      console.log(`update ${tagObj.tag_name} shoots`);
+      // console.log(`update ${tagObj.tag_name} shoots`);
 
       navigate(`/work?tag=${tagObj.tag_name}`);
 
@@ -68,6 +72,10 @@ export const AppProvider = ({ children }) => {
     }
     setShowFloatingButton(true);
   };
+
+  const handleNavLinkClick = () => {
+    setSelectValue(null);
+  }
 
   // fetch tags
   useEffect(() => {
@@ -165,7 +173,12 @@ export const AppProvider = ({ children }) => {
     setShouldUpdateAllShoots, 
     shouldUpdateFilteredShoots, 
     setShouldUpdateFilteredShoots,
-    handleNavigateHome
+
+    handleNavigateHome,
+    handleNavLinkClick,
+    
+    selectValue, 
+    setSelectValue
    }
   
   return (

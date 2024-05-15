@@ -17,7 +17,8 @@ const Nav = ({ handleLogOut }) => {
     prevScrollYPos, 
     setShowFloatingButton,
     tags, 
-    handleNavigateHome
+    handleNavigateHome,
+    handleNavLinkClick
    } = useContext(AppContext);
 
    const handleHomeClick = () => {
@@ -28,6 +29,7 @@ const Nav = ({ handleLogOut }) => {
    const handleNavClick = () => {
     scrollToTop()
     setShowFloatingButton(true)
+    handleNavLinkClick()
    }
   
   return (

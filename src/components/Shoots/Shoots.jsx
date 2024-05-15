@@ -175,59 +175,59 @@ const Shoots = () => {
   }
 
     // fetch shoots
-    useEffect(() => {
-      const fetchShoots = async () => {
+  // useEffect(() => {
+  //   const fetchShoots = async () => {
+      
+  //     // console.log("fetchShoots ")
+  //     if(!location.search.includes('tag')) {
         
-        // console.log("fetchShoots ")
-        if(!location.search.includes('tag')) {
+  //       if(shouldUpdate) {
+  //         setIsLoading(true);
           
-          if(shouldUpdate) {
-            setIsLoading(true);
+  //         try {
             
-            try {
+  //           const response = await fetch(`${BASE_URL}/shoots/all?page=${currentPage}&limit=${itemsPerPage}`);
+            
+  //           if(response.ok) {
+  //             const data = await response.json();
               
-              const response = await fetch(`${BASE_URL}/shoots/all?page=${currentPage}&limit=${itemsPerPage}`);
+  //             let filteredData = [...data];
               
-              if(response.ok) {
-                const data = await response.json();
+  //             if(isOnShootDetails) {
+  //               const currentShoot = shoot_id;
+  //               filteredData = data.filter(shoot => shoot.shoot_id !== +currentShoot);
+  //             }            
+              
+  //             setShootsData([...shootsData, ...filteredData]);
+              
+  //             setTimeout(() => {
+  //               setIsLoading(false); 
+  //               }, minLoadingInterval);
                 
-                let filteredData = [...data];
-                
-                if(isOnShootDetails) {
-                  const currentShoot = shoot_id;
-                  filteredData = data.filter(shoot => shoot.shoot_id !== +currentShoot);
-                }            
-                
-                setShootsData([...shootsData, ...filteredData]);
-                
-                setTimeout(() => {
-                  setIsLoading(false); 
-                  }, minLoadingInterval);
-                  
-                if(isLoadingInitial) {
-                  setIsLoadingInitial(false);
-                }
-                
-                if(data.length === 0) {
-                  setShouldUpdate(false);
-                  setTimeout(() => {
-                    setIsLoading(false)
-                  }, minLoadingInterval);
-                }
-              }
-            } catch(error) {
-              console.log(`Error fetching shoots: ${error}`)
-              toast.error(`Failed to fetch shoots:, ${error}`);
-              setTimeout(() => {
-                setIsLoading(false);
-              }, minLoadingInterval);
-                      
-            }
-          }
-        } 
-      }
-      fetchShoots();
-    }, [currentPage, currentShootId, selectedTag, shouldUpdateShoots, shootsData]);
+  //             if(isLoadingInitial) {
+  //               setIsLoadingInitial(false);
+  //             }
+              
+  //             if(data.length === 0) {
+  //               setShouldUpdate(false);
+  //               setTimeout(() => {
+  //                 setIsLoading(false)
+  //               }, minLoadingInterval);
+  //             }
+  //           }
+  //         } catch(error) {
+  //           console.log(`Error fetching shoots: ${error}`)
+  //           toast.error(`Failed to fetch shoots:, ${error}`);
+  //           setTimeout(() => {
+  //             setIsLoading(false);
+  //           }, minLoadingInterval);
+                    
+  //         }
+  //       }
+  //     } 
+  //   }
+  //   fetchShoots();
+  // }, [currentPage, currentShootId, selectedTag, shouldUpdateShoots, shootsData]);
 
 
   // fetch shoots by tag
