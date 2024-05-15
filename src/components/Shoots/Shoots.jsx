@@ -48,10 +48,10 @@ const Shoots = () => {
 
   const [ activeDragShoot, setActiveDragShoot ] = useState(null); 
 
-  // const itemsPerPage = 2;
+  const itemsPerPage = 2;
   // const itemsPerPage = 4;
   // const itemsPerPage = 6;
-  const itemsPerPage = 12;
+  // const itemsPerPage = 12;
 
   const [ searchTerm, setSearchTerm ] = useState(location.search.split("=")[1] || null);
     
@@ -349,6 +349,7 @@ const Shoots = () => {
                 isOrderEditable={isOrderEditable}
                 handleShootDragStart={handleShootDragStart}
                 handleDropShootTarget={handleDropShootTarget}
+                tags={shoot.tags}
               />
             </Link>
           ))}

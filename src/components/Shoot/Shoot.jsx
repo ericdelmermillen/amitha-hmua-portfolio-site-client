@@ -14,7 +14,8 @@ const Shoot = ({
   handleNewShootId,
   isOrderEditable, 
   handleShootDragStart,
-  handleDropShootTarget
+  handleDropShootTarget,
+  tags
 }) => {
 
   const { 
@@ -120,6 +121,16 @@ const Shoot = ({
                 ? photographers.join(", ") 
                 : photographers}
           </p>
+        </div>
+        <div className="shoot__tags">
+          {tags.map(tag => (
+            <span 
+              className='shoot__tag'
+              key={tag}
+            >
+              {tag}
+            </span>
+          ))}
         </div>
       </div>
     </>
