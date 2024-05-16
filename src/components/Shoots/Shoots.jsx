@@ -42,13 +42,13 @@ const Shoots = () => {
   const [ shootsData, setShootsData ] = useState([]);
   const [ currentPage, setCurrentPage ] = useState(1);
   const [ shouldUpdate, setShouldUpdate ] = useState(true);
-  const [ isLoadingInitial, setIsLoadingInitial ] = useState(true);
   const [ isOnShootDetails, setIsOnShootDetails ] = useState(location.pathname.includes('/shoot/'));
   const [ currentShootId, setCurrentShootId ] = useState(shoot_id);
   const [ isOrderEditable, setIsOrderEditable ] = useState(false);
 
   const [ activeDragShoot, setActiveDragShoot ] = useState(null); 
 
+  // const itemsPerPage = 1;
   const itemsPerPage = 2;
   // const itemsPerPage = 4;
   // const itemsPerPage = 6;
@@ -56,17 +56,20 @@ const Shoots = () => {
 
   const [ searchTerm, setSearchTerm ] = useState(location.search.split("=")[1] || null);
 
-  const [ finalPageLoaded, setFinalPageLoaded ] = useState(false)
+  const [ finalShootsPageLoaded, setFinalShootsPageLoaded ] = useState(false);
 
   // handleOverScroll --
   const handleOverScroll = () => {
-    const windowHeight = window.innerHeight;
-    const fullHeight = document.body.scrollHeight;
-    const distanceToBottom = fullHeight - windowHeight - window.scrollY;
+    if(!finalShootsPageLoaded) {
 
-    if(distanceToBottom <= 100) {
-      console.log(`distanceToBottom: ${distanceToBottom}`)
-      // setFinalPageLoaded(true)
+      const windowHeight = window.innerHeight;
+      const fullHeight = document.body.scrollHeight;
+      const distanceToBottom = fullHeight - windowHeight - window.scrollY;
+      
+      if(distanceToBottom <= 100) {
+        console.log("fetch again")
+        setShouldUpdateAllShoots(true);
+      }
     }
   }
   // --
@@ -190,61 +193,49 @@ const Shoots = () => {
     setActiveDragShoot(null);
   };
 
-    // fetch shoots
-  // useEffect(() => {
-  //   const fetchShoots = async () => {
+  // revised fetchAllShoots useEffect --
+  useEffect(() => {
+    if(!finalShootsPageLoaded && !location.search.includes('tag')) {
+      setIsLoading(true);
       
-  //     // console.log("fetchShoots ")
-  //     if(!location.search.includes('tag')) {
+      const fetchShoots = async () => {
         
-  //       if(shouldUpdate) {
-  //         setIsLoading(true);
-          
-  //         try {
-            
-  //           const response = await fetch(`${BASE_URL}/shoots/all?page=${currentPage}&limit=${itemsPerPage}`);
-            
-  //           if(response.ok) {
-  //             const data = await response.json();
-              
-  //             let filteredData = [...data];
-              
-  //             if(isOnShootDetails) {
-  //               const currentShoot = shoot_id;
-  //               filteredData = data.filter(shoot => shoot.shoot_id !== +currentShoot);
-  //             }            
-              
-  //             setShootsData([...shootsData, ...filteredData]);
-              
-  //             setTimeout(() => {
-  //               setIsLoading(false); 
-  //               }, minLoadingInterval);
-                
-  //             if(isLoadingInitial) {
-  //               setIsLoadingInitial(false);
-  //             }
-              
-  //             if(data.length === 0) {
-  //               setShouldUpdate(false);
-  //               setTimeout(() => {
-  //                 setIsLoading(false)
-  //               }, minLoadingInterval);
-  //             }
-  //           }
-  //         } catch(error) {
-  //           console.log(`Error fetching shoots: ${error}`)
-  //           toast.error(`Failed to fetch shoots:, ${error}`);
-  //           setTimeout(() => {
-  //             setIsLoading(false);
-  //           }, minLoadingInterval);
-                    
-  //         }
-  //       }
-  //     } 
-  //   }
-  //   fetchShoots();
-  // }, [currentPage, currentShootId, selectedTag, shouldUpdateShoots, shootsData]);
+        try {
+          const response = await fetch(`${BASE_URL}/shoots/all?page=${currentPage}&limit=${itemsPerPage}`);
 
+          if(response.ok) {
+            const data = await response.json();
+            setCurrentPage(currentPage + 1);
+
+            let filteredData = [...data];
+
+            if(isOnShootDetails) {
+              const currentShoot = shoot_id;
+              filteredData = data.filter(shoot => shoot.shoot_id !== +currentShoot);
+            }    
+
+            const updatedShootsData = [...shootsData, ...filteredData];
+
+            if(!data.length) {
+              setFinalShootsPageLoaded(true);
+            } else {
+              setShootsData(updatedShootsData)
+            }
+          }
+        } catch(error) {
+          console.log(`Error fetching shoots: ${error}`)
+          toast.error(`Failed to fetch shoots:, ${error}`);
+        } finally {
+          setTimeout(() => {
+          setIsLoading(false); 
+          setShouldUpdateAllShoots(false);
+          }, minLoadingInterval);
+        }
+      }
+      fetchShoots();
+    }
+
+  }, [shouldUpdateAllShoots]);
 
   // fetch shoots by tag
   useEffect(() => {
@@ -333,7 +324,7 @@ const Shoots = () => {
 
   // handleOverScroll useEffect --
   useEffect(() => {
-    if(!finalPageLoaded) {
+    if(!finalShootsPageLoaded) {
       handleOverScroll();
     }
   }, [scrollYPos, prevScrollYPos])

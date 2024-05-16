@@ -51,7 +51,7 @@ export const AppProvider = ({ children }) => {
   const handleNavigateHome = (updateAllShoots, updateFilteredShoots, tagObj) => {    
 
     if(updateAllShoots && !updateFilteredShoots) {
-      console.log("update all shoots")
+      // console.log("update all shoots")
       if(location.pathname === "/" || location.pathname === "/work" && !selectedTag) {
         setSelectedTag(null);
         return toast.info("Already on Work");
