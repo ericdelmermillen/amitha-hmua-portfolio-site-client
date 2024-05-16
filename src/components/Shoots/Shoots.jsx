@@ -16,6 +16,7 @@ const Shoots = () => {
     isLoggedIn,
     setIsLoggedIn,
     scrollYPos, 
+    prevScrollYPos,
     setPrevScrollYPos,
     setSelectedShoot,
     shouldUpdateShoots, 
@@ -54,19 +55,34 @@ const Shoots = () => {
   // const itemsPerPage = 12;
 
   const [ searchTerm, setSearchTerm ] = useState(location.search.split("=")[1] || null);
+
+  const [ finalPageLoaded, setFinalPageLoaded ] = useState(false)
+
+  // handleOverScroll --
+  const handleOverScroll = () => {
+    const windowHeight = window.innerHeight;
+    const fullHeight = document.body.scrollHeight;
+    const distanceToBottom = fullHeight - windowHeight - window.scrollY;
+
+    if(distanceToBottom <= 100) {
+      console.log(`distanceToBottom: ${distanceToBottom}`)
+      // setFinalPageLoaded(true)
+    }
+  }
+  // --
     
   const handleNewShootId = (shootId) => {
     setShootsData([]);
     setCurrentPage(1);
     setCurrentShootId(shootId);
     setShouldUpdate(true);
-  }
+  };
 
   const makeOrderEditable = () => {
     setIsOrderEditable(true);
     setActiveDragShoot(null);
     toast.info("Drag shoots into desired order then Save to update")
-  }
+  };
 
   const saveNewOrder = async () => {
     setIsOrderEditable(false);
@@ -114,12 +130,12 @@ const Shoots = () => {
 
     setIsOrderEditable(false);
     setActiveDragShoot(null);
-  }
+  };
 
   const handleShootDragStart = (shoot_id) => {
     const draggedShoot = shootsData.find(shoot => shoot.shoot_id === shoot_id);
     setActiveDragShoot(draggedShoot);
-  }
+  };
 
   const handleDropShootTarget = (dropTargetShootId, dropTargetShootDisplayOrder) => {
     const activeDraggedShootId = activeDragShoot.shoot_id;
@@ -172,7 +188,7 @@ const Shoots = () => {
   
     setShootsData(updatedShootsData);
     setActiveDragShoot(null);
-  }
+  };
 
     // fetch shoots
   // useEffect(() => {
@@ -270,50 +286,59 @@ const Shoots = () => {
   }, [selectedTag])
   
   // pagination useEffect
-  useEffect(() => {
-    if(shouldUpdate) {
+  // useEffect(() => {
+  //   if(shouldUpdate) {
 
-      const handleScrollY = () => {
-        const newScrollYPos = window.scrollY;
-        const documentHeight = document.documentElement.scrollHeight;
-        const windowHeight = window.innerHeight;
+  //     const handleScrollY = () => {
+  //       const newScrollYPos = window.scrollY;
+  //       const documentHeight = document.documentElement.scrollHeight;
+  //       const windowHeight = window.innerHeight;
         
-        if(scrollYPos !== undefined && setPrevScrollYPos !== undefined && newScrollYPos !== scrollYPos) {
-          setSelectedShoot(null);
-        } else if (newScrollYPos + windowHeight >= documentHeight - 100) {
-          if(!isLoading) {
-            setCurrentPage((prevPage) => prevPage + 1);
-          }
-        }
-      };
+  //       if(scrollYPos !== undefined && setPrevScrollYPos !== undefined && newScrollYPos !== scrollYPos) {
+  //         setSelectedShoot(null);
+  //       } else if (newScrollYPos + windowHeight >= documentHeight - 100) {
+  //         if(!isLoading) {
+  //           setCurrentPage((prevPage) => prevPage + 1);
+  //         }
+  //       }
+  //     };
       
-      handleScrollY();
+  //     handleScrollY();
       
-      window.addEventListener('scroll', handleScrollY);
+  //     window.addEventListener('scroll', handleScrollY);
       
-      return () => {
-        window.removeEventListener('scroll', handleScrollY);
-      };
-    } 
-  }, [scrollYPos, isLoading]);
+  //     return () => {
+  //       window.removeEventListener('scroll', handleScrollY);
+  //     };
+  //   } 
+  // }, [scrollYPos, isLoading]);
 
 
   // initial load useEffect
+  // useEffect(() => {
+  //   let searchedTerm;
+
+  //   if(tags && searchTerm) {
+  //     searchedTerm = tags.find(tag => tag.tag_name.toLowerCase() === searchTerm);
+  //   }
+
+  //   if(searchedTerm) {
+  //     // console.log(searchedTerm)
+  //     setSelectedTag(searchedTerm)
+  //     setShouldUpdateShoots(true)
+  //   }
+
+  //   scrollToTop();
+  // }, [searchTerm, tags])
+
+  // handleOverScroll useEffect --
   useEffect(() => {
-    let searchedTerm;
-
-    if(tags && searchTerm) {
-      searchedTerm = tags.find(tag => tag.tag_name.toLowerCase() === searchTerm);
+    if(!finalPageLoaded) {
+      handleOverScroll();
     }
+  }, [scrollYPos, prevScrollYPos])
 
-    if(searchedTerm) {
-      // console.log(searchedTerm)
-      setSelectedTag(searchedTerm)
-      setShouldUpdateShoots(true)
-    }
-
-    scrollToTop();
-  }, [searchTerm, tags])
+  // --
 
   return (
     <>
