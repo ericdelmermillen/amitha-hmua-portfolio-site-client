@@ -26,6 +26,7 @@ export const AppProvider = ({ children }) => {
   // experiment ---
   const [ shouldUpdateAllShoots, setShouldUpdateAllShoots ] = useState(false);
   const [ shouldUpdateFilteredShoots, setShouldUpdateFilteredShoots ] = useState(false);
+  const [ shootsData, setShootsData ] = useState([]);
   
   
   const [ selectedPhotogModelTag, setSelectedPhotogModelTag ] = useState({});
@@ -49,28 +50,26 @@ export const AppProvider = ({ children }) => {
   const navigate = useNavigate(); 
 
   const handleNavigateHome = (updateAllShoots, updateFilteredShoots, tagObj) => {    
-
+    
     if(updateAllShoots && !updateFilteredShoots) {
-      // console.log("update all shoots")
       if(location.pathname === "/" || location.pathname === "/work" && !selectedTag) {
         setSelectedTag(null);
+        navigate('/work');
         return toast.info("Already on Work");
-    } 
-
-    navigate('/work');
-    setSelectValue(null);
-    setShouldUpdateAllShoots(true);
-    setShouldUpdateFilteredShoots(false);
-
+      }
+      
+      navigate('/work');
+      setSelectValue(null);
+      setShouldUpdateAllShoots(true);
+      setShouldUpdateFilteredShoots(false);
+      
     } else if(!updateAllShoots && updateFilteredShoots && tagObj) {
-      console.log(`update ${tagObj.tag_name} shoots`);
-
       navigate(`/work?tag=${tagObj.tag_name}`);
-
       setShouldUpdateAllShoots(false);
       setShouldUpdateFilteredShoots(true);
     }
     setShowFloatingButton(true);
+    setShootsData([]);
   };
 
   const handleNavLinkClick = () => {
@@ -174,6 +173,8 @@ export const AppProvider = ({ children }) => {
     setShouldUpdateAllShoots, 
     shouldUpdateFilteredShoots, 
     setShouldUpdateFilteredShoots,
+    shootsData, 
+    setShootsData,
 
     handleNavigateHome,
     handleNavLinkClick,

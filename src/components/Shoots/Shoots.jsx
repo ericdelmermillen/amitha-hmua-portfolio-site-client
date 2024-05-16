@@ -33,13 +33,18 @@ const Shoots = () => {
     shouldUpdateAllShoots, 
     setShouldUpdateAllShoots, 
     shouldUpdateFilteredShoots, 
-    setShouldUpdateFilteredShoots
+    setShouldUpdateFilteredShoots,
+    shootsData, 
+    setShootsData
   } = useContext(AppContext);
+
+  // const [ shouldUpdateAllShoots, setShouldUpdateAllShoots ] = useState(false);
+  // const [ shouldUpdateFilteredShoots, setShouldUpdateFilteredShoots ] = useState(false);
   
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [ shootsData, setShootsData ] = useState([]);
+  // const [ shootsData, setShootsData ] = useState([]);
   const [ currentPage, setCurrentPage ] = useState(1);
   const [ shouldUpdate, setShouldUpdate ] = useState(true);
   const [ isOnShootDetails, setIsOnShootDetails ] = useState(location.pathname.includes('/shoot/'));
@@ -195,6 +200,7 @@ const Shoots = () => {
 
   // revised fetchAllShoots useEffect --
   useEffect(() => {
+    console.log("updateAllShoots")
     if(!finalShootsPageLoaded && !location.search.includes('tag')) {
       setIsLoading(true);
       
@@ -241,6 +247,11 @@ const Shoots = () => {
   useEffect(() => {
     if(selectedTag) {
       setIsLoading(true);
+      setShouldUpdateAllShoots(false);
+
+      if(currentPage === 1) {
+        setShootsData([]);
+      }
       
       const fetchShootsByTag = async () => {
         
@@ -271,38 +282,10 @@ const Shoots = () => {
           toast.error(`Error fetching shoots...`)
         }
       }
-      fetchShootsByTag()
+      fetchShootsByTag();
     }
 
-  }, [selectedTag])
-  
-  // pagination useEffect
-  // useEffect(() => {
-  //   if(shouldUpdate) {
-
-  //     const handleScrollY = () => {
-  //       const newScrollYPos = window.scrollY;
-  //       const documentHeight = document.documentElement.scrollHeight;
-  //       const windowHeight = window.innerHeight;
-        
-  //       if(scrollYPos !== undefined && setPrevScrollYPos !== undefined && newScrollYPos !== scrollYPos) {
-  //         setSelectedShoot(null);
-  //       } else if (newScrollYPos + windowHeight >= documentHeight - 100) {
-  //         if(!isLoading) {
-  //           setCurrentPage((prevPage) => prevPage + 1);
-  //         }
-  //       }
-  //     };
-      
-  //     handleScrollY();
-      
-  //     window.addEventListener('scroll', handleScrollY);
-      
-  //     return () => {
-  //       window.removeEventListener('scroll', handleScrollY);
-  //     };
-  //   } 
-  // }, [scrollYPos, isLoading]);
+  }, [selectedTag]);
 
 
   // initial load useEffect
@@ -322,6 +305,7 @@ const Shoots = () => {
   //   scrollToTop();
   // }, [searchTerm, tags])
 
+
   // handleOverScroll useEffect --
   useEffect(() => {
     if(!finalShootsPageLoaded) {
@@ -329,7 +313,18 @@ const Shoots = () => {
     }
   }, [scrollYPos, prevScrollYPos])
 
-  // --
+  // useEffect(() => {
+  //   // setShootsData([]);
+  //   setCurrentPage(1);
+
+  //   if(!location.search.includes("tag")) {
+  //     setShouldUpdateAllShoots(true);
+  //     setShouldUpdateFilteredShoots(false);
+  //     console.log("!tag")
+  //   }
+  // }, [location])
+
+  // // --
 
   return (
     <>
