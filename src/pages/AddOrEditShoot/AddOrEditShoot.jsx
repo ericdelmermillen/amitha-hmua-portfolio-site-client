@@ -29,7 +29,7 @@ const AddOrEditShoot = ({ shootAction }) => {
     shouldUpdateModels, 
     setShouldUpdateModels,
     setShouldUpdateShoots,
-    setShowFloatingButton,
+    // setShowFloatingButton,
     tags
   } = useContext(AppContext);
 
@@ -358,7 +358,7 @@ const handleSubmitShoot = async (e) => {
         setShouldUpdateShoots(true);
         setTimeout(() => {
           navigate('/work');
-          setShowFloatingButton(true);
+          // setShowFloatingButton(true);
         }, minLoadingInterval);
       }
       
@@ -373,18 +373,18 @@ const handleSubmitShoot = async (e) => {
 
       setIsLoading(false);
       navigate('/work');
-      setShowFloatingButton(true);
+      // setShowFloatingButton(true);
     }
   } else if(!isLoggedIn) {
     toast.error("Not logged in...");
     navigate('/work');
-    setShowFloatingButton(true);
+    // setShowFloatingButton(true);
   } 
 };
 
   const handleCancel = () => {
     navigate('/work');
-    setShowFloatingButton(true);
+    // setShowFloatingButton(true);
   };
   
   // fetch photographers
@@ -526,7 +526,7 @@ const handleSubmitShoot = async (e) => {
         } catch(error) {
           console.log(error)
           navigate('/notfound')
-          setShowFloatingButton(true);
+          // setShowFloatingButton(true);
         }
       }
       fetchShootDetails();
@@ -541,13 +541,6 @@ const handleSubmitShoot = async (e) => {
   // initial load useEffect
   useEffect(() => {
     setIsLoading(true);
-    const isEditing = location.pathname.includes("edit");
-    const isAdding = location.pathname.includes("add");
-
-    if(isAdding || isEditing) {
-      setShowFloatingButton(false);
-    }
-    
     setIsInitialLoad(false);
 
     setTimeout(() => {

@@ -14,7 +14,6 @@ const Nav = ({ handleLogOut }) => {
     setShowSideNav,
     scrollYPos, 
     prevScrollYPos, 
-    setShowFloatingButton,
     tags, 
     handleNavigateHome,
     handleNavLinkClick
@@ -26,7 +25,6 @@ const Nav = ({ handleLogOut }) => {
    };
 
    const handleNavClick = () => {
-    setShowFloatingButton(true)
     handleNavLinkClick()
    };
   

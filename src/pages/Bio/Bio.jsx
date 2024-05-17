@@ -9,8 +9,6 @@ const Bio = () => {
     minLoadingInterval, 
     setMinLoadingInterval,
     setShowSideNav,
-    showfloatingButton,
-    setShowfloatingButton
   } = useContext(AppContext);
 
   const [ componentIsLoaded, setIsComponentLoaded ] = useState(false);
@@ -24,12 +22,6 @@ const Bio = () => {
 
   // initial load useEffect
   useEffect(() => {
-    const isEditing = location.pathname.includes("edit");
-    const isAdding = location.pathname.includes("add");
-
-    if(isAdding || isEditing) {
-      setShowfloatingButton(false)
-    }
     setIsLoading(true);
     setShowSideNav(false);
   }, []); 

@@ -61,7 +61,6 @@ export const AppProvider = ({ children }) => {
     } else if(!updateAllShoots && updateFilteredShoots && tagObj) {
       navigate(`/work?tag=${tagObj.tag_name}`);
     }
-    setShowFloatingButton(true);
   };
   // ---
 
@@ -108,6 +107,8 @@ export const AppProvider = ({ children }) => {
     const pathname = location.pathname;
     const search = location.search;
     const currentURL = pathname.concat(search)
+    const URLIncludesEdit = pathname.includes("edit")
+    const URLIncludesAdd = pathname.includes("add")
 
     if(currentURL === prevURL) {
       console.log("url did not change");
@@ -116,6 +117,16 @@ export const AppProvider = ({ children }) => {
       console.log(`prevURL: ${prevURL}`)
       console.log(`currentURL: ${currentURL}`)
     }
+
+    
+    if(URLIncludesEdit || URLIncludesAdd) {
+      console.log("on add or edit")
+      setShowFloatingButton(false);
+    } else if (!URLIncludesEdit || !URLIncludesAdd) {
+      console.log("not on add or edit")
+      setShowFloatingButton(true);
+    }
+    
     scrollToTop();
   }, [location]);
 

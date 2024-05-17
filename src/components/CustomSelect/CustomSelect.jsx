@@ -17,9 +17,6 @@ const CustomSelect = ({
   entryNameType
  }) => {
   
-  // console.log(chooserName)
-  // console.log(selectOptions)
-  
   const {
     showPhotogModelTagModal, 
     setShowPhotogModelTagModal,

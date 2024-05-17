@@ -13,7 +13,6 @@ const SideNav = ({ handleLogOut }) => {
     setShowSideNav,
     minLoadingInterval,
     tags,
-    setShowFloatingButton,
     handleNavLinkClick
    } = useContext(AppContext);
 
@@ -21,7 +20,6 @@ const SideNav = ({ handleLogOut }) => {
   const navigate = useNavigate();
   
   const handleNavLinkBio = () => {
-    setShowFloatingButton(true);
     handleNavLinkClick();
 
     if(location.pathname === "/bio") {
@@ -36,7 +34,6 @@ const SideNav = ({ handleLogOut }) => {
   };
   
   const handleNavLinkContact = () => { 
-    setShowFloatingButton(true);
     handleNavLinkClick();
     
     if(location.pathname === "/contact") {
@@ -51,7 +48,6 @@ const SideNav = ({ handleLogOut }) => {
   };
   
   const handleSideNavLogout = () => {
-    setShowFloatingButton(true);
     setTimeout(() => {
       handleLogOut();
     }, 500);

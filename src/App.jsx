@@ -44,7 +44,6 @@ const App = () => {
     minLoadingInterval, 
     setMinLoadingInterval,
     showFloatingButton, 
-    setShowFloatingButton,
     tags,
     setTags,
     selectedTag, 
