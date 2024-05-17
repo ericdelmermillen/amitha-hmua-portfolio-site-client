@@ -1,5 +1,5 @@
 import { useEffect, useContext } from 'react';
-import { Routes, Route, useNavigate, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import { scrollToTop } from './utils/utils.js';
 import AddIcon from './assets/icons/AddIcon.jsx';
@@ -23,7 +23,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
   const navigate = useNavigate();
-  // const location = useLocation();
   
   const { 
     isLoggedIn, 
@@ -138,7 +137,6 @@ const App = () => {
         <SideNav handleLogOut={handleLogOut}/>
 
         <Routes>
-          {/* <Route path="/" element={<Home />} /> */}
           <Route path="/" element={<Navigate to="/work" />} />
           <Route path="/work" element={<Home />} />
           {selectedTag 

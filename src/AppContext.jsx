@@ -37,28 +37,27 @@ export const AppProvider = ({ children }) => {
   const [ selectedTag, setSelectedTag ] = useState(null);
   const [ shouldUpdateTags, setShouldUpdateTags ] = useState(false);
 
-  // --
   const [ selectValue, setSelectValue ] = useState(null);
   
   const navigate = useNavigate(); 
 
+  // handleNavigateHome ---
   const handleNavigateHome = (updateAllShoots, updateFilteredShoots, tagObj) => {    
     
     if(updateAllShoots && !updateFilteredShoots) {
-      if(location.pathname === "/" || location.pathname === "/work" && !selectedTag) {
+      if(location.pathname === "/work" && !selectedTag) {
         setSelectedTag(null);
         navigate('/work');
-        return toast.info("Already on Work");
       }
       
       navigate('/work');
       setSelectValue(null);
-      
     } else if(!updateAllShoots && updateFilteredShoots && tagObj) {
       navigate(`/work?tag=${tagObj.tag_name}`);
     }
     setShowFloatingButton(true);
   };
+  // ---
 
   const handleNavLinkClick = () => {
     setSelectValue(null);

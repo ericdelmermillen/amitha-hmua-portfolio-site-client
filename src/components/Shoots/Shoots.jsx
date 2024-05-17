@@ -96,7 +96,7 @@ const Shoots = () => {
     if(isLoggedIn) {      
       toast.info("Updating database. One sec...");
 
-      const new_shoot_order = []
+      const new_shoot_order = [];
   
       for(const shoot of shootsData) {
         const updateObj = {};
@@ -190,10 +190,8 @@ const Shoots = () => {
   };
 
   // console.log(location)
-  // revised fetchAllShoots useEffect --
+  // what if there is a search but it is not "tag"?
   useEffect(() => {
-    // console.log("updateAllShoots")
-    // if(!finalPageLoaded && !location.search.includes('tag')) {
     if(!finalPageLoaded && !location.search.includes('tag')) {
       setIsLoading(true);
       
@@ -263,10 +261,7 @@ const Shoots = () => {
             } else {
               setShootsData(updatedShootsData)
             }
-            
-            // console.log(data)
           }
-          
         } catch(error) {
           console.log(`Error fetching ${selectedTag.tag_name} shoots: ${error}`)
           toast.error(`Failed to fetch ${selectedTag.tag_name} shoots:, ${error}`);
@@ -276,12 +271,9 @@ const Shoots = () => {
             setShouldUpdateFilteredShoots(false);
           }, minLoadingInterval);
         }
-        
       }
-      fetchFilteredShoot()
-
+      fetchFilteredShoot();
     }
-
   }, [selectedTag, shouldUpdateFilteredShoots])
 
 
@@ -292,7 +284,9 @@ const Shoots = () => {
     }
   }, [scrollYPos, prevScrollYPos])
 
-  // useEffect(() => {
+  useEffect(() => {
+    console.log("location change")
+    scrollToTop();
   //   // setShootsData([]);
   //   setCurrentPage(1);
 
@@ -301,7 +295,7 @@ const Shoots = () => {
   //     setShouldUpdateFilteredShoots(false);
   //     console.log("!tag")
   //   }
-  // }, [location])
+  }, [location])
 
   // // --
 
