@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useContext } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import AppContext from '../../AppContext.jsx';
 import DownIcon from '../../assets/icons/DownIcon.jsx';
 import './NavSelect.scss';
@@ -18,6 +19,9 @@ const NavSelect = ({
     selectValue, 
     setSelectValue
   } = useContext(AppContext);
+
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const [ showOptions, setShowOptions ] = useState(false);
   const innerRef = useRef(null);
@@ -74,6 +78,29 @@ const NavSelect = ({
       innerRef.current.scrollTop = 0;
     }
   };
+
+  // handle refresh/initial mount with tag url query params and setting state for selectedTag
+  useEffect(() => {
+    if(location.search.includes("tag")) {
+      const locationTagName = location.search.split("=")[1];
+      setSelectValue(locationTagName);
+
+      if(selectOptions.length) {
+        const foundTag = selectOptions.find(tag => tag.tag_name.toLowerCase() === locationTagName.toLowerCase());
+
+        if(foundTag) {
+          setSelectedTag(foundTag);
+        } else if(!foundTag) {
+          setIsLoading(true);
+          navigate("/notfound");
+          setSelectValue(null);
+          setTimeout(() => {
+            setIsLoading(false);
+          }, [minLoadingInterval]);
+        }
+      }
+    }
+  }, [location, selectOptions]);
 
   useEffect(() => {
     if(scrollYPos > prevScrollYPos) {

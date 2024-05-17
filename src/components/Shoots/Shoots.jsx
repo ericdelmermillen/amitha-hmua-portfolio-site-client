@@ -72,7 +72,7 @@ const Shoots = () => {
       const distanceToBottom = fullHeight - windowHeight - window.scrollY;
       
       if(distanceToBottom <= 100) {
-        console.log("fetch again")
+        // console.log("fetch again")
         setShouldUpdateAllShoots(true);
       }
     }
@@ -200,7 +200,7 @@ const Shoots = () => {
 
   // revised fetchAllShoots useEffect --
   useEffect(() => {
-    console.log("updateAllShoots")
+    // console.log("updateAllShoots")
     if(!finalShootsPageLoaded && !location.search.includes('tag')) {
       setIsLoading(true);
       
