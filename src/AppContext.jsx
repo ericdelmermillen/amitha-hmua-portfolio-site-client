@@ -22,12 +22,6 @@ export const AppProvider = ({ children }) => {
 
   const [ selectedShoot, setSelectedShoot ] = useState(null);
   const [ shouldUpdateShoots, setShouldUpdateShoots ] = useState(false);
-
-  // experiment ---
-  const [ shouldUpdateAllShoots, setShouldUpdateAllShoots ] = useState(false);
-  const [ shouldUpdateFilteredShoots, setShouldUpdateFilteredShoots ] = useState(false);
-  const [ shootsData, setShootsData ] = useState([]);
-  
   
   const [ selectedPhotogModelTag, setSelectedPhotogModelTag ] = useState({});
 
@@ -38,7 +32,6 @@ export const AppProvider = ({ children }) => {
   
   const [ shouldUpdatePhotographers, setShouldUpdatePhotographers ] = useState(false);
   const [ shouldUpdateModels, setShouldUpdateModels ] = useState(false);
-
 
   const [ tags, setTags ] = useState([]);
   const [ selectedTag, setSelectedTag ] = useState(null);
@@ -60,16 +53,11 @@ export const AppProvider = ({ children }) => {
       
       navigate('/work');
       setSelectValue(null);
-      setShouldUpdateAllShoots(true);
-      setShouldUpdateFilteredShoots(false);
       
     } else if(!updateAllShoots && updateFilteredShoots && tagObj) {
       navigate(`/work?tag=${tagObj.tag_name}`);
-      setShouldUpdateAllShoots(false);
-      setShouldUpdateFilteredShoots(true);
     }
     setShowFloatingButton(true);
-    setShootsData([]);
   };
 
   const handleNavLinkClick = () => {
@@ -167,14 +155,6 @@ export const AppProvider = ({ children }) => {
     setTags,
     selectedTag, 
     setSelectedTag,
-
-
-    shouldUpdateAllShoots, 
-    setShouldUpdateAllShoots, 
-    shouldUpdateFilteredShoots, 
-    setShouldUpdateFilteredShoots,
-    shootsData, 
-    setShootsData,
 
     handleNavigateHome,
     handleNavLinkClick,

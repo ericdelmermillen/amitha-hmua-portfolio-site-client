@@ -28,22 +28,15 @@ const Shoots = () => {
     setSelectedTag,
     tags,
     setTags,
-
-    shouldUpdateAllShoots, 
-    setShouldUpdateAllShoots, 
-    shouldUpdateFilteredShoots, 
-    setShouldUpdateFilteredShoots,
-    shootsData, 
-    setShootsData
   } = useContext(AppContext);
 
-  // const [ shouldUpdateAllShoots, setShouldUpdateAllShoots ] = useState(false);
-  // const [ shouldUpdateFilteredShoots, setShouldUpdateFilteredShoots ] = useState(false);
+  const [ shouldUpdateAllShoots, setShouldUpdateAllShoots ] = useState(false);
+  const [ shouldUpdateFilteredShoots, setShouldUpdateFilteredShoots ] = useState(false);
   
   const location = useLocation();
   const navigate = useNavigate();
 
-  // const [ shootsData, setShootsData ] = useState([]);
+  const [ shootsData, setShootsData ] = useState([]);
   const [ currentPage, setCurrentPage ] = useState(1);
   const [ shouldUpdate, setShouldUpdate ] = useState(true);
   const [ isOnShootDetails, setIsOnShootDetails ] = useState(location.pathname.includes('/shoot/'));
@@ -271,7 +264,7 @@ const Shoots = () => {
               setShootsData(updatedShootsData)
             }
             
-            console.log(data)
+            // console.log(data)
           }
           
         } catch(error) {
