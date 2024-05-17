@@ -1,7 +1,6 @@
 import AppContext from '../../AppContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
-import { scrollToTop } from '../../utils/utils.js';
 import { toast } from 'react-toastify';
 import Shoots from '../../components/Shoots/Shoots.jsx';
 import './ShootDetails.scss';
@@ -34,7 +33,6 @@ const ShootDetails = () => {
 
   // useEffect for when shoot_id changes
   useEffect(() => {
-    scrollToTop();
     setIsLoading(true);
     
     const fetchShootDetails = async () => {
@@ -50,7 +48,6 @@ const ShootDetails = () => {
           const date = new Date(data.shoot_date);
           const formattedDate = `${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`;
           setFormattedDate(formattedDate);
-          scrollToTop();
           setPhotographers(data.photographers);
           setModels(data.models);
         } else {

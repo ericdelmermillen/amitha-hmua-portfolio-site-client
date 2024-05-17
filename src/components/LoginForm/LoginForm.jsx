@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import AppContext from '../../AppContext'; 
 import { Link, useNavigate } from 'react-router-dom';
-import { scrollToTop,isValidEmail, isValidPassword } from '../../utils/utils';
+import { isValidEmail, isValidPassword } from '../../utils/utils';
 import { toast } from 'react-toastify';
 import Hide from '../../assets/icons/Hide';
 import Show from '../../assets/icons/Show';
@@ -103,11 +103,6 @@ const LoginForm = () => {
       console.error('Error:', error);
     }
   };
-  
-
-  useEffect(() => {
-    scrollToTop();
-  }, []);
 
   return (
     <>

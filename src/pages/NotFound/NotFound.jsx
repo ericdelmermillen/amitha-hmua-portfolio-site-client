@@ -1,12 +1,6 @@
-import { useEffect } from 'react';
-import { scrollToTop } from '../../utils/utils';
 import './NotFound.scss';
 
-// initial load useEffect
 const NotFound = () => {
-  useEffect(() => {
-    scrollToTop();
-  }, []);
 
   return (
     <>

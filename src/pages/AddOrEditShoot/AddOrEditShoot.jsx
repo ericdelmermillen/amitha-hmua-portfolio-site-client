@@ -2,7 +2,6 @@ import { useState, useEffect, useContext } from 'react';
 import { useNavigate, useParams, useLocation, json } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { checkTokenExpiration } from '../../utils/utils.js';
-import { scrollToTop } from '../../utils/utils.js';
 import AddIcon from '../../assets/icons/AddIcon.jsx';
 import AppContext from '../../AppContext.jsx';
 import Compressor from 'compressorjs';
@@ -549,7 +548,6 @@ const handleSubmitShoot = async (e) => {
       setShowFloatingButton(false);
     }
     
-    scrollToTop();
     setIsInitialLoad(false);
 
     setTimeout(() => {

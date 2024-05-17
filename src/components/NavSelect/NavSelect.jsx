@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, useContext } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import AppContext from '../../AppContext.jsx';
 import DownIcon from '../../assets/icons/DownIcon.jsx';
-import { scrollToTop } from "../../utils/utils.js";
 import './NavSelect.scss';
 
 const NavSelect = ({ 
@@ -55,7 +54,7 @@ const NavSelect = ({
 
     if(showOptions) {
       setSelectValue(null);
-      setIsLoading(true);
+      // setIsLoading(true);
       setTimeout(() => {
         handleNavigateHome(true, false, null);
       }, minLoadingInterval);
@@ -65,7 +64,6 @@ const NavSelect = ({
         setTimeout(() => {
           setIsLoading(false);
         }, minLoadingInterval);
-        scrollToTop();
       } else if(!selectValue) {
         setTimeout(() => {
           handleNavigateHome(true, false, null);

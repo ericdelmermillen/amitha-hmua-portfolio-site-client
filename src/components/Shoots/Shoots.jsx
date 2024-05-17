@@ -309,7 +309,6 @@ const Shoots = () => {
           setShouldUpdateFilteredShoots(true);
         }
       }
-    // scrollToTop();
     }, [location])
 
   // // --
