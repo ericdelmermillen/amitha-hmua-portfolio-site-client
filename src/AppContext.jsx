@@ -1,12 +1,18 @@
 import { createContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { checkTokenExpiration } from './utils/utils.js';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { checkTokenExpiration, scrollToTop } from './utils/utils.js';
 import { toast } from 'react-toastify';
 
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+  const location = useLocation();
+
+  // can make currentUrl and lastUrl states: prevent unnecessary calls if user still on same page
+
+  const [ prevURL, setPrevURL ] = useState("");
 
   const [ isLoggedIn, setIsLoggedIn ] = useState(false);
   const [ colorMode, setColorMode ] = useState(localStorage.getItem('colorMode') || "light");
@@ -97,6 +103,27 @@ export const AppProvider = ({ children }) => {
     fetchTags();
   }, [BASE_URL, shouldUpdateTags]);
 
+  // handle updating of current URL for comparison of if URL has changed elsewhere to avoid unneccessary calls
+  useEffect(() => {
+    const pathname = location.pathname;
+    const search = location.search;
+    const currentURL = pathname.concat(search)
+
+    if(currentURL === prevURL) {
+      console.log("url did not change");
+    } else if(currentURL !== prevURL) {
+      setPrevURL(currentURL);
+      console.log(`prevURL: ${prevURL}`)
+      console.log(`currentURL: ${currentURL}`)
+    }
+    scrollToTop();
+  }, [location]);
+
+  // Update local storage when color mode state changes
+  useEffect(() => {
+    localStorage.setItem('colorMode', colorMode);
+  }, [colorMode]);
+
   // check loggedIn on mount
   useEffect(() => {
     checkTokenExpiration(setIsLoggedIn, navigate);
@@ -108,10 +135,6 @@ export const AppProvider = ({ children }) => {
     setColorMode(storedColorMode || "light");
   }, []);
 
-  // Update local storage when color mode state changes
-  useEffect(() => {
-    localStorage.setItem('colorMode', colorMode);
-  }, [colorMode]);
 
   const contextValues = {
     isLoggedIn, 
@@ -159,7 +182,10 @@ export const AppProvider = ({ children }) => {
     handleNavLinkClick,
     
     selectValue, 
-    setSelectValue
+    setSelectValue,
+
+    prevURL, 
+    setPrevURL
    }
   
   return (

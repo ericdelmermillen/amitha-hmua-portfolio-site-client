@@ -1,6 +1,5 @@
 import AppContext from '../../AppContext';
 import { useState, useEffect, useContext } from 'react';
-import { scrollToTop } from '../../utils/utils';
 import bioPic from '../../assets/images/bio-pic.jpg';
 import './Bio.scss';
 
@@ -33,7 +32,6 @@ const Bio = () => {
     }
     setIsLoading(true);
     setShowSideNav(false);
-    scrollToTop();
   }, []); 
   
   return (

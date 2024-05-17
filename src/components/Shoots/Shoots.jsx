@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import { Link, useLocation, useParams, useNavigate } from 'react-router-dom';
 import AppContext from '../../AppContext.jsx';
 import { toast } from 'react-toastify';
-import { checkTokenExpiration, scrollToTop } from '../../utils/utils.js';
+import { checkTokenExpiration } from '../../utils/utils.js';
 import Shoot from '../Shoot/Shoot.jsx';
 import './Shoots.scss';
 
@@ -28,6 +28,8 @@ const Shoots = () => {
     setSelectedTag,
     tags,
     setTags,
+    prevURL, 
+    setPrevURL
   } = useContext(AppContext);
 
   const [ shouldUpdateAllShoots, setShouldUpdateAllShoots ] = useState(false);
@@ -285,17 +287,30 @@ const Shoots = () => {
   }, [scrollYPos, prevScrollYPos])
 
   useEffect(() => {
-    console.log("location change")
-    scrollToTop();
-  //   // setShootsData([]);
-  //   setCurrentPage(1);
-
-  //   if(!location.search.includes("tag")) {
-  //     setShouldUpdateAllShoots(true);
-  //     setShouldUpdateFilteredShoots(false);
-  //     console.log("!tag")
-  //   }
-  }, [location])
+    const { pathname, search } = location;
+    const currentURL = pathname.concat(search);
+    
+      if(currentURL !== prevURL) {
+        setShootsData([]);
+        setCurrentPage(1);
+    
+        const searchByTag = search.includes("tag")
+      
+        if(pathname === "/work" && !searchByTag) {
+          setFinalPageLoaded(false);
+          // setCurrentPage(1);
+          setShouldUpdateAllShoots(true);
+          setShouldUpdateFilteredShoots(false);
+        }
+        
+        if(pathname === "/work" && searchByTag) {
+          setFinalPageLoaded(false);
+          setShouldUpdateAllShoots(false);
+          setShouldUpdateFilteredShoots(true);
+        }
+      }
+    // scrollToTop();
+    }, [location])
 
   // // --
 

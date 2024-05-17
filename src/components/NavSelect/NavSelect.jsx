@@ -36,10 +36,11 @@ const NavSelect = ({
     setSelectValue(option.tag_name);
     setShowOptions(false);
     setShowSideNav(false);
-
+    
     setTimeout(() => {
       setSelectedTag(option);
       handleNavigateHome(false, true, option);
+      setIsLoading(false);
     }, minLoadingInterval);
 
     // Reset scroll position to top

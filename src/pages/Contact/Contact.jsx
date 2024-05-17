@@ -1,5 +1,4 @@
 import { useEffect, useContext } from 'react';
-import { scrollToTop } from '../../utils/utils';
 import AppContext from '../../AppContext';
 import ContactForm from '../../components/ContactForm/ContactForm';
 import './Contact.scss';
@@ -16,7 +15,6 @@ const Contact = () => {
   useEffect(() => {
     setIsLoading(true);
     setShowSideNav(false);
-    scrollToTop();
     setTimeout(() => {
       setIsLoading(false);
     }, minLoadingInterval)
