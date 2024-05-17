@@ -27,7 +27,9 @@ const Shoots = () => {
     tags,
     setTags,
     prevURL, 
-    setPrevURL
+    setPrevURL,
+    showDeleteOrEditShootModal,
+    setShowDeleteOrEditShootModal
   } = useContext(AppContext);
 
   const [ shouldUpdateAllShoots, setShouldUpdateAllShoots ] = useState(false);
@@ -192,6 +194,7 @@ const Shoots = () => {
   // console.log(location)
   // what if there is a search but it is not "tag"?
   useEffect(() => {
+    console.log("fetchAllShoots")
     if(!finalPageLoaded && !location.search.includes('tag')) {
       setIsLoading(true);
       
@@ -288,7 +291,8 @@ const Shoots = () => {
     const { pathname, search } = location;
     const currentURL = pathname.concat(search);
     
-      if(currentURL !== prevURL) {
+      if(currentURL !== prevURL || showDeleteOrEditShootModal) {
+        setShowDeleteOrEditShootModal(false);
         setShootsData([]);
         setCurrentPage(1);
     
@@ -296,7 +300,6 @@ const Shoots = () => {
       
         if(pathname === "/work" && !searchByTag) {
           setFinalPageLoaded(false);
-          // setCurrentPage(1);
           setShouldUpdateAllShoots(true);
           setShouldUpdateFilteredShoots(false);
         }

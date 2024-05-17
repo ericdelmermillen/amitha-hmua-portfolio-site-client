@@ -19,7 +19,9 @@ const DeleteShootModal = () => {
     showDeleteOrEditShootModal,
     setShowDeleteOrEditShootModal,
     deleteOrEditClickAction, 
-    setDeleteOrEditClickAction
+    setDeleteOrEditClickAction,
+    handleNavigateHome,
+    selectedTag
   } = useContext(AppContext);
 
   const navigate = useNavigate();
@@ -48,11 +50,17 @@ const DeleteShootModal = () => {
 
         if(response.ok) {
           setShouldUpdateShoots(true);
+          if(selectedTag) {
+            handleNavigateHome(false, true, selectedTag);
+          } else if(!selectedTag) {
+            handleNavigateHome(true, false, null);
+          }
+          
           toast.success(`Shoot ${selectedShoot} successfully deleted.`); 
         } else if(response.status === 401) {
           setIsLoading(false);
           setIsLoggedIn(false);
-          navigate("/home");
+          handleNavigateHome(true, false, null);
           return toast.error("Please login again...");
         } else {
           toast.error(`Failed to delete Shoot ${selectedShoot}.`);
@@ -60,12 +68,12 @@ const DeleteShootModal = () => {
         }
       } catch (error) {
         console.error(`Error deleting Shoot ${selectedShoot}: ${error}`);
+        handleNavigateHome(true, false, null);
         toast.error(`Error deleting Shoot ${selectedShoot}. Loggin you out...`);
       }
     } else {
       toast.error("Sorry please login again");
     }
-    setShowDeleteOrEditShootModal(false);
     setDeleteOrEditClickAction('');
   };
 
