@@ -4,7 +4,6 @@ import AppContext from '../../AppContext.jsx';
 import { toast } from 'react-toastify';
 import { checkTokenExpiration, scrollToTop } from '../../utils/utils.js';
 import Shoot from '../Shoot/Shoot.jsx';
-// import PlaceholderShoot from '../PlaceholderShoot/PlaceholderShoot.jsx';
 import './Shoots.scss';
 
 const Shoots = () => {
@@ -53,31 +52,30 @@ const Shoots = () => {
 
   const [ activeDragShoot, setActiveDragShoot ] = useState(null); 
 
-  // const itemsPerPage = 1;
-  const itemsPerPage = 2;
+  const itemsPerPage = 1;
+  // const itemsPerPage = 2;
   // const itemsPerPage = 4;
   // const itemsPerPage = 6;
   // const itemsPerPage = 12;
 
   const [ searchTerm, setSearchTerm ] = useState(location.search.split("=")[1] || null);
 
-  const [ finalShootsPageLoaded, setFinalShootsPageLoaded ] = useState(false);
+  const [ finalPageLoaded, setFinalPageLoaded ] = useState(false);
 
   // handleOverScroll --
   const handleOverScroll = () => {
-    if(!finalShootsPageLoaded) {
-
+    if(!finalPageLoaded) {
       const windowHeight = window.innerHeight;
       const fullHeight = document.body.scrollHeight;
       const distanceToBottom = fullHeight - windowHeight - window.scrollY;
       
-      if(distanceToBottom <= 100) {
-        // console.log("fetch again")
+      if(distanceToBottom <= 100 && !location.search) {
         setShouldUpdateAllShoots(true);
+      } else if (distanceToBottom <= 100 && location.search && selectedTag) {
+        setShouldUpdateFilteredShoots(true);
       }
     }
-  }
-  // --
+  };
     
   const handleNewShootId = (shootId) => {
     setShootsData([]);
@@ -89,7 +87,7 @@ const Shoots = () => {
   const makeOrderEditable = () => {
     setIsOrderEditable(true);
     setActiveDragShoot(null);
-    toast.info("Drag shoots into desired order then Save to update")
+    toast.info("Drag shoots into desired order then Save to update");
   };
 
   const saveNewOrder = async () => {
@@ -108,7 +106,7 @@ const Shoots = () => {
       const new_shoot_order = []
   
       for(const shoot of shootsData) {
-        const updateObj = {}
+        const updateObj = {};
         updateObj.shoot_id = shoot.shoot_id;
         updateObj.display_order = shoot.display_order;
         new_shoot_order.push(updateObj);
@@ -126,12 +124,12 @@ const Shoots = () => {
 
         if(response.ok) {
           toast.success("Database updated.");
-          setIsLoading(false)
+          setIsLoading(false);
         }
         
       } catch(error) {
-        console.log(error)
-        toast.error("Error updating database...")
+        console.log(error);
+        toast.error("Error updating database...");
         setIsLoading(false);
       }
     }
@@ -198,10 +196,12 @@ const Shoots = () => {
     setActiveDragShoot(null);
   };
 
+  // console.log(location)
   // revised fetchAllShoots useEffect --
   useEffect(() => {
     // console.log("updateAllShoots")
-    if(!finalShootsPageLoaded && !location.search.includes('tag')) {
+    // if(!finalPageLoaded && !location.search.includes('tag')) {
+    if(!finalPageLoaded && !location.search.includes('tag')) {
       setIsLoading(true);
       
       const fetchShoots = async () => {
@@ -223,7 +223,7 @@ const Shoots = () => {
             const updatedShootsData = [...shootsData, ...filteredData];
 
             if(!data.length) {
-              setFinalShootsPageLoaded(true);
+              setFinalPageLoaded(true);
             } else {
               setShootsData(updatedShootsData)
             }
@@ -243,72 +243,58 @@ const Shoots = () => {
 
   }, [shouldUpdateAllShoots]);
 
-  // fetch shoots by tag
+  // revised fetchFilteredShoots useEffect
   useEffect(() => {
-    if(selectedTag) {
-      setIsLoading(true);
-      setShouldUpdateAllShoots(false);
+    if(!finalPageLoaded && selectedTag) {
 
-      if(currentPage === 1) {
-        setShootsData([]);
-      }
-      
-      const fetchShootsByTag = async () => {
-        
+      const fetchFilteredShoot = async () => {
+
         try {
-
-          const response = await fetch(`${BASE_URL}/shoots/all?tag_id=${selectedTag.id}`);
+          const response = await fetch(`${BASE_URL}/shoots/all?tag_id=${selectedTag.id}&page=${currentPage}&limit=${itemsPerPage}`);
 
           if(response.ok) {
             const data = await response.json();
+            setCurrentPage(currentPage + 1);
 
-            setShootsData(data)
-            
             let filteredData = [...data];
+
+            if(isOnShootDetails) {
+              const currentShoot = shoot_id;
+              filteredData = data.filter(shoot => shoot.shoot_id !== +currentShoot);
+            }
+
+            const updatedShootsData = [...shootsData, ...filteredData];
+
+            if(!data.length) {
+              setFinalPageLoaded(true);
+            } else {
+              setShootsData(updatedShootsData)
+            }
             
-              if(isOnShootDetails) {
-                console.log("is on shoot details")
-                const currentShoot = shoot_id;
-                filteredData = data.filter(shoot => shoot.shoot_id !== +currentShoot);
-              }            
-            }      
-
-            setTimeout(() => {
-              setIsLoading(false);
-            }, minLoadingInterval);
-
+            console.log(data)
+          }
+          
         } catch(error) {
-          console.log(error);
-          toast.error(`Error fetching shoots...`)
+          console.log(`Error fetching ${selectedTag.tag_name} shoots: ${error}`)
+          toast.error(`Failed to fetch ${selectedTag.tag_name} shoots:, ${error}`);
+        } finally {
+          setTimeout(() => {
+            setIsLoading(false); 
+            setShouldUpdateFilteredShoots(false);
+          }, minLoadingInterval);
         }
+        
       }
-      fetchShootsByTag();
+      fetchFilteredShoot()
+
     }
 
-  }, [selectedTag]);
-
-
-  // initial load useEffect
-  // useEffect(() => {
-  //   let searchedTerm;
-
-  //   if(tags && searchTerm) {
-  //     searchedTerm = tags.find(tag => tag.tag_name.toLowerCase() === searchTerm);
-  //   }
-
-  //   if(searchedTerm) {
-  //     // console.log(searchedTerm)
-  //     setSelectedTag(searchedTerm)
-  //     setShouldUpdateShoots(true)
-  //   }
-
-  //   scrollToTop();
-  // }, [searchTerm, tags])
+  }, [selectedTag, shouldUpdateFilteredShoots])
 
 
   // handleOverScroll useEffect --
   useEffect(() => {
-    if(!finalShootsPageLoaded) {
+    if(!finalPageLoaded) {
       handleOverScroll();
     }
   }, [scrollYPos, prevScrollYPos])
@@ -328,19 +314,6 @@ const Shoots = () => {
 
   return (
     <>
-      {/* <div className="placeholderShoots">
-        <div className="placeholderShoots__inner">
-
-          {Array.from({ length: itemsPerPage }).map((_, index) => (
-            <PlaceholderShoot 
-              key={index} 
-              placeholderClass={`placeholderShoot ${(isLoadingInitial && shouldUpdate) ? "show" : ""}`}
-            />
-          ))}
-
-        </div>
-      </div> */}
-      
       <div className="shoots">
         <div className={`shoots__inner ${isOnShootDetails ? "onShootDetails" : ""}`}>
           {shootsData.map(shoot => (
