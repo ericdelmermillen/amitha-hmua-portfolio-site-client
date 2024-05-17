@@ -118,7 +118,6 @@ export const AppProvider = ({ children }) => {
       console.log(`currentURL: ${currentURL}`)
     }
 
-    
     if(URLIncludesEdit || URLIncludesAdd) {
       console.log("on add or edit")
       setShowFloatingButton(false);

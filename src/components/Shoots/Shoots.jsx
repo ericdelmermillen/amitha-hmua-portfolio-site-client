@@ -18,8 +18,6 @@ const Shoots = () => {
     prevScrollYPos,
     setPrevScrollYPos,
     setSelectedShoot,
-    shouldUpdateShoots, 
-    setShouldUpdateShoots,
     isLoading, 
     setIsLoading,
     minLoadingInterval, 
@@ -340,29 +338,31 @@ const Shoots = () => {
           ))}
         </div>
 
-        {!isOnShootDetails && isLoggedIn && !isOrderEditable && !shouldUpdate?
 
-            <div className="shoots__button-container">
-              <button
-                className="shoots__editShootOrder"
-                onClick={makeOrderEditable}
-              >
-                Edit Order
-              </button>
-            </div>
+        {isLoggedIn && !isOnShootDetails && finalPageLoaded && !selectedTag && !isOrderEditable
 
-          : !isOnShootDetails && isLoggedIn && isOrderEditable ? 
+        ? <div className="shoots__button-container">
+            <button
+              className="shoots__editShootOrder"
+              onClick={makeOrderEditable}
+            >
+              Edit Order
+            </button>
+          </div>
 
-            <div className="shoots__button-container">
-              <button
-                className="shoots__editShootOrder"
-                onClick={saveNewOrder}
-              >
-                Save Order
-              </button>
-            </div>
+        : isLoggedIn && !isOnShootDetails && finalPageLoaded && !selectedTag && isOrderEditable
+        
+        ? <div className="shoots__button-container">
+            <button
+              className="shoots__editShootOrder"
+              onClick={saveNewOrder}
+            >
+              Save Order
+            </button>
+          </div>
+        
+        : null
 
-          : null
         }
 
       </div>
