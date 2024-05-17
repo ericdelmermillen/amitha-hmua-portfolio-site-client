@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { checkTokenExpiration, scrollToTop } from './utils/utils.js';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 
 const AppContext = createContext();
 
@@ -9,8 +9,6 @@ export const AppProvider = ({ children }) => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const location = useLocation();
-
-  // can make currentUrl and lastUrl states: prevent unnecessary calls if user still on same page
 
   const [ prevURL, setPrevURL ] = useState("");
 
@@ -51,11 +49,7 @@ export const AppProvider = ({ children }) => {
   const handleNavigateHome = (updateAllShoots, updateFilteredShoots, tagObj) => {    
     
     if(updateAllShoots && !updateFilteredShoots) {
-      if(location.pathname === "/work" && !selectedTag) {
-        setSelectedTag(null);
-        navigate('/work');
-      }
-      
+      setSelectedTag(null);
       navigate('/work');
       setSelectValue(null);
     } else if(!updateAllShoots && updateFilteredShoots && tagObj) {
@@ -104,18 +98,16 @@ export const AppProvider = ({ children }) => {
 
   // handle updating of current URL for comparison of if URL has changed elsewhere to avoid unneccessary calls
   useEffect(() => {
+    setIsLoading(true);
+
     const pathname = location.pathname;
     const search = location.search;
     const currentURL = pathname.concat(search)
     const URLIncludesEdit = pathname.includes("edit")
     const URLIncludesAdd = pathname.includes("add")
 
-    if(currentURL === prevURL) {
-      console.log("url did not change");
-    } else if(currentURL !== prevURL) {
+    if(currentURL !== prevURL) {
       setPrevURL(currentURL);
-      console.log(`prevURL: ${prevURL}`)
-      console.log(`currentURL: ${currentURL}`)
     }
 
     if(URLIncludesEdit || URLIncludesAdd) {
@@ -127,6 +119,10 @@ export const AppProvider = ({ children }) => {
     }
     
     scrollToTop();
+
+    setTimeout(() => {
+      setIsLoading(false);
+    }, minLoadingInterval);
   }, [location]);
 
   // Update local storage when color mode state changes

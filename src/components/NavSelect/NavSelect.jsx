@@ -39,7 +39,7 @@ const NavSelect = ({
     setTimeout(() => {
       setSelectedTag(option);
       handleNavigateHome(false, true, option);
-      setIsLoading(false);
+      // setIsLoading(false);
     }, minLoadingInterval);
 
     // Reset scroll position to top
@@ -54,15 +54,16 @@ const NavSelect = ({
 
     if(showOptions) {
       setSelectValue(null);
-      // setIsLoading(true);
       setTimeout(() => {
         handleNavigateHome(true, false, null);
       }, minLoadingInterval);
     } else if(!showOptions) {
       if(selectValue) {
-        setIsLoading(true);
+        const foundOption = selectOptions.find(tag => tag.tag_name === selectValue);
         setTimeout(() => {
-          setIsLoading(false);
+          setSelectedTag(foundOption);
+          handleNavigateHome(false, true, foundOption);
+          // setIsLoading(false);
         }, minLoadingInterval);
       } else if(!selectValue) {
         setTimeout(() => {
@@ -93,12 +94,12 @@ const NavSelect = ({
         if(foundTag) {
           setSelectedTag(foundTag);
         } else if(!foundTag) {
-          setIsLoading(true);
+          // setIsLoading(true);
           navigate("/notfound");
           setSelectValue(null);
-          setTimeout(() => {
-            setIsLoading(false);
-          }, [minLoadingInterval]);
+          // setTimeout(() => {
+          //   setIsLoading(false);
+          // }, [minLoadingInterval]);
         }
       }
     }

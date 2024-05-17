@@ -361,9 +361,7 @@ const Shoots = () => {
             </button>
           </div>
         
-        : null
-
-        }
+        : null}
 
       </div>
     </>
