@@ -23,11 +23,7 @@ const Shoots = () => {
     minLoadingInterval, 
     setMinLoadingInterval,
     selectedTag, 
-    setSelectedTag,
-    tags,
-    setTags,
     prevURL, 
-    setPrevURL,
     showDeleteOrEditShootModal,
     setShowDeleteOrEditShootModal
   } = useContext(AppContext);
@@ -40,7 +36,7 @@ const Shoots = () => {
 
   const [ shootsData, setShootsData ] = useState([]);
   const [ currentPage, setCurrentPage ] = useState(1);
-  const [ shouldUpdate, setShouldUpdate ] = useState(true);
+  // const [ shouldUpdate, setShouldUpdate ] = useState(true);
   const [ isOnShootDetails, setIsOnShootDetails ] = useState(location.pathname.includes('/shoot/'));
   const [ currentShootId, setCurrentShootId ] = useState(shoot_id);
   const [ isOrderEditable, setIsOrderEditable ] = useState(false);
@@ -53,11 +49,8 @@ const Shoots = () => {
   // const itemsPerPage = 6;
   // const itemsPerPage = 12;
 
-  const [ searchTerm, setSearchTerm ] = useState(location.search.split("=")[1] || null);
-
   const [ finalPageLoaded, setFinalPageLoaded ] = useState(false);
 
-  // handleOverScroll --
   const handleOverScroll = () => {
     if(!finalPageLoaded) {
       const windowHeight = window.innerHeight;
@@ -65,7 +58,6 @@ const Shoots = () => {
       const distanceToBottom = fullHeight - windowHeight - window.scrollY;
       
       if(distanceToBottom <= 100) {
-
         if(!selectedTag) {
           setShouldUpdateAllShoots(true);
         } else if(selectedTag) {
@@ -76,10 +68,7 @@ const Shoots = () => {
   };
     
   const handleNewShootId = (shootId) => {
-    setShootsData([]);
-    setCurrentPage(1);
     setCurrentShootId(shootId);
-    setShouldUpdate(true);
   };
 
   const makeOrderEditable = () => {
@@ -194,10 +183,9 @@ const Shoots = () => {
     setActiveDragShoot(null);
   };
 
-  // what if there is a search but it is not "tag"?
   // fetchAllShoots useEffect
   useEffect(() => {
-    if((!finalPageLoaded && !selectedTag)) {
+    if((!finalPageLoaded && !selectedTag && !location.search.includes("tag"))) {
       setIsLoading(true);
       
       const fetchShoots = async () => {
@@ -210,8 +198,6 @@ const Shoots = () => {
             setCurrentPage(currentPage + 1);
 
             let filteredData = [...data];
-
-            console.log(data)
 
             if(isOnShootDetails) {
               const currentShoot = shoot_id;
@@ -240,7 +226,7 @@ const Shoots = () => {
     }
   }, [shouldUpdateAllShoots]);
 
-  // revised fetchFilteredShoots useEffect
+  // fetchFilteredShoots useEffect
   useEffect(() => {    
     if(!finalPageLoaded && selectedTag) {
 
@@ -251,9 +237,8 @@ const Shoots = () => {
 
           if(response.ok) {
             const data = await response.json();
-            setCurrentPage(currentPage + 1);
-
             let filteredData = [...data];
+            setCurrentPage(currentPage + 1);
 
             if(isOnShootDetails) {
               const currentShoot = shoot_id;
@@ -288,14 +273,12 @@ const Shoots = () => {
     if(!finalPageLoaded) {
       handleOverScroll();
     }
-  }, [scrollYPos, prevScrollYPos])
+  }, [scrollYPos, prevScrollYPos]);
 
   // useEffect to clear shoots state when navigating to page
   useEffect(() => {
     const { pathname, search } = location;
     const currentURL = pathname.concat(search);
-
-    // console.log(pathname)
     
       if(currentURL !== prevURL || showDeleteOrEditShootModal) {
         setShowDeleteOrEditShootModal(false);
@@ -308,22 +291,14 @@ const Shoots = () => {
         if(pathname === "/work" && !searchByTag) {
           setShouldUpdateAllShoots(true);
           setShouldUpdateFilteredShoots(false);
-          setShootsData([]);
         }
         
         if(pathname === "/work" && searchByTag) {
           setShouldUpdateAllShoots(false);
           setShouldUpdateFilteredShoots(true);
-          setShootsData([]);
         }
       }
-
-      if(pathname.includes("shoot")) {
-        console.log("pathname includes shoot")
-      }
-    }, [location])
-
-  // --
+    }, [location]);
 
   return (
     <>
