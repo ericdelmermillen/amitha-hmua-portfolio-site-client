@@ -114,6 +114,7 @@ export const AppProvider = ({ children }) => {
       setShowFloatingButton(true);
     }
     
+    // setShowSideNav(false);
     scrollToTop();
 
     setTimeout(() => {

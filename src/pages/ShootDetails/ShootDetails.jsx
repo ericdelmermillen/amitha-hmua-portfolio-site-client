@@ -14,8 +14,7 @@ const ShootDetails = () => {
 
   const { 
     setIsLoading,
-    selectedTag,
-    setSelectedTag
+    selectedTag
   } = useContext(AppContext);
 
   const [ shootDetails, setShootDetails ] = useState(null);

@@ -7,8 +7,6 @@ const Bio = () => {
   const { 
     setIsLoading,
     minLoadingInterval, 
-    setMinLoadingInterval,
-    setShowSideNav,
   } = useContext(AppContext);
 
   const [ componentIsLoaded, setIsComponentLoaded ] = useState(false);
@@ -19,12 +17,6 @@ const Bio = () => {
       setIsComponentLoaded(true);
     }, minLoadingInterval)
   }
-
-  // initial load useEffect
-  useEffect(() => {
-    setIsLoading(true);
-    setShowSideNav(false);
-  }, []); 
   
   return (
     <>

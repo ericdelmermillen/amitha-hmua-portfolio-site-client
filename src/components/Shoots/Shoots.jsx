@@ -281,8 +281,8 @@ const Shoots = () => {
     const currentURL = pathname.concat(search);
     
       if(currentURL !== prevURL || showDeleteOrEditShootModal) {
+        setShootsData([]);
         setShowDeleteOrEditShootModal(false);
-        // setShootsData([]);
         setCurrentPage(1);
         setFinalPageLoaded(false);
     

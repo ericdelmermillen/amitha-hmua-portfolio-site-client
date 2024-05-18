@@ -144,7 +144,7 @@ const ContactForm = () => {
       toast.success(`${responseData.message} Redirecting...`);
       setIsLoading(false);
       setTimeout(() => {
-        navigate('/home')
+        navigate('/work')
       }, minLoadingInterval);
       
     } catch(error) {
