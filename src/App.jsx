@@ -47,7 +47,8 @@ const App = () => {
     tags,
     setTags,
     selectedTag, 
-    setSelectedTag
+    setSelectedTag,
+    handleNavigateHome
   } = useContext(AppContext);
 
   const handleLogOut = () => {
@@ -55,10 +56,7 @@ const App = () => {
     setIsLoggedIn(false);
     localStorage.removeItem('token'); 
     localStorage.removeItem('refreshToken'); 
-    setTimeout(() => {
-      setIsLoading(false);
-    }, minLoadingInterval)
-    navigate('/work');
+    handleNavigateHome(true, false, null)
     toast.success("Successfully logged out!");
   };
 
@@ -88,10 +86,7 @@ const App = () => {
 
   return (
     <>
-      <div 
-        className="app" 
-        data-color-mode={colorMode}
-      >
+      <div className="app" data-color-mode={colorMode}>
         <div className="app__inner">
           <div 
             className={`loading ${isLoading 

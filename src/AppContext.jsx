@@ -45,7 +45,6 @@ export const AppProvider = ({ children }) => {
   
   const navigate = useNavigate(); 
 
-  // handleNavigateHome ---
   const handleNavigateHome = (updateAllShoots, updateFilteredShoots, tagObj) => {    
     
     if(updateAllShoots && !updateFilteredShoots) {
@@ -56,14 +55,13 @@ export const AppProvider = ({ children }) => {
       navigate(`/work?tag=${tagObj.tag_name}`);
     }
   };
-  // ---
 
   const handleNavLinkClick = () => {
     setSelectValue(null);
     setSelectedTag(null)
   }
 
-  // fetch tags
+  // fetchTags
   useEffect(() => {
     const token = localStorage.getItem('token');
     const headers = {};
@@ -111,10 +109,8 @@ export const AppProvider = ({ children }) => {
     }
 
     if(URLIncludesEdit || URLIncludesAdd) {
-      // console.log("on add or edit")
       setShowFloatingButton(false);
     } else if (!URLIncludesEdit || !URLIncludesAdd) {
-      // console.log("not on add or edit")
       setShowFloatingButton(true);
     }
     
