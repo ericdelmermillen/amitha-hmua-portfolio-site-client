@@ -282,7 +282,7 @@ const Shoots = () => {
     
       if(currentURL !== prevURL || showDeleteOrEditShootModal) {
         setShowDeleteOrEditShootModal(false);
-        setShootsData([]);
+        // setShootsData([]);
         setCurrentPage(1);
         setFinalPageLoaded(false);
     
@@ -291,11 +291,13 @@ const Shoots = () => {
         if(pathname === "/work" && !searchByTag) {
           setShouldUpdateAllShoots(true);
           setShouldUpdateFilteredShoots(false);
+          setShootsData([]);
         }
         
         if(pathname === "/work" && searchByTag) {
           setShouldUpdateAllShoots(false);
           setShouldUpdateFilteredShoots(true);
+          setShootsData([]);
         }
       }
     }, [location]);

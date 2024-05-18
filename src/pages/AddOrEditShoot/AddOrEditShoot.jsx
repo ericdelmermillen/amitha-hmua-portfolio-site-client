@@ -28,8 +28,7 @@ const AddOrEditShoot = ({ shootAction }) => {
     setShouldUpdatePhotographers,
     shouldUpdateModels, 
     setShouldUpdateModels,
-    setShouldUpdateShoots,
-    // setShowFloatingButton,
+    handleNavigateHome,
     tags
   } = useContext(AppContext);
 
@@ -355,11 +354,6 @@ const handleSubmitShoot = async (e) => {
           toast.success("Shoot added Successfully");
         }
 
-        setShouldUpdateShoots(true);
-        setTimeout(() => {
-          navigate('/work');
-          // setShowFloatingButton(true);
-        }, minLoadingInterval);
       }
       
     } catch(error) {
@@ -370,21 +364,15 @@ const handleSubmitShoot = async (e) => {
       } else if (!shoot_id) {
         toast.error('Error creating shoot. Logging you out...');
       }
-
-      setIsLoading(false);
-      navigate('/work');
-      // setShowFloatingButton(true);
     }
   } else if(!isLoggedIn) {
     toast.error("Not logged in...");
-    navigate('/work');
-    // setShowFloatingButton(true);
   } 
+  handleNavigateHome(true, false, null);
 };
 
   const handleCancel = () => {
-    navigate('/work');
-    // setShowFloatingButton(true);
+    handleNavigateHome(true, false, null);
   };
   
   // fetch photographers
@@ -422,7 +410,6 @@ const handleSubmitShoot = async (e) => {
 
   // fetch models
   useEffect(() => {
-    console.log("fetch models")
     const token = localStorage.getItem('token');
     const headers = {};
 
@@ -435,6 +422,7 @@ const handleSubmitShoot = async (e) => {
 
     const fetchModels = async () => {
       try {
+
         const response = await fetch(`${BASE_URL}/models/all`, { headers });
 
         if(!response.ok) {
@@ -457,7 +445,6 @@ const handleSubmitShoot = async (e) => {
 
   // fetch existing shoot
   useEffect(() => {
-    setIsLoading(true);
 
     if(shoot_id) {
       const fetchShootDetails = async () => {
@@ -524,9 +511,8 @@ const handleSubmitShoot = async (e) => {
           }
           
         } catch(error) {
-          console.log(error)
-          navigate('/notfound')
-          // setShowFloatingButton(true);
+          console.log(error);
+          navigate('/notfound');
         }
       }
       fetchShootDetails();
@@ -540,7 +526,6 @@ const handleSubmitShoot = async (e) => {
 
   // initial load useEffect
   useEffect(() => {
-    setIsLoading(true);
     setIsInitialLoad(false);
 
     setTimeout(() => {
@@ -604,13 +589,13 @@ const handleSubmitShoot = async (e) => {
                 >
 
                   <CustomSelect 
+                    chooserType={"Tag"}
+                    entryNameType={"tag_name"}
                     chooserNo={chooser.chooserNo}
                     chooserName={chooser.tagName}
-                    chooserType={"Tag"}
                     chooserIDs={tagChooserIDs}
                     setChooserIDs={setTagChooserIDs}
                     selectOptions={tags}
-                    entryNameType={"tag_name"}
                   />
 
                     <span 
@@ -622,9 +607,7 @@ const handleSubmitShoot = async (e) => {
                         : null
                       }
                     >
-                      <MinusIcon 
-                        className={"addOrEditShoot__minus-icon"}
-                      />
+                      <MinusIcon className={"addOrEditShoot__minus-icon"} />
                     </span>
                     
                 </div>
@@ -649,7 +632,6 @@ const handleSubmitShoot = async (e) => {
                       shootPhotos={shootPhotos}
                       setShootPhotos={setShootPhotos}
                       handleImageChange={handleImageChange}
-
                       handleInputDragStart={handleInputDragStart}
                       handleDropInputTarget={handleDropInputTarget}
                     />
@@ -690,13 +672,13 @@ const handleSubmitShoot = async (e) => {
                   >
 
                     <CustomSelect 
+                      chooserType={"Photographer"}
+                      entryNameType={"photographer_name"}
                       chooserNo={chooser.chooserNo}
                       chooserName={chooser.photographerName}
-                      chooserType={"Photographer"}
                       chooserIDs={photographerChooserIDs}
                       setChooserIDs={setPhotographerChooserIDs}
                       selectOptions={photographers}
-                      entryNameType={"photographer_name"}
                     />
 
                       <span 
@@ -708,9 +690,7 @@ const handleSubmitShoot = async (e) => {
                           : null
                         }
                       >
-                        <MinusIcon 
-                          className={"addOrEditShoot__minus-icon"}
-                        />
+                        <MinusIcon className={"addOrEditShoot__minus-icon"}/>
                       </span>
                       
                   </div>
@@ -744,13 +724,13 @@ const handleSubmitShoot = async (e) => {
                   >
 
                     <CustomSelect
+                      chooserType={"Model"}
+                      entryNameType={"model_name"}
                       chooserNo={chooser.chooserNo}
                       chooserName={chooser.modelName}
-                      chooserType={"Model"}
                       chooserIDs={modelChooserIDs}
                       setChooserIDs={setModelChooserIDs}
                       selectOptions={models}
-                      entryNameType={"model_name"}
                     />
 
                       <span 
@@ -762,9 +742,7 @@ const handleSubmitShoot = async (e) => {
                           : null
                         }
                       >
-                        <MinusIcon 
-                          className={"addOrEditShoot__minus-icon"}
-                        />
+                        <MinusIcon className={"addOrEditShoot__minus-icon"} />
                       </span>
 
                     </div>
