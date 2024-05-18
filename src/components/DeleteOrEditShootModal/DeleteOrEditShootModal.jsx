@@ -50,6 +50,7 @@ const DeleteShootModal = () => {
 
         if(response.ok) {
           setShouldUpdateShoots(true);
+          
           if(selectedTag) {
             handleNavigateHome(false, true, selectedTag);
           } else if(!selectedTag) {

@@ -111,10 +111,10 @@ export const AppProvider = ({ children }) => {
     }
 
     if(URLIncludesEdit || URLIncludesAdd) {
-      console.log("on add or edit")
+      // console.log("on add or edit")
       setShowFloatingButton(false);
     } else if (!URLIncludesEdit || !URLIncludesAdd) {
-      console.log("not on add or edit")
+      // console.log("not on add or edit")
       setShowFloatingButton(true);
     }
     

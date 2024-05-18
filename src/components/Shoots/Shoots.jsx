@@ -64,10 +64,13 @@ const Shoots = () => {
       const fullHeight = document.body.scrollHeight;
       const distanceToBottom = fullHeight - windowHeight - window.scrollY;
       
-      if(distanceToBottom <= 100 && !location.search) {
-        setShouldUpdateAllShoots(true);
-      } else if (distanceToBottom <= 100 && location.search && selectedTag) {
-        setShouldUpdateFilteredShoots(true);
+      if(distanceToBottom <= 100) {
+
+        if(!selectedTag) {
+          setShouldUpdateAllShoots(true);
+        } else if(selectedTag) {
+          setShouldUpdateFilteredShoots(true);
+        }
       }
     }
   };
@@ -191,15 +194,14 @@ const Shoots = () => {
     setActiveDragShoot(null);
   };
 
-  // console.log(location)
   // what if there is a search but it is not "tag"?
+  // fetchAllShoots useEffect
   useEffect(() => {
-    console.log("fetchAllShoots")
-    if(!finalPageLoaded && !location.search.includes('tag')) {
+    if((!finalPageLoaded && !selectedTag)) {
       setIsLoading(true);
       
       const fetchShoots = async () => {
-        
+      
         try {
           const response = await fetch(`${BASE_URL}/shoots/all?page=${currentPage}&limit=${itemsPerPage}`);
 
@@ -208,6 +210,8 @@ const Shoots = () => {
             setCurrentPage(currentPage + 1);
 
             let filteredData = [...data];
+
+            console.log(data)
 
             if(isOnShootDetails) {
               const currentShoot = shoot_id;
@@ -219,12 +223,12 @@ const Shoots = () => {
             if(!data.length) {
               setFinalPageLoaded(true);
             } else {
-              setShootsData(updatedShootsData)
+              setShootsData(updatedShootsData);
             }
           }
         } catch(error) {
-          console.log(`Error fetching shoots: ${error}`)
-          toast.error(`Failed to fetch shoots:, ${error}`);
+          console.log(`Error fetching shoots: ${error}`);
+          toast.error(`Failed to fetch shoots: ${error}`);
         } finally {
           setTimeout(() => {
           setIsLoading(false); 
@@ -234,11 +238,10 @@ const Shoots = () => {
       }
       fetchShoots();
     }
-
   }, [shouldUpdateAllShoots]);
 
   // revised fetchFilteredShoots useEffect
-  useEffect(() => {
+  useEffect(() => {    
     if(!finalPageLoaded && selectedTag) {
 
       const fetchFilteredShoot = async () => {
@@ -278,7 +281,7 @@ const Shoots = () => {
       fetchFilteredShoot();
     }
   }, [selectedTag, shouldUpdateFilteredShoots])
-
+  
 
   // handleOverScroll useEffect --
   useEffect(() => {
@@ -287,32 +290,40 @@ const Shoots = () => {
     }
   }, [scrollYPos, prevScrollYPos])
 
+  // useEffect to clear shoots state when navigating to page
   useEffect(() => {
     const { pathname, search } = location;
     const currentURL = pathname.concat(search);
+
+    // console.log(pathname)
     
       if(currentURL !== prevURL || showDeleteOrEditShootModal) {
         setShowDeleteOrEditShootModal(false);
         setShootsData([]);
         setCurrentPage(1);
+        setFinalPageLoaded(false);
     
         const searchByTag = search.includes("tag")
       
         if(pathname === "/work" && !searchByTag) {
-          setFinalPageLoaded(false);
           setShouldUpdateAllShoots(true);
           setShouldUpdateFilteredShoots(false);
+          setShootsData([]);
         }
         
         if(pathname === "/work" && searchByTag) {
-          setFinalPageLoaded(false);
           setShouldUpdateAllShoots(false);
           setShouldUpdateFilteredShoots(true);
+          setShootsData([]);
         }
+      }
+
+      if(pathname.includes("shoot")) {
+        console.log("pathname includes shoot")
       }
     }, [location])
 
-  // // --
+  // --
 
   return (
     <>
