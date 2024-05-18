@@ -9,7 +9,6 @@ const NavSelect = ({
  }) => {
   
   const {
-    setIsLoading,
     setSelectedTag,
     minLoadingInterval, 
     handleNavigateHome,
@@ -39,7 +38,6 @@ const NavSelect = ({
     setTimeout(() => {
       setSelectedTag(option);
       handleNavigateHome(false, true, option);
-      // setIsLoading(false);
     }, minLoadingInterval);
 
     // Reset scroll position to top
@@ -63,7 +61,6 @@ const NavSelect = ({
         setTimeout(() => {
           setSelectedTag(foundOption);
           handleNavigateHome(false, true, foundOption);
-          // setIsLoading(false);
         }, minLoadingInterval);
       } else if(!selectValue) {
         setTimeout(() => {
@@ -94,12 +91,8 @@ const NavSelect = ({
         if(foundTag) {
           setSelectedTag(foundTag);
         } else if(!foundTag) {
-          // setIsLoading(true);
           navigate("/notfound");
           setSelectValue(null);
-          // setTimeout(() => {
-          //   setIsLoading(false);
-          // }, [minLoadingInterval]);
         }
       }
     }

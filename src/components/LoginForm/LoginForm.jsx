@@ -1,6 +1,6 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 import AppContext from '../../AppContext'; 
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { isValidEmail, isValidPassword } from '../../utils/utils';
 import { toast } from 'react-toastify';
 import Hide from '../../assets/icons/Hide';
@@ -12,7 +12,7 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const LoginForm = () => {
   const { 
     setIsLoggedIn,
-    setIsLoading
+    handleNavigateHome
   } = useContext(AppContext);
   
   const [ email, setEmail ] = useState('');
@@ -24,8 +24,6 @@ const LoginForm = () => {
   const [ shouldCheckPasswordIsValid, setShouldCheckPasswordIsValid ] = useState(false);
 
   const [ showPassword, setShowPassword ] = useState(false);
-
-  const navigate = useNavigate(); 
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -92,8 +90,7 @@ const LoginForm = () => {
         localStorage.setItem('token', token);
         localStorage.setItem('refreshToken', refreshToken); 
         setIsLoggedIn(true);
-        setIsLoading(true);
-        navigate('/');
+        handleNavigateHome(true, false, null);
         toast.success('Successfully logged in!');
       } else if(response.status === 401) {
         toast.error('Login Failed. Check Email & Password')

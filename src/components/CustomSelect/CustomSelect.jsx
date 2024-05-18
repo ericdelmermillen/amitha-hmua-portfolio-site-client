@@ -7,9 +7,7 @@ import './CustomSelect.scss';
 
 const CustomSelect = ({ 
   chooserNo,
-
   chooserName,
-
   chooserType, 
   chooserIDs,
   setChooserIDs,
@@ -18,10 +16,7 @@ const CustomSelect = ({
  }) => {
   
   const {
-    showPhotogModelTagModal, 
     setShowPhotogModelTagModal,
-    setSelectedPhotogOrModel,
-    selectedPhotogModelTag, 
     setSelectedPhotogModelTag,
   } = useContext(AppContext);
 
@@ -70,7 +65,6 @@ const CustomSelect = ({
   }
 
   const handleUpdateSelectValue = (option) => {
-    // console.log(chooserIDs)
     setSelectValue(option.photographer_name || option.model_name || option.tag_name);
 
     const newChooserIDs = [...chooserIDs];
@@ -116,13 +110,13 @@ const CustomSelect = ({
     if(innerRef.current) {
       innerRef.current.scrollTop = 0;
     }
-  }
+  };
 
   useEffect(() => {
     if(chooserName) {
-      setSelectValue(chooserName)
+      setSelectValue(chooserName);
     }
-  }, [chooserName])
+  }, [chooserName]);
   
   return (
     <>

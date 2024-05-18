@@ -34,10 +34,10 @@ const Shoot = ({
   const handleDeleteOrEditClick = (e, action) => {
     e.preventDefault();
     e.stopPropagation();
-    setSelectedShoot(shoot_id)
+    setSelectedShoot(shoot_id);
     setShowDeleteOrEditShootModal(true);
-    setDeleteOrEditClickAction(action)
-  }
+    setDeleteOrEditClickAction(action);
+  };
 
   return (
     <>

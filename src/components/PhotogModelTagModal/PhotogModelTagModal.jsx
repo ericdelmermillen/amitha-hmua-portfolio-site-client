@@ -19,6 +19,7 @@ const PhotogOrModelModal = () => {
     setSelectedPhotogModelTag,
     showPhotogModelTagModal,
     setShowPhotogModelTagModal,
+    handleNavigateHome
   } = useContext(AppContext);
 
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -93,8 +94,6 @@ const PhotogOrModelModal = () => {
           : newEntryData.tag_name = newEntryName
       }
 
-      console.log(newEntryData)
-
       const endPoint = `${BASE_URL}/${entryType.toLowerCase()}s/${modalType.toLowerCase()}${modalType !== "Add" ? `/${id}` : ""}`
 
       const method = modalType === "Add"
@@ -122,11 +121,10 @@ const PhotogOrModelModal = () => {
 
         if(response.ok) {
           if(method === "DELETE") {
-            console.log("Here")
             toast.success(`${entryName} successfully deleted`);
             setTimeout(() => {
               setIsLoading(false);
-            }, minLoadingInterval)
+            }, minLoadingInterval);
           } else {
             toast.success(`${newEntryName} successfully ${modalType.toLowerCase()}ed`);
           }
@@ -148,9 +146,9 @@ const PhotogOrModelModal = () => {
           } else if(response.status === 401) {
             setTimeout(() => {
               setIsLoading(false);
-            }, minLoadingInterval)
+            }, minLoadingInterval);
             setIsLoggedIn(false);
-            navigate("/home");
+            handleNavigateHome(true, false, null)
             return toast.error("Please login again...");
           } else {
             setTimeout(() => {

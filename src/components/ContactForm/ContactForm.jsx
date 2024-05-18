@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
 import AppContext from '../../AppContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { isValidEmail } from '../../utils/utils';
 import { toast } from 'react-toastify';
 import './ContactForm.scss';
@@ -12,8 +12,8 @@ const ContactForm = () => {
 
   const { 
     setIsLoading,
-    minLoadingInterval, 
-    setMinLoadingInterval,
+    minLoadingInterval,
+    handleNavigateHome
   } = useContext(AppContext);
   
   const [ firstName, setFirstName ] = useState('');
@@ -31,8 +31,6 @@ const ContactForm = () => {
   
   const [ message, setMessage ] = useState('');
   const [ messageIsInvalid, setMessageIsInvalid ] = useState(false);
-
-  const navigate = useNavigate(); 
 
   const handleFirstNameChange = (e) => {
     setFirstName(e.target.value); 
@@ -142,10 +140,7 @@ const ContactForm = () => {
       const responseData = await response.json(); 
   
       toast.success(`${responseData.message} Redirecting...`);
-      setIsLoading(false);
-      setTimeout(() => {
-        navigate('/work')
-      }, minLoadingInterval);
+      handleNavigateHome(true, false, null);
       
     } catch(error) {
       toast.error(error.message);

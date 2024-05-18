@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import AppContext from '../../AppContext';
 import ColorModeToggle from '../ColorModeToggle/ColorModeToggle';
 import Logo from '../../assets/icons/Logo';
@@ -20,12 +20,12 @@ const Nav = ({ handleLogOut }) => {
    } = useContext(AppContext);
 
    const handleHomeClick = () => {
-    handleNavigateHome(true);
+    handleNavigateHome(true, false, null);
     handleNavClick();
    };
 
    const handleNavClick = () => {
-    handleNavLinkClick()
+    handleNavLinkClick();
    };
   
   return (

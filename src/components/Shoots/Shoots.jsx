@@ -16,12 +16,8 @@ const Shoots = () => {
     setIsLoggedIn,
     scrollYPos, 
     prevScrollYPos,
-    setPrevScrollYPos,
-    setSelectedShoot,
-    isLoading, 
     setIsLoading,
     minLoadingInterval, 
-    setMinLoadingInterval,
     selectedTag, 
     prevURL, 
     showDeleteOrEditShootModal,
@@ -36,7 +32,6 @@ const Shoots = () => {
 
   const [ shootsData, setShootsData ] = useState([]);
   const [ currentPage, setCurrentPage ] = useState(1);
-  // const [ shouldUpdate, setShouldUpdate ] = useState(true);
   const [ isOnShootDetails, setIsOnShootDetails ] = useState(location.pathname.includes('/shoot/'));
   const [ currentShootId, setCurrentShootId ] = useState(shoot_id);
   const [ isOrderEditable, setIsOrderEditable ] = useState(false);
@@ -250,11 +245,11 @@ const Shoots = () => {
             if(!data.length) {
               setFinalPageLoaded(true);
             } else {
-              setShootsData(updatedShootsData)
+              setShootsData(updatedShootsData);
             }
           }
         } catch(error) {
-          console.log(`Error fetching ${selectedTag.tag_name} shoots: ${error}`)
+          console.log(`Error fetching ${selectedTag.tag_name} shoots: ${error}`);
           toast.error(`Failed to fetch ${selectedTag.tag_name} shoots:, ${error}`);
         } finally {
           setTimeout(() => {
