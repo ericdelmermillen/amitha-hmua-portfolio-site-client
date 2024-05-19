@@ -52,10 +52,15 @@
   }
 
   &__form {
-    display: flex;
+    display: none;
     flex-direction: column;
     flex-grow: 1;
     height: 100%;
+    
+    &.show {
+      display: flex;
+      
+    }
   }
 
   &__input {

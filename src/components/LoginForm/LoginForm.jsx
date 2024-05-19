@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import AppContext from '../../AppContext'; 
 import { Link } from 'react-router-dom';
 import { isValidEmail, isValidPassword } from '../../utils/utils';
@@ -13,8 +13,7 @@ const LoginForm = () => {
   const { 
     setIsLoggedIn,
     handleNavigateHome,
-    isSafari, 
-    setIsSafari
+    isSafari
   } = useContext(AppContext);
   
   const [ email, setEmail ] = useState('');
@@ -26,6 +25,7 @@ const LoginForm = () => {
   const [ shouldCheckPasswordIsValid, setShouldCheckPasswordIsValid ] = useState(false);
 
   const [ showPassword, setShowPassword ] = useState(false);
+  const [ showModal, setShowModal ] = useState(false);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -103,6 +103,12 @@ const LoginForm = () => {
     }
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      setShowModal(true)
+    }, 0)
+  }, []);
+
   return (
     <>
       <div className='loginForm'>
@@ -111,7 +117,7 @@ const LoginForm = () => {
             Admin Login
           </h1>
           <form 
-            className='loginForm__form' 
+            className={`loginForm__form ${showModal ? "show" : ""}`} 
             onSubmit={handleSubmit}>
             <div className='loginForm__group'>
               <label 
