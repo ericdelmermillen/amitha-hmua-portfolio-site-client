@@ -52,8 +52,12 @@ const Bio = () => {
                 onLoad={handleImageLoad}
               />
             </div>
-            <h3 className='bio__hero-caption'>
+            <h3 className={`bio__heroCaption ${componentIsLoaded 
+              ? "" 
+              : "show"}`}
+            >
               Amitha Millen-Suwanta
+              <span className="bio__heroCaption--placeholder"></span>
             </h3>
           </div>
           <div className="bio__divider"></div>
