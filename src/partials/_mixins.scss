@@ -44,10 +44,11 @@
 
 @mixin page {
   align-items: center;
+  background: var(--background-color);
   box-shadow: var(--box-shadow);
+  color: var(--text-color);
   display: flex;
   flex-direction: column;
-  // justify-content: center;
   margin-inline: auto;
   max-width: 1920px;
   // min-height: 100vh;

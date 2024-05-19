@@ -28,26 +28,17 @@ const App = () => {
     isLoggedIn, 
     setIsLoggedIn,
     colorMode, 
-    setColorMode,
     showSideNav, 
     setShowSideNav,
     scrollYPos, 
     setScrollYPos,
-    prevScrollYPos, 
     setPrevScrollYPos,
     showPhotogModelTagModal, 
-    setShowPhotogModelTagModal,
     showDeleteOrEditShootModal, 
-    setShowDeleteOrEditShootModal,
     isLoading, 
     setIsLoading,
-    minLoadingInterval, 
-    setMinLoadingInterval,
     showFloatingButton, 
-    tags,
-    setTags,
     selectedTag, 
-    setSelectedTag,
     handleNavigateHome
   } = useContext(AppContext);
 
@@ -62,7 +53,7 @@ const App = () => {
 
   const handleNavigateToAddShoot = () => {
     navigate('/shoots/add');
-  }
+  };
 
   // handle scroll position for show hide of menu
   useEffect(() => {

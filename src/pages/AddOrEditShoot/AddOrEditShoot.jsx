@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { useNavigate, useParams, useLocation, json } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { checkTokenExpiration } from '../../utils/utils.js';
 import AddIcon from '../../assets/icons/AddIcon.jsx';
@@ -16,7 +16,6 @@ const AddOrEditShoot = ({ shootAction }) => {
   const AWS_SIGNED_URL_ROUTE = import.meta.env.VITE_AWS_SIGNED_URL_ROUTE;
 
   const { shoot_id } = useParams();
-  const location = useLocation();
   const navigate = useNavigate();
 
   const { 
@@ -98,7 +97,7 @@ const AddOrEditShoot = ({ shootAction }) => {
   const handleInputDragStart = (photoNo) => {
     const draggedInput = shootPhotos.find(photo => photo.photoNo === photoNo);
     setActiveDragInput(draggedInput);
-  }
+  };
 
   const handleDropInputTarget = (dropTargetInputNo, dropTargetInputDisplayOrder) => {
     const activeDraggedInputNo = activeDragInput.photoNo;
@@ -150,7 +149,7 @@ const AddOrEditShoot = ({ shootAction }) => {
   
     setShootPhotos(updatedShootPhotos);
     setActiveDragInput(null);
-  }
+  };
   
   const handleAddCustomSelect = (selectedEntry) => {
     const selectedEntryType = selectedEntry === "photographer_name"
@@ -197,17 +196,17 @@ const AddOrEditShoot = ({ shootAction }) => {
     }
 
     return toast.error(`Please select a ${selectedEntryType} before adding a new one`);
-  }
+  };
 
   const handleRemoveCustomSelector = (chooser) => {
     let chooserType;
 
     if(chooser.hasOwnProperty('photographerID')) {
-      chooserType = "Photographer"
+      chooserType = "Photographer";
     } else if(chooser.hasOwnProperty('modelID')) {
-      chooserType = "Model"
+      chooserType = "Model";
     } else if(chooser.hasOwnProperty('tagID')) {
-      chooserType = "Tag"
+      chooserType = "Tag";
     }
 
     const { chooserNo } = chooser;
@@ -226,7 +225,7 @@ const AddOrEditShoot = ({ shootAction }) => {
       
       setTagChooserIDs(filteredChoosers);
     }
-  }
+  };
 
 const handleSubmitShoot = async (e) => {
   e.preventDefault();
@@ -463,7 +462,7 @@ const handleSubmitShoot = async (e) => {
             setShootPhotos(fetchedShootPhotos);
           
             const date = new Date(data.shoot_date);
-            setRawDate(date)
+            setRawDate(date);
             const formattedDate = `${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`;
             setFormattedDate(formattedDate);
 
@@ -476,6 +475,7 @@ const handleSubmitShoot = async (e) => {
             const fetchedTagIDs = data.tag_ids;
 
             const fetchedPhotographerChooserIDs = [];
+
             for(let idx = 0; idx < fetchedPhotogIDs.length; idx++) {
               const chooser = {};
               chooser.chooserNo =idx + 1;
@@ -485,6 +485,7 @@ const handleSubmitShoot = async (e) => {
             }
 
             const fetchedModelChooserIDs = [];
+
             for(let idx = 0; idx < fetchedModelIDs.length; idx++) {
               const chooser = {};
               chooser.chooserNo = idx + 1;
@@ -494,6 +495,7 @@ const handleSubmitShoot = async (e) => {
             }
 
             const fetchedTagChooserIDs = [];
+            
             for(let idx = 0; idx < fetchedTagIDs.length; idx++) {
               const chooser = {};
               chooser.chooserNo = idx + 1;

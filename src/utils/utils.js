@@ -84,7 +84,7 @@ const isValidEmail = (email) => {
 
 const isValidPassword = (password) =>{
   return password.trim().length >= 8;
-}
+};
 
 export { 
   checkTokenExpiration,

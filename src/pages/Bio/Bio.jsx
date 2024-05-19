@@ -1,12 +1,12 @@
 import AppContext from '../../AppContext';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useContext } from 'react';
 import bioPic from '../../assets/images/bio-pic.jpg';
 import './Bio.scss';
 
 const Bio = () => {
   const { 
     setIsLoading,
-    minLoadingInterval, 
+    minLoadingInterval
   } = useContext(AppContext);
 
   const [ componentIsLoaded, setIsComponentLoaded ] = useState(false);
@@ -15,16 +15,25 @@ const Bio = () => {
     setTimeout(() => {
       setIsLoading(false);
       setIsComponentLoaded(true);
-    }, minLoadingInterval)
-  }
+    }, minLoadingInterval);
+    // }, 2000);
+  };
+
+  // placeholder planning:
+  // --hero image and caption
+  // set specific heights for hero-container and hero-img relative to breakpoints
+  // container around image with position relative
+  // img and imgPlaceholder position absolute with z-index for placeholder higher
+  // conditional class on placeholder to transition the opacity to 0 or change the z-index after image is fully loaded
+  // same with hero-caption
+  // --text section
+  // render several fake paragraphs (3-4, with 3-6 lines each) at the top of the text container with the real paragraphs hidden with display none until hero-img loaded
   
   return (
     <>
       <div className="bio">
         <div 
-          className={`bio__inner ${componentIsLoaded 
-            ? "show"
-            : ""}`}
+          className={`bio__inner`}
         >
           <div className="bio__hero-container">
             <img
@@ -50,19 +59,6 @@ const Bio = () => {
             </p>
           </div>
         </div>
-
-        {/* <div 
-          className={`placeholder__inner ${componentIsLoaded 
-            ? "hide" 
-            : ""}`}
-        >
-          <div src="" alt="" className="placeholder__hero-img"></div>
-          <div className="placeholder__text-container">
-            <div className="placeholder__text placeholder__text--1"></div>
-            <div className="placeholder__text placeholder__text--2"></div>
-            <div className="placeholder__text placeholder__text--3"></div>
-          </div>
-        </div> */}
       </div>
     </>
   )};
