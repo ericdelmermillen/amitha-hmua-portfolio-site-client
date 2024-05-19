@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { checkTokenExpiration, scrollToTop } from './utils/utils.js';
-// import { toast } from 'react-toastify';
 
 const AppContext = createContext();
 
@@ -129,20 +128,14 @@ export const AppProvider = ({ children }) => {
     localStorage.setItem('colorMode', colorMode);
   }, [colorMode]);
 
-    // --
+  useEffect(() => {
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isSafariBrowser = /safari/.test(userAgent) && !/chrome/.test(userAgent) && !/android/.test(userAgent);
+    const isSafariFeatureDetection = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
-    useEffect(() => {
-      const userAgent = navigator.userAgent.toLowerCase();
-      const isSafariBrowser = /safari/.test(userAgent) && !/chrome/.test(userAgent) && !/android/.test(userAgent);
-      const isSafariFeatureDetection = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    setIsSafari(isSafariBrowser || isSafariFeatureDetection);
+  }, []);
   
-      setIsSafari(isSafariBrowser || isSafariFeatureDetection);
-    }, []);
-  
-    console.log(`isSafari: ${isSafari}`)
-  
-    // ---
-
   // check loggedIn on mount
   useEffect(() => {
     checkTokenExpiration(setIsLoggedIn, navigate);
@@ -156,6 +149,8 @@ export const AppProvider = ({ children }) => {
 
 
   const contextValues = {
+    isLoading, 
+    setIsLoading,
     isLoggedIn, 
     setIsLoggedIn,
     colorMode, 
@@ -166,6 +161,16 @@ export const AppProvider = ({ children }) => {
     setScrollYPos,
     prevScrollYPos, 
     setPrevScrollYPos,
+    showFloatingButton, 
+    setShowFloatingButton,
+    prevURL, 
+    setPrevURL,
+    isFirefox, 
+    setIsFirefox,
+    isSafari, 
+    setIsSafari,
+    setMinLoadingInterval,
+    minLoadingInterval, 
     selectedShoot, 
     setSelectedShoot,
     showDeleteOrEditShootModal, 
@@ -184,29 +189,15 @@ export const AppProvider = ({ children }) => {
     setShouldUpdateShoots,
     shouldUpdateTags, 
     setShouldUpdateTags,
-    isLoading, 
-    setIsLoading,
-    minLoadingInterval, 
-    setMinLoadingInterval,
-    isFirefox, 
-    setIsFirefox,
-    showFloatingButton, 
-    setShowFloatingButton,
     tags, 
     setTags,
     selectedTag, 
     setSelectedTag,
-
-    handleNavigateHome,
-    handleNavLinkClick,
-    
     selectValue, 
     setSelectValue,
-
-    prevURL, 
-    setPrevURL,
-    isSafari, 
-    setIsSafari
+    // non-state functions
+    handleNavLinkClick,
+    handleNavigateHome
    }
   
   return (
