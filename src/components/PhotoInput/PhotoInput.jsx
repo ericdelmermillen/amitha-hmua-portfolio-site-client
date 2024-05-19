@@ -80,7 +80,6 @@ const PhotoInput = ({
               ? "inFront" 
               : ""}`}
             src={shootPhoto.photoPreview}
-            alt="Uploaded"
             onLoad={handleImageLoad} 
             draggable={true}
           />
