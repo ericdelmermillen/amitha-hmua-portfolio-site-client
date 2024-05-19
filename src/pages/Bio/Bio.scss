@@ -28,17 +28,44 @@
     }
   }
 
-  &__hero-img {
-    @include shootImg;
+  &__heroImg-container { 
+    left: 50%;
+    position: relative;
+    transform: translateX(-50%);
+    width: 100%;
+    padding-bottom: 100%;
+
+    @media(min-width: $tablet) {
+      height: 500px;
+      width: 500px;
+      padding-bottom: 0;
+    }
+  }
+
+  &__heroImg {
+    height: 100%;
+    width: 100%;
     object-fit: cover;
     object-position: center center;
+    position: absolute;
+    opacity: 0;
     
-    @media(min-width: $tablet) {
-      max-height: 90vh;
+    &.show {
+      transition: opacity 0.25s ease;
+      opacity: 1;
     }
 
-    @media(min-width: $desktop) {
-      min-width: 50%;
+    &--placeholder {
+      min-height: 100%;
+      min-width: 100%;
+      background: yellow;
+      background: var(--placeholder-color);
+      position: absolute;
+      opacity: 1;
+      
+      &.hide {
+        opacity: 0;
+      }
     }
   }
 
@@ -88,3 +115,6 @@
     }
   }
 }
+
+
+

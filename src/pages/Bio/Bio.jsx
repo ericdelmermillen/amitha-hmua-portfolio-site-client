@@ -36,12 +36,22 @@ const Bio = () => {
           className={`bio__inner`}
         >
           <div className="bio__hero-container">
-            <img
-              className="bio__hero-img"
-              src={bioPic}
-              alt="Hero Image of Amitha Millen-Suwanta"
-              onLoad={handleImageLoad}
-            />
+
+            <div className="bio__heroImg-container">
+
+              <div className={`bio__heroImg--placeholder ${componentIsLoaded 
+                ? "hide" 
+                : ""}`}
+              ></div>
+              <img
+                className={`bio__heroImg ${componentIsLoaded 
+                  ? "show" 
+                  : ""}`}
+                src={bioPic}
+                alt="Hero Image of Amitha Millen-Suwanta"
+                onLoad={handleImageLoad}
+              />
+            </div>
             <h3 className='bio__hero-caption'>
               Amitha Millen-Suwanta
             </h3>

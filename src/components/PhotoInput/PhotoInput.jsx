@@ -12,7 +12,7 @@ const PhotoInput = ({
   handleDropInputTarget
 }) => {
 
-  const [ showImage, setShowImage ] = useState(false)
+  const [ showImage, setShowImage ] = useState(false);
 
   const inputNo = shootPhoto.photoNo;
   const displayOrder = shootPhoto.displayOrder;
@@ -25,7 +25,7 @@ const PhotoInput = ({
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
-    setShowImage(true)
+    setShowImage(true);
     file && handleImageChange(e, shootPhoto.photoNo);
   };
 
