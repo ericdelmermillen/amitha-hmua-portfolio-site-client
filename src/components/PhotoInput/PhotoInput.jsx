@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import PhotoPlaceholder from '../../assets/icons/PhotoPlaceholder';
 import './PhotoInput.scss';
 
@@ -12,6 +12,8 @@ const PhotoInput = ({
   handleDropInputTarget
 }) => {
 
+  const [ showImage, setShowImage ] = useState(false)
+
   const inputNo = shootPhoto.photoNo;
   const displayOrder = shootPhoto.displayOrder;
 
@@ -23,11 +25,13 @@ const PhotoInput = ({
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
+    setShowImage(true)
     file && handleImageChange(e, shootPhoto.photoNo);
   };
 
   const handleClearInput = (e) => {
     e.stopPropagation();
+    setShowImage(false)
     const newShootPhotos = [...shootPhotos];
 
     newShootPhotos.forEach((shootPhoto) => {
@@ -43,12 +47,19 @@ const PhotoInput = ({
   const handleDragOver = (e) => {
     e.preventDefault();
   };
+
+  const handleImageLoad = () => {
+    setShowImage(true)
+  }
   
   return (
     <>
       <div 
-        draggable={true}
         className="photoInput"
+        draggable={true}
+        onClick={showImage 
+          ? null
+          : handleFileInputChange}
         onDragStart={!isFirefox 
           ? () => handleInputDragStart(inputNo)
           : null}
@@ -58,36 +69,40 @@ const PhotoInput = ({
         onDragOver={handleDragOver}
         onDrop={() => handleDropInputTarget(inputNo, displayOrder)}
       >
-        {shootPhoto.photoPreview ? (
-          <div 
-            className="photoInput__box disabled"
+        <div 
+          className={`photoInput__box ${showImage 
+            ? "disabled" 
+            : ""}`}
+          draggable={true}
+        >
+          <img
+            className={`photoInput__image ${showImage 
+              ? "inFront" 
+              : ""}`}
+            src={shootPhoto.photoPreview}
+            alt="Uploaded"
+            onLoad={handleImageLoad} 
             draggable={true}
+          />
+          <PhotoPlaceholder
+            className={`photoInput__placeholder ${showImage 
+              ? "behind" 
+              : ""}`}
+            strokeClassName="photoInput__placeholderStroke"
+          />
+          <div
+            className={`photoInput__clearButton ${showImage 
+              ? "show" 
+              : ""}`}
+            onClick={handleClearInput}
           >
-            <img
-              src={shootPhoto.photoPreview}
-              alt="Uploaded"
-              className="photoInput__image"
-              draggable={true}
-            />
-            <div
-              className="photoInput__clearButton"
-              onClick={handleClearInput}
-            >
+            <div className="photoInput__clear">
               <div className="photoInput__close-icon"></div>
               <div className="photoInput__close-icon"></div>
             </div>
           </div>
-        ) : (
-          <div 
-            className="photoInput__box" 
-            onClick={handleFileInputChange}
-          >
-            <PhotoPlaceholder
-              className="photoInput__placeholder"
-              strokeClassName="photoInput__placeholderStroke"
-            />
-          </div>
-        )}
+        </div>
+
         <input
           ref={fileInputRef}
           type="file"

@@ -12,72 +12,19 @@
     position: relative;
     overflow: hidden;
     width: 100%;
-    transition: scale 0.2s ease;
+    transition: scale 0.1s ease;
     
     &.disabled {
       cursor: default;
     }
   }
 
-  &__clearButton {
-    align-items: center;
-    background: var(--background-color);
-    border-radius: 50%;
-    box-shadow: var(--boxShadow);
-    cursor: pointer;
-    display: flex;
-    height: 2rem;
-    justify-content: center;
-    left: 0.25rem;
-    padding: 0.5rem;
-    position: absolute;
-    top: 0.25rem;
-    width: 2rem;
-
-    @media(min-width: 500px) {
-      height: 2rem;
-      width: 2rem;
-    }
-
-    @media(min-width: $tablet) {
-      height: 2.25rem;
-      width: 2.25rem;
-    }
-
-    @media(min-width: $tablet) {
-      height: 2.5rem;
-      width: 2.5rem;
-    }
-  }
-
-  &__close-icon {
-    background-color: var(--text-color); 
-    border-radius: 2px;
-    height: 3px;
-    position: absolute;
-    transform-origin: center;
-    width: 70%;
-  }
-
-  &__close-icon:first-child {
-    transform: rotate(45deg);
-  }
-
-  &__close-icon:last-child {
-    transform: rotate(-45deg);
-  }
-
-  &__placeholder {
-    fill: var(--text-color);
-    height: 100%;
-    width: 100%;
-  }
-
   &__image {
-    object-fit: cover; 
-    object-position: top center;
     cursor: grab;
     height: 15rem;
+    object-fit: cover; 
+    object-position: top center;
+    position: absolute;
     width: 15rem;
 
     @media(min-width: 500px) {
@@ -106,20 +53,104 @@
     }
   }
 
-  &__clear-button {
+  &__placeholder {
+    background: var(--background-color);
     cursor: pointer;
-    height: 2rem;
-    position: absolute;
-    top: 0;
-    width: 2rem;
-  }
+    fill: var(--text-color);
+    opacity: 1;
+    z-index: 1;
 
-  &__fileInput {
-    display: none;
+    &.behind {
+      cursor: grab;
+      transition: opacity 0.2s ease-in-out;
+      opacity: 0;
+    }
+
+    @media(min-width: 500px) {
+      height: 11rem;
+      width: 11rem;
+    }
+
+    @media(min-width: 600px) {
+      height: 12.5rem;
+      width: 12.5rem;
+    }
+
+    @media(min-width: 700px) {
+      height: 13.5rem;
+      width: 13.5rem;
+    }
+
+    @media(min-width: $tablet) {
+      height: 15rem;
+      width: 15rem;
+    }
+
+    @media(min-width: $largeTablet) {
+      height: 10rem;
+      width: 10rem;
+    }
   }
 
   &__placeholderStroke {
     fill: none;
     stroke: var(--text-color);
+  }
+
+  &__clearButton {
+    display: none;
+    left: 0;
+    position: absolute;
+    top: 0;
+    
+    &.show {
+      align-items: center;
+      cursor: auto;
+      display: flex;
+      height: 4rem;
+      justify-content: center;
+      width: 4rem;
+      
+      @media(min-width: 500px) {
+        height: 3rem;
+        width: 3rem;
+      }
+    }
+  }
+
+
+  &__clear {
+    align-items: center;
+    background: var(--background-color);
+    border-radius: 50%;
+    box-shadow: var(--boxShadow);
+    display: flex;
+    height: 2.5rem;
+    justify-content: center;
+    width: 2.5rem;
+  }
+
+
+  &__close-icon {
+    background-color: var(--text-color); 
+    border-radius: 2px;
+    height: 3px;
+    position: absolute;
+    transform-origin: center;
+    width: 50%;
+    width: 45%;
+    z-index: 1;
+  }
+
+  &__close-icon:first-child {
+    transform: rotate(45deg);
+  }
+
+  &__close-icon:last-child {
+    transform: rotate(-45deg);
+  }
+
+  &__fileInput {
+    display: none;
   }
 }
