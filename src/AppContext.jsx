@@ -17,6 +17,8 @@ export const AppProvider = ({ children }) => {
   const [ isLoading, setIsLoading ] = useState(false); 
   const [ minLoadingInterval, setMinLoadingInterval ] = useState(250); 
   const [ isFirefox, setIsFirefox ] = useState(navigator.userAgent.toLowerCase().indexOf('firefox') > -1);
+  const [ isSafari, setIsSafari ] = useState(false);
+
   const [ showFloatingButton, setShowFloatingButton ] = useState(!location.pathname.includes("edit") || !location.pathname.includes("add"));
 
   const [ scrollYPos, setScrollYPos ] = useState(window.scrollY);
@@ -40,7 +42,7 @@ export const AppProvider = ({ children }) => {
   const [ tags, setTags ] = useState([]);
   const [ selectedTag, setSelectedTag ] = useState(null);
   const [ shouldUpdateTags, setShouldUpdateTags ] = useState(false);
-
+  
   const [ selectValue, setSelectValue ] = useState(null);
   
   const navigate = useNavigate(); 
@@ -100,9 +102,9 @@ export const AppProvider = ({ children }) => {
 
     const pathname = location.pathname;
     const search = location.search;
-    const currentURL = pathname.concat(search)
-    const URLIncludesEdit = pathname.includes("edit")
-    const URLIncludesAdd = pathname.includes("add")
+    const currentURL = pathname.concat(search);
+    const URLIncludesEdit = pathname.includes("edit");
+    const URLIncludesAdd = pathname.includes("add");
 
     if(currentURL !== prevURL) {
       setPrevURL(currentURL);
@@ -116,7 +118,7 @@ export const AppProvider = ({ children }) => {
     
     // setShowSideNav(false);
     scrollToTop();
-
+    
     setTimeout(() => {
       setIsLoading(false);
     }, minLoadingInterval);
@@ -126,6 +128,20 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem('colorMode', colorMode);
   }, [colorMode]);
+
+    // --
+
+    useEffect(() => {
+      const userAgent = navigator.userAgent.toLowerCase();
+      const isSafariBrowser = /safari/.test(userAgent) && !/chrome/.test(userAgent) && !/android/.test(userAgent);
+      const isSafariFeatureDetection = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  
+      setIsSafari(isSafariBrowser || isSafariFeatureDetection);
+    }, []);
+  
+    console.log(`isSafari: ${isSafari}`)
+  
+    // ---
 
   // check loggedIn on mount
   useEffect(() => {
@@ -188,7 +204,9 @@ export const AppProvider = ({ children }) => {
     setSelectValue,
 
     prevURL, 
-    setPrevURL
+    setPrevURL,
+    isSafari, 
+    setIsSafari
    }
   
   return (

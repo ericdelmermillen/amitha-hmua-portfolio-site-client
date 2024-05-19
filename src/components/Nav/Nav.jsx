@@ -30,7 +30,7 @@ const Nav = ({ handleLogOut }) => {
   
   return (
     <>
-      <nav className={`nav ${prevScrollYPos < scrollYPos ? "hide": ""}`}>
+      <nav className={`nav ${prevScrollYPos < scrollYPos && scrollYPos > 50 ? "hide": ""}`}>
         <div className="nav__inner">
           <Link 
             to={'/work'}

@@ -21,8 +21,9 @@
     flex-direction: column;
     height: 70%;
     min-height: 70%;
-    min-height: 70%;
-    // margin-top: 2rem;
+    min-height: 35rem;
+    margin-top: 2rem;
+    margin-top: 1rem;
     max-height: 40rem;
     max-width: 40rem;
     overflow-y: auto;
@@ -30,6 +31,8 @@
     width: 90%;
     
     @media(min-width: $tablet) {
+      margin-top: 2rem;
+      margin-top: 1.5rem;
       width: 80%;
     }
   }

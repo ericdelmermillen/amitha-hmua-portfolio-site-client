@@ -20,6 +20,7 @@
     overflow-y: auto; 
     position: absolute;
     scrollbar-width: none;
+    -ms-overflow-style: none; // hide in explorer
     transition: max-height 0.25s ease;
     width: 100%;
   }
@@ -81,6 +82,11 @@
       text-transform: uppercase;
       background: var(--navAndFooterBG);
     }
+  }
+
+  /* Hide scrollbar for WebKit browsers (Safari and Chrome) */
+  &__inner::-webkit-scrollbar {
+    display: none;
   }
 
   /* Hide the scrollbar */

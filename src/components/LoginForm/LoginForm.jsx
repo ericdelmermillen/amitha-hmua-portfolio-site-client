@@ -12,7 +12,9 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 const LoginForm = () => {
   const { 
     setIsLoggedIn,
-    handleNavigateHome
+    handleNavigateHome,
+    isSafari, 
+    setIsSafari
   } = useContext(AppContext);
   
   const [ email, setEmail ] = useState('');
@@ -146,8 +148,9 @@ const LoginForm = () => {
                   onChange={handlePasswordChange}
                   onBlur={handleCheckPasswordIsValid}
                 />
+
                 <div 
-                  className='passwordInput__icon'
+                  className={`passwordInput__icon ${!isSafari ? "show": ""}`}
                   alt='password hide/show icon'
                   onClick={() => setShowPassword(!showPassword)}
                 >

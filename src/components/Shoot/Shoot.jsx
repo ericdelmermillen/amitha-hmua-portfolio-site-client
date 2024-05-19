@@ -122,7 +122,7 @@ const Shoot = ({
                 : photographers}
           </p>
         </div>
-        <div className="shoot__tags">
+        {/* <div className="shoot__tags">
           {tags.map(tag => (
             <span 
               className='shoot__tag'
@@ -131,7 +131,7 @@ const Shoot = ({
               {tag}
             </span>
           ))}
-        </div>
+        </div> */}
       </div>
     </>
   )};

@@ -137,10 +137,15 @@
     }
   }
 
-  /* Hide the scrollbar */
-  &::-webkit-scrollbar {
-    width: 0;
-  }
+/* Hide scrollbar for WebKit browsers (Safari and Chrome) */
+&__inner::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide the scrollbar */
+&::-webkit-scrollbar {
+  width: 0;
+}
 
   &__touchOffDiv {
     display: none;

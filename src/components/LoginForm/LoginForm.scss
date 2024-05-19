@@ -71,10 +71,18 @@
     position: relative;
     
     &__icon {
-      position: absolute;
-      right: 1rem;
-      top: 0.5rem;
-      width: 1.75rem;
+      display: none;
+      
+      &.show {
+        align-items: center;
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 3rem;
+      }
 
       &--show {
         fill: var(--text-color);
