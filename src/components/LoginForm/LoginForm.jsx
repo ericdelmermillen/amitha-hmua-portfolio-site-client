@@ -13,7 +13,8 @@ const LoginForm = () => {
   const { 
     setIsLoggedIn,
     handleNavigateHome,
-    isSafari
+    isSafari, 
+    minLoadingInterval
   } = useContext(AppContext);
   
   const [ email, setEmail ] = useState('');

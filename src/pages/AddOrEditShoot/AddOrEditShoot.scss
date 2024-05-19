@@ -144,36 +144,8 @@
   }
 
   &__photoInput {
-    height: 15rem;
     max-height: 100%;
     max-width: 100%;
-    overflow: hidden;
-    width: 15rem;
-    
-    @media(min-width: 500px) {
-      height: 11rem;
-      width: 11rem;
-    }
-    
-    @media(min-width: 600px) {
-      height: 12.5rem;
-      width: 12.5rem;
-    }
-    
-    @media(min-width: 700px) {
-      height: 13.5rem;
-      width: 13.5rem;
-    }
-    
-    @media(min-width: $tablet) {
-      height: 15rem;
-      width: 15rem;
-    }
-    
-    @media(min-width: $largeTablet) {
-      height: 10rem;
-      width: 10rem;
-    }
   }
 
   &__selector {
