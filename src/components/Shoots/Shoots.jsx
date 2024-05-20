@@ -21,7 +21,9 @@ const Shoots = () => {
     selectedTag, 
     prevURL, 
     showDeleteOrEditShootModal,
-    setShowDeleteOrEditShootModal
+    setShowDeleteOrEditShootModal,
+    shootDetails, 
+    setShootDetails
   } = useContext(AppContext);
 
   const [ shouldUpdateAllShoots, setShouldUpdateAllShoots ] = useState(false);
@@ -63,6 +65,7 @@ const Shoots = () => {
   };
     
   const handleNewShootId = (shootId) => {
+    setShootDetails(null);
     setCurrentShootId(shootId);
   };
 

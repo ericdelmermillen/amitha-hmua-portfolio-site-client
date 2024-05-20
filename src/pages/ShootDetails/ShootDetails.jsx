@@ -14,25 +14,33 @@ const ShootDetails = () => {
 
   const { 
     setIsLoading,
-    selectedTag
+    selectedTag,
+    minLoadingInterval,
+    shootDetails, 
+    setShootDetails,
   } = useContext(AppContext);
 
-  const [ shootDetails, setShootDetails ] = useState(null);
   const [ photos, setPhotos ] = useState([]);
   const [ photographers, setPhotographers ] = useState([]);
   const [ models, setModels ] = useState([]);
   const [ formattedDate, setFormattedDate ] = useState('');
 
   // state for when to render placeholders
-  const [ shootIsLoaded, setShootIsLoaded ] = useState(false);
+  const [ componentIsLoaded, setComponentIsLoaded ] = useState(false);
+
+  const placeHolderArray = Array.from({ length: 10 });
 
   const handlePhotosLoaded = () => {
-    setShootIsLoaded(true)
+    setTimeout(() => {
+      setComponentIsLoaded(true)
+    }, minLoadingInterval)
+    // }, 2000)
   }
 
   // useEffect for when shoot_id changes
   useEffect(() => {
     setIsLoading(true);
+    setComponentIsLoaded(false);
     
     const fetchShootDetails = async () => {
       try {
@@ -70,16 +78,41 @@ const ShootDetails = () => {
       <div className="shootDetails">
         <div className="shootDetails__inner">
 
-          <div className="shootDetails__photos">         
+          <div className="shootDetails__photos">   
+
+            <div className={`shootDetails__photo-placeholders ${componentIsLoaded 
+              ? "hide"
+              : ""}`}>
+              <div className="shootDetails__date-placeholder"></div>
+
+              <div className="shootDetails__photo-placeholder shootDetails__photo-placeholder--1"></div>
+
+                <div className="shootDetails__detail-placeholders">
+                  <div className="shootDetails__detail-placeholder"></div>
+                  <div className="shootDetails__detail-placeholder"></div>
+                </div>
+                
+
+                <div className="shootDetails__photo-placeholder"></div>
+                <div className="shootDetails__photo-placeholder"></div>
+                <div className="shootDetails__photo-placeholder"></div>
+                <div className="shootDetails__photo-placeholder"></div>
+            </div>
+            
             {photos && photos.map((photo, idx) => 
               <div 
-                className="shootDetails__photo-container"
+                className={`shootDetails__photo-container ${setComponentIsLoaded 
+                  ? "show"
+                : ""}`}
                 key={idx}
               >
+                
                 {idx === 0 && 
 
                   <h4 
-                    className={`shootDetails__date ${shootDetails && "show"}`}
+                    className={`shootDetails__date ${shootDetails 
+                      ? "show"
+                      : ""}`}
                   >
                     {formattedDate && formattedDate}
                   </h4>

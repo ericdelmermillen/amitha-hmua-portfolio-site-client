@@ -43,6 +43,8 @@ export const AppProvider = ({ children }) => {
   const [ shouldUpdateTags, setShouldUpdateTags ] = useState(false);
   
   const [ selectValue, setSelectValue ] = useState(null);
+
+  const [ shootDetails, setShootDetails ] = useState(null);
   
   const navigate = useNavigate(); 
 
@@ -195,6 +197,8 @@ export const AppProvider = ({ children }) => {
     setSelectedTag,
     selectValue, 
     setSelectValue,
+    shootDetails, 
+    setShootDetails,
     // non-state functions
     handleNavLinkClick,
     handleNavigateHome
