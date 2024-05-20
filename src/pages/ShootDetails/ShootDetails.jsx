@@ -13,6 +13,7 @@ const ShootDetails = () => {
   const { shoot_id } = useParams();
 
   const { 
+    isLoading,
     setIsLoading,
     selectedTag,
     minLoadingInterval,
@@ -31,9 +32,9 @@ const ShootDetails = () => {
   const placeHolderArray = Array.from({ length: 10 });
 
   const handlePhotosLoaded = () => {
-    setTimeout(() => {
+    // setTimeout(() => {
       setComponentIsLoaded(true)
-    }, minLoadingInterval)
+    // }, minLoadingInterval)
     // }, 2000)
   }
 
@@ -82,21 +83,18 @@ const ShootDetails = () => {
 
             <div className={`shootDetails__photo-placeholders ${componentIsLoaded 
               ? "hide"
-              : ""}`}>
+              : ""}`}
+            >
               <div className="shootDetails__date-placeholder"></div>
-
               <div className="shootDetails__photo-placeholder shootDetails__photo-placeholder--1"></div>
-
-                <div className="shootDetails__detail-placeholders">
-                  <div className="shootDetails__detail-placeholder"></div>
-                  <div className="shootDetails__detail-placeholder"></div>
-                </div>
-                
-
-                <div className="shootDetails__photo-placeholder"></div>
-                <div className="shootDetails__photo-placeholder"></div>
-                <div className="shootDetails__photo-placeholder"></div>
-                <div className="shootDetails__photo-placeholder"></div>
+              <div className="shootDetails__detail-placeholders">
+                <div className="shootDetails__detail-placeholder"></div>
+                <div className="shootDetails__detail-placeholder"></div>
+              </div>
+              <div className="shootDetails__photo-placeholder"></div>
+              <div className="shootDetails__photo-placeholder"></div>
+              <div className="shootDetails__photo-placeholder"></div>
+              <div className="shootDetails__photo-placeholder"></div>
             </div>
             
             {photos && photos.map((photo, idx) => 
