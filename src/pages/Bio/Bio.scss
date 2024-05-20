@@ -57,7 +57,7 @@
     width: 100%;
     
     &.show {
-      transition: opacity 0.1s ease-in-out;
+      // transition: opacity 0.1s ease-in-out;
       opacity: 1;
     }
 
@@ -94,7 +94,7 @@
     &.show {
       background: var(--placeholder-color);
       color: transparent;
-      transition: color 0.1s ease-in-out;
+      // transition: color 0.1s ease-in-out;
       width: 80%;
     }
   }
@@ -121,7 +121,6 @@
     
     &.hide {
       opacity: 0;
-      // transition: opacity 0.1s ease-out;
     }
   }
   

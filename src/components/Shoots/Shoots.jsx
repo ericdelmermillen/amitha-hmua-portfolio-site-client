@@ -192,8 +192,10 @@ const Shoots = () => {
           const response = await fetch(`${BASE_URL}/shoots/all?page=${currentPage}&limit=${itemsPerPage}`);
 
           if(response.ok) {
-            const data = await response.json();
+            const { shootSummaries, isFinalPage } = await response.json();
             setCurrentPage(currentPage + 1);
+
+            const data = shootSummaries;
 
             let filteredData = [...data];
 
@@ -204,7 +206,7 @@ const Shoots = () => {
 
             const updatedShootsData = [...shootsData, ...filteredData];
 
-            if(!data.length) {
+            if(isFinalPage) {
               setFinalPageLoaded(true);
             } else {
               setShootsData(updatedShootsData);
@@ -234,7 +236,9 @@ const Shoots = () => {
           const response = await fetch(`${BASE_URL}/shoots/all?tag_id=${selectedTag.id}&page=${currentPage}&limit=${itemsPerPage}`);
 
           if(response.ok) {
-            const data = await response.json();
+            // const data = await response.json();
+            const { shootSummaries, isFinalPage } = await response.json();
+            const data = shootSummaries;
             let filteredData = [...data];
             setCurrentPage(currentPage + 1);
 
@@ -245,7 +249,7 @@ const Shoots = () => {
 
             const updatedShootsData = [...shootsData, ...filteredData];
 
-            if(!data.length) {
+            if(isFinalPage) {
               setFinalPageLoaded(true);
             } else {
               setShootsData(updatedShootsData);
