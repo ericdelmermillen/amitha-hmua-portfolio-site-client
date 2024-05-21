@@ -23,7 +23,9 @@ const Shoots = () => {
     showDeleteOrEditShootModal,
     setShowDeleteOrEditShootModal,
     shootDetails, 
-    setShootDetails
+    setShootDetails,
+    isInitialShootsLoad,
+    setIsInitialShootsLoad
   } = useContext(AppContext);
 
   const [ shouldUpdateAllShoots, setShouldUpdateAllShoots ] = useState(false);
@@ -40,13 +42,13 @@ const Shoots = () => {
 
   const [ activeDragShoot, setActiveDragShoot ] = useState(null); 
 
-  const itemsPerPage = 1;
+  // const itemsPerPage = 1;
   // const itemsPerPage = 2;
   // const itemsPerPage = 4;
   // const itemsPerPage = 6;
-  // const itemsPerPage = 12;
+  const itemsPerPage = 12;
 
-  const [ finalPageLoaded, setFinalPageLoaded ] = useState(false);
+  const [ finalPageLoaded, setFinalPageLoaded ] = useState(!false);
 
   const handleOverScroll = () => {
     if(!finalPageLoaded) {
@@ -195,6 +197,12 @@ const Shoots = () => {
             const { shootSummaries, isFinalPage } = await response.json();
             setCurrentPage(currentPage + 1);
 
+            setTimeout(() => {
+
+              setIsInitialShootsLoad(false);
+            // }, 2000)
+            }, 0)
+
             const data = shootSummaries;
 
             let filteredData = [...data];
@@ -236,11 +244,16 @@ const Shoots = () => {
           const response = await fetch(`${BASE_URL}/shoots/all?tag_id=${selectedTag.id}&page=${currentPage}&limit=${itemsPerPage}`);
 
           if(response.ok) {
-            // const data = await response.json();
             const { shootSummaries, isFinalPage } = await response.json();
             const data = shootSummaries;
             let filteredData = [...data];
             setCurrentPage(currentPage + 1);
+
+            setTimeout(() => {
+
+              setIsInitialShootsLoad(false);
+            // }, 2000)
+            }, 0)
 
             if(isOnShootDetails) {
               const currentShoot = shoot_id;
@@ -307,7 +320,32 @@ const Shoots = () => {
   return (
     <>
       <div className="shoots">
+
+          <div className={`shoots__placeholders ${isInitialShootsLoad && isOnShootDetails
+            ? "show onShootDetails"
+            : isInitialShootsLoad && !isOnShootDetails
+            ? "show"
+            : ""}`}
+          >
+
+            {Array.from({ length: itemsPerPage }, (_, idx) => 
+
+              <div 
+                className="shoots__placeholder"
+                key={idx + 1}
+              >
+                <div className="shoots__placeholder-img"></div>
+                <div className="shoots__placeholder-textContainer">
+                  <div className="shoots__placeholder-models"></div>
+                  <div className="shoots__placeholder-photographers"></div>
+                </div>
+              </div>
+              )
+            }
+
+          </div>
         <div className={`shoots__inner ${isOnShootDetails ? "onShootDetails" : ""}`}>
+
           {shootsData.map(shoot => (
             <Link 
               to={`/shoot/${shoot.shoot_id}`} 
@@ -330,7 +368,6 @@ const Shoots = () => {
             </Link>
           ))}
         </div>
-
 
         {isLoggedIn && !isOnShootDetails && finalPageLoaded && !selectedTag && !isOrderEditable
 

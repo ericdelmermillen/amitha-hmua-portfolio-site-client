@@ -7,6 +7,7 @@
   min-width: 80%;
   
   &__inner {
+    // border: 2px solid red;
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(1, 1fr);
@@ -41,12 +42,85 @@
   }
 }
 
-.placeholderShoots {
-  max-width: 95%;
-  width: 100%;
+// .placeholderShoots {
+//   max-width: 95%;
+//   width: 100%;
 
-  &__inner {
-    margin-bottom: 1rem;
+//   &__inner {
+//     margin-bottom: 1rem;
+//   }
+// }
+
+.shoots {
+
+  &__placeholders {
+    position: sticky;
+    display: none;
+    
+    &.show {
+      
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(1, 1fr);
+      // height: 50rem;
+      min-width: 100%;
+      opacity: 0.5;
+      
+      
+      &.onShootDetails {
+        background: red;
+        grid-template-columns: repeat(2, 1fr);
+        
+        @media(min-width: $tablet) {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+    
+      @media(min-width: $tablet) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      @media(min-width: $desktop) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    
+    
+  }
+  &__placeholder {
+    width: 100%;
+    min-width: 100%;
+    background: var(--placeholder-color);
+    border-radius: var(--borderRadius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  &__placeholder-img {
+    @include shootImg;
+  }
+
+  &__placeholder-textContainer {
+    // border: 2px solid red;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--background-color);
+    padding-block: 0.75rem;
+  }
+
+  &__placeholder-models,
+  &__placeholder-photographers {
+    background: var(--placeholder-color);
+    border-radius: var(--borderRadius);
+    height: 2rem;
+    width: 65%;
+  }
+  
+  &__placeholder-photographers {
+    width: 75%;
   }
 }
-
