@@ -46,7 +46,7 @@ export const AppProvider = ({ children }) => {
 
   const [ shootDetails, setShootDetails ] = useState(null);
 
-  const [ isInitialShootsLoad, setIsInitialShootsLoad ] = useState(true);
+  const [ isInitialShootsLoad, setIsInitialShootsLoad ] = useState(false);
   
   const navigate = useNavigate(); 
 
@@ -102,7 +102,7 @@ export const AppProvider = ({ children }) => {
   // handle updating of current URL for comparison of if URL has changed elsewhere to avoid unneccessary calls
   useEffect(() => {
     setIsLoading(true);
-    setIsInitialShootsLoad(true);
+    // setIsInitialShootsLoad(true);
 
     const pathname = location.pathname;
     const search = location.search;
@@ -116,7 +116,7 @@ export const AppProvider = ({ children }) => {
 
     if(URLIncludesEdit || URLIncludesAdd) {
       setShowFloatingButton(false);
-    } else if (!URLIncludesEdit || !URLIncludesAdd) {
+    } else if(!URLIncludesEdit || !URLIncludesAdd) {
       setShowFloatingButton(true);
     }
     
@@ -126,6 +126,7 @@ export const AppProvider = ({ children }) => {
     setTimeout(() => {
       setIsLoading(false);
     }, minLoadingInterval);
+    // console.log(isInitialShootsLoad)
   }, [location]);
 
   // Update local storage when color mode state changes

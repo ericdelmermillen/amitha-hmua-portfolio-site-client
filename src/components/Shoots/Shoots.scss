@@ -7,7 +7,6 @@
   min-width: 80%;
   
   &__inner {
-    // border: 2px solid red;
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(1, 1fr);
@@ -42,14 +41,6 @@
   }
 }
 
-// .placeholderShoots {
-//   max-width: 95%;
-//   width: 100%;
-
-//   &__inner {
-//     margin-bottom: 1rem;
-//   }
-// }
 
 .shoots {
 
@@ -62,13 +53,11 @@
       display: grid;
       gap: 1rem;
       grid-template-columns: repeat(1, 1fr);
-      // height: 50rem;
       min-width: 100%;
       opacity: 0.5;
       
       
       &.onShootDetails {
-        background: red;
         grid-template-columns: repeat(2, 1fr);
         
         @media(min-width: $tablet) {

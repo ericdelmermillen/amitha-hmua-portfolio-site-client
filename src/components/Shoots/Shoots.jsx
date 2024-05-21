@@ -67,6 +67,7 @@ const Shoots = () => {
   };
     
   const handleNewShootId = (shootId) => {
+    setShootsData([]);
     setShootDetails(null);
     setCurrentShootId(shootId);
   };
@@ -197,12 +198,6 @@ const Shoots = () => {
             const { shootSummaries, isFinalPage } = await response.json();
             setCurrentPage(currentPage + 1);
 
-            setTimeout(() => {
-
-              setIsInitialShootsLoad(false);
-            // }, 2000)
-            }, 0)
-
             const data = shootSummaries;
 
             let filteredData = [...data];
@@ -213,6 +208,10 @@ const Shoots = () => {
             }    
 
             const updatedShootsData = [...shootsData, ...filteredData];
+            
+            setTimeout(() => {
+              setIsInitialShootsLoad(false);
+            }, minLoadingInterval)
 
             if(isFinalPage) {
               setFinalPageLoaded(true);
@@ -232,6 +231,7 @@ const Shoots = () => {
       }
       fetchShoots();
     }
+
   }, [shouldUpdateAllShoots]);
 
   // fetchFilteredShoots useEffect
@@ -249,18 +249,17 @@ const Shoots = () => {
             let filteredData = [...data];
             setCurrentPage(currentPage + 1);
 
-            setTimeout(() => {
-
-              setIsInitialShootsLoad(false);
-            // }, 2000)
-            }, 0)
-
             if(isOnShootDetails) {
               const currentShoot = shoot_id;
               filteredData = data.filter(shoot => shoot.shoot_id !== +currentShoot);
             }
 
             const updatedShootsData = [...shootsData, ...filteredData];
+
+
+            setTimeout(() => {
+              setIsInitialShootsLoad(false);
+            }, minLoadingInterval)
 
             if(isFinalPage) {
               setFinalPageLoaded(true);
@@ -296,6 +295,7 @@ const Shoots = () => {
     const currentURL = pathname.concat(search);
     
       if(currentURL !== prevURL || showDeleteOrEditShootModal) {
+        setIsInitialShootsLoad(true);
         setShootsData([]);
         setShowDeleteOrEditShootModal(false);
         setCurrentPage(1);
@@ -344,7 +344,10 @@ const Shoots = () => {
             }
 
           </div>
-        <div className={`shoots__inner ${isOnShootDetails ? "onShootDetails" : ""}`}>
+        <div className={`shoots__inner ${isOnShootDetails 
+          ? "onShootDetails" 
+          : ""}`}
+        >
 
           {shootsData.map(shoot => (
             <Link 
@@ -364,6 +367,7 @@ const Shoots = () => {
                 handleShootDragStart={handleShootDragStart}
                 handleDropShootTarget={handleDropShootTarget}
                 tags={shoot.tags}
+                setShootsData={setShootsData}
               />
             </Link>
           ))}
