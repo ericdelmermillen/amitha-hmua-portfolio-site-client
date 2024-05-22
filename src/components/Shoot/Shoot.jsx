@@ -15,8 +15,7 @@ const Shoot = ({
   isOrderEditable, 
   handleShootDragStart,
   handleDropShootTarget,
-  tags,
-  setShootsData
+  tags
 }) => {
 
   const { 

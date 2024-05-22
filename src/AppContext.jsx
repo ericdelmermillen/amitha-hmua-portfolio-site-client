@@ -63,7 +63,7 @@ export const AppProvider = ({ children }) => {
 
   const handleNavLinkClick = () => {
     setSelectValue(null);
-    setSelectedTag(null)
+    setSelectedTag(null);
   }
 
   // fetchTags
@@ -94,15 +94,15 @@ export const AppProvider = ({ children }) => {
       fetchTags();
       setTimeout(() => {
         setIsLoading(false);
-      })
+      }, minLoadingInterval);
     }
+
     fetchTags();
   }, [BASE_URL, shouldUpdateTags]);
 
   // handle updating of current URL for comparison of if URL has changed elsewhere to avoid unneccessary calls
   useEffect(() => {
     setIsLoading(true);
-    // setIsInitialShootsLoad(true);
 
     const pathname = location.pathname;
     const search = location.search;
@@ -120,13 +120,15 @@ export const AppProvider = ({ children }) => {
       setShowFloatingButton(true);
     }
     
-    // setShowSideNav(false);
     scrollToTop();
     
-    setTimeout(() => {
+    if(location.pathname === "/work") {
       setIsLoading(false);
-    }, minLoadingInterval);
-    // console.log(isInitialShootsLoad)
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, minLoadingInterval);
+    }
   }, [location]);
 
   // Update local storage when color mode state changes

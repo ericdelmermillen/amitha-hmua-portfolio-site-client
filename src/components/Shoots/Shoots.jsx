@@ -46,7 +46,8 @@ const Shoots = () => {
   // const itemsPerPage = 2;
   // const itemsPerPage = 4;
   // const itemsPerPage = 6;
-  const itemsPerPage = 12;
+  const itemsPerPage = 10;
+  // const itemsPerPage = 12;
 
   const [ finalPageLoaded, setFinalPageLoaded ] = useState(!false);
 
@@ -56,7 +57,7 @@ const Shoots = () => {
       const fullHeight = document.body.scrollHeight;
       const distanceToBottom = fullHeight - windowHeight - window.scrollY;
       
-      if(distanceToBottom <= 100) {
+      if(distanceToBottom <= 250) {
         if(!selectedTag) {
           setShouldUpdateAllShoots(true);
         } else if(selectedTag) {
@@ -67,7 +68,6 @@ const Shoots = () => {
   };
     
   const handleNewShootId = (shootId) => {
-    setShootsData([]);
     setShootDetails(null);
     setCurrentShootId(shootId);
   };
@@ -197,21 +197,21 @@ const Shoots = () => {
           if(response.ok) {
             const { shootSummaries, isFinalPage } = await response.json();
             setCurrentPage(currentPage + 1);
-
+            
             const data = shootSummaries;
-
+            
             let filteredData = [...data];
-
+            
             if(isOnShootDetails) {
               const currentShoot = shoot_id;
               filteredData = data.filter(shoot => shoot.shoot_id !== +currentShoot);
             }    
-
-            const updatedShootsData = [...shootsData, ...filteredData];
             
+            const updatedShootsData = [...shootsData, ...filteredData];
+
             setTimeout(() => {
               setIsInitialShootsLoad(false);
-            }, minLoadingInterval)
+            }, minLoadingInterval);
 
             if(isFinalPage) {
               setFinalPageLoaded(true);
@@ -232,11 +232,12 @@ const Shoots = () => {
       fetchShoots();
     }
 
-  }, [shouldUpdateAllShoots]);
+  }, [shouldUpdateAllShoots, shoot_id]);
 
   // fetchFilteredShoots useEffect
   useEffect(() => {    
     if(!finalPageLoaded && selectedTag) {
+      setIsLoading(true);
 
       const fetchFilteredShoot = async () => {
 
@@ -295,7 +296,15 @@ const Shoots = () => {
     const currentURL = pathname.concat(search);
     
       if(currentURL !== prevURL || showDeleteOrEditShootModal) {
-        setIsInitialShootsLoad(true);
+
+        if(location.pathname.includes("shoot")) {
+          setTimeout(() => {
+            setIsInitialShootsLoad(true);
+          }, minLoadingInterval);
+        } else {
+          setIsInitialShootsLoad(true);
+        }
+        
         setShootsData([]);
         setShowDeleteOrEditShootModal(false);
         setCurrentPage(1);
@@ -328,7 +337,8 @@ const Shoots = () => {
             : ""}`}
           >
 
-            {Array.from({ length: itemsPerPage }, (_, idx) => 
+            {Array.from({ length: 9 }, (_, idx) => 
+            // {Array.from({ length: itemsPerPage }, (_, idx) => 
 
               <div 
                 className="shoots__placeholder"
@@ -367,7 +377,6 @@ const Shoots = () => {
                 handleShootDragStart={handleShootDragStart}
                 handleDropShootTarget={handleDropShootTarget}
                 tags={shoot.tags}
-                setShootsData={setShootsData}
               />
             </Link>
           ))}
