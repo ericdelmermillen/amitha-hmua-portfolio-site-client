@@ -46,7 +46,6 @@ img {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100%;
   margin-inline: auto;
   position: relative;
 
@@ -143,7 +142,8 @@ img {
     stroke: var(--text-color);
   }
 
-  &__add {
+  &__add, 
+  &__up {
     height: 35px;
     width: 35px;
   }

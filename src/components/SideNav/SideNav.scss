@@ -14,7 +14,7 @@
   width: 80vw;
   z-index: 5;
   
-  @media(min-width: 500px) {
+  @media(min-width: 525px) {
     width: 50vw;
   }
   
@@ -22,7 +22,7 @@
     left: 20vw;
     transition: all 0.5s ease-out;
     
-    @media(min-width: 500px) {
+    @media(min-width: 525px) {
       left: 50vw;
     }
   }

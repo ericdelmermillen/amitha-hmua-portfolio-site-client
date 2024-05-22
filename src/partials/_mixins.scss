@@ -53,8 +53,7 @@
   flex-direction: column;
   margin-inline: auto;
   max-width: 1920px;
-  // min-height: 100vh;
-  min-height: calc(100vh - 10rem);
+  min-height: calc(100vh - 11rem + 1px);
   padding-block: 4rem;
   padding-top: 0rem;
   width: 100%;
@@ -147,9 +146,9 @@
   color: var(--error-color);
   bottom: 0.25rem;
   display: block;
+  font-size: 0.8rem;
   margin-inline-start: 0.5rem;
   position: absolute;
-  font-size: 0.8rem;
 }
 
 @mixin shootImg {
@@ -158,10 +157,10 @@
   width: 100%;
 }
 
-@mixin shootImgSkeleton {
-  @include shootImg;
-  background: grey;
-}
+// @mixin shootImgSkeleton {
+//   @include shootImg;
+//   background: grey;
+// }
 
 @mixin selectChooser {
 
@@ -194,12 +193,6 @@
     &:active {
       outline: none;
     }
-
-    // &__option {
-    //   color: red;
-    //   border: 2px solid red;
-    //   text-align: center;
-    // }
   }
 
   &__button-container {
@@ -252,7 +245,5 @@
   font-size: 1.25rem;
   font-weight: 600;
   justify-content: center;
-  letter-spacing: 1px;
-  letter-spacing: 2px;
   letter-spacing: 3px;
 }

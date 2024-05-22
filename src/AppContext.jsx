@@ -64,7 +64,7 @@ export const AppProvider = ({ children }) => {
   const handleNavLinkClick = () => {
     setSelectValue(null);
     setSelectedTag(null);
-  }
+  };
 
   // fetchTags
   useEffect(() => {
@@ -149,7 +149,7 @@ export const AppProvider = ({ children }) => {
     checkTokenExpiration(setIsLoggedIn, navigate);
   }, []);
 
-  // check colorMode
+  // check colorMode on mount
   useEffect(() => {
     const storedColorMode = localStorage.getItem('colorMode');  
     setColorMode(storedColorMode || "light");
