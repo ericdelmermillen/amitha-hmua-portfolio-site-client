@@ -8,7 +8,7 @@
   justify-content: center;
   height: 100%;
   left: 50%;
-  position: fixed;
+  position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
@@ -19,15 +19,19 @@
     box-shadow: var(--box-shadow);
     display: flex;
     flex-direction: column;
-    min-height: 30rem;
+    min-height: 28rem;
     max-height: 33rem;
-    margin-top: 1rem;
     max-width: 40rem;
     overflow-y: auto;
+    padding-block: 1rem;
     padding-inline: 2rem;
+    position: absolute;
     width: 90%;
+    top: 50%;
+    transform: translateY(-50%);
     
     @media(min-width: $tablet) {
+      padding-block: 2rem;
       width: 80%;
     }
   }
@@ -35,22 +39,29 @@
   &__form {
     display: flex;
     flex-direction: column;
-    // height: 100%;
+    overflow-y: auto;
   }
   
   &__title {
     color: var(--text-color);
     font-size: 1.75rem;
-    margin-block: 1rem;
-    // margin-top: 2.5%;
+    margin-block: 0.5rem;
     text-align: center;
+    
+    @media(min-width: $tablet) {
+      margin-block: 1rem;
+    }
   }
   
   &__instructions {
     color: var(--text-color);
     font-size: 1.25rem;
     font-weight: normal;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    
+    @media(min-width: $tablet) {
+      margin-bottom: 1rem;
+    }
   }
 
   &__label {

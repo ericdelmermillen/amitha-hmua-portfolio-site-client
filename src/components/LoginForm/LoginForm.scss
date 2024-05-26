@@ -8,7 +8,7 @@
   justify-content: center;
   height: 100%;
   left: 50%;
-  position: fixed;
+  position: absolute;
   top: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
@@ -19,17 +19,19 @@
     box-shadow: 0 0 10px var(--box-shadow);
     display: flex;
     flex-direction: column;
-    height: 70%;
-    height: 60%;
-    min-height: 30rem;
-    margin-top: 2rem;
-    max-height: 35rem;
+    min-height: 28rem;
+    max-height: 33rem;
     max-width: 40rem;
-    overflow-y: auto;;
-    padding-inline: 1rem;
+    overflow-y: auto;
+    padding-block: 1rem;
+    padding-inline: 2rem;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
     width: 90%;
     
     @media(min-width: $tablet) {
+      padding-block: 2rem;
       width: 80%;
     }
   }
