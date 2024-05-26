@@ -26,9 +26,9 @@
     padding-block: 1rem;
     padding-inline: 2rem;
     position: absolute;
-    width: 90%;
     top: 50%;
     transform: translateY(-50%);
+    width: 90%;
     
     @media(min-width: $tablet) {
       padding-block: 2rem;
