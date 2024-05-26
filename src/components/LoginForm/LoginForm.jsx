@@ -96,7 +96,11 @@ const LoginForm = () => {
         handleNavigateHome(true, false, null);
         toast.success('Successfully logged in!');
       } else if(response.status === 401) {
+        console.log("401")
         toast.error('Login Failed. Check Email & Password')
+      } else if(response.status === 404) {
+        console.log(`response.status: ${response.status}`)
+        toast.error("User not found");
       }
     } catch(error) {
       toast.error(error.message)
