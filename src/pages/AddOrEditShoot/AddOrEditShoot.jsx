@@ -299,15 +299,29 @@ const handleSubmitShoot = async (e) => {
 
       for(const shootPhoto of shootPhotos) {
         if(shootPhoto.photoPreview && !shootPhoto.photoData) {
-          shoot.photo_urls.push(shootPhoto.photoPreview);
+          // if photoPreview without photoData then the image shown in thrumbnail is already in the S3 bucket or is one of my dummy images
+          
+          // aws image added to bucket
+          if(shootPhoto.photoPreview.includes("aws")) {
+            console.log(shootPhoto.photoPreview);
+            const objectName = shootPhoto.photoPreview.split("/images/")[1]
+            shoot.photo_urls.push(objectName);
+          } else if(!shootPhoto.photoPreview.includes("aws")) {
+            console.log(shootPhoto.photoPreview)
+            shoot.photo_urls.push(shootPhoto.photoPreview);
+          }
+
         } else if(shootPhoto.photoData) {
 
           try {
             const { url } = await fetch(`${AWS_SIGNED_URL_ROUTE}`, {
               headers: headers
             }).then(res => res.json());
+
+            // console.log(url)
             
             awsURL = url;
+            const objectName = awsURL.split("/images/")[1];
           } catch(error) {
             console.log(error);
           }
@@ -319,7 +333,8 @@ const handleSubmitShoot = async (e) => {
             });
 
             const imageUrl = `${awsURL.split('?')[0]}`;
-            shoot.photo_urls.push(imageUrl);
+            const objectName = imageUrl.split("/images/")[1];
+            shoot.photo_urls.push(objectName);
           } catch(error) {
             console.log(error);
           }
