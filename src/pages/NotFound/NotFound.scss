@@ -4,6 +4,7 @@
 .notFound {
   @include page;
   background-color: var(--background-color);
+  justify-content: center;
 
   &__heading, 
   &__sub-heading {
