@@ -45,8 +45,8 @@ const Shoots = () => {
   // const itemsPerPage = 1;
   // const itemsPerPage = 2;
   // const itemsPerPage = 4;
-  // const itemsPerPage = 6;
-  const itemsPerPage = 10;
+  const itemsPerPage = 6;
+  // const itemsPerPage = 10;
   // const itemsPerPage = 12;
 
   const [ finalPageLoaded, setFinalPageLoaded ] = useState(!false);
