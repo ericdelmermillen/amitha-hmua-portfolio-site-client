@@ -122,7 +122,7 @@ export const AppProvider = ({ children }) => {
     
     scrollToTop();
     
-    if(location.pathname === "/work") {
+    if(location.pathname === "/work" && prevURL !== "/work") {
       setIsLoading(false);
     } else {
       setTimeout(() => {

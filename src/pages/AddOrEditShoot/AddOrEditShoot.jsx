@@ -303,11 +303,9 @@ const handleSubmitShoot = async (e) => {
           
           // aws image added to bucket
           if(shootPhoto.photoPreview.includes("aws")) {
-            console.log(shootPhoto.photoPreview);
             const objectName = shootPhoto.photoPreview.split("/images/")[1]
             shoot.photo_urls.push(objectName);
           } else if(!shootPhoto.photoPreview.includes("aws")) {
-            console.log(shootPhoto.photoPreview)
             shoot.photo_urls.push(shootPhoto.photoPreview);
           }
 

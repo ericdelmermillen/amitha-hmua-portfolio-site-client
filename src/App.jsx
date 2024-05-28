@@ -43,7 +43,7 @@ const App = () => {
   } = useContext(AppContext);
 
   const handleLogOut = () => {
-    setIsLoading(true);
+    // setIsLoading(true);
     setIsLoggedIn(false);
     localStorage.removeItem('token'); 
     localStorage.removeItem('refreshToken'); 
