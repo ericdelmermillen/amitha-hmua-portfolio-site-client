@@ -630,7 +630,7 @@ const handleSubmitShoot = async (e) => {
             </div>
 
             <div className="addOrEditShoot__photoUploads">
-              <h3 className="addOrEditShoot_photos-heading">
+              <h3 className="addOrEditShoot__photos-heading">
                 Select up to 10 Photos
               </h3>
 

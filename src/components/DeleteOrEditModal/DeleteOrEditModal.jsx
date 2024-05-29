@@ -27,8 +27,6 @@ const DeleteShootModal = () => {
 
   const navigate = useNavigate();
 
-  console.log(deleteOrEditClickAction)
-
   const handleCloseModal = () => {
     setShowDeleteOrEditModal(false);
     setDeleteOrEditClickAction('');

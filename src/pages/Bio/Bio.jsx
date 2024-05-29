@@ -28,40 +28,15 @@ const Bio = () => {
     handleDeleteOrEditClick(e, "Edit Bio", null)
   }
 
-  // fetch bioPageData useEffect
+  // // fetch bioPageData useEffect
   useEffect(() => {
-    if(!bioText.length || !bioName.length || !bioImg.length) {
-      console.log("calling for bio data")
-      setIsLoading(true);
-
-      const fetchBioData = async () => {
-  
-        try {
-          const response = await fetch(`${BASE_URL}/bio`);
-
-          if(response.ok) {
-            const data = await response.json();
-            setBioText(data.bioText);
-            setBioName(data.bioName);
-            setBioImg(data.bioImgURL);
-          } else {
-            throw new Error("Error fetching bio page content")
-          }
-
-        } catch(error) {
-          console.log(error);
-          toast.error(error);
-        }
-      }
-
-      fetchBioData();
+    if(bioText && bioName && bioImg) {
+      setTimeout(() => {
+        setIsLoading(false)
+        setIsComponentLoaded(true);
+      }, minLoadingInterval);
     }
-
-    setTimeout(() => {
-      setIsLoading(false)
-      setIsComponentLoaded(true);
-    }, minLoadingInterval);
-  }, []);
+  }, [bioText, bioName, bioImg]);
   
   return (
     <>

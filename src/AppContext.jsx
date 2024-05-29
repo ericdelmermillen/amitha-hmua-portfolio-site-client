@@ -119,6 +119,39 @@ export const AppProvider = ({ children }) => {
     fetchTags();
   }, [BASE_URL, shouldUpdateTags]);
 
+  // fetch bioPage data
+  useEffect(() => {
+    if(location.pathname.includes("bio")) {
+
+      if(!bioText.length || !bioName.length || !bioImg.length) {
+        setIsLoading(true);
+  
+        const fetchBioData = async () => {
+    
+          try {
+            const response = await fetch(`${BASE_URL}/bio`);
+  
+            if(response.ok) {
+              const data = await response.json();
+              setBioText(data.bioText);
+              setBioName(data.bioName);
+              setBioImg(data.bioImgURL);
+            } else {
+              throw new Error("Error fetching bio page content")
+            }
+  
+          } catch(error) {
+            console.log(error);
+            toast.error(error);
+          }
+        }
+  
+        fetchBioData();
+      }
+
+    } 
+  }, [location])
+
   // handle updating of current URL for comparison of if URL has changed elsewhere to avoid unneccessary calls
   useEffect(() => {
     setIsLoading(true);
