@@ -1,30 +1,66 @@
 import AppContext from '../../AppContext';
-import { useState, useContext } from 'react';
-import bioPic from '../../assets/images/bio-pic.jpg';
+import { useState, useContext, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import './Bio.scss';
 
 const Bio = () => {
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
   const { 
+    isLoggedIn,
+    setIsLoggedIn,
     setIsLoading,
-    minLoadingInterval
+    minLoadingInterval,
+    bioImg, 
+    setBioImg,
+    bioName, 
+    setBioName,
+    bioText, 
+    setBioText,
   } = useContext(AppContext);
 
   const [ componentIsLoaded, setIsComponentLoaded ] = useState(false);
 
-  const handleImageLoad = () => {
+  // fetch bioPageData useEffect
+  useEffect(() => {
+    if(!bioText.length || !bioName.length || !bioImg.length) {
+      console.log("calling for bio data")
+      setIsLoading(true);
+
+      const fetchBioData = async () => {
+  
+        try {
+          const response = await fetch(`${BASE_URL}/bio`);
+
+          if(response.ok) {
+            const data = await response.json();
+            setBioText(data.bioText);
+            setBioName(data.bioName);
+            setBioImg(data.bioImgURL);
+          } else {
+            throw new Error("Error fetching bio page content")
+          }
+
+        } catch(error) {
+          console.log(error);
+          toast.error(error);
+        }
+      }
+
+      fetchBioData();
+    }
+
     setTimeout(() => {
-      setIsLoading(false);
+      setIsLoading(false)
       setIsComponentLoaded(true);
     }, minLoadingInterval);
-    // }, 2000);
-    // }, 5000);
-  };
+  }, []);
   
   return (
     <>
       <div className="bio">
         <div 
-          className={`bio__inner`}
+          className={"bio__inner"}
         >
           <div className="bio__hero-container">
 
@@ -38,16 +74,15 @@ const Bio = () => {
                 className={`bio__heroImg ${componentIsLoaded 
                   ? "show" 
                   : ""}`}
-                src={bioPic}
+                src={bioImg}
                 alt="Hero Image of Amitha Millen-Suwanta"
-                onLoad={handleImageLoad}
               />
             </div>
             <h3 className={`bio__heroCaption ${componentIsLoaded 
               ? "" 
               : "show"}`}
             >
-              Amitha Millen-Suwanta
+              {bioName}
               <span className="bio__heroCaption--placeholder"></span>
             </h3>
           </div>
@@ -78,25 +113,32 @@ const Bio = () => {
               </div>
 
             </div>
-            <p className={`bio__text ${componentIsLoaded 
-              ? "show" 
-              : ""}`}
-            >
-              Meet Amitha, a dynamic makeup artist and fashion stylist who thrives on celebrating the unique beauty of each person. With a deep understanding that beauty knows no bounds, she rejects the notion of a one-size-fits-all approach to makeup. Instead, she crafts bespoke experiences for her clients, considering their individuality, comfort levels, and personal style. 
-            </p>
-            <p className={`bio__text ${componentIsLoaded 
-              ? "show" 
-              : ""}`}
-            >
-              Located in the heart of Toronto, Ontario, Amitha's professional journey has been a whirlwind of diverse experiences within the beauty industry. Though she revels in all aspects of her craft, her passion ignites most brightly within the realms of Fashion and Bridal makeup. 
-            </p>
-            <p className={`bio__text ${componentIsLoaded 
-              ? "show" 
-              : ""}`}
-            >
-              From esteemed corporations to celebrated singers, actors, and brands across Canada, the USA, and the UK, Amitha and her team ensure that each client embarks on a unique and unforgettable beauty journey.
-            </p>
+
+            {bioText.length 
+              ? bioText
+                  .split("\n")
+                  .filter((paragraph) => paragraph.trim() !== "")
+                  .map((paragraph, idx) => 
+
+                (<p 
+                  className={`bio__text ${componentIsLoaded 
+                    ? "show" 
+                    : ""}`}
+                  key={idx}
+                >
+                  {paragraph}
+                </p>))
+
+              : null
+            }
+
           </div>
+
+          {/* {isLoggedIn 
+            ? <h1>Update Bio</h1>
+            : null
+          } */}
+
         </div>
       </div>
     </>
