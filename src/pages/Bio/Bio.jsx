@@ -17,9 +17,16 @@ const Bio = () => {
     setBioName,
     bioText, 
     setBioText,
+    handleDeleteOrEditClick
   } = useContext(AppContext);
 
   const [ componentIsLoaded, setIsComponentLoaded ] = useState(false);
+
+  const handleUpdateBioClick = (e) => {
+    // console.log("first")
+    // console.log(e)
+    handleDeleteOrEditClick(e, "Edit Bio", null)
+  }
 
   // fetch bioPageData useEffect
   useEffect(() => {
@@ -85,6 +92,21 @@ const Bio = () => {
               {bioName}
               <span className="bio__heroCaption--placeholder"></span>
             </h3>
+
+
+        {isLoggedIn 
+          ? 
+            <div className="bio__button-container">
+              <button
+                className='bio__edit-button'
+                onClick={handleUpdateBioClick}
+                >
+                Update Bio
+              </button>
+            </div>
+
+          : null
+        }
           </div>
           <div className="bio__divider"></div>
           <div className="bio__text-container">
@@ -136,19 +158,6 @@ const Bio = () => {
 
 
         </div>
-
-        {isLoggedIn 
-          ? 
-            <div className="bio__button-container">
-              <button
-                className='bio__edit-button'
-                >
-                Update Bio
-              </button>
-            </div>
-
-          : null
-        }
 
       </div>
     </>

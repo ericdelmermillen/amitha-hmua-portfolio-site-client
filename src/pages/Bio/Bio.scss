@@ -165,13 +165,12 @@
   &__button-container {
     display: flex;
     justify-content: center;
-    margin-bottom: 2rem;
-    margin-top: 5rem;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
   }
 
   &__edit-button {
     @include button;
-    // margin-top: 2rem;;
     margin-inline: auto;
   }
 }
