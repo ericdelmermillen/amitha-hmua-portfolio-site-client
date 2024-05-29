@@ -19,6 +19,7 @@ import SideNav from './components/SideNav/SideNav.jsx';
 import UpIcon from './assets/icons/UpIcon.jsx';
 import './App.scss';
 import 'react-toastify/dist/ReactToastify.css';
+import EditBio from './pages/EditBio/EditBio.jsx';
 
 
 const App = () => {
@@ -133,6 +134,13 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/shoot/:shoot_id" element={<ShootDetails />} />
           <Route path="/login" element={<Login />} />
+          
+          {isLoggedIn ?
+            <Route path="/bio/edit" element={<EditBio />} />
+          
+            : null
+          }
+
           {isLoggedIn 
             ? <Route 
                 path="/shoots/add" 

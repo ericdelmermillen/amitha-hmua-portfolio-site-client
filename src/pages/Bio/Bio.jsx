@@ -22,7 +22,7 @@ const Bio = () => {
 
   const [ componentIsLoaded, setIsComponentLoaded ] = useState(false);
 
-  const handleUpdateBioClick = (e) => {
+  const handleEditBioClick = (e) => {
     // console.log("first")
     // console.log(e)
     handleDeleteOrEditClick(e, "Edit Bio", null)
@@ -99,9 +99,9 @@ const Bio = () => {
             <div className="bio__button-container">
               <button
                 className='bio__edit-button'
-                onClick={handleUpdateBioClick}
+                onClick={handleEditBioClick}
                 >
-                Update Bio
+                Edit Bio
               </button>
             </div>
 

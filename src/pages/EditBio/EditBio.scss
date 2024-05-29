@@ -1,0 +1,11 @@
+@import '../../partials/mixins.scss';
+@import '../../partials/variables.scss';
+
+.editBio {
+  
+  @include page;
+
+  &__h1 {
+    color: red;
+  }
+}

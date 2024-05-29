@@ -27,6 +27,8 @@ const DeleteShootModal = () => {
 
   const navigate = useNavigate();
 
+  console.log(deleteOrEditClickAction)
+
   const handleCloseModal = () => {
     setShowDeleteOrEditModal(false);
     setDeleteOrEditClickAction('');
@@ -86,6 +88,14 @@ const DeleteShootModal = () => {
     return navigate(`/shoots/edit/${selectedShoot}`);
   }
   
+  const handleNavigateToEditBio = () => {
+    setShowDeleteOrEditModal(false);
+    setDeleteOrEditClickAction('');
+    setIsLoading(true);
+    // return navigate(`/shoots/edit/${selectedShoot}`);
+    return navigate("/bio/edit");
+  }
+  
   return (
     <>
       <div 
@@ -97,18 +107,27 @@ const DeleteShootModal = () => {
           onClick={(e) => e.stopPropagation()}
         >
           <h3 className="deleteOrEditShootModal__heading">
-            {deleteOrEditClickAction} Shoot Number {selectedShoot}?
+            {deleteOrEditClickAction === "Edit Bio" 
+              ? "Edit Your Bio Page?"
+              : (`${deleteOrEditClickAction} Shoot Number ${selectedShoot}?`)
+            }
           </h3>
           <div className="deleteOrEditShootModal__button-container">
             <button
               className="deleteOrEditShootModal__button deleteOrEditShootModal__button--delete"
               onClick={deleteOrEditClickAction === "Delete"
                 ? handleDeleteShoot
-                : handleNavigateToEditShoot}
+                : deleteOrEditClickAction === "Edit"
+                ? handleNavigateToEditShoot
+                : handleNavigateToEditBio
+              }
             >
               {deleteOrEditClickAction === "Delete"
                 ? "Confirm"
-                : "Edit Shoot"}
+                : deleteOrEditClickAction === "Edit"
+                ? "Edit Shoot"
+                : "Edit Bio"
+              }
             </button>
             <button
               className="deleteOrEditShootModal__button deleteOrEditShootModal__button--cancel"

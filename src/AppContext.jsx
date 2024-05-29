@@ -75,7 +75,6 @@ export const AppProvider = ({ children }) => {
   };
 
   const handleDeleteOrEditClick = (e, action, shoot_id = null) => {
-    console.log(action)
     e.preventDefault();
     e.stopPropagation();
     setShowDeleteOrEditModal(true);
