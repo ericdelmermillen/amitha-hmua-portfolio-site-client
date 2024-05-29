@@ -74,6 +74,18 @@ export const AppProvider = ({ children }) => {
     setSelectedTag(null);
   };
 
+  const handleDeleteOrEditClick = (e, action, shoot_id = null) => {
+    console.log(action)
+    e.preventDefault();
+    e.stopPropagation();
+    setShowDeleteOrEditModal(true);
+    setDeleteOrEditClickAction(action);
+    
+    if(shoot_id) {
+      setSelectedShoot(shoot_id);
+    }
+  };
+
   // fetchTags
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -224,7 +236,8 @@ export const AppProvider = ({ children }) => {
     setBioText,
     // non-state functions
     handleNavLinkClick,
-    handleNavigateHome
+    handleNavigateHome,
+    handleDeleteOrEditClick
    }
   
   return (

@@ -24,19 +24,12 @@ const Shoot = ({
     setShowDeleteOrEditModal,
     deleteOrEditClickAction,
     setDeleteOrEditClickAction,
+    handleDeleteOrEditClick,
     isFirefox
   } = useContext(AppContext);
 
   const handleDragOver = (e) => {
     e.preventDefault();
-  };
-
-  const handleDeleteOrEditClick = (e, action) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setSelectedShoot(shoot_id);
-    setShowDeleteOrEditModal(true);
-    setDeleteOrEditClickAction(action);
   };
 
   return (
@@ -64,10 +57,10 @@ const Shoot = ({
 
           ? <div 
               className="shoot__delete-btn"
-              onClick={(e) => handleDeleteOrEditClick(e, "Delete")}
+              onClick={(e) => handleDeleteOrEditClick(e, "Delete", shoot_id)}
             >
               <DeleteIcon
-                onClick={(e) => handleDeleteOrEditClick(e, "Delete")}
+                onClick={(e) => handleDeleteOrEditClick(e, "Delete", shoot_id)}
                 className={"shoot__delete-btn--icon"}
               />
             </div>
@@ -80,10 +73,10 @@ const Shoot = ({
 
           ? <div 
               className="shoot__edit-btn"
-              onClick={(e) => handleDeleteOrEditClick(e, "Edit")}
+              onClick={(e) => handleDeleteOrEditClick(e, "Edit", shoot_id)}
             >
               <EditIcon
-                onClick={(e) => handleDeleteOrEditClick(e, "Edit")}
+                onClick={(e) => handleDeleteOrEditClick(e, "Edit", shoot_id)}
                 className={"shoot__edit-btn--icon"}
               />
             </div>
