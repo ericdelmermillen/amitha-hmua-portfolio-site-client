@@ -8,7 +8,7 @@ import AppContext from './AppContext.jsx';
 import Bio from './pages/Bio/Bio.jsx';
 import Contact from './pages/Contact/Contact.jsx';
 import Footer from './components/Footer/Footer.jsx';
-import DeleteOrEditShootModal from './components/DeleteOrEditShootModal/DeleteOrEditShootModal.jsx';
+import DeleteOrEditModal from './components/DeleteOrEditModal/DeleteOrEditModal.jsx';
 import Home from './pages/Home/Home.jsx';
 import Login from './pages/Login/Login.jsx';
 import Nav from './components/Nav/Nav.jsx';
@@ -171,7 +171,7 @@ const App = () => {
       }
 
       {isLoggedIn && showDeleteOrEditModal 
-        ? <DeleteOrEditShootModal />
+        ? <DeleteOrEditModal />
         : null
       }
       

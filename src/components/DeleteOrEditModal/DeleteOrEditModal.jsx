@@ -3,7 +3,7 @@ import AppContext from '../../AppContext.jsx';
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 import { checkTokenExpiration } from '../../utils/utils.js';
-import './DeleteOrEditShootModal.scss';
+import './DeleteOrEditModal.scss';
 
 const DeleteShootModal = () => {
   
