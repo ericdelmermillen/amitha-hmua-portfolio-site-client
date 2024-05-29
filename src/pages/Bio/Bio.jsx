@@ -134,12 +134,22 @@ const Bio = () => {
 
           </div>
 
-          {/* {isLoggedIn 
-            ? <h1>Update Bio</h1>
-            : null
-          } */}
 
         </div>
+
+        {isLoggedIn 
+          ? 
+            <div className="bio__button-container">
+              <button
+                className='bio__edit-button'
+                >
+                Update Bio
+              </button>
+            </div>
+
+          : null
+        }
+
       </div>
     </>
   )};

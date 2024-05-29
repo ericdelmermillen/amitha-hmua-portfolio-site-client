@@ -20,8 +20,9 @@ const Shoots = () => {
     minLoadingInterval, 
     selectedTag, 
     prevURL, 
-    showDeleteOrEditShootModal,
-    setShowDeleteOrEditShootModal,
+    showDeleteOrEditModal,
+    setShowDeleteOrEditModal,
+    // 
     shootDetails, 
     setShootDetails,
     isInitialShootsLoad,
@@ -294,8 +295,7 @@ const Shoots = () => {
   useEffect(() => {
     const { pathname, search } = location;
     const currentURL = pathname.concat(search);
-    
-      if(currentURL !== prevURL || showDeleteOrEditShootModal) {
+      if(currentURL !== prevURL || showDeleteOrEditModal) {
 
         if(location.pathname.includes("shoot")) {
           setTimeout(() => {
@@ -306,7 +306,7 @@ const Shoots = () => {
         }
         
         setShootsData([]);
-        setShowDeleteOrEditShootModal(false);
+        setShowDeleteOrEditModal(false);
         setCurrentPage(1);
         setFinalPageLoaded(false);
     

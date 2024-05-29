@@ -159,6 +159,21 @@
       display: none;
     }
   }
+
+
+  
+  &__button-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    margin-top: 5rem;
+  }
+
+  &__edit-button {
+    @include button;
+    // margin-top: 2rem;;
+    margin-inline: auto;
+  }
 }
 
 

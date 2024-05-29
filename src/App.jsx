@@ -34,7 +34,7 @@ const App = () => {
     setScrollYPos,
     setPrevScrollYPos,
     showPhotogModelTagModal, 
-    showDeleteOrEditShootModal, 
+    showDeleteOrEditModal, 
     isLoading, 
     setIsLoading,
     showFloatingButton, 
@@ -170,7 +170,7 @@ const App = () => {
         : null
       }
 
-      {isLoggedIn && showDeleteOrEditShootModal 
+      {isLoggedIn && showDeleteOrEditModal 
         ? <DeleteOrEditShootModal />
         : null
       }

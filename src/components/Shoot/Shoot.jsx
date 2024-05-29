@@ -21,7 +21,7 @@ const Shoot = ({
   const { 
     isLoggedIn, 
     setSelectedShoot,
-    setShowDeleteOrEditShootModal,
+    setShowDeleteOrEditModal,
     deleteOrEditClickAction,
     setDeleteOrEditClickAction,
     isFirefox
@@ -35,7 +35,7 @@ const Shoot = ({
     e.preventDefault();
     e.stopPropagation();
     setSelectedShoot(shoot_id);
-    setShowDeleteOrEditShootModal(true);
+    setShowDeleteOrEditModal(true);
     setDeleteOrEditClickAction(action);
   };
 
@@ -68,7 +68,7 @@ const Shoot = ({
             >
               <DeleteIcon
                 onClick={(e) => handleDeleteOrEditClick(e, "Delete")}
-                className={"shoot__delete-btn---icon"}
+                className={"shoot__delete-btn--icon"}
               />
             </div>
 
@@ -84,7 +84,7 @@ const Shoot = ({
             >
               <EditIcon
                 onClick={(e) => handleDeleteOrEditClick(e, "Edit")}
-                className={"shoot__edit-btn---icon"}
+                className={"shoot__edit-btn--icon"}
               />
             </div>
 

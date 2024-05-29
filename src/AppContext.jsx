@@ -30,8 +30,9 @@ export const AppProvider = ({ children }) => {
   
   const [ selectedPhotogModelTag, setSelectedPhotogModelTag ] = useState({});
 
-  const [ showDeleteOrEditShootModal, setShowDeleteOrEditShootModal ] = useState(false);
-
+  // ---
+  const [ showDeleteOrEditModal, setShowDeleteOrEditModal ] = useState(false);
+  // --
   const [ deleteOrEditClickAction, setDeleteOrEditClickAction ] = useState('')
   const [ showPhotogModelTagModal, setShowPhotogModelTagModal ] = useState({modalType: null});
   
@@ -188,8 +189,9 @@ export const AppProvider = ({ children }) => {
     minLoadingInterval, 
     selectedShoot, 
     setSelectedShoot,
-    showDeleteOrEditShootModal, 
-    setShowDeleteOrEditShootModal,
+    // ---
+    showDeleteOrEditModal, 
+    setShowDeleteOrEditModal,
     deleteOrEditClickAction, 
     setDeleteOrEditClickAction,
     showPhotogModelTagModal, 

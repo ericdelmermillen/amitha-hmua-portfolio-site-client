@@ -16,8 +16,9 @@ const DeleteShootModal = () => {
     setIsLoading,
     setShouldUpdateShoots,
     selectedShoot, 
-    showDeleteOrEditShootModal,
-    setShowDeleteOrEditShootModal,
+    showDeleteOrEditModal,
+    setShowDeleteOrEditModal,
+
     deleteOrEditClickAction, 
     setDeleteOrEditClickAction,
     handleNavigateHome,
@@ -27,7 +28,7 @@ const DeleteShootModal = () => {
   const navigate = useNavigate();
 
   const handleCloseModal = () => {
-    setShowDeleteOrEditShootModal(false);
+    setShowDeleteOrEditModal(false);
     setDeleteOrEditClickAction('');
   };
 
@@ -79,7 +80,7 @@ const DeleteShootModal = () => {
   };
 
   const handleNavigateToEditShoot = () => {
-    setShowDeleteOrEditShootModal(false);
+    setShowDeleteOrEditModal(false);
     setDeleteOrEditClickAction('');
     setIsLoading(true);
     return navigate(`/shoots/edit/${selectedShoot}`);
