@@ -10,6 +10,7 @@ import "./EditBio.scss";
 const EditBio = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const AWS_SIGNED_URL_ROUTE = import.meta.env.VITE_AWS_SIGNED_URL_ROUTE;
+  const AWS_BIO_DIRNAME = import.meta.env.VITE_AWS_BIO_DIRNAME;
 
   const navigate = useNavigate();
 
@@ -98,96 +99,106 @@ const EditBio = () => {
     }
   };
 
-// ---
-  const handleSubmitBioUpdate = async (e) => {
-    e.preventDefault();
+// // ---
+const handleSubmitBioUpdate = async (e) => {
+  e.preventDefault();
 
-    const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
+  const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
 
-    if(tokenIsExpired) {
-      handleNavigateHome(true, false, null);
-      return toast.error("Token missing. Logging you out...");
+  if(tokenIsExpired) {
+    handleNavigateHome(true, false, null);
+    return toast.error("Token missing. Logging you out...");
+  }
+
+  if(!newBioName.length) {
+    return toast.error("Bio name cannot be left blank");
+  }
+
+  if(!newBioText.length) {
+    return toast.error("Bio text cannot be left blank");
+  }
+
+  if(!inputPhotos[0].photoPreview) {
+    return toast.error("You forgot your bio photo");
+  }
+
+  try {
+    const token = localStorage.getItem('token');
+
+    const headers = {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    };
+
+    const newBioImgPreview = inputPhotos[0].photoPreview;
+    const newBioImgphotoData = inputPhotos[0].photoData;
+
+    let awsURL;
+    let awsObjName;
+
+    if(newBioImgPreview && !newBioImgphotoData) {
+      awsObjName = newBioImgPreview.split(`/${AWS_BIO_DIRNAME}/`)[1];
+    } else if(newBioImgphotoData) {
+
+      // Generate AWS signed upload URL
+      try {
+        const response = await fetch(`${AWS_SIGNED_URL_ROUTE}?dirname=${AWS_BIO_DIRNAME}`, { headers });
+        const { url } = await response.json();
+        awsURL = url;
+      } catch (error) {
+        console.error('Error generating AWS signed URL:', error);
+        return;
+      }
+
+      // Post image to AWS S3 bucket
+      try {
+        await fetch(awsURL, {
+          method: "PUT",
+          body: newBioImgphotoData
+        });
+
+        const imageUrl = awsURL.split('?')[0];
+        awsObjName = imageUrl.split(`/${AWS_BIO_DIRNAME}/`)[1];
+      } catch (error) {
+        console.error('Error posting image to AWS S3:', error);
+        return;
+      }
     }
 
-    if(tokenIsExpired) {
-      return;
-    }
-    
-    if(!newBioName.length) {
-      toast.error("Bio name can not be left blank");
-    }
-    
-    if(!newBioText.length) {
-      toast.error("Bio text can not be left blank");
-    }
-    
-    if(!inputPhotos[0].photoPreview) {
-      toast.error("You forgot your bio photo");
+    const updatedBioData = {
+      bio_name: newBioName,
+      bio_img_url: awsObjName,
+      bio_text: newBioText
     }
 
     try {
-      // setIsLoading(true);
+      const response = await fetch(`${BASE_URL}/bio/update`, {
+        method: "PUT",
+        headers: headers,
+        body: JSON.stringify(updatedBioData)
+      });
 
-      const token = localStorage.getItem('token');
-
-      const headers = {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      };
-
-      let awsURL;
-      let awsObjName;
-
-      const newBioImgPreview = inputPhotos[0].photoPreview;
-      const newBioImgphotoData = inputPhotos[0].photoData;
-
-      if(newBioImgPreview && !newBioImgphotoData) {
-        const objectName = newBioImgPreview.split("/bio/")[1];
-        awsObjName = objectName;
-      } else if(newBioImgphotoData) {
-
-        try {
-          const { url } = await fetch(`${AWS_SIGNED_URL_ROUTE}`, {
-            headers: headers
-          }).then(res => res.json());
-          
-          awsURL = url;
-          console.log(awsURL)
-          const objectName = awsURL.split("/bio/")[1];
-        } catch(error) {
-          console.log(error);
-        }
-
-        // post image to aws s3 bucket
-        try {
-          await fetch(awsURL, {
-            method: "PUT",
-            body: newBioImgphotoData
-          });
-
-          const imageUrl = `${awsURL.split('?')[0]}`;
-          const objectName = imageUrl.split("/bio/")[1];
-          console.log(objectName)
-          awsObjName = objectName
-
-
-        } catch(error) {
-          console.log(error);
-        }
-
-        
-      }
-      
-      
-      console.log(`awsURL: ${awsURL}`)
-      console.log(`awsObjName: ${awsObjName}`)
+      const data = await response.json()
+      console.log(data)
 
     } catch(error) {
       console.log(error)
     }
+    // /bio/update
 
+    // ---
+    
 
-  };
+    console.log(updatedBioData)
+
+    return 
+
+  } catch (error) {
+    console.error('Error updating bio:', error);
+  }
+
+};
+
 
 
   // {

@@ -312,15 +312,18 @@ const handleSubmitShoot = async (e) => {
 
         } else if(shootPhoto.photoData) {
 
-          // get presigned url from server
           try {
-            const { url } = await fetch(`${AWS_SIGNED_URL_ROUTE}?dirname=${AWS_SHOOTS_DIRNAME}`, {
-              headers: headers, 
-            }).then(res => res.json());
-            
-            awsURL = url;
+            const response = await fetch(`${AWS_SIGNED_URL_ROUTE}?dirname=${AWS_SHOOTS_DIRNAME}`, {
+              headers: headers,
+            });
 
-          } catch(error) {
+            // Wait for the JSON response
+            const { url } = await response.json();
+            
+            // Assign the URL to awsURL
+            awsURL = url;
+          } catch (error) {
+            // Log any errors that occur
             console.log(error);
           }
 
