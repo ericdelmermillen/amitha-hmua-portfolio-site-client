@@ -14,6 +14,7 @@ import './AddOrEditShoot.scss';
 const AddOrEditShoot = ({ shootAction }) => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const AWS_SIGNED_URL_ROUTE = import.meta.env.VITE_AWS_SIGNED_URL_ROUTE;
+  const AWS_SHOOTS_DIRNAME = import.meta.env.VITE_AWS_SHOOTS_DIRNAME;
 
   const { shoot_id } = useParams();
   const navigate = useNavigate();
@@ -303,7 +304,7 @@ const handleSubmitShoot = async (e) => {
           
           // aws image added to bucket
           if(shootPhoto.photoPreview.includes("aws")) {
-            const objectName = shootPhoto.photoPreview.split("/images/")[1]
+            const objectName = shootPhoto.photoPreview.split(`/${AWS_SHOOTS_DIRNAME}/`)[1]
             shoot.photo_urls.push(objectName);
           } else if(!shootPhoto.photoPreview.includes("aws")) {
             shoot.photo_urls.push(shootPhoto.photoPreview);
@@ -311,19 +312,19 @@ const handleSubmitShoot = async (e) => {
 
         } else if(shootPhoto.photoData) {
 
+          // get presigned url from server
           try {
-            const { url } = await fetch(`${AWS_SIGNED_URL_ROUTE}`, {
-              headers: headers
+            const { url } = await fetch(`${AWS_SIGNED_URL_ROUTE}?dirname=${AWS_SHOOTS_DIRNAME}`, {
+              headers: headers, 
             }).then(res => res.json());
-
-            // console.log(url)
             
             awsURL = url;
-            const objectName = awsURL.split("/images/")[1];
+
           } catch(error) {
             console.log(error);
           }
 
+          // post image to aws s3 bucket
           try {
             await fetch(awsURL, {
               method: "PUT",
@@ -331,7 +332,7 @@ const handleSubmitShoot = async (e) => {
             });
 
             const imageUrl = `${awsURL.split('?')[0]}`;
-            const objectName = imageUrl.split("/images/")[1];
+            const objectName = imageUrl.split(`/${AWS_SHOOTS_DIRNAME}/`)[1];
             shoot.photo_urls.push(objectName);
           } catch(error) {
             console.log(error);
