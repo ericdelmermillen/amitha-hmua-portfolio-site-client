@@ -2,6 +2,7 @@ import AppContext from '../../AppContext';
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import { checkTokenExpiration } from '../../utils/utils';
+import { scrollToTop } from '../../utils/utils';
 import { toast } from 'react-toastify';
 import PhotoInput from '../../components/PhotoInput/PhotoInput';
 import Compressor from 'compressorjs';
@@ -31,7 +32,6 @@ const EditBio = () => {
     handleNavigateHome
   } = useContext(AppContext);
 
-  // shootPhoto state: bioImg(?)
   const [ inputPhotos, setInputPhotos ] = useState([{
     photoNo: 1,
     photoPreview: null,
@@ -61,7 +61,7 @@ const EditBio = () => {
   const handleDropInputTarget = () => {
     // defined so the function is not undefined in the PhotoInput
   }
-
+  
   const handleImageChange = async (e, inputNo) => {
     const file = e.target.files[0];
     
@@ -100,6 +100,9 @@ const EditBio = () => {
   };
 
 // // ---
+
+// console.log(inputPhotos[0].photoPreview)
+
 const handleSubmitBioUpdate = async (e) => {
   e.preventDefault();
 
@@ -123,6 +126,8 @@ const handleSubmitBioUpdate = async (e) => {
   }
 
   try {
+    setIsLoading(true);
+    
     const token = localStorage.getItem('token');
 
     const headers = {
@@ -132,12 +137,13 @@ const handleSubmitBioUpdate = async (e) => {
 
     const newBioImgPreview = inputPhotos[0].photoPreview;
     const newBioImgphotoData = inputPhotos[0].photoData;
-
-    let awsURL;
+    
     let awsObjName;
+    let awsURL;
 
     if(newBioImgPreview && !newBioImgphotoData) {
       awsObjName = newBioImgPreview.split(`/${AWS_BIO_DIRNAME}/`)[1];
+      // awsURL = newBioImgPreview;
     } else if(newBioImgphotoData) {
 
       // Generate AWS signed upload URL
@@ -168,7 +174,10 @@ const handleSubmitBioUpdate = async (e) => {
     const updatedBioData = {
       bio_name: newBioName,
       bio_img_url: awsObjName,
-      bio_text: newBioText
+      bio_text: newBioText,
+      updated_Photo: !newBioImgPreview.includes("aws")
+        ? true
+        : false
     }
 
     try {
@@ -178,41 +187,33 @@ const handleSubmitBioUpdate = async (e) => {
         body: JSON.stringify(updatedBioData)
       });
 
-      const data = await response.json()
-      console.log(data)
-
+      const data = await response.json();
+      
+      if(response.ok) {
+        setBioImg(data.bioImgURL);
+        setBioName(data.bioName);
+        setBioText(data.bioText);
+        toast.success("Bio page updated")
+      }
+      
     } catch(error) {
-      console.log(error)
+      console.log(error);
+      setIsLoggedIn(false);
+      toast.error("Error updating Bio Page. Logging you out...")
     }
-    // /bio/update
-
-    // ---
-    
-
-    console.log(updatedBioData)
-
-    return 
-
   } catch (error) {
     console.error('Error updating bio:', error);
   }
-
+  setTimeout(() => {
+    navigate("/bio");
+  }, minLoadingInterval);
 };
-
-
-
-  // {
-  //   "bio_name": "Amitha Millen-Suwanta", 
-  //   "bio_img_url": "432584672_10161253506945768_7528924934946103991_n.jpg",
-  //   "bio_text": "Here's my awesome bio..."
-  // }
   
-
   // fetch bioPageData useEffect
   useEffect(() => {
-    if(bioName && bioText && bioImg) {      
+    if(bioName && bioText) {      
       setNewBioName(bioName);
-      setNewBioText(bioText.replace(/\n/g, '\n\n'))
+      setNewBioText(bioText);
       setInputPhotos([{
         photoNo: 1,
         photoPreview: bioImg,
@@ -221,6 +222,13 @@ const handleSubmitBioUpdate = async (e) => {
       }]);
     }
   }, [bioName, bioText, bioImg]);
+
+  // scroll to top on initial mount
+  useEffect(() => {
+    setTimeout(() => {
+      scrollToTop()
+    }, 0);
+  },  []);
 
   return (
     <>

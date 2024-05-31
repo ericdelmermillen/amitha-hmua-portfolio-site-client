@@ -1,5 +1,6 @@
 import AppContext from '../../AppContext';
 import { useState, useContext, useEffect } from 'react';
+import { scrollToTop } from '../../utils/utils';
 import { toast } from 'react-toastify';
 import './Bio.scss';
 
@@ -23,20 +24,27 @@ const Bio = () => {
   const [ componentIsLoaded, setIsComponentLoaded ] = useState(false);
 
   const handleEditBioClick = (e) => {
-    // console.log("first")
-    // console.log(e)
     handleDeleteOrEditClick(e, "Edit Bio", null)
   }
 
-  // // fetch bioPageData useEffect
+  // fetch bioPageData useEffect
   useEffect(() => {
-    if(bioText && bioName && bioImg) {
+    if(bioText && bioName) {
       setTimeout(() => {
         setIsLoading(false)
         setIsComponentLoaded(true);
       }, minLoadingInterval);
     }
   }, [bioText, bioName, bioImg]);
+
+  // scroll to top on initial mount
+  useEffect(() => {
+    setTimeout(() => {
+      scrollToTop();
+    }, 10000);
+    console.log("first")
+  },  []);
+
   
   return (
     <>
@@ -48,16 +56,16 @@ const Bio = () => {
 
             <div className="bio__heroImg-container">
 
-              <div className={`bio__heroImg--placeholder ${componentIsLoaded 
+              <div className={`bio__heroImg--placeholder ${componentIsLoaded && bioImg
                 ? "hide" 
                 : ""}`}
               ></div>
               <img
-                className={`bio__heroImg ${componentIsLoaded 
+                className={`bio__heroImg ${componentIsLoaded && bioImg
                   ? "show" 
                   : ""}`}
                 src={bioImg}
-                alt="Hero Image of Amitha Millen-Suwanta"
+                alt={`Hero Image of ${bioName}`}
               />
             </div>
             <h3 className={`bio__heroCaption ${componentIsLoaded 

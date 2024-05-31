@@ -12,8 +12,8 @@
     justify-content: center;
     position: relative;
     overflow: hidden;
-    width: 15rem;
     transition: scale 0.1s ease;
+    width: 15rem;
 
     @media(min-width: 500px) {
       height: 11rem;
@@ -131,15 +131,17 @@
     
     &.show {
       align-items: center;
-      cursor: auto;
+      cursor: default;
       display: flex;
-      height: 4rem;
+      height: 6rem;
       justify-content: center;
-      width: 4rem;
+      padding-bottom: 2rem;
+      padding-inline-end: 2rem;
+      width: 6rem;
       
       @media(min-width: 500px) {
-        height: 3rem;
-        width: 3rem;
+        height: 5rem;
+        width: 5rem;
       }
     }
   }
@@ -160,8 +162,7 @@
     height: 3px;
     position: absolute;
     transform-origin: center;
-    width: 50%;
-    width: 45%;
+    width: 40%;
     z-index: 1;
   }
 
