@@ -30,9 +30,9 @@ export const AppProvider = ({ children }) => {
   
   const [ selectedPhotogModelTag, setSelectedPhotogModelTag ] = useState({});
 
-  // ---
+
   const [ showDeleteOrEditModal, setShowDeleteOrEditModal ] = useState(false);
-  // --
+
   const [ deleteOrEditClickAction, setDeleteOrEditClickAction ] = useState('')
   const [ showPhotogModelTagModal, setShowPhotogModelTagModal ] = useState({modalType: null});
   
@@ -49,12 +49,9 @@ export const AppProvider = ({ children }) => {
 
   const [ isInitialShootsLoad, setIsInitialShootsLoad ] = useState(false);
 
-  // bio state---
   const [ bioImg, setBioImg ] = useState("");
   const [ bioName, setBioName ] = useState("");
   const [ bioText, setBioText ] = useState("");
-  
-  // --
   
   const navigate = useNavigate(); 
 
@@ -233,7 +230,6 @@ export const AppProvider = ({ children }) => {
     minLoadingInterval, 
     selectedShoot, 
     setSelectedShoot,
-    // ---
     showDeleteOrEditModal, 
     setShowDeleteOrEditModal,
     deleteOrEditClickAction, 

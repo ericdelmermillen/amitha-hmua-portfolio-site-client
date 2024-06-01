@@ -32,10 +32,9 @@ const ShootDetails = () => {
   const placeHolderArray = Array.from({ length: 10 });
 
   const handlePhotosLoaded = () => {
-    // setTimeout(() => {
+    setTimeout(() => {
       setComponentIsLoaded(true)
-    // }, minLoadingInterval)
-    // }, 2000)
+    }, minLoadingInterval)
   }
 
   // useEffect for when shoot_id changes

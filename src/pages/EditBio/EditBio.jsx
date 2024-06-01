@@ -223,13 +223,6 @@ const handleSubmitBioUpdate = async (e) => {
     }
   }, [bioName, bioText, bioImg]);
 
-  // scroll to top on initial mount
-  useEffect(() => {
-    setTimeout(() => {
-      scrollToTop()
-    }, 0);
-  },  []);
-
   return (
     <>
       <div className="editBio">

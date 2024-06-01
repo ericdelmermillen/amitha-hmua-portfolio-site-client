@@ -284,7 +284,7 @@ const Shoots = () => {
   }, [selectedTag, shouldUpdateFilteredShoots])
   
 
-  // handleOverScroll useEffect --
+  // handleOverScroll useEffect
   useEffect(() => {
     if(!finalPageLoaded) {
       handleOverScroll();

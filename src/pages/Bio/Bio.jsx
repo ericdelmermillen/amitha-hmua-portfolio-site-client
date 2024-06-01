@@ -36,14 +36,6 @@ const Bio = () => {
       }, minLoadingInterval);
     }
   }, [bioText, bioName, bioImg]);
-
-  // scroll to top on initial mount
-  useEffect(() => {
-    setTimeout(() => {
-      scrollToTop();
-    }, 10000);
-  },  []);
-
   
   return (
     <>
