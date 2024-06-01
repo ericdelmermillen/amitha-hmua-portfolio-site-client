@@ -58,7 +58,7 @@ const Shoots = () => {
       const fullHeight = document.body.scrollHeight;
       const distanceToBottom = fullHeight - windowHeight - window.scrollY;
       
-      if(distanceToBottom <= 650) {
+      if(distanceToBottom <= 800) {
         if(!selectedTag) {
           setShouldUpdateAllShoots(true);
         } else if(selectedTag) {

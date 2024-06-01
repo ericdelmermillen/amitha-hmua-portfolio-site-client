@@ -2,17 +2,17 @@
 @import '../../partials/variables.scss';
 
 .shoots {
-  margin-bottom: 1rem;
-  max-width: 95%;
-  min-width: 80%;
+  min-height: 100vh;
+  max-width: min(calc(100vw - 4rem), $desktop);
+  min-width: min(calc(100vw - 4rem), $desktop);
   
   &__inner {
     display: grid;
     gap: 1rem;
     grid-template-columns: repeat(1, 1fr);
     height: 80%;
-    position: sticky;
     min-width: 100%;
+    position: sticky;
     
     &.onShootDetails {
       grid-template-columns: repeat(2, 1fr);
@@ -41,20 +41,15 @@
     @include button;
     margin-inline: auto;
   }
-}
-
-
-.shoots {
 
   &__placeholders {
-    position: sticky;
     display: none;
+    position: sticky;
     
     &.show {
       
       display: grid;
       gap: 1rem;
-      // grid-template-columns: repeat(1, 1fr);
       grid-template-columns: 1fr;
       min-width: 100%;
       opacity: 0.5;
@@ -79,11 +74,11 @@
   }
 
   &__placeholder {
+    align-items: center;
     background: var(--placeholder-color);
     border-radius: var(--borderRadius);
     display: flex;
     flex-direction: column;
-    align-items: center;
   }
   
   &__placeholder-img {
@@ -92,11 +87,11 @@
   }
 
   &__placeholder-textContainer {
+    align-items: center;
+    background: var(--background-color);
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 0.5rem;
-    background: var(--background-color);
     padding-block: 0.75rem;
     width: 100%;
   }

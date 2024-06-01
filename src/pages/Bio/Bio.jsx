@@ -42,7 +42,6 @@ const Bio = () => {
     setTimeout(() => {
       scrollToTop();
     }, 10000);
-    console.log("first")
   },  []);
 
   
