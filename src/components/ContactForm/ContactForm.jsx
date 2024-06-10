@@ -6,6 +6,8 @@ import { toast } from 'react-toastify';
 import './ContactForm.scss';
 
 // need background image for behind the form
+// email sending can be very slow: add a: "Working on it..." toast and a "Message sent successfully"
+
 
 const ContactForm = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;

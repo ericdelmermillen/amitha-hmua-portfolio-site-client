@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from 'react';
+import { useState, useEffect, createContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { checkTokenExpiration, scrollToTop } from './utils/utils.js';
 
@@ -147,7 +147,7 @@ export const AppProvider = ({ children }) => {
       }
 
     } 
-  }, [location])
+  }, [location]);
 
   // handle updating of current URL for comparison of if URL has changed elsewhere to avoid unneccessary calls
   useEffect(() => {

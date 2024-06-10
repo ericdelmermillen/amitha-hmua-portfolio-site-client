@@ -7,6 +7,7 @@ import AddOrEditShoot from './pages/AddOrEditShoot/AddOrEditShoot.jsx';
 import AppContext from './AppContext.jsx'; 
 import Bio from './pages/Bio/Bio.jsx';
 import Contact from './pages/Contact/Contact.jsx';
+import EditBio from './pages/EditBio/EditBio.jsx';
 import Footer from './components/Footer/Footer.jsx';
 import DeleteOrEditModal from './components/DeleteOrEditModal/DeleteOrEditModal.jsx';
 import Home from './pages/Home/Home.jsx';
@@ -19,7 +20,6 @@ import SideNav from './components/SideNav/SideNav.jsx';
 import UpIcon from './assets/icons/UpIcon.jsx';
 import './App.scss';
 import 'react-toastify/dist/ReactToastify.css';
-import EditBio from './pages/EditBio/EditBio.jsx';
 
 
 const App = () => {
@@ -37,14 +37,12 @@ const App = () => {
     showPhotogModelTagModal, 
     showDeleteOrEditModal, 
     isLoading, 
-    setIsLoading,
     showFloatingButton, 
     selectedTag, 
     handleNavigateHome
   } = useContext(AppContext);
 
   const handleLogOut = () => {
-    // setIsLoading(true);
     setIsLoggedIn(false);
     localStorage.removeItem('token'); 
     localStorage.removeItem('refreshToken'); 

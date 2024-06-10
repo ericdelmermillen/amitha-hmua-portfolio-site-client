@@ -11,9 +11,6 @@ const checkTokenExpiration = async (setIsLoggedIn, navigate) => {
       const decodedToken = jwtDecode(token);
       const currentTime = Math.floor(Date.now() / 1000);
 
-      const tokenExpTime = new Date(decodedToken.exp * 1000).toLocaleString('en-US');
-      const currentDateTime = new Date(currentTime * 1000).toLocaleString('en-US');
-
       if(decodedToken.exp > currentTime) {
         return setIsLoggedIn(true);
       } else if(decodedToken.exp < currentTime) {

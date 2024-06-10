@@ -99,10 +99,6 @@ const EditBio = () => {
     }
   };
 
-// // ---
-
-// console.log(inputPhotos[0].photoPreview)
-
 const handleSubmitBioUpdate = async (e) => {
   e.preventDefault();
 

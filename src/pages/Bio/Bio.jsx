@@ -32,7 +32,6 @@ const Bio = () => {
     if(bioText && bioName) {
       setTimeout(() => {
         setIsLoading(false)
-        setIsComponentLoaded(true);
       }, minLoadingInterval);
     }
   }, [bioText, bioName, bioImg]);
@@ -57,6 +56,7 @@ const Bio = () => {
                   : ""}`}
                 src={bioImg}
                 alt={`Hero Image of ${bioName}`}
+                onLoad={() => setIsComponentLoaded(true)}
               />
             </div>
             <h3 className={`bio__heroCaption ${componentIsLoaded 
