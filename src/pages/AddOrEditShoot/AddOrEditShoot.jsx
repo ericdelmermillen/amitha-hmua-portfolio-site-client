@@ -7,7 +7,7 @@ import AppContext from '../../AppContext.jsx';
 import Compressor from 'compressorjs';
 import CustomSelect from '../../components/CustomSelect/CustomSelect.jsx';
 import MinusIcon from '../../assets/icons/MinusIcon.jsx';
-import NewShootdatePicker from '../../components/NewShootDatePicker/NewShootDatePicker.jsx';
+import NewShootDatePicker from '../../components/NewShootDatePicker/NewShootDatePicker.jsx';
 import PhotoInput from '../../components/PhotoInput/PhotoInput.jsx';
 import './AddOrEditShoot.scss';
 
@@ -400,6 +400,7 @@ const handleSubmitShoot = async (e) => {
       headers['Authorization'] = `Bearer ${token}`;
     } else {
       setIsLoggedIn(false);
+      handleNavigateHome(true, false, null);
       return toast.error("Not logged in");
     }
 
@@ -433,6 +434,7 @@ const handleSubmitShoot = async (e) => {
       headers['Authorization'] = `Bearer ${token}`;
     } else {
       setIsLoggedIn(false);
+      handleNavigateHome(true, false, null);
       return toast.error("Not logged in");
     }
 
@@ -575,7 +577,7 @@ const handleSubmitShoot = async (e) => {
                   </label>
               }
 
-                <NewShootdatePicker
+                <NewShootDatePicker
                   newShootDate={newShootDate}
                   setNewShootDate={setNewShootDate}
                   className={"addOrEditShoot__calendarIcon"}
