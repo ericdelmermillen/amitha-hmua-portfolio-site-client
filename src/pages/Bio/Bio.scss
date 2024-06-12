@@ -4,8 +4,8 @@
 .bio {
   @include page;
   background: var(--background-color);
-  padding-top: 2rem;
   padding-inline: 2rem;
+  padding-top: 2rem;
   
   &__inner {
     display: grid;
@@ -178,6 +178,3 @@
     margin-inline: auto;
   }
 }
-
-
-

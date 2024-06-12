@@ -4,31 +4,22 @@ import { toast } from 'react-toastify';
 import './Bio.scss';
 
 const Bio = () => {
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const { 
     isLoggedIn,
-    setIsLoggedIn,
     setIsLoading,
     minLoadingInterval,
     bioImg, 
-    setBioImg,
     bioName, 
-    setBioName,
     bioText, 
-    setBioText,
     bioImageNotSet,
-    setBioImageNotSet,
     handleDeleteOrEditClick
   } = useContext(AppContext);
-
-
-  console.log(bioImageNotSet)
 
   const [ componentIsLoaded, setIsComponentLoaded ] = useState(false);
 
   const handleEditBioClick = (e) => {
-    handleDeleteOrEditClick(e, "Edit Bio", null)
+    handleDeleteOrEditClick(e, "Edit Bio", null);
   }
 
   // fetch bioPageData useEffect
@@ -40,7 +31,7 @@ const Bio = () => {
     }
 
     if(bioImageNotSet) {
-      toast.info("No Bio Image set yet");
+      toast.info("Bio page not set up by User yet");
     }
   }, [bioText, bioName, bioImg]);
   
@@ -137,7 +128,6 @@ const Bio = () => {
             }
 
           </div>
-
 
         </div>
 
