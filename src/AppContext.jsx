@@ -180,6 +180,7 @@ export const AppProvider = ({ children }) => {
         setIsLoading(false);
       }, minLoadingInterval);
     }
+    setShowPhotogModelTagModal(false);
   }, [location]);
 
   // Update local storage when color mode state changes

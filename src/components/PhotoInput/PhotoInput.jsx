@@ -31,7 +31,7 @@ const PhotoInput = ({
 
   const handleClearInput = (e) => {
     e.stopPropagation();
-    setShowImage(false)
+    setShowImage(false);
     const newShootPhotos = [...shootPhotos];
 
     newShootPhotos.forEach((shootPhoto) => {
@@ -49,8 +49,8 @@ const PhotoInput = ({
   };
 
   const handleImageLoad = () => {
-    setShowImage(true)
-  }
+    setShowImage(true);
+  };
   
   return (
     <>

@@ -9,7 +9,6 @@ const PhotogOrModelModal = () => {
   const { 
     setIsLoading,
     minLoadingInterval, 
-    setMinLoadingInterval,
     isLoggedIn, 
     setIsLoggedIn,
     setShouldUpdatePhotographers,
