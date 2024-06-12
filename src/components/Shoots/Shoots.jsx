@@ -43,9 +43,9 @@ const Shoots = () => {
   const [ activeDragShoot, setActiveDragShoot ] = useState(null); 
 
   // const itemsPerPage = 1;
-  // const itemsPerPage = 2;
+  const itemsPerPage = 2;
   // const itemsPerPage = 4;
-  const itemsPerPage = 6;
+  // const itemsPerPage = 6;
   // const itemsPerPage = 10;
   // const itemsPerPage = 12;
 
@@ -57,11 +57,7 @@ const Shoots = () => {
       const fullHeight = document.body.scrollHeight;
       const distanceToBottom = fullHeight - windowHeight - window.scrollY;
       
-      const distanceFromBottomValue = location.pathname.includes("/work") 
-        ? 500
-        : 1500
-      
-      if(distanceToBottom <= distanceFromBottomValue) {
+      if(distanceToBottom <= (itemsPerPage * 600)) {
         if(!selectedTag) {
           setShouldUpdateAllShoots(true);
         } else if(selectedTag) {
@@ -216,9 +212,11 @@ const Shoots = () => {
             setTimeout(() => {
               setIsInitialShootsLoad(false);
             }, minLoadingInterval);
-
+            
             if(isFinalPage) {
-              setFinalPageLoaded(true);
+              setTimeout(() => {
+                setFinalPageLoaded(true);
+              }, minLoadingInterval);
             } else {
               setShootsData(updatedShootsData);
             }
@@ -261,10 +259,9 @@ const Shoots = () => {
 
             const updatedShootsData = [...shootsData, ...filteredData];
 
-
             setTimeout(() => {
               setIsInitialShootsLoad(false);
-            }, minLoadingInterval)
+            }, minLoadingInterval);
 
             if(isFinalPage) {
               setFinalPageLoaded(true);
@@ -285,7 +282,6 @@ const Shoots = () => {
       fetchFilteredShoot();
     }
   }, [selectedTag, shouldUpdateFilteredShoots])
-  
 
   // handleOverScroll useEffect
   useEffect(() => {
@@ -340,30 +336,30 @@ const Shoots = () => {
     <>
       <div className="shoots">
 
-          <div className={`shoots__placeholders ${isInitialShootsLoad && isOnShootDetails
-            ? "show onShootDetails"
-            : isInitialShootsLoad && !isOnShootDetails
-            ? "show"
-            : ""}`}
-          >
+        <div 
+          className={`shoots__placeholders ${isInitialShootsLoad && isOnShootDetails
+          ? "show onShootDetails"
+          : isInitialShootsLoad && !isOnShootDetails
+          ? "show"
+          : ""}`}
+        >
 
-            {Array.from({ length: 9 }, (_, idx) => 
-            // {Array.from({ length: itemsPerPage }, (_, idx) => 
+          {Array.from({ length: itemsPerPage }, (_, idx) => 
 
-              <div 
-                className="shoots__placeholder"
-                key={idx + 1}
-              >
-                <div className="shoots__placeholder-img"></div>
-                <div className="shoots__placeholder-textContainer">
-                  <div className="shoots__placeholder-models"></div>
-                  <div className="shoots__placeholder-photographers"></div>
-                </div>
+            <div 
+              className="shoots__placeholder"
+              key={idx + 1}
+            >
+              <div className="shoots__placeholder-img"></div>
+              <div className="shoots__placeholder-textContainer">
+                <div className="shoots__placeholder-models"></div>
+                <div className="shoots__placeholder-photographers"></div>
               </div>
-              )
-            }
+            </div>
+            )
+          }
 
-          </div>
+        </div>
         <div className={`shoots__inner ${isOnShootDetails 
           ? "onShootDetails" 
           : ""}`}
@@ -390,6 +386,29 @@ const Shoots = () => {
               />
             </Link>
           ))}
+
+          {!isInitialShootsLoad && !finalPageLoaded 
+          
+            ?
+
+              (Array.from({ length: itemsPerPage }, (_, idx) => 
+
+                <div 
+                  className="shoots__placeholder"
+                  key={idx + 1}
+                >
+                  <div className="shoots__placeholder-img"></div>
+                  <div className="shoots__placeholder-textContainer">
+                    <div className="shoots__placeholder-models"></div>
+                    <div className="shoots__placeholder-photographers"></div>
+                  </div>
+                </div>)
+              )
+
+            : null
+
+          }
+
         </div>
 
         {isLoggedIn && !isOnShootDetails && finalPageLoaded && !selectedTag && !isOrderEditable

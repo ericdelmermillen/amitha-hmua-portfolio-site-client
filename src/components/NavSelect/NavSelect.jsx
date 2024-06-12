@@ -32,6 +32,7 @@ const NavSelect = ({
 
   const handleUpdateSelectValue = (option) => {
     setSelectValue(option.tag_name);
+    console.log(option.tag_name)
     setShowOptions(false);
     setShowSideNav(false);
     

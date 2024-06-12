@@ -38,7 +38,9 @@ const App = () => {
     showDeleteOrEditModal, 
     isLoading, 
     showFloatingButton, 
+    setSelectedTag, 
     selectedTag, 
+    setSelectValue,
     handleNavigateHome
   } = useContext(AppContext);
 
@@ -51,6 +53,8 @@ const App = () => {
   };
 
   const handleNavigateToAddShoot = () => {
+    setSelectedTag(null);
+    setSelectValue(null);
     navigate('/shoots/add');
   };
 
