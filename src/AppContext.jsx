@@ -52,6 +52,7 @@ export const AppProvider = ({ children }) => {
   const [ bioImg, setBioImg ] = useState("");
   const [ bioName, setBioName ] = useState("");
   const [ bioText, setBioText ] = useState("");
+  const [ bioImageNotSet, setBioImageNotSet ] = useState(false);
   
   const navigate = useNavigate(); 
 
@@ -133,6 +134,7 @@ export const AppProvider = ({ children }) => {
               setBioText(data.bioText);
               setBioName(data.bioName);
               setBioImg(data.bioImgURL);
+              setBioImageNotSet(data.bioImageNotSet)
             } else {
               throw new Error("Error fetching bio page content")
             }
@@ -262,6 +264,8 @@ export const AppProvider = ({ children }) => {
     setBioName,
     bioText, 
     setBioText,
+    bioImageNotSet, 
+    setBioImageNotSet,
     // non-state functions
     handleNavLinkClick,
     handleNavigateHome,

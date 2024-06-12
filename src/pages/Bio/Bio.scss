@@ -5,13 +5,15 @@
   @include page;
   background: var(--background-color);
   padding-top: 2rem;
-
+  padding-inline: 2rem;
+  
   &__inner {
     display: grid;
     justify-content: center;
-    overflow-y: hidden;;
-    width: 90%;
-
+    max-width: calc(100vw - 4rem);
+    min-width: calc(100vw - 4rem);
+    overflow-y: hidden;
+    
     @media(min-width: $largeTablet) {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -20,17 +22,21 @@
   &__heroImg-container { 
     left: 50%;
     margin-bottom: 2rem;
+    max-width: calc(100vw - 4rem);
+    min-width: calc(100vw - 4rem);
     padding-bottom: 100%;
     position: relative;
     transform: translateX(-50%);
     width: 100%;
-
+    
     @media(min-width: $tablet) {
       @include shootImg;
       padding-bottom: 0;
-    }
-
+      }
+      
     @media(min-width: $largeTablet) {
+      max-width: 100%;
+      min-width: 100%;
       padding-bottom: 0;
       width: 100%;
     }

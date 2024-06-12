@@ -29,6 +29,8 @@ const EditBio = () => {
     setBioName,
     bioText, 
     setBioText,
+    bioImageNotSet, 
+    setBioImageNotSet,
     handleNavigateHome
   } = useContext(AppContext);
 

@@ -1,6 +1,5 @@
 import AppContext from '../../AppContext';
 import { useState, useContext, useEffect } from 'react';
-import { scrollToTop } from '../../utils/utils';
 import { toast } from 'react-toastify';
 import './Bio.scss';
 
@@ -18,8 +17,13 @@ const Bio = () => {
     setBioName,
     bioText, 
     setBioText,
+    bioImageNotSet,
+    setBioImageNotSet,
     handleDeleteOrEditClick
   } = useContext(AppContext);
+
+
+  console.log(bioImageNotSet)
 
   const [ componentIsLoaded, setIsComponentLoaded ] = useState(false);
 
@@ -33,6 +37,10 @@ const Bio = () => {
       setTimeout(() => {
         setIsLoading(false)
       }, minLoadingInterval);
+    }
+
+    if(bioImageNotSet) {
+      toast.info("No Bio Image set yet");
     }
   }, [bioText, bioName, bioImg]);
   
