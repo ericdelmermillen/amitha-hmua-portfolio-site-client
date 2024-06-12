@@ -28,7 +28,7 @@ const NavSelect = ({
   const handleDownArrowClick = (e) => {
     e.stopPropagation();
     showOptions ? setShowOptions(false) : setShowOptions(true);
-  }
+  };
 
   const handleUpdateSelectValue = (option) => {
     setSelectValue(option.tag_name);

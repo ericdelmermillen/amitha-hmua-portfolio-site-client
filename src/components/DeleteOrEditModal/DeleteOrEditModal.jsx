@@ -12,13 +12,10 @@ const DeleteShootModal = () => {
   const { 
     isLoggedIn, 
     setIsLoggedIn,
-    isLoading,
     setIsLoading,
     setShouldUpdateShoots,
     selectedShoot, 
-    showDeleteOrEditModal,
     setShowDeleteOrEditModal,
-
     deleteOrEditClickAction, 
     setDeleteOrEditClickAction,
     handleNavigateHome,
@@ -90,7 +87,6 @@ const DeleteShootModal = () => {
     setShowDeleteOrEditModal(false);
     setDeleteOrEditClickAction('');
     setIsLoading(true);
-    // return navigate(`/shoots/edit/${selectedShoot}`);
     return navigate("/bio/edit");
   }
   

@@ -5,16 +5,11 @@ import { isValidEmail } from '../../utils/utils';
 import { toast } from 'react-toastify';
 import './ContactForm.scss';
 
-// need background image for behind the form
-// email sending can be very slow: add a: "Working on it..." toast and a "Message sent successfully"
-
-
 const ContactForm = () => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const { 
     setIsLoading,
-    minLoadingInterval,
     handleNavigateHome
   } = useContext(AppContext);
   
@@ -45,15 +40,15 @@ const ContactForm = () => {
   const handleShouldCheckFirstName = () => {
     setFirstNameIsInvalid(firstName.length < 2)
     setShouldCheckFirstName(true);
-  }
+  };
   
   const handleLastNameChange = (e) => {
     setLastName(e.target.value);
   };
 
   const handleShouldCheckLastName = () => {
-    setLastNameIsInvalid(lastName.length < 2)
-  }
+    setLastNameIsInvalid(lastName.length < 2);
+  };
   
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -61,15 +56,15 @@ const ContactForm = () => {
 
   const handleShouldCheckEmail = () => {
     setEmailIsInvalid(!isValidEmail(email));
-  }
+  };
   
   const handleSubjectChange = (e) => {
     setSubject(e.target.value);
   };
 
   const handleShouldCheckSubject = () => {
-    setSubjectIsInvalid(subject.length <= 10)
-  }
+    setSubjectIsInvalid(subject.length <= 10);
+  };
   
   const handleMessageChange = (e) => {
     setMessage(e.target.value);
@@ -77,7 +72,7 @@ const ContactForm = () => {
 
   const handleShouldCheckMessage = () => {
     setMessageIsInvalid(message.length <= 25);
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -227,7 +222,7 @@ const ContactForm = () => {
               <p 
                 className={`contactForm__email-error ${emailIsInvalid ? "error" : ""}`}
               >
-                  Invalid Email
+                Invalid Email
               </p>
             </div>
 
@@ -250,7 +245,7 @@ const ContactForm = () => {
               <p 
                 className={`contactForm__subject-error ${subjectIsInvalid ? "error" : ""}`}
               >
-                  Subject must be at least 10 characters long
+                Subject must be at least 10 characters long
               </p>
             </div>
 
@@ -284,7 +279,7 @@ const ContactForm = () => {
                 <button 
                   type="button" className="contactForm__button contactForm__button--cancel"
                 >
-                    Cancel
+                  Cancel
                 </button>
               </Link>
               <button 
@@ -292,7 +287,7 @@ const ContactForm = () => {
                 className="contactForm__button contactForm__button--send"
                 onClick={handleSubmit}
               >
-                  Send
+                Send
               </button>
             </div>
 

@@ -30,7 +30,11 @@ const Nav = ({ handleLogOut }) => {
   
   return (
     <>
-      <nav className={`nav ${prevScrollYPos < scrollYPos && scrollYPos > 50 ? "hide": ""}`}>
+      <nav 
+        className={`nav ${prevScrollYPos < scrollYPos && scrollYPos > 50 
+          ? "hide"
+          : ""}`
+      }>
         <div className="nav__inner">
           <Link 
             to={'/work'}
@@ -52,7 +56,7 @@ const Nav = ({ handleLogOut }) => {
               onClick={handleNavClick}
             >
               <li className="nav__link nav__link--bio">
-                BIO
+                Bio
               </li>
             </Link>
             <Link 
@@ -60,7 +64,7 @@ const Nav = ({ handleLogOut }) => {
               onClick={handleNavClick}
             >
               <li className="nav__link">
-                CONTACT
+                Contact
               </li>
             </Link>
             <a href="https://www.instagram.com/amitha_hmua/" target="_blank">

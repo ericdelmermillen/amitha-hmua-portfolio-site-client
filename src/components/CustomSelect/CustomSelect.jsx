@@ -26,7 +26,7 @@ const CustomSelect = ({
 
   const handleToggleShowOptions = () => {
     setShowOptions(!showOptions);
-  }
+  };
 
   const alreadySelected = (chooserID) => {
     const entryID = `${chooserType.toLowerCase()}ID`;
@@ -36,7 +36,7 @@ const CustomSelect = ({
         return true;
       }
     }
-  }
+  };
   
   const handleTouchOff = () => {
     setShowOptions(false);
@@ -45,7 +45,7 @@ const CustomSelect = ({
     if(innerRef.current) {
       innerRef.current.scrollTop = 0;
     }
-  }
+  };
 
   const handleOptionClick = (e, option, modalType, entryType) => {
   
@@ -62,7 +62,7 @@ const CustomSelect = ({
       } 
     }
     setShowPhotogModelTagModal({modalType: modalType});
-  }
+  };
 
   const handleUpdateSelectValue = (option) => {
     setSelectValue(option.photographer_name || option.model_name || option.tag_name);

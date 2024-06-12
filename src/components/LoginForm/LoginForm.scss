@@ -72,7 +72,6 @@
     }
   }
 
-
   .passwordInput {
     position: relative;
     
@@ -90,10 +89,7 @@
         width: 3rem;
       }
 
-      &--show {
-        fill: var(--text-color);
-      }
-
+      &--show,
       &--hide {
         fill: var(--text-color);
       }
