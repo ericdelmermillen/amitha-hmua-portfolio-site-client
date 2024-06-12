@@ -2,7 +2,6 @@ import AppContext from '../../AppContext';
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from 'react-router-dom';
 import { checkTokenExpiration } from '../../utils/utils';
-import { scrollToTop } from '../../utils/utils';
 import { toast } from 'react-toastify';
 import PhotoInput from '../../components/PhotoInput/PhotoInput';
 import Compressor from 'compressorjs';
@@ -16,21 +15,15 @@ const EditBio = () => {
   const navigate = useNavigate();
 
   const { 
-    isLoading,
     setIsLoading,
     setIsLoggedIn,
-    selectedTag,
     minLoadingInterval,
-    shootDetails, 
-    setShootDetails,
     bioImg, 
     setBioImg,
     bioName, 
     setBioName,
     bioText, 
     setBioText,
-    bioImageNotSet, 
-    setBioImageNotSet,
     handleNavigateHome
   } = useContext(AppContext);
 
@@ -45,11 +38,11 @@ const EditBio = () => {
   const [ newBioText, setNewBioText ] = useState("");
 
   const handleBioCaptionChange = (e) => {
-    setNewBioName(e.target.value)
+    setNewBioName(e.target.value);
   };
   
   const handleBioTextChange = (e) => {
-    setNewBioText(e.target.value)
+    setNewBioText(e.target.value);
   };
 
   const handleCancel = () => {
@@ -58,11 +51,11 @@ const EditBio = () => {
 
   const handleInputDragStart = () => {
     // defined so the function is not undefined in the PhotoInput
-  }
+  };
   
   const handleDropInputTarget = () => {
     // defined so the function is not undefined in the PhotoInput
-  }
+  };
   
   const handleImageChange = async (e, inputNo) => {
     const file = e.target.files[0];
@@ -101,111 +94,110 @@ const EditBio = () => {
     }
   };
 
-const handleSubmitBioUpdate = async (e) => {
-  e.preventDefault();
+  const handleSubmitBioUpdate = async (e) => {
+    e.preventDefault();
 
-  const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
+    const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
 
-  if(tokenIsExpired) {
-    handleNavigateHome(true, false, null);
-    return toast.error("Token missing. Logging you out...");
-  }
-
-  if(!newBioName.length) {
-    return toast.error("Bio name cannot be left blank");
-  }
-
-  if(!newBioText.length) {
-    return toast.error("Bio text cannot be left blank");
-  }
-
-  if(!inputPhotos[0].photoPreview) {
-    return toast.error("You forgot your bio photo");
-  }
-
-  try {
-    setIsLoading(true);
-    
-    const token = localStorage.getItem('token');
-
-    const headers = {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    };
-
-    const newBioImgPreview = inputPhotos[0].photoPreview;
-    const newBioImgphotoData = inputPhotos[0].photoData;
-    
-    let awsObjName;
-    let awsURL;
-
-    if(newBioImgPreview && !newBioImgphotoData) {
-      awsObjName = newBioImgPreview.split(`/${AWS_BIO_DIRNAME}/`)[1];
-      // awsURL = newBioImgPreview;
-    } else if(newBioImgphotoData) {
-
-      // Generate AWS signed upload URL
-      try {
-        const response = await fetch(`${AWS_SIGNED_URL_ROUTE}?dirname=${AWS_BIO_DIRNAME}`, { headers });
-        const { url } = await response.json();
-        awsURL = url;
-      } catch (error) {
-        console.error('Error generating AWS signed URL:', error);
-        return;
-      }
-
-      // Post image to AWS S3 bucket
-      try {
-        await fetch(awsURL, {
-          method: "PUT",
-          body: newBioImgphotoData
-        });
-
-        const imageUrl = awsURL.split('?')[0];
-        awsObjName = imageUrl.split(`/${AWS_BIO_DIRNAME}/`)[1];
-      } catch (error) {
-        console.error('Error posting image to AWS S3:', error);
-        return;
-      }
+    if(tokenIsExpired) {
+      handleNavigateHome(true, false, null);
+      return toast.error("Token missing. Logging you out...");
     }
 
-    const updatedBioData = {
-      bio_name: newBioName,
-      bio_img_url: awsObjName,
-      bio_text: newBioText,
-      updated_Photo: !newBioImgPreview.includes("aws")
-        ? true
-        : false
+    if(!newBioName.length) {
+      return toast.error("Bio name cannot be left blank");
+    }
+
+    if(!newBioText.length) {
+      return toast.error("Bio text cannot be left blank");
+    }
+
+    if(!inputPhotos[0].photoPreview) {
+      return toast.error("You forgot your bio photo");
     }
 
     try {
-      const response = await fetch(`${BASE_URL}/bio/update`, {
-        method: "PUT",
-        headers: headers,
-        body: JSON.stringify(updatedBioData)
-      });
+      setIsLoading(true);
+      
+      const token = localStorage.getItem('token');
 
-      const data = await response.json();
+      const headers = {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      };
+
+      const newBioImgPreview = inputPhotos[0].photoPreview;
+      const newBioImgphotoData = inputPhotos[0].photoData;
       
-      if(response.ok) {
-        setBioImg(data.bioImgURL);
-        setBioName(data.bioName);
-        setBioText(data.bioText);
-        toast.success("Bio page updated")
+      let awsObjName;
+      let awsURL;
+
+      if(newBioImgPreview && !newBioImgphotoData) {
+        awsObjName = newBioImgPreview.split(`/${AWS_BIO_DIRNAME}/`)[1];
+      } else if(newBioImgphotoData) {
+
+        // Generate AWS signed upload URL
+        try {
+          const response = await fetch(`${AWS_SIGNED_URL_ROUTE}?dirname=${AWS_BIO_DIRNAME}`, { headers });
+          const { url } = await response.json();
+          awsURL = url;
+        } catch (error) {
+          console.error('Error generating AWS signed URL:', error);
+          return;
+        }
+
+        // Post image to AWS S3 bucket
+        try {
+          await fetch(awsURL, {
+            method: "PUT",
+            body: newBioImgphotoData
+          });
+
+          const imageUrl = awsURL.split('?')[0];
+          awsObjName = imageUrl.split(`/${AWS_BIO_DIRNAME}/`)[1];
+        } catch (error) {
+          console.error('Error posting image to AWS S3:', error);
+          return;
+        }
       }
-      
-    } catch(error) {
-      console.log(error);
-      setIsLoggedIn(false);
-      toast.error("Error updating Bio Page. Logging you out...")
+
+      const updatedBioData = {
+        bio_name: newBioName,
+        bio_img_url: awsObjName,
+        bio_text: newBioText,
+        updated_Photo: !newBioImgPreview.includes("aws")
+          ? true
+          : false
+      }
+
+      try {
+        const response = await fetch(`${BASE_URL}/bio/update`, {
+          method: "PUT",
+          headers: headers,
+          body: JSON.stringify(updatedBioData)
+        });
+
+        const data = await response.json();
+        
+        if(response.ok) {
+          setBioImg(data.bioImgURL);
+          setBioName(data.bioName);
+          setBioText(data.bioText);
+          toast.success("Bio page updated");
+        }
+        
+      } catch(error) {
+        console.log(error);
+        setIsLoggedIn(false);
+        toast.error("Error updating Bio Page. Logging you out...");
+      }
+    } catch (error) {
+      console.error('Error updating bio:', error);
     }
-  } catch (error) {
-    console.error('Error updating bio:', error);
-  }
-  setTimeout(() => {
-    navigate("/bio");
-  }, minLoadingInterval);
-};
+    setTimeout(() => {
+      navigate("/bio");
+    }, minLoadingInterval);
+  };
   
   // fetch bioPageData useEffect
   useEffect(() => {
