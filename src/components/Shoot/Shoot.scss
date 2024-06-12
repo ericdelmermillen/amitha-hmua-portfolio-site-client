@@ -85,7 +85,6 @@
     }
   }
 
-
   &__edit-btn--icon {
     fill: var(--text-color);
   }
@@ -135,16 +134,3 @@
     scale: 0.999;
   }
 }
-
-// .shoot__tags {
-//   position: absolute;
-//   top: 5rem;
-//   left: 50%;
-//   display: flex;
-//   flex-direction: column;
-//   gap: 2rem;
-//   font-size: 3rem;
-//   transform: translateX(-50%);
-//   color: #fff;
-//   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-// }

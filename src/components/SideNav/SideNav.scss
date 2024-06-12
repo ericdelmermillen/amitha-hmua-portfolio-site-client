@@ -37,25 +37,19 @@
 
   &__close-button {
     cursor: pointer;
-    height: 2.5rem;
     height: 2rem;
     padding-top: 0.8rem;
     position: fixed;
-    top: 1.75rem;
     top: 2.5rem;
-    width: 2.5rem;
     width: 2rem;
   }
 
   &__links {
     display: flex;
     flex-direction: column;
-    gap: 8vh;
-    gap: 2.5rem;
     gap: 2rem;
     text-align: center;
     height: max(100%, 60vh);
-    margin-top: 6rem;
     margin-top: 8rem;
     width: 15rem;
   }

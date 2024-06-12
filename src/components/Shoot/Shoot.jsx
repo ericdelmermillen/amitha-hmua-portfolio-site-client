@@ -14,16 +14,11 @@ const Shoot = ({
   handleNewShootId,
   isOrderEditable, 
   handleShootDragStart,
-  handleDropShootTarget,
-  tags
+  handleDropShootTarget
 }) => {
 
   const { 
     isLoggedIn, 
-    setSelectedShoot,
-    setShowDeleteOrEditModal,
-    deleteOrEditClickAction,
-    setDeleteOrEditClickAction,
     handleDeleteOrEditClick,
     isFirefox
   } = useContext(AppContext);
@@ -36,7 +31,9 @@ const Shoot = ({
     <>
       <div 
         draggable={isOrderEditable}
-        className={isOrderEditable ? "shoot draggable" : "shoot"}
+        className={isOrderEditable 
+          ? "shoot draggable" 
+          : "shoot"}
         onDragStart={isOrderEditable && !isFirefox
           ? () => handleShootDragStart(shoot_id)
           : null}
@@ -115,16 +112,7 @@ const Shoot = ({
                 : photographers}
           </p>
         </div>
-        {/* <div className="shoot__tags">
-          {tags.map(tag => (
-            <span 
-              className='shoot__tag'
-              key={tag}
-            >
-              {tag}
-            </span>
-          ))}
-        </div> */}
+
       </div>
     </>
   )};
