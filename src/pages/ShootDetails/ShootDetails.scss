@@ -15,10 +15,6 @@
   &__photos {
     margin-top: 1.5rem;
     position: relative;
-    
-    // @media(min-width: $tablet) {
-    //   margin-top: 4rem;
-    // }
   }
 
 
@@ -94,7 +90,7 @@
   }
   
   &__date {
-    background: gray;
+    background: var(--placeholder-color);
     color: transparent;
     height: 2rem;
     margin-bottom: 0.125rem;
@@ -116,7 +112,7 @@
   }
   
   &__photographers {
-    background: gray;
+    background: var(--placeholder-color);
     color: transparent;
     height: 2rem;
     margin-inline: auto;
@@ -134,7 +130,7 @@
   }
   
   &__models {
-    background: gray;
+    background: var(--placeholder-color);
     color: transparent;
     height: 2rem;
     margin-inline: auto;

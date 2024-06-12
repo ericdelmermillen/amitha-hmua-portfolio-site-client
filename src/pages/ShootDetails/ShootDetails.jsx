@@ -131,15 +131,16 @@ const ShootDetails = () => {
                         <h3   
                           className={`shootDetails__models ${shootDetails && "show"}`}
                         >
-                          {shootDetails && 
+                          {shootDetails 
+                            ?
+                              <span 
+                                className={"shootDetails__models-label"}>
+                                  {models.length > 1 
+                                  ? "Models: " 
+                                  : "Model: "}
+                              </span>
                             
-                            <span 
-                              className={"shootDetails__models-label"}>
-                                {models.length > 1 
-                                ? "Models: " 
-                                : "Model: "}
-                            </span>
-                            
+                            : null
                           }
                         
                           {shootDetails && models.length > 1 
@@ -153,16 +154,16 @@ const ShootDetails = () => {
                             ? "show"
                             : ""}`}
                         >
-                          {photographers && 
+                          {photographers 
+                            ? 
+                              <span className="shootDetails__photographers-label">
+                                {"Photos: "}
+                              </span>              
 
-                            <span className="shootDetails__photographers-label">
-                              {"Photos: "}
-                            </span>              
-
+                            : null
                           }
 
-                          {shootDetails &&              
-                            photographers.length > 1 
+                          {shootDetails && photographers.length > 1 
                             ? photographers.join(", ") 
                             : photographers}
                         </h3>

@@ -59,9 +59,7 @@ const Shoots = () => {
       
       const distanceFromBottomValue = location.pathname.includes("/work") 
         ? 500
-        : 1000
-      console.log(location.pathname)
-      console.log(distanceFromBottomValue)
+        : 1500
       
       if(distanceToBottom <= distanceFromBottomValue) {
         if(!selectedTag) {
