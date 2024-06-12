@@ -3,6 +3,7 @@ import { Link, useLocation, useParams, useNavigate } from 'react-router-dom';
 import AppContext from '../../AppContext.jsx';
 import { toast } from 'react-toastify';
 import { checkTokenExpiration } from '../../utils/utils.js';
+import { scrollToTop } from '../../utils/utils.js';
 import Shoot from '../Shoot/Shoot.jsx';
 import './Shoots.scss';
 
@@ -22,8 +23,6 @@ const Shoots = () => {
     prevURL, 
     showDeleteOrEditModal,
     setShowDeleteOrEditModal,
-    // 
-    shootDetails, 
     setShootDetails,
     isInitialShootsLoad,
     setIsInitialShootsLoad
@@ -58,7 +57,13 @@ const Shoots = () => {
       const fullHeight = document.body.scrollHeight;
       const distanceToBottom = fullHeight - windowHeight - window.scrollY;
       
-      if(distanceToBottom <= 800) {
+      const distanceFromBottomValue = location.pathname.includes("/work") 
+        ? 500
+        : 1000
+      console.log(location.pathname)
+      console.log(distanceFromBottomValue)
+      
+      if(distanceToBottom <= distanceFromBottomValue) {
         if(!selectedTag) {
           setShouldUpdateAllShoots(true);
         } else if(selectedTag) {
@@ -325,6 +330,13 @@ const Shoots = () => {
         }
       }
     }, [location]);
+
+    // initial load scroll to top
+    useEffect(() => {
+      setTimeout(() => {
+        scrollToTop();
+      }, 0)
+    }, []);
 
   return (
     <>

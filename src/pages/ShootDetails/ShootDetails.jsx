@@ -13,12 +13,11 @@ const ShootDetails = () => {
   const { shoot_id } = useParams();
 
   const { 
-    isLoading,
     setIsLoading,
     selectedTag,
     minLoadingInterval,
     shootDetails, 
-    setShootDetails,
+    setShootDetails
   } = useContext(AppContext);
 
   const [ photos, setPhotos ] = useState([]);
@@ -29,13 +28,13 @@ const ShootDetails = () => {
   // state for when to render placeholders
   const [ componentIsLoaded, setComponentIsLoaded ] = useState(false);
 
-  const placeHolderArray = Array.from({ length: 10 });
+  // const placeHolderArray = Array.from({ length: 10 });
 
   const handlePhotosLoaded = () => {
     setTimeout(() => {
-      setComponentIsLoaded(true)
-    }, minLoadingInterval)
-  }
+      setComponentIsLoaded(true);
+    }, minLoadingInterval);
+  };
 
   // useEffect for when shoot_id changes
   useEffect(() => {
@@ -50,7 +49,7 @@ const ShootDetails = () => {
           setShootDetails(data);
           setTimeout(() => {
             setIsLoading(false);
-          }, 250)
+          }, 250);
           setPhotos(data.photo_urls);
           const date = new Date(data.shoot_date);
           const formattedDate = `${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear()}`;
@@ -63,9 +62,9 @@ const ShootDetails = () => {
         }
 
       } catch(error) {
-        console.log(error)
+        console.log(error);
         setIsLoading(false);
-        navigate('/notfound')
+        navigate('/notfound');
       }
     }
 
