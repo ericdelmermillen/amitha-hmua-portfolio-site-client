@@ -1,6 +1,7 @@
 import { useState, useEffect, createContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { checkTokenExpiration, scrollToTop } from './utils/utils.js';
+import { toast } from 'react-toastify';
 
 const AppContext = createContext();
 

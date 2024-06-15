@@ -48,7 +48,12 @@
     height: 4rem;
     justify-content: center;
     margin-top: 0.25rem;
-    margin-inline-start: 1rem;;
+    margin-inline-start: 1rem;
+    width: 8rem;
+
+    @media(min-width: 350px) {
+      width: 10rem;
+    }
 
     &--icon {
      fill: var(--text-color); 
