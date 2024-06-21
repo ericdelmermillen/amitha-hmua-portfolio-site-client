@@ -209,9 +209,9 @@ const Shoots = () => {
             
             const updatedShootsData = [...shootsData, ...filteredData];
 
-            setTimeout(() => {
+            // setTimeout(() => {
               setIsInitialShootsLoad(false);
-            }, minLoadingInterval);
+            // }, minLoadingInterval);
             
             if(isFinalPage) {
               setTimeout(() => {
@@ -326,11 +326,11 @@ const Shoots = () => {
     }, [location]);
 
     // initial load scroll to top
-    useEffect(() => {
-      setTimeout(() => {
-        scrollToTop();
-      }, 0)
-    }, []);
+    // useEffect(() => {
+    //   setTimeout(() => {
+    //     scrollToTop();
+    //   }, 0)
+    // }, []);
 
   return (
     <>
