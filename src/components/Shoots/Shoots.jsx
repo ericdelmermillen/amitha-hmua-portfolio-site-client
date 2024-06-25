@@ -324,13 +324,6 @@ const Shoots = () => {
       }
     }, [location]);
 
-    // initial load scroll to top
-    // useEffect(() => {
-    //   setTimeout(() => {
-    //     scrollToTop();
-    //   }, 0)
-    // }, []);
-
   return (
     <>
       <div className="shoots">
