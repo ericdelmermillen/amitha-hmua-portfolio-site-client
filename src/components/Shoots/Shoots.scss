@@ -2,7 +2,6 @@
 @import '../../partials/variables.scss';
 
 .shoots {
-  min-height: 100vh;
   max-width: min(calc(100vw - 4rem), $desktop);
   min-width: min(calc(100vw - 4rem), $desktop);
   
@@ -11,12 +10,13 @@
     gap: 1rem;
     grid-template-columns: repeat(1, 1fr);
     height: 80%;
-    min-height: 65vh;
+    min-height: 55vh;
     min-width: 100%;
     position: sticky;
     
     &.onShootDetails {
       grid-template-columns: repeat(2, 1fr);
+      min-height: 0;
       
       @media(min-width: $tablet) {
         grid-template-columns: repeat(3, 1fr);
