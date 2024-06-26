@@ -3,6 +3,7 @@ import { Link, useLocation, useParams, useNavigate } from 'react-router-dom';
 import AppContext from '../../AppContext.jsx';
 import { toast } from 'react-toastify';
 import { checkTokenExpiration } from '../../utils/utils.js';
+import { scrollToTop } from '../../utils/utils.js';
 import Shoot from '../Shoot/Shoot.jsx';
 import './Shoots.scss';
 
