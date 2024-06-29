@@ -48,7 +48,7 @@ const Shoots = () => {
   // const itemsPerPage = 10;
   const itemsPerPage = 12;
 
-  const [ finalPageLoaded, setFinalPageLoaded ] = useState(!false);
+  const [ finalPageLoaded, setFinalPageLoaded ] = useState(false);
 
   const handleOverScroll = () => {
     if(!finalPageLoaded) {
@@ -308,9 +308,9 @@ const Shoots = () => {
         setCurrentPage(1);
         setFinalPageLoaded(false);
     
-        const searchByTag = search.includes("tag")
+        const searchByTag = search.includes("tag");
       
-        if(pathname === "/work" && !searchByTag) {
+        if((pathname === "/work" && !searchByTag) || (pathname === "/work/" && !searchByTag)) {
           setShouldUpdateAllShoots(true);
           setShouldUpdateFilteredShoots(false);
           setShootsData([]);
