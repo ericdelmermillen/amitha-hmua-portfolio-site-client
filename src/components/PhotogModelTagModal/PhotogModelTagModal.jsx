@@ -27,7 +27,6 @@ const PhotogOrModelModal = () => {
 
   const { modalType } = showPhotogModelTagModal;
 
-  
   let entryType;
 
   if(selectedPhotogModelTag.hasOwnProperty("photographer_name")) {
