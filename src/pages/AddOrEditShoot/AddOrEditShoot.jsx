@@ -323,7 +323,6 @@ const handleSubmitShoot = async (e) => {
             // Assign the URL to awsURL
             awsURL = url;
           } catch (error) {
-            // Log any errors that occur
             console.log(error);
           }
 
