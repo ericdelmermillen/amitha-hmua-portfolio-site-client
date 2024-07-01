@@ -26,7 +26,7 @@ const PhotogOrModelModal = () => {
   const navigate = useNavigate();
 
   const { modalType } = showPhotogModelTagModal;
-  
+
   let entryType;
 
   if(selectedPhotogModelTag.hasOwnProperty("photographer_name")) {
@@ -87,12 +87,12 @@ const PhotogOrModelModal = () => {
       if(modalType !== "Delete") {
         newEntryData = {};
         entryType === 'Photographer'
-          ? newEntryData.photographer_name = newEntryName
+          ? newEntryData.photographer_name = newEntryName.trim()
           : entryType === 'Model'
-          ? newEntryData.model_name = newEntryName
-          : newEntryData.tag_name = newEntryName
+          ? newEntryData.model_name = newEntryName.trim()
+          : newEntryData.tag_name = newEntryName.trim()
       }
-
+      
       const endPoint = `${BASE_URL}/${entryType.toLowerCase()}s/${modalType.toLowerCase()}${modalType !== "Add" ? `/${id}` : ""}`
 
       const method = modalType === "Add"
