@@ -20,12 +20,13 @@ const PhotogOrModelModal = () => {
     setShowPhotogModelTagModal,
     handleNavigateHome
   } = useContext(AppContext);
-
+  
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const navigate = useNavigate();
 
   const { modalType } = showPhotogModelTagModal;
+
 
   let entryType;
 
@@ -54,6 +55,7 @@ const PhotogOrModelModal = () => {
     ? entryName
     : ''
   );
+
   
   const handleEntryNameChange = (e) => {
     setNewEntryName(e.target.value);
@@ -77,9 +79,18 @@ const PhotogOrModelModal = () => {
     }
   
     if(isLoggedIn) {
-      
+
       if(modalType !== "Delete" && newEntryName.length < 2) {
         return toast.error(`${entryType} names must be at least 2 characters long`);
+      }
+
+      if(modalType !== "Delete" && entryType === "Tag") {
+        
+        for(const letter of newEntryName) {
+          if(letter === " ")  {
+            return toast.error("Tag names can not contain spaces")
+          }
+        }
       }
 
       let newEntryData;
