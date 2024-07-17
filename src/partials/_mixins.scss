@@ -155,14 +155,13 @@
   aspect-ratio: 1 / 1;
   max-width: 100%;
   object-fit: cover; 
-  object-position: top;
+  object-position: center;
   width: 100%;
 }
 
 @mixin shootDetailsImg {
   @include shootImg;
   aspect-ratio: 4 / 5;
-  object-position: center;
 }
 
 @mixin selectChooser {
