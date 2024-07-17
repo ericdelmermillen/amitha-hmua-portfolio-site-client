@@ -38,7 +38,8 @@
   }
   
   &__photo-placeholder {
-    @include shootImg;
+    @include shootDetailsImg;
+    
     background: var(--placeholder-color);
     border-radius: var(--borderRadius);
     margin-bottom: 2rem;
@@ -160,7 +161,7 @@
   }
 
   &__photo {
-    @include shootImg;
+    @include shootDetailsImg;
   }
 
   &__divider {
