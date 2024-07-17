@@ -158,6 +158,11 @@
   width: 100%;
 }
 
+@mixin shootDetailsImg {
+  @include shootImg;
+  aspect-ratio: 4 / 5;
+}
+
 @mixin selectChooser {
 
   &__inner {
