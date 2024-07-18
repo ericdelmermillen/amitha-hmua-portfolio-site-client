@@ -1,5 +1,5 @@
-import { useState, useEffect, useContext } from 'react';
-import AppContext from '../../AppContext'; 
+import { useState, useEffect } from 'react';
+import { useAppContext } from '../../AppContext'; 
 import { Link } from 'react-router-dom';
 import { isValidEmail, isValidPassword } from '../../utils/utils';
 import { toast } from 'react-toastify';
@@ -14,7 +14,7 @@ const LoginForm = () => {
     setIsLoggedIn,
     handleNavigateHome,
     isSafari
-  } = useContext(AppContext);
+  } = useAppContext();
   
   const [ email, setEmail ] = useState('');
   const [ emailIsInvalid, setEmailIsInvalid ] = useState(false);

@@ -1,5 +1,5 @@
-import AppContext from '../../AppContext.jsx';
-import { useState, useContext } from 'react';
+import { useAppContext } from '../../AppContext.jsx';
+import { useState } from 'react';
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 import { checkTokenExpiration } from '../../utils/utils.js';
@@ -19,7 +19,7 @@ const PhotogOrModelModal = () => {
     showPhotogModelTagModal,
     setShowPhotogModelTagModal,
     handleNavigateHome
-  } = useContext(AppContext);
+  } = useAppContext();
   
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 

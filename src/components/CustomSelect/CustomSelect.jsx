@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef, useContext } from 'react';
-import AppContext from '../../AppContext.jsx';
+import { useState, useEffect, useRef } from 'react';
+import { useAppContext } from '../../AppContext.jsx';
 import DeleteIcon from '../../assets/icons/DeleteIcon.jsx';
 import DownIcon from '../../assets/icons/DownIcon.jsx';
 import EditIcon from '../../assets/icons/EditIcon.jsx';
@@ -18,7 +18,7 @@ const CustomSelect = ({
   const {
     setShowPhotogModelTagModal,
     setSelectedPhotogModelTag,
-  } = useContext(AppContext);
+  } = useAppContext();
 
   const [ selectValue, setSelectValue ] = useState(null);
   const [ showOptions, setShowOptions ] = useState(false);

@@ -1,5 +1,4 @@
-import { useContext } from 'react';
-import AppContext from '../../AppContext.jsx';
+import { useAppContext } from '../../AppContext.jsx';
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom';
 import { checkTokenExpiration } from '../../utils/utils.js';
@@ -20,7 +19,7 @@ const DeleteShootModal = () => {
     setDeleteOrEditClickAction,
     handleNavigateHome,
     selectedTag
-  } = useContext(AppContext);
+  } = useAppContext();
 
   const navigate = useNavigate();
 

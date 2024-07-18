@@ -1,5 +1,5 @@
-import { useState, useContext } from 'react';
-import AppContext from '../../AppContext';
+import { useState } from 'react';
+import { useAppContext } from '../../AppContext';
 import { Link } from 'react-router-dom';
 import { isValidEmail } from '../../utils/utils';
 import { toast } from 'react-toastify';
@@ -11,7 +11,7 @@ const ContactForm = () => {
   const { 
     setIsLoading,
     handleNavigateHome
-  } = useContext(AppContext);
+  } = useAppContext();
   
   const [ firstName, setFirstName ] = useState('');
   const [ firstNameIsInvalid, setFirstNameIsInvalid ] = useState(false);

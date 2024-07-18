@@ -1,6 +1,6 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation, useParams, useNavigate } from 'react-router-dom';
-import AppContext from '../../AppContext.jsx';
+import { useAppContext } from '../../AppContext.jsx';
 import { toast } from 'react-toastify';
 import { checkTokenExpiration } from '../../utils/utils.js';
 import Shoot from '../Shoot/Shoot.jsx';
@@ -25,7 +25,7 @@ const Shoots = () => {
     setShootDetails,
     isInitialShootsLoad,
     setIsInitialShootsLoad
-  } = useContext(AppContext);
+  } = useAppContext();
 
   const [ shouldUpdateAllShoots, setShouldUpdateAllShoots ] = useState(false);
   const [ shouldUpdateFilteredShoots, setShouldUpdateFilteredShoots ] = useState(false);
