@@ -1,5 +1,4 @@
-import AppContext from '../../AppContext';
-import { useContext } from 'react';
+import { useAppContext } from '../../AppContext';
 import DeleteIcon from '../../assets/icons/DeleteIcon.jsx';
 import EditIcon from '../../assets/icons/EditIcon.jsx';
 import './Shoot.scss';
@@ -21,7 +20,7 @@ const Shoot = ({
     isLoggedIn, 
     handleDeleteOrEditClick,
     isFirefox
-  } = useContext(AppContext);
+  } = useAppContext();
 
   const handleDragOver = (e) => {
     e.preventDefault();

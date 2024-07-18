@@ -1,6 +1,5 @@
-import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import AppContext from '../../AppContext';
+import { useAppContext } from '../../AppContext';
 import ColorModeToggle from '../ColorModeToggle/ColorModeToggle';
 import Logo from '../../assets/icons/Logo';
 import Instagram from '../../assets/icons/Instagram';
@@ -17,7 +16,7 @@ const Nav = ({ handleLogOut }) => {
     tags, 
     handleNavigateHome,
     handleNavLinkClick
-   } = useContext(AppContext);
+   } = useAppContext();
 
    const handleHomeClick = () => {
     handleNavigateHome(true, false, null);

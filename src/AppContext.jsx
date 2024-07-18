@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext } from 'react';
+import { useState, useEffect, createContext, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { checkTokenExpiration, scrollToTop } from './utils/utils.js';
 import { toast } from 'react-toastify';
@@ -282,4 +282,9 @@ export const AppProvider = ({ children }) => {
     </>
   )};
 
-export default AppContext;
+  // custom hook to access AppContext object in context consumers
+const useAppContext = () => {
+  return useContext(AppContext)
+}
+
+export { useAppContext }

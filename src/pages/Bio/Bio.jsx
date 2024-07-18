@@ -1,5 +1,5 @@
-import AppContext from '../../AppContext';
-import { useState, useContext, useEffect } from 'react';
+import { useAppContext } from '../../AppContext';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import './Bio.scss';
 
@@ -14,7 +14,7 @@ const Bio = () => {
     bioText, 
     bioImageNotSet,
     handleDeleteOrEditClick
-  } = useContext(AppContext);
+  } = useAppContext();
 
   const [ componentIsLoaded, setIsComponentLoaded ] = useState(false);
 

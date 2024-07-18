@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef, useContext } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import AppContext from '../../AppContext.jsx';
+import { useAppContext } from '../../AppContext.jsx';
 import DownIcon from '../../assets/icons/DownIcon.jsx';
 import './NavSelect.scss';
 
@@ -17,7 +17,7 @@ const NavSelect = ({
     setShowSideNav,
     selectValue, 
     setSelectValue
-  } = useContext(AppContext);
+  } = useAppContext();
 
   const location = useLocation();
   const navigate = useNavigate();

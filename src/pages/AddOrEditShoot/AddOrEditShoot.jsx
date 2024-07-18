@@ -1,9 +1,9 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { checkTokenExpiration } from '../../utils/utils.js';
 import AddIcon from '../../assets/icons/AddIcon.jsx';
-import AppContext from '../../AppContext.jsx';
+import { useAppContext } from '../../AppContext.jsx';
 import Compressor from 'compressorjs';
 import CustomSelect from '../../components/CustomSelect/CustomSelect.jsx';
 import MinusIcon from '../../assets/icons/MinusIcon.jsx';
@@ -30,7 +30,7 @@ const AddOrEditShoot = ({ shootAction }) => {
     setShouldUpdateModels,
     handleNavigateHome,
     tags
-  } = useContext(AppContext);
+  } = useAppContext();
 
   const [ isInitialLoad, setIsInitialLoad ] = useState(true);
   const [ newShootDate, setNewShootDate ] = useState(new Date());

@@ -1,5 +1,5 @@
-import AppContext from '../../AppContext';
-import { useState, useEffect, useContext } from "react";
+import { useAppContext } from '../../AppContext';
+import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { checkTokenExpiration } from '../../utils/utils';
 import { toast } from 'react-toastify';
@@ -25,7 +25,7 @@ const EditBio = () => {
     bioText, 
     setBioText,
     handleNavigateHome
-  } = useContext(AppContext);
+  } = useAppContext();
 
   const [ inputPhotos, setInputPhotos ] = useState([{
     photoNo: 1,

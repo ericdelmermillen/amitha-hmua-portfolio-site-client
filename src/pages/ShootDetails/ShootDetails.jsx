@@ -1,6 +1,6 @@
-import AppContext from '../../AppContext';
+import { useAppContext} from '../../AppContext';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import Shoots from '../../components/Shoots/Shoots.jsx';
 import './ShootDetails.scss';
@@ -18,7 +18,7 @@ const ShootDetails = () => {
     minLoadingInterval,
     shootDetails, 
     setShootDetails
-  } = useContext(AppContext);
+  } = useAppContext();
 
   const [ photos, setPhotos ] = useState([]);
   const [ photographers, setPhotographers ] = useState([]);

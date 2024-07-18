@@ -4,7 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { scrollToTop } from './utils/utils.js';
 import AddIcon from './assets/icons/AddIcon.jsx';
 import AddOrEditShoot from './pages/AddOrEditShoot/AddOrEditShoot.jsx';
-import AppContext from './AppContext.jsx'; 
+import { useAppContext } from './AppContext.jsx'; 
 import Bio from './pages/Bio/Bio.jsx';
 import Contact from './pages/Contact/Contact.jsx';
 import EditBio from './pages/EditBio/EditBio.jsx';
@@ -42,7 +42,7 @@ const App = () => {
     selectedTag, 
     setSelectValue,
     handleNavigateHome
-  } = useContext(AppContext);
+  } = useAppContext();
 
   const handleLogOut = () => {
     setIsLoggedIn(false);

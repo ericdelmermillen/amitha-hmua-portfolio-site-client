@@ -1,5 +1,4 @@
-import AppContext from '../../AppContext';
-import { useContext } from 'react';
+import { useAppContext } from '../../AppContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ColorModeToggle from '../ColorModeToggle/ColorModeToggle';
@@ -14,7 +13,7 @@ const SideNav = ({ handleLogOut }) => {
     minLoadingInterval,
     tags,
     handleNavLinkClick
-   } = useContext(AppContext);
+   } = useAppContext();
 
   const location = useLocation();
   const navigate = useNavigate();

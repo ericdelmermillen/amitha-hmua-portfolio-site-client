@@ -1,5 +1,4 @@
-import { useContext } from 'react';
-import AppContext from '../../AppContext';
+import { useAppContext} from '../../AppContext';
 import sun from '../../assets/icons/sun.svg';
 import moon from '../../assets/icons/crescent_moon.svg';
 import './ColorModeToggle.scss';
@@ -9,7 +8,7 @@ const ColorModeToggle = ({ inputId }) => {
   const { 
     colorMode, 
     setColorMode,
-  } = useContext(AppContext);
+  } = useAppContext();
 
   const handleToggleColorMode = () => {
     const currentMode = colorMode === 'light' 
