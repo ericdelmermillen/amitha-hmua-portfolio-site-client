@@ -5,8 +5,9 @@ import { isValidEmail } from '../../utils/utils';
 import { toast } from 'react-toastify';
 import './ContactForm.scss';
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const ContactForm = () => {
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const { 
     setIsLoading,
