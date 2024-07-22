@@ -207,10 +207,6 @@ const Shoots = () => {
             }    
             
             const updatedShootsData = [...shootsData, ...filteredData];
-
-            // setTimeout(() => {
-              setIsInitialShootsLoad(false);
-            // }, minLoadingInterval);
             
             if(isFinalPage) {
               setTimeout(() => {
