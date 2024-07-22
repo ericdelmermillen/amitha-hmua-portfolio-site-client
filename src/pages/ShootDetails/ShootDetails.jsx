@@ -5,8 +5,9 @@ import { toast } from 'react-toastify';
 import Shoots from '../../components/Shoots/Shoots.jsx';
 import './ShootDetails.scss';
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const ShootDetails = () => {
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const navigate = useNavigate();
   

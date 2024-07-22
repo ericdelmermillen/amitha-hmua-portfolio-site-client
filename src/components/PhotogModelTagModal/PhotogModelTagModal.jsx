@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { checkTokenExpiration } from '../../utils/utils.js';
 import './PhotogModelTagModal.scss';
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const PhotogOrModelModal = () => {
   const { 
     setIsLoading,
@@ -21,7 +23,6 @@ const PhotogOrModelModal = () => {
     handleNavigateHome
   } = useAppContext();
   
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const navigate = useNavigate();
 

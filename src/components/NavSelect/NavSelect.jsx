@@ -4,9 +4,7 @@ import { useAppContext } from '../../AppContext.jsx';
 import DownIcon from '../../assets/icons/DownIcon.jsx';
 import './NavSelect.scss';
 
-const NavSelect = ({ 
-  selectOptions, 
- }) => {
+const NavSelect = ({ selectOptions }) => {
   
   const {
     setSelectedTag,

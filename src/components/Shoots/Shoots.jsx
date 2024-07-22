@@ -6,8 +6,9 @@ import { checkTokenExpiration } from '../../utils/utils.js';
 import Shoot from '../Shoot/Shoot.jsx';
 import './Shoots.scss';
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const Shoots = () => {
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const { shoot_id } = useParams();
   
@@ -429,4 +430,4 @@ const Shoots = () => {
     </>
   )};
 
-export default Shoots;
+export default Shoots; 
