@@ -227,6 +227,8 @@ const Shoots = () => {
           setTimeout(() => {
           setIsLoading(false); 
           setShouldUpdateAllShoots(false);
+          // here
+          setIsInitialShootsLoad(false);
           }, minLoadingInterval);
         }
       }

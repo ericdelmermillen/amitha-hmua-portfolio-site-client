@@ -28,8 +28,6 @@ const ShootDetails = () => {
   // state for when to render placeholders
   const [ componentIsLoaded, setComponentIsLoaded ] = useState(false);
 
-  // const placeHolderArray = Array.from({ length: 10 });
-
   const handlePhotosLoaded = () => {
     setTimeout(() => {
       setComponentIsLoaded(true);
