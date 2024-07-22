@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import { checkTokenExpiration } from '../../utils/utils.js';
 import './DeleteOrEditModal.scss';
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 const DeleteShootModal = () => {
   
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-
   const { 
     isLoggedIn, 
     setIsLoggedIn,
