@@ -1,4 +1,4 @@
-import { useState, useEffect, createContext, useContext } from 'react';
+import { useState, useEffect, createContext, useContext, } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { checkTokenExpiration, scrollToTop } from './utils/utils.js';
 import { toast } from 'react-toastify';

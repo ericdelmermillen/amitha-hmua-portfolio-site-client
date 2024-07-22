@@ -7,11 +7,12 @@ import PhotoInput from '../../components/PhotoInput/PhotoInput';
 import Compressor from 'compressorjs';
 import "./EditBio.scss";
 
-const EditBio = () => {
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  const AWS_SIGNED_URL_ROUTE = import.meta.env.VITE_AWS_SIGNED_URL_ROUTE;
-  const AWS_BIO_DIRNAME = import.meta.env.VITE_AWS_BIO_DIRNAME;
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const AWS_SIGNED_URL_ROUTE = import.meta.env.VITE_AWS_SIGNED_URL_ROUTE;
+const AWS_BIO_DIRNAME = import.meta.env.VITE_AWS_BIO_DIRNAME;
 
+const EditBio = () => {
+  
   const navigate = useNavigate();
 
   const { 
