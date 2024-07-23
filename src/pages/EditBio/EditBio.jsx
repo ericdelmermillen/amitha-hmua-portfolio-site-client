@@ -12,7 +12,6 @@ const AWS_SIGNED_URL_ROUTE = import.meta.env.VITE_AWS_SIGNED_URL_ROUTE;
 const AWS_BIO_DIRNAME = import.meta.env.VITE_AWS_BIO_DIRNAME;
 
 const EditBio = () => {
-  
   const navigate = useNavigate();
 
   const { 
@@ -232,7 +231,8 @@ const EditBio = () => {
                   <PhotoInput 
                     shootPhoto={inputPhotos[0]}
                     shootPhotos={inputPhotos}
-                    setShootPhotos={setInputPhotos}                  handleImageChange={handleImageChange}
+                    setShootPhotos={setInputPhotos}                  
+                    handleImageChange={handleImageChange}
                     handleInputDragStart={handleInputDragStart}
                     handleDropInputTarget={handleDropInputTarget}
                     />
