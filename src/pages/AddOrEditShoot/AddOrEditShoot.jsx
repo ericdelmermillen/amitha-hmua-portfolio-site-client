@@ -93,10 +93,10 @@ const AddOrEditShoot = ({ shootAction }) => {
     }
   }, []);
 
-  const handleInputDragStart = (photoNo) => {
+  const handleInputDragStart = useCallback((photoNo) => {
     const draggedInput = shootPhotos.find(photo => photo.photoNo === photoNo);
     setActiveDragInput(draggedInput);
-  };
+  }, [shootPhotos]);
 
   const handleDropInputTarget = (dropTargetInputNo, dropTargetInputDisplayOrder) => {
     const activeDraggedInputNo = activeDragInput.photoNo;
