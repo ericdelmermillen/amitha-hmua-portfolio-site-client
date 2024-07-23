@@ -99,56 +99,54 @@ const AddOrEditShoot = ({ shootAction }) => {
   }, [shootPhotos]);
 
   const handleDropInputTarget = (dropTargetInputNo, dropTargetInputDisplayOrder) => {
-    const activeDraggedInputNo = activeDragInput.photoNo;
-    const activeDraggedInputOldDisplayOrder = activeDragInput.displayOrder;
+    setShootPhotos(prevShootPhotos => {
+      const activeDraggedInputNo = activeDragInput.photoNo;
+      const activeDraggedInputOldDisplayOrder = activeDragInput.displayOrder;
   
-    const highestDisplayOrder = shootPhotos.reduce((maxDisplayOrder, photo) => {
-      return Math.max(maxDisplayOrder, photo.displayOrder);
-    }, 0);
+      const highestDisplayOrder = prevShootPhotos.reduce((maxDisplayOrder, photo) => {
+        return Math.max(maxDisplayOrder, photo.displayOrder);
+      }, 0);
   
-    const updatedShootPhotos = [...shootPhotos];
+      const updatedShootPhotos = prevShootPhotos.map(photo => ({ ...photo }));
   
-    for(const photo of updatedShootPhotos) {
-  
-      if(dropTargetInputNo !== activeDraggedInputNo) {
-
-        if(dropTargetInputDisplayOrder === highestDisplayOrder) {
-          if(photo.photoNo === dropTargetInputNo) {
-            photo.displayOrder = dropTargetInputDisplayOrder - 1;
-          } else if(photo.photoNo === activeDraggedInputNo) {
-            photo.displayOrder = dropTargetInputDisplayOrder;
-          } else if(photo.displayOrder < dropTargetInputDisplayOrder && photo.displayOrder >= activeDraggedInputOldDisplayOrder) {
-            photo.displayOrder--;
+      for (const photo of updatedShootPhotos) {
+        if (dropTargetInputNo !== activeDraggedInputNo) {
+          if (dropTargetInputDisplayOrder === highestDisplayOrder) {
+            if (photo.photoNo === dropTargetInputNo) {
+              photo.displayOrder = dropTargetInputDisplayOrder - 1;
+            } else if (photo.photoNo === activeDraggedInputNo) {
+              photo.displayOrder = dropTargetInputDisplayOrder;
+            } else if (photo.displayOrder < dropTargetInputDisplayOrder && photo.displayOrder >= activeDraggedInputOldDisplayOrder) {
+              photo.displayOrder--;
+            }
+          } else if (activeDraggedInputOldDisplayOrder > dropTargetInputDisplayOrder) {
+            if (photo.photoNo === dropTargetInputNo) {
+              photo.displayOrder = dropTargetInputDisplayOrder + 1;
+            } else if (photo.photoNo === activeDraggedInputNo) {
+              photo.displayOrder = dropTargetInputDisplayOrder;
+            } else if (photo.displayOrder > dropTargetInputDisplayOrder && photo.displayOrder <= activeDraggedInputOldDisplayOrder) {
+              photo.displayOrder++;
+            }
+          } else if (dropTargetInputDisplayOrder > activeDraggedInputOldDisplayOrder) {
+            if (photo.photoNo === dropTargetInputNo) {
+              photo.displayOrder = dropTargetInputDisplayOrder - 1;
+            } else if (photo.photoNo === activeDraggedInputNo) {
+              photo.displayOrder = dropTargetInputDisplayOrder;
+            } else if (photo.displayOrder <= dropTargetInputDisplayOrder && photo.displayOrder > activeDraggedInputOldDisplayOrder) {
+              photo.displayOrder--;
+            }
           }
-
-        } else if(activeDraggedInputOldDisplayOrder > dropTargetInputDisplayOrder) {      
-          
-          if(photo.photoNo === dropTargetInputNo) {
-            photo.displayOrder = dropTargetInputDisplayOrder + 1;
-          } else if(photo.photoNo === activeDraggedInputNo) {
-            photo.displayOrder = dropTargetInputDisplayOrder;
-          } else if(photo.displayOrder > dropTargetInputDisplayOrder && photo.displayOrder <= activeDraggedInputOldDisplayOrder) {
-            photo.displayOrder++;
-          }
-        
-        } else if(dropTargetInputDisplayOrder > activeDraggedInputOldDisplayOrder) {
-          
-          if(photo.photoNo === dropTargetInputNo) {
-            photo.displayOrder = dropTargetInputDisplayOrder - 1;
-          } else if(photo.photoNo === activeDraggedInputNo) {
-            photo.displayOrder = dropTargetInputDisplayOrder;
-          } else if(photo.displayOrder <= dropTargetInputDisplayOrder && photo.displayOrder > activeDraggedInputOldDisplayOrder) {
-            photo.displayOrder--;
-          }
-        } 
+        }
       }
-    }
-
-    updatedShootPhotos.sort((a, b) => a.displayOrder - b.displayOrder);
   
-    setShootPhotos(updatedShootPhotos);
+      updatedShootPhotos.sort((a, b) => a.displayOrder - b.displayOrder);
+  
+      return updatedShootPhotos;
+    });
+  
     setActiveDragInput(null);
   };
+  
   
   const handleAddCustomSelect = (selectedEntry) => {
     const selectedEntryType = selectedEntry === "photographer_name"
