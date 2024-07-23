@@ -48,14 +48,6 @@ const EditBio = () => {
   const handleCancel = () => {
     handleNavigateHome(true, false, null);
   };
-
-  const handleInputDragStart = () => {
-    // defined so the function is not undefined in the PhotoInput
-  };
-  
-  const handleDropInputTarget = () => {
-    // defined so the function is not undefined in the PhotoInput
-  };
   
   const handleImageChange = async (e, inputNo) => {
     const file = e.target.files[0];
@@ -233,9 +225,7 @@ const EditBio = () => {
                     shootPhotos={inputPhotos}
                     setShootPhotos={setInputPhotos}                  
                     handleImageChange={handleImageChange}
-                    handleInputDragStart={handleInputDragStart}
-                    handleDropInputTarget={handleDropInputTarget}
-                    />
+                  />
                 </div>
 
               </div>
