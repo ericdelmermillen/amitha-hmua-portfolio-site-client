@@ -57,9 +57,7 @@ export const AppProvider = ({ children }) => {
   
   const navigate = useNavigate(); 
 
-  // memoizing this with useCallback causes shoots not to rerender after publishing a shoot then immediately deleting it
-  const handleNavigateHome = (updateAllShoots, updateFilteredShoots, tagObj) => {    
-    
+  const handleNavigateHome = useCallback((updateAllShoots, updateFilteredShoots, tagObj) => {   
     if(updateAllShoots && !updateFilteredShoots) {
       setSelectedTag(null);
       navigate('/work');
@@ -67,7 +65,7 @@ export const AppProvider = ({ children }) => {
     } else if(!updateAllShoots && updateFilteredShoots && tagObj) {
       navigate(`/work?tag=${tagObj.tag_name}`);
     }
-  };
+  }, [navigate]);
 
   const handleNavLinkClick = useCallback(() => {
     setSelectValue(null);
@@ -146,10 +144,8 @@ export const AppProvider = ({ children }) => {
             toast.error(error);
           }
         }
-  
         fetchBioData();
       }
-
     } 
   }, [location]);
 
