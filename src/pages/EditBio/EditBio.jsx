@@ -1,5 +1,5 @@
 import { useAppContext } from '../../AppContext';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from 'react-router-dom';
 import { checkTokenExpiration } from '../../utils/utils';
 import { toast } from 'react-toastify';
@@ -49,7 +49,7 @@ const EditBio = () => {
     handleNavigateHome(true, false, null);
   };
   
-  const handleImageChange = async (e, inputNo) => {
+  const handleImageChange = useCallback(async (e, inputNo) => {
     const file = e.target.files[0];
     
     try {
@@ -69,22 +69,19 @@ const EditBio = () => {
         });
       });
 
-      const newInputPhotos = [...inputPhotos];
-
       const compressedImageUrl = URL.createObjectURL(compressedImage);
-    
-      newInputPhotos.forEach((inputPhoto) => {
-        if(inputPhoto.photoNo === inputNo) {
-          inputPhoto.photoPreview = compressedImageUrl;
-          inputPhoto.photoData = compressedImage;
-        }
-      });
   
-      setInputPhotos(newInputPhotos);
+      setInputPhotos(prevInputPhotos =>
+        prevInputPhotos.map(inputPhoto =>
+          inputPhoto.photoNo === inputNo
+            ? {...inputPhoto, photoPreview: compressedImageUrl, photoData: compressedImage}
+            : inputPhoto
+        )
+      );
     } catch (error) {
       console.error('Error compressing image:', error);
     }
-  };
+  }, []);
 
   const handleSubmitBioUpdate = async (e) => {
     e.preventDefault();
