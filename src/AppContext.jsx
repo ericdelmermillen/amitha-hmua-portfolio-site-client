@@ -1,12 +1,13 @@
-import { useState, useEffect, createContext, useContext, } from 'react';
+import { useState, useEffect, createContext, useContext, useCallback, } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { checkTokenExpiration, scrollToTop } from './utils/utils.js';
 import { toast } from 'react-toastify';
 
 const AppContext = createContext();
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export const AppProvider = ({ children }) => {
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const location = useLocation();
 
@@ -30,7 +31,6 @@ export const AppProvider = ({ children }) => {
   const [ shouldUpdateShoots, setShouldUpdateShoots ] = useState(false);
   
   const [ selectedPhotogModelTag, setSelectedPhotogModelTag ] = useState({});
-
 
   const [ showDeleteOrEditModal, setShowDeleteOrEditModal ] = useState(false);
 
@@ -57,7 +57,7 @@ export const AppProvider = ({ children }) => {
   
   const navigate = useNavigate(); 
 
-  const handleNavigateHome = (updateAllShoots, updateFilteredShoots, tagObj) => {    
+  const handleNavigateHome = useCallback((updateAllShoots, updateFilteredShoots, tagObj) => {    
     
     if(updateAllShoots && !updateFilteredShoots) {
       setSelectedTag(null);
@@ -66,14 +66,14 @@ export const AppProvider = ({ children }) => {
     } else if(!updateAllShoots && updateFilteredShoots && tagObj) {
       navigate(`/work?tag=${tagObj.tag_name}`);
     }
-  };
+  }, [navigate]);
 
-  const handleNavLinkClick = () => {
+  const handleNavLinkClick = useCallback(() => {
     setSelectValue(null);
     setSelectedTag(null);
-  };
+  }, []);
 
-  const handleDeleteOrEditClick = (e, action, shoot_id = null) => {
+  const handleDeleteOrEditClick = useCallback((e, action, shoot_id = null) => {
     e.preventDefault();
     e.stopPropagation();
     setShowDeleteOrEditModal(true);
@@ -82,7 +82,7 @@ export const AppProvider = ({ children }) => {
     if(shoot_id) {
       setSelectedShoot(shoot_id);
     }
-  };
+  }, []);
 
   // fetchTags
   useEffect(() => {
@@ -285,6 +285,6 @@ export const AppProvider = ({ children }) => {
   // custom hook to access AppContext object in context consumers
 const useAppContext = () => {
   return useContext(AppContext)
-}
+};
 
-export { useAppContext }
+export { useAppContext };
