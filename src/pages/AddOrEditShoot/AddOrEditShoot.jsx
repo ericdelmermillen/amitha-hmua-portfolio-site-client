@@ -11,10 +11,13 @@ import NewShootDatePicker from '../../components/NewShootDatePicker/NewShootDate
 import PhotoInput from '../../components/PhotoInput/PhotoInput.jsx';
 import './AddOrEditShoot.scss';
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const AWS_SIGNED_URL_ROUTE = import.meta.env.VITE_AWS_SIGNED_URL_ROUTE;
+const AWS_SHOOTS_DIRNAME = import.meta.env.VITE_AWS_SHOOTS_DIRNAME;
+
+const numberOfPhotoUploads = 10;
+
 const AddOrEditShoot = ({ shootAction }) => {
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  const AWS_SIGNED_URL_ROUTE = import.meta.env.VITE_AWS_SIGNED_URL_ROUTE;
-  const AWS_SHOOTS_DIRNAME = import.meta.env.VITE_AWS_SHOOTS_DIRNAME;
 
   const { shoot_id } = useParams();
   const navigate = useNavigate();
@@ -44,8 +47,6 @@ const AddOrEditShoot = ({ shootAction }) => {
   const [ photos, setPhotos ] = useState([]);
   const [ formattedDate, setFormattedDate ] = useState('');
   const [ rawDate, setRawDate ] = useState('');
-
-  const numberOfPhotoUploads = 10;
 
   const [ activeDragInput, setActiveDragInput ] = useState(null); 
 
