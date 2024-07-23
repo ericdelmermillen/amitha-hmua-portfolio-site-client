@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link, useLocation, useParams, useNavigate } from 'react-router-dom';
 import { useAppContext } from '../../AppContext.jsx';
 import { toast } from 'react-toastify';
@@ -40,7 +40,7 @@ const Shoots = () => {
   const [ currentShootId, setCurrentShootId ] = useState(shoot_id);
   const [ isOrderEditable, setIsOrderEditable ] = useState(false);
 
-  const [ activeDragShoot, setActiveDragShoot ] = useState(null); 
+  const [ activeDragShoot, setActiveDragShoot ] = useState({id: -1}); 
 
   // const itemsPerPage = 1;
   // const itemsPerPage = 2;
@@ -67,14 +67,14 @@ const Shoots = () => {
     }
   };
     
-  const handleNewShootId = (shootId) => {
+  const handleNewShootId = useCallback((shootId) => {
     setShootDetails(null);
     setCurrentShootId(shootId);
-  };
+  }, []);
 
   const makeOrderEditable = () => {
     setIsOrderEditable(true);
-    setActiveDragShoot(null);
+    setActiveDragShoot({id: -1});
     toast.info("Drag shoots into desired order then Save to update");
   };
 
@@ -123,66 +123,61 @@ const Shoots = () => {
     }
 
     setIsOrderEditable(false);
-    setActiveDragShoot(null);
+    setActiveDragShoot({id: -1});
   };
 
-  const handleShootDragStart = (shoot_id) => {
+  const handleShootDragStart = useCallback((shoot_id) => {
     const draggedShoot = shootsData.find(shoot => shoot.shoot_id === shoot_id);
     setActiveDragShoot(draggedShoot);
-  };
+  }, [shootsData]);
 
-  const handleDropShootTarget = (dropTargetShootId, dropTargetShootDisplayOrder) => {
-    const activeDraggedShootId = activeDragShoot.shoot_id;
-    const activeDraggedShootOldDisplayOrder = activeDragShoot.display_order;
+  const handleDropShootTarget = useCallback((dropTargetShootId, dropTargetShootDisplayOrder) => {
+    setShootsData(prevShootsData => {
+      const activeDraggedShootId = activeDragShoot.shoot_id;
+      const activeDraggedShootOldDisplayOrder = activeDragShoot.display_order;
   
-    const highestDisplayOrder = shootsData.reduce((maxDisplayOrder, shoot) => {
-      return Math.max(maxDisplayOrder, shoot.display_order);
-    }, 0);
+      const highestDisplayOrder = prevShootsData.reduce((maxDisplayOrder, shoot) => {
+        return Math.max(maxDisplayOrder, shoot.display_order);
+      }, 0);
   
-    const updatedShootsData = [...shootsData];
+      const updatedShootsData = prevShootsData.map(shoot => ({ ...shoot }));
   
-    for(const shoot of updatedShootsData) {
-  
-      if(dropTargetShootId !== activeDraggedShootId) {
-  
-        if(dropTargetShootDisplayOrder === highestDisplayOrder) {
-  
-          if(shoot.shoot_id === dropTargetShootId) {
-            shoot.display_order = dropTargetShootDisplayOrder - 1;
-          } else if(shoot.shoot_id === activeDraggedShootId) {
-            shoot.display_order = dropTargetShootDisplayOrder;
-          } else if(shoot.display_order < dropTargetShootDisplayOrder && shoot.display_order >= activeDraggedShootOldDisplayOrder) {
-            shoot.display_order--;
+      for (const shoot of updatedShootsData) {
+        if (dropTargetShootId !== activeDraggedShootId) {
+          if (dropTargetShootDisplayOrder === highestDisplayOrder) {
+            if (shoot.shoot_id === dropTargetShootId) {
+              shoot.display_order = dropTargetShootDisplayOrder - 1;
+            } else if (shoot.shoot_id === activeDraggedShootId) {
+              shoot.display_order = dropTargetShootDisplayOrder;
+            } else if (shoot.display_order < dropTargetShootDisplayOrder && shoot.display_order >= activeDraggedShootOldDisplayOrder) {
+              shoot.display_order--;
+            }
+          } else if (activeDraggedShootOldDisplayOrder > dropTargetShootDisplayOrder) {
+            if (shoot.shoot_id === dropTargetShootId) {
+              shoot.display_order = dropTargetShootDisplayOrder + 1;
+            } else if (shoot.shoot_id === activeDraggedShootId) {
+              shoot.display_order = dropTargetShootDisplayOrder;
+            } else if (shoot.display_order > dropTargetShootDisplayOrder && shoot.display_order <= activeDraggedShootOldDisplayOrder) {
+              shoot.display_order++;
+            }
+          } else if (dropTargetShootDisplayOrder > activeDraggedShootOldDisplayOrder) {
+            if (shoot.shoot_id === dropTargetShootId) {
+              shoot.display_order = dropTargetShootDisplayOrder - 1;
+            } else if (shoot.shoot_id === activeDraggedShootId) {
+              shoot.display_order = dropTargetShootDisplayOrder;
+            } else if (shoot.display_order <= dropTargetShootDisplayOrder && shoot.display_order > activeDraggedShootOldDisplayOrder) {
+              shoot.display_order--;
+            }
           }
-  
-        } else if(activeDraggedShootOldDisplayOrder > dropTargetShootDisplayOrder) {
-          
-          if(shoot.shoot_id === dropTargetShootId) {
-            shoot.display_order = dropTargetShootDisplayOrder + 1;
-          } else if(shoot.shoot_id === activeDraggedShootId) {
-            shoot.display_order = dropTargetShootDisplayOrder;
-          } else if(shoot.display_order > dropTargetShootDisplayOrder && shoot.display_order <= activeDraggedShootOldDisplayOrder) {
-            shoot.display_order++;
-          }
-          
-        } else if(dropTargetShootDisplayOrder > activeDraggedShootOldDisplayOrder) { 
-    
-          if(shoot.shoot_id === dropTargetShootId) {
-            shoot.display_order = dropTargetShootDisplayOrder - 1;
-          } else if(shoot.shoot_id === activeDraggedShootId) {
-            shoot.display_order = dropTargetShootDisplayOrder;
-          } else if(shoot.display_order <= dropTargetShootDisplayOrder && shoot.display_order > activeDraggedShootOldDisplayOrder) {
-            shoot.display_order--;
-          }
-        } 
+        }
       }
-    }
-    
-    updatedShootsData.sort((a, b) => a.display_order - b.display_order);
+      updatedShootsData.sort((a, b) => a.display_order - b.display_order);
+      return updatedShootsData;
+    });
   
-    setShootsData(updatedShootsData);
-    setActiveDragShoot(null);
-  };
+    setActiveDragShoot({id: -1});
+  }, [activeDragShoot.id]);
+  
 
   // fetchAllShoots useEffect
   useEffect(() => {

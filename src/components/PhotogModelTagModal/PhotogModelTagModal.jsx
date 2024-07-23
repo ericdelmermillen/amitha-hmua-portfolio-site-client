@@ -56,7 +56,6 @@ const PhotogOrModelModal = () => {
     ? entryName
     : ''
   );
-
   
   const handleEntryNameChange = (e) => {
     setNewEntryName(e.target.value);
