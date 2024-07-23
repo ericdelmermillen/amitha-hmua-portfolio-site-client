@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useAppContext } from '../../AppContext.jsx';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { checkTokenExpiration } from '../../utils/utils.js';
 import AddIcon from '../../assets/icons/AddIcon.jsx';
-import { useAppContext } from '../../AppContext.jsx';
 import Compressor from 'compressorjs';
 import CustomSelect from '../../components/CustomSelect/CustomSelect.jsx';
 import MinusIcon from '../../assets/icons/MinusIcon.jsx';
@@ -59,7 +59,7 @@ const AddOrEditShoot = ({ shootAction }) => {
     }))
   );
   
-  const handleImageChange = async (e, inputNo) => {
+  const handleImageChange = useCallback(async (e, inputNo) => {
     const file = e.target.files[0];
     
     try {
@@ -79,22 +79,19 @@ const AddOrEditShoot = ({ shootAction }) => {
         });
       });
 
-      const newShootPhotos = [...shootPhotos];
-
       const compressedImageUrl = URL.createObjectURL(compressedImage);
-    
-      newShootPhotos.forEach((shootPhoto) => {
-        if(shootPhoto.photoNo === inputNo) {
-          shootPhoto.photoPreview = compressedImageUrl;
-          shootPhoto.photoData = compressedImage;
-        }
-      });
-  
-      setShootPhotos(newShootPhotos);
+
+      setShootPhotos((prevShootPhotos) => 
+        prevShootPhotos.map((shootPhoto) => 
+          shootPhoto.photoNo === inputNo 
+            ? { ...shootPhoto, photoPreview: compressedImageUrl, photoData: compressedImage } 
+            : shootPhoto
+        )
+      );
     } catch (error) {
       console.error('Error compressing image:', error);
     }
-  };
+  }, []);
 
   const handleInputDragStart = (photoNo) => {
     const draggedInput = shootPhotos.find(photo => photo.photoNo === photoNo);
