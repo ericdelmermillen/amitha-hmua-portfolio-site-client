@@ -5,8 +5,9 @@ import { toast } from 'react-toastify';
 
 const AppContext = createContext();
 
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
 export const AppProvider = ({ children }) => {
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const location = useLocation();
 
@@ -30,7 +31,6 @@ export const AppProvider = ({ children }) => {
   const [ shouldUpdateShoots, setShouldUpdateShoots ] = useState(false);
   
   const [ selectedPhotogModelTag, setSelectedPhotogModelTag ] = useState({});
-
 
   const [ showDeleteOrEditModal, setShowDeleteOrEditModal ] = useState(false);
 
