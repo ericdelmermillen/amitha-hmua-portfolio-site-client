@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import { scrollToTop } from './utils/utils.js';
@@ -44,19 +44,19 @@ const App = () => {
     handleNavigateHome
   } = useAppContext();
 
-  const handleLogOut = () => {
+  const handleLogOut = useCallback(() => {
     setIsLoggedIn(false);
     localStorage.removeItem('token'); 
     localStorage.removeItem('refreshToken'); 
     handleNavigateHome(true, false, null);
     toast.success("Successfully logged out!");
-  };
+  }, []);
 
-  const handleNavigateToAddShoot = () => {
+  const handleNavigateToAddShoot = useCallback(() => {
     setSelectedTag(null);
     setSelectValue(null);
     navigate('/shoots/add');
-  };
+  }, [navigate]);
 
   // handle scroll position for show hide of menu
   useEffect(() => {
