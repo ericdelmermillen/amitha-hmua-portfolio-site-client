@@ -8,8 +8,8 @@ const PhotoInput = ({
   shootPhotos, 
   setShootPhotos, 
   handleImageChange,
-  handleInputDragStart,
-  handleDropInputTarget
+  handleInputDragStart = null,
+  handleDropInputTarget = null
 }) => {
 
   const [ showImage, setShowImage ] = useState(false);
@@ -60,14 +60,16 @@ const PhotoInput = ({
         onClick={showImage 
           ? null
           : handleFileInputChange}
-        onDragStart={!isFirefox 
+        onDragStart={!isFirefox && handleInputDragStart
           ? () => handleInputDragStart(inputNo)
           : null}
-        onMouseDown={isFirefox
+        onMouseDown={isFirefox && handleInputDragStart
           ? () => handleInputDragStart(inputNo)
           : null}
         onDragOver={handleDragOver}
-        onDrop={() => handleDropInputTarget(inputNo, displayOrder)}
+        onDrop={handleDropInputTarget
+          ? () => handleDropInputTarget(inputNo, displayOrder)
+          : null}
       >
         <div 
           className={`photoInput__box ${showImage 
