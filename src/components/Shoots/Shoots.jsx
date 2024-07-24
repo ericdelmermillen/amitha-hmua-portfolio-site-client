@@ -202,9 +202,7 @@ const Shoots = () => {
             }    
             
             if(isFinalPage) {
-              setTimeout(() => {
-                setFinalPageLoaded(true);
-              }, minLoadingInterval);
+              setFinalPageLoaded(true);
             } else {
               setShootsData(() => [...shootsData, ...filteredData]);
             }
