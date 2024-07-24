@@ -109,7 +109,9 @@ export const AppProvider = ({ children }) => {
       setIsLoading(true);
       setShouldUpdateTags(false);
       fetchTags();
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, minLoadingInterval);
     }
 
     fetchTags();
@@ -172,7 +174,9 @@ export const AppProvider = ({ children }) => {
     if(location.pathname === "/work" && prevURL !== "/work") {
       setIsLoading(false);
     } else {
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, minLoadingInterval);
     }
     setShowPhotogModelTagModal(false);
   }, [location]);
