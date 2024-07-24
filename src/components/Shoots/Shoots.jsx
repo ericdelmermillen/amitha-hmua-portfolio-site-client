@@ -127,8 +127,7 @@ const Shoots = () => {
   };
 
   const handleShootDragStart = useCallback((shoot_id) => {
-    const draggedShoot = shootsData.find(shoot => shoot.shoot_id === shoot_id);
-    setActiveDragShoot(draggedShoot);
+    setActiveDragShoot(() => shootsData.find(shoot => shoot.shoot_id === shoot_id));
   }, [shootsData]);
 
   const handleDropShootTarget = useCallback((dropTargetShootId, dropTargetShootDisplayOrder) => {
@@ -191,7 +190,7 @@ const Shoots = () => {
 
           if(response.ok) {
             const { shootSummaries, isFinalPage } = await response.json();
-            setCurrentPage(currentPage + 1);
+            setCurrentPage(currentPage => currentPage + 1);
             
             const data = shootSummaries;
             
@@ -202,14 +201,12 @@ const Shoots = () => {
               filteredData = data.filter(shoot => shoot.shoot_id !== +currentShoot);
             }    
             
-            const updatedShootsData = [...shootsData, ...filteredData];
-            
             if(isFinalPage) {
               setTimeout(() => {
                 setFinalPageLoaded(true);
               }, minLoadingInterval);
             } else {
-              setShootsData(updatedShootsData);
+              setShootsData(() => [...shootsData, ...filteredData]);
             }
           }
         } catch(error) {
@@ -242,14 +239,12 @@ const Shoots = () => {
             const { shootSummaries, isFinalPage } = await response.json();
             const data = shootSummaries;
             let filteredData = [...data];
-            setCurrentPage(currentPage + 1);
+            setCurrentPage(currentPage => currentPage + 1);
 
             if(isOnShootDetails) {
               const currentShoot = shoot_id;
               filteredData = data.filter(shoot => shoot.shoot_id !== +currentShoot);
             }
-
-            const updatedShootsData = [...shootsData, ...filteredData];
 
             setTimeout(() => {
               setIsInitialShootsLoad(false);
@@ -258,7 +253,7 @@ const Shoots = () => {
             if(isFinalPage) {
               setFinalPageLoaded(true);
             } else {
-              setShootsData(updatedShootsData);
+              setShootsData(() => [...shootsData, ...filteredData]);
             }
           }
         } catch(error) {

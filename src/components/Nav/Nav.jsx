@@ -91,7 +91,7 @@ const Nav = ({ handleLogOut }) => {
           <div 
             className="nav__toggle-button" 
             aria-label="Toggle Menu"
-            onClick={() => setShowSideNav(!showSideNav)}
+            onClick={() => setShowSideNav(showSideNav =>!showSideNav)}
           >
             <div className="nav__toggle-icon"></div>
             <div className="nav__toggle-icon"></div>

@@ -66,48 +66,26 @@ const CustomSelect = ({
 
   const handleUpdateSelectValue = (option) => {
     setSelectValue(option.photographer_name || option.model_name || option.tag_name);
-
-    const newChooserIDs = [...chooserIDs];
   
-    if(chooserType === "Photographer") {
-      const found = chooserIDs.find(chooserID => chooserID.photographerID === option.id);
-      
-      if(!found) {
-        newChooserIDs.forEach(chooserID => chooserID.chooserNo === chooserNo 
-          ? chooserID.photographerID = option.id
-          : null
-        )
-      }
-  
-    } else if(chooserType === "Model") {
-      const found = chooserIDs.find(chooserID => chooserID.modelID === option.id);
-
-      if(!found) {
-        if(!found) {
-          newChooserIDs.forEach(chooserID => chooserID.chooserNo === chooserNo 
-            ? chooserID.modelID = option.id
-            : null
-          )
+    setChooserIDs(prevChooserIDs => {
+      return prevChooserIDs.map(chooserID => {
+        if(chooserID.chooserNo === chooserNo) {
+          if(chooserType === "Photographer" && !chooserID.photographerID) {
+            return { ...chooserID, photographerID: option.id };
+          } else if (chooserType === "Model" && !chooserID.modelID) {
+            return { ...chooserID, modelID: option.id };
+          } else if (chooserType === "Tag" && !chooserID.tagID) {
+            return { ...chooserID, tagID: option.id };
+          }
         }
-      }
-    } else if(chooserType === "Tag") {
-      const found = chooserIDs.find(chooserID => chooserID.tagID === option.id);
-
-      if(!found) {
-        if(!found) {
-          newChooserIDs.forEach(chooserID => chooserID.chooserNo === chooserNo 
-            ? chooserID.tagID = option.id
-            : null
-          )
-        }
-      }
-    }
+        return chooserID;
+      });
+    });
   
-    setChooserIDs(newChooserIDs);
     setShowOptions(false);
-
+  
     // Reset scroll position to top
-    if(innerRef.current) {
+    if (innerRef.current) {
       innerRef.current.scrollTop = 0;
     }
   };
