@@ -48,7 +48,6 @@ const AddOrEditShoot = ({ shootAction }) => {
   const [ formattedDate, setFormattedDate ] = useState('');
   const [ rawDate, setRawDate ] = useState('');
 
-  // const [ activeDragInput, setActiveDragInput ] = useState(null); 
   const [ activeDragInput, setActiveDragInput ] = useState({id: -1}); 
 
   const [ shootPhotos, setShootPhotos ] = useState(
@@ -145,7 +144,6 @@ const AddOrEditShoot = ({ shootAction }) => {
       return updatedShootPhotos;
     });
   
-    // setActiveDragInput(null);
     setActiveDragInput({id: -1});
   }, [activeDragInput.id]);
   
