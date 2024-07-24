@@ -96,7 +96,7 @@ const ShootDetails = () => {
             
             {photos && photos.map((photo, idx) => 
               <div 
-                className={`shootDetails__photo-container ${setComponentIsLoaded 
+                className={`shootDetails__photo-container ${componentIsLoaded 
                   ? "show"
                 : ""}`}
                 key={idx}

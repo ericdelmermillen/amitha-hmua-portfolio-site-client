@@ -166,9 +166,7 @@ const AddOrEditShoot = ({ shootAction }) => {
 
       const newChooser = { chooserNo: maxChooserNo + 1, photographerID: null, photographerName: null};
 
-      setPhotographerChooserIDs([...photographerChooserIDs, newChooser]);
-      
-      return;
+      return setPhotographerChooserIDs(prevChooserIDs => [...prevChooserIDs, newChooser]);
       
     } else if(selectedEntryType === "model" && !hasNullModelChooser) {
 
@@ -176,9 +174,7 @@ const AddOrEditShoot = ({ shootAction }) => {
 
       const newChooser = { chooserNo: maxChooserNo + 1, modelID: null, modelName: null};
 
-      setModelChooserIDs([...modelChooserIDs, newChooser]);
-
-      return;
+      return setModelChooserIDs(prevChooserIDs => [...prevChooserIDs, newChooser]);
 
     } else if(selectedEntryType === "tag" && !hasNullTagChooser) {
 
@@ -186,9 +182,8 @@ const AddOrEditShoot = ({ shootAction }) => {
 
       const newChooser = { chooserNo: maxChooserNo + 1, tagID: null, tagName: null};
 
-      setTagChooserIDs([...tagChooserIDs, newChooser]);
+      return setTagChooserIDs(prevChooserIDs => [...prevChooserIDs, newChooser]);
 
-      return;
     }
 
     return toast.error(`Please select a ${selectedEntryType} before adding a new one`);
@@ -208,18 +203,11 @@ const AddOrEditShoot = ({ shootAction }) => {
     const { chooserNo } = chooser;
     
     if(chooserType === "Photographer") {
-      const filteredChoosers = photographerChooserIDs.filter(chooser => chooser.chooserNo !== chooserNo);
-
-      setPhotographerChooserIDs(filteredChoosers);
-
+      return setPhotographerChooserIDs(prevChoosers => prevChoosers.filter(chooser => chooser.chooserNo !== chooserNo))
     } else if(chooserType === "Model") {
-      const filteredChoosers = modelChooserIDs.filter(chooser => chooser.chooserNo !== chooserNo);
-      
-      setModelChooserIDs(filteredChoosers);
+      return setModelChooserIDs(prevChoosers => prevChoosers.filter(chooser => chooser.chooserNo !== chooserNo));
     } else if(chooserType === "Tag") {
-      const filteredChoosers = tagChooserIDs.filter(chooser => chooser.chooserNo !== chooserNo);
-      
-      setTagChooserIDs(filteredChoosers);
+      return setTagChooserIDs(prevChoosers => prevChoosers.filter(chooser => chooser.chooserNo !== chooserNo));
     }
   };
 
@@ -245,9 +233,7 @@ const handleSubmitShoot = async (e) => {
       });
 
       if(selectedTagIDs.length === 0) {
-        setTimeout(() => {
-          setIsLoading(false);
-        }, minLoadingInterval);
+        setIsLoading(false);
         return toast.error("Select at least one tag");
       }
 
@@ -466,13 +452,12 @@ const handleSubmitShoot = async (e) => {
             const data = await response.json();
             setShootDetails(data);
             setPhotos(data.photo_urls);
-            const fetchedShootPhotos = [...shootPhotos];
-          
-            for(const [idx, photoUrl] of data.photo_urls.entries()) {
-              fetchedShootPhotos[idx].photoPreview = photoUrl.photo_url;
-            }
-
-            setShootPhotos(fetchedShootPhotos);
+            setShootPhotos(prevShootPhotos => 
+              prevShootPhotos.map((photo, idx) => ({
+                ...photo,
+                photoPreview: data.photo_urls[idx]?.photo_url || photo.photoPreview
+              }))
+            );
           
             const date = new Date(data.shoot_date);
             setRawDate(date);
@@ -533,9 +518,7 @@ const handleSubmitShoot = async (e) => {
       fetchShootDetails();
     }
 
-    setTimeout(() => {
-      setIsLoading(false);
-    }, minLoadingInterval);
+    setIsLoading(false);
   }, [shoot_id]);
   
 
