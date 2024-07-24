@@ -7,7 +7,7 @@ import './ShootDetails.scss';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-const ShootDetails = ({ children }) => {
+const ShootDetails = () => {
 
   const navigate = useNavigate();
   
