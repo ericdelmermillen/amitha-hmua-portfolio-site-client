@@ -219,7 +219,6 @@ const EditBio = () => {
                 <div className="editBio__photoInput">
                   <PhotoInput 
                     shootPhoto={inputPhotos[0]}
-                    shootPhotos={inputPhotos}
                     setShootPhotos={setInputPhotos}                  
                     handleImageChange={handleImageChange}
                   />

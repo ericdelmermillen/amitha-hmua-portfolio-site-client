@@ -627,7 +627,6 @@ const handleSubmitShoot = async (e) => {
                     <PhotoInput 
                       key={shootPhoto.photoNo}
                       shootPhoto={shootPhoto}
-                      shootPhotos={shootPhotos}
                       setShootPhotos={setShootPhotos}
                       handleImageChange={handleImageChange}
                       handleInputDragStart={handleInputDragStart}

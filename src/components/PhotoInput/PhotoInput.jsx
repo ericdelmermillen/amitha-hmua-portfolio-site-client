@@ -5,7 +5,6 @@ import './PhotoInput.scss';
 const PhotoInput = ({ 
   isFirefox, 
   shootPhoto, 
-  shootPhotos, 
   setShootPhotos, 
   handleImageChange,
   handleInputDragStart = null,
