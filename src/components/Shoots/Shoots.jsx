@@ -185,11 +185,14 @@ const Shoots = () => {
       
       const fetchShoots = async () => {
       
+        let finalPage;
+
         try {
           const response = await fetch(`${BASE_URL}/shoots/all?page=${currentPage}&limit=${itemsPerPage}`);
-
+          
           if(response.ok) {
             const { shootSummaries, isFinalPage } = await response.json();
+            finalPage = isFinalPage
             setCurrentPage(currentPage => currentPage + 1);
             
             const data = shootSummaries;
@@ -201,9 +204,11 @@ const Shoots = () => {
               filteredData = data.filter(shoot => shoot.shoot_id !== +currentShoot);
             }    
             
-            if(isFinalPage) {
-              setFinalPageLoaded(true);
-            } else {
+            // if(isFinalPage) {
+            //   setFinalPageLoaded(true);
+            // } 
+            // else {
+            if(!isFinalPage) {
               setShootsData(() => [...shootsData, ...filteredData]);
             }
           }
@@ -211,10 +216,16 @@ const Shoots = () => {
           console.log(`Error fetching shoots: ${error}`);
           toast.error(`Failed to fetch shoots: ${error}`);
         } finally {
+          
+          if(finalPage) {
+            console.log("finalPage loaded")
+            setFinalPageLoaded(true);
+          }
+
           setTimeout(() => {
-          setIsLoading(false); 
-          setShouldUpdateAllShoots(false);
-          setIsInitialShootsLoad(false);
+            setIsLoading(false); 
+            setShouldUpdateAllShoots(false);
+            setIsInitialShootsLoad(false);
           }, minLoadingInterval);
         }
       }
