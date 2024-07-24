@@ -2,12 +2,12 @@ import { useAppContext} from '../../AppContext';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import Shoots from '../../components/Shoots/Shoots.jsx';
+// import Shoots from '../../components/Shoots/Shoots.jsx';
 import './ShootDetails.scss';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-const ShootDetails = () => {
+const ShootDetails = ({ children }) => {
 
   const navigate = useNavigate();
   
@@ -181,7 +181,8 @@ const ShootDetails = () => {
           <h3 className='shootDetails__bottom-text'>
             Other {selectedTag ? selectedTag.tag_name : null} Shoots
           </h3>
-          <Shoots />
+          {/* <Shoots /> */}
+          {children}
         </div>
       </div>
     </>

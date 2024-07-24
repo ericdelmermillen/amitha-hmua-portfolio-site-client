@@ -20,6 +20,7 @@ import SideNav from './components/SideNav/SideNav.jsx';
 import UpIcon from './assets/icons/UpIcon.jsx';
 import './App.scss';
 import 'react-toastify/dist/ReactToastify.css';
+import Shoots from "./components/Shoots/Shoots.jsx"
 
 
 const App = () => {
@@ -134,7 +135,14 @@ const App = () => {
           <Route path="/bio" element={<Bio />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/shoot/:shoot_id" element={<ShootDetails />} />
+          {/* <Route path="/shoot/:shoot_id" element={<ShootDetails />} /> */}
+          <Route 
+            path="/shoot/:shoot_id" 
+            element={
+              <ShootDetails>
+                <Shoots/>
+              </ShootDetails>} 
+          />
           <Route path="/login" element={<Login />} />
           
           {isLoggedIn ?
