@@ -32,17 +32,17 @@ const PhotoInput = ({
   const handleClearInput = (e) => {
     e.stopPropagation();
     setShowImage(false);
-    const newShootPhotos = [...shootPhotos];
-
-    newShootPhotos.forEach((shootPhoto) => {
-      if(shootPhoto.photoNo === inputNo) {
-        shootPhoto.photoPreview = null;
-        shootPhoto.photoData = null;
-      }
+  
+    setShootPhotos(prevShootPhotos => {
+      return prevShootPhotos.map(shootPhoto => {
+        if (shootPhoto.photoNo === inputNo) {
+          return { ...shootPhoto, photoPreview: null, photoData: null };
+        }
+        return shootPhoto;
+      });
     });
-
-    setShootPhotos(newShootPhotos);
   };
+  
 
   const handleDragOver = (e) => {
     e.preventDefault();

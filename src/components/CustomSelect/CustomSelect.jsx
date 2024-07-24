@@ -69,7 +69,6 @@ const CustomSelect = ({
   
     setChooserIDs(prevChooserIDs => {
       return prevChooserIDs.map(chooserID => {
-        console.log(chooserNo)
         if(chooserID.chooserNo === chooserNo) {
           if(chooserType === "Photographer" && !chooserID.photographerID) {
             return { ...chooserID, photographerID: option.id };
