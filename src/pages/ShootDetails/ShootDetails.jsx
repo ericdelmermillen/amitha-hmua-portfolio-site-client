@@ -18,7 +18,8 @@ const ShootDetails = () => {
     selectedTag,
     minLoadingInterval,
     shootDetails, 
-    setShootDetails
+    setShootDetails,
+    isLoggedIn
   } = useAppContext();
 
   const [ photos, setPhotos ] = useState([]);
@@ -131,14 +132,14 @@ const ShootDetails = () => {
                           className={`shootDetails__models ${shootDetails && "show"}`}
                         >
                           {shootDetails 
-                            ?
+                            ? (
                               <span 
                                 className={"shootDetails__models-label"}>
                                   {models.length > 1 
                                   ? "Models: " 
                                   : "Model: "}
                               </span>
-                            
+                              )
                             : null
                           }
                         
@@ -165,6 +166,19 @@ const ShootDetails = () => {
                           {shootDetails && photographers.length > 1 
                             ? photographers.join(", ") 
                             : photographers}
+                        </h3>
+
+                        <h3   
+                          className={`shootDetails__photographers ${shootDetails 
+                            ? "show"
+                            : ""}`}
+                        >
+                          {/* showing shoot tags if logged in to help with debugging */}
+                          {isLoggedIn && shootDetails && shootDetails.tags.length < 1
+                            ? `Tags: ${shootDetails.tags}`
+                            : isLoggedIn && shootDetails && shootDetails.tags.length >= 1  && !shootDetails.tags !== null
+                            ? `Tags: ${shootDetails.tags.join(", ")}`
+                            : null}
                         </h3>
                       </div>
                     </>
