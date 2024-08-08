@@ -36,7 +36,6 @@ const Shoots = () => {
   } = useAppContext();
 
   const [ shouldUpdateAllShoots, setShouldUpdateAllShoots ] = useState(false);
-  const [ shouldUpdateFilteredShoots, setShouldUpdateFilteredShoots ] = useState(false);
   
   const location = useLocation();
   const navigate = useNavigate();
@@ -189,17 +188,23 @@ const Shoots = () => {
   useEffect(() => {
     let finalPageFetched = false;
     
-    if(!finalPageLoaded && shouldUpdateAllShoots && !location.search.includes("tag")) {
+    // if(!finalPageLoaded && shouldUpdateAllShoots && !location.search.includes("tag")) {
+    if(!finalPageLoaded && (shouldUpdateAllShoots) ) {
 
       setIsLoading(true);
 
       const fetchShoots = async () => {
+        console.log(selectedTag)
       
         try {
-          const response = await fetch(`${BASE_URL}/shoots/all?page=${currentPage}&limit=${itemsPerPage}`);
+          const response = selectedTag === null
+            ? await fetch(`${BASE_URL}/shoots/all?page=${currentPage}&limit=${itemsPerPage}`)
+            : await fetch(`${BASE_URL}/shoots/all?tag_id=${selectedTag.id}&page=${currentPage}&limit=${itemsPerPage}`);
           
           if(response.ok) {
             const { shootSummaries, isFinalPage } = await response.json();
+
+            console.log(shootSummaries)
 
             finalPageFetched = isFinalPage;
             
@@ -240,51 +245,6 @@ const Shoots = () => {
     setShouldUpdateAllShoots(false)
   }, [shouldUpdateAllShoots, isOnShootDetails, currentPage, shoot_id, shootsData.length]);
 
-  // // fetchFilteredShoots useEffect
-  // useEffect(() => {    
-  //   if(!finalPageLoaded && selectedTag) {
-  //     setIsLoading(true);
-
-  //     const fetchFilteredShoot = async () => {
-
-  //       try {
-  //         const response = await fetch(`${BASE_URL}/shoots/all?tag_id=${selectedTag.id}&page=${currentPage}&limit=${itemsPerPage}`);
-
-  //         if(response.ok) {
-  //           const { shootSummaries, isFinalPage } = await response.json();
-  //           const data = shootSummaries;
-  //           let filteredData = [...data];
-  //           setCurrentPage(currentPage => currentPage + 1);
-
-  //           if(isOnShootDetails) {
-  //             const currentShoot = shoot_id;
-  //             filteredData = data.filter(shoot => shoot.shoot_id !== +currentShoot);
-  //           }
-
-  //           setTimeout(() => {
-  //             setIsInitialShootsLoad(false);
-  //           }, minLoadingInterval);
-
-  //           if(isFinalPage) {
-  //             setFinalPageLoaded(true);
-  //           } else {
-  //             setShootsData(() => [...shootsData, ...filteredData]);
-  //           }
-  //         }
-  //       } catch(error) {
-  //         console.log(`Error fetching ${selectedTag.tag_name} shoots: ${error}`);
-  //         toast.error(`Failed to fetch ${selectedTag.tag_name} shoots:, ${error}`);
-  //       } finally {
-  //         setTimeout(() => {
-  //           setIsLoading(false); 
-  //           setShouldUpdateFilteredShoots(false);
-  //         }, minLoadingInterval);
-  //       }
-  //     }
-  //     fetchFilteredShoot();
-  //   }
-  // }, [selectedTag, shouldUpdateFilteredShoots]);
-
   // handleOverScroll useEffect
   useEffect(() => {
     if(!finalPageLoaded) {
@@ -294,34 +254,18 @@ const Shoots = () => {
 
   // useEffect to clear shoots state when navigating to page
   useEffect(() => {
-    // const { pathname, search } = location;
-    // const currentURL = pathname.concat(search);
-      if(currentURL !== prevURL || showDeleteOrEditModal) {
+    if(currentURL !== prevURL || showDeleteOrEditModal) {
 
-        if(location.pathname.includes("shoot")) {
-          setTimeout(() => {
-            setIsInitialShootsLoad(true);
-          }, minLoadingInterval);
-        } else {
-          setIsInitialShootsLoad(true);
-        }
-        
+      setTimeout(() => {
+        setIsInitialShootsLoad(true);
+      }, minLoadingInterval);
         setShootsData([]);
         setShowDeleteOrEditModal(false);
         setCurrentPage(1);
         setFinalPageLoaded(false);
-    
-        const searchByTag = search.includes("tag");
-      
-        if((pathname === "/work" && !searchByTag) || (pathname === "/work/" && !searchByTag)) {
+  
+        if(pathname.includes('work')) {
           setShouldUpdateAllShoots(true);
-          setShouldUpdateFilteredShoots(false);
-          setShootsData([]);
-        }
-        
-        if(pathname === "/work" && searchByTag) {
-          setShouldUpdateAllShoots(false);
-          setShouldUpdateFilteredShoots(true);
           setShootsData([]);
         }
       }

@@ -28,7 +28,6 @@ export const AppProvider = ({ children }) => {
   const [ showSideNav, setShowSideNav ] = useState(false);
 
   const [ selectedShoot, setSelectedShoot ] = useState(null);
-  const [ shouldUpdateShoots, setShouldUpdateShoots ] = useState(false);
   
   const [ selectedPhotogModelTag, setSelectedPhotogModelTag ] = useState({});
 
@@ -250,8 +249,6 @@ export const AppProvider = ({ children }) => {
     setShouldUpdatePhotographers,
     shouldUpdateModels, 
     setShouldUpdateModels,
-    shouldUpdateShoots, 
-    setShouldUpdateShoots,
     shouldUpdateTags, 
     setShouldUpdateTags,
     tags, 
