@@ -44,10 +44,8 @@ export const AppProvider = ({ children }) => {
   const [ shouldUpdateTags, setShouldUpdateTags ] = useState(false);
   
   const [ selectValue, setSelectValue ] = useState(null);
-
+  
   const [ shootDetails, setShootDetails ] = useState(null);
-
-  const [ isInitialShootsLoad, setIsInitialShootsLoad ] = useState(false);
 
   const [ isOrderEditable, setIsOrderEditable ] = useState(false);
 
@@ -61,25 +59,15 @@ export const AppProvider = ({ children }) => {
   
   const navigate = useNavigate(); 
 
-  const handleNavigateHome = useCallback((updateAllShoots, updateFilteredShoots, tagObj) => {   
+  const handleNavigateHome = useCallback((tagObj) => {   
 
     if(!tagObj) {
-      console.log("tagObj === null")
       navigate('/work');
     } else if (tagObj) {
-      // navigate(`/work?tag=${tagObj.tag_name}`);
-    }
-    
-    setIsOrderEditable(false);
-    return 
-    
-    if(updateAllShoots && !updateFilteredShoots) {
-      setSelectedTag(null);
-      navigate('/work');
-      setSelectValue(null);
-    } else if(!updateAllShoots && updateFilteredShoots && tagObj) {
       navigate(`/work?tag=${tagObj.tag_name}`);
     }
+
+    setIsOrderEditable(false);
   }, [navigate]);
 
   const handleNavLinkClick = useCallback(() => {
@@ -268,8 +256,6 @@ export const AppProvider = ({ children }) => {
     setSelectValue,
     shootDetails, 
     setShootDetails,
-    isInitialShootsLoad, 
-    setIsInitialShootsLoad,
     isOrderEditable, 
     setIsOrderEditable,
     bioImg, 

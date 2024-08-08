@@ -92,7 +92,7 @@ const LoginForm = () => {
         localStorage.setItem('token', token);
         localStorage.setItem('refreshToken', refreshToken); 
         setIsLoggedIn(true);
-        handleNavigateHome(true, false, null);
+        handleNavigateHome();
         toast.success('Successfully logged in!');
       } else if(response.status === 401) {
         console.log("401")

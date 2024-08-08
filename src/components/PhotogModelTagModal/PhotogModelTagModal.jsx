@@ -158,7 +158,7 @@ const PhotogOrModelModal = () => {
               setIsLoading(false);
             }, minLoadingInterval);
             setIsLoggedIn(false);
-            handleNavigateHome(true, false, null)
+            handleNavigateHome()
             return toast.error("Please login again...");
           } else {
             setTimeout(() => {

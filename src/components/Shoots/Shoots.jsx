@@ -28,15 +28,16 @@ const Shoots = () => {
     showDeleteOrEditModal,
     setShowDeleteOrEditModal,
     setShootDetails,
-    isInitialShootsLoad,
-    setIsInitialShootsLoad,
     isOrderEditable, 
     setIsOrderEditable,
     isLoading
   } = useAppContext();
 
+  // console.log(isInitialShootsLoad)
+
   const [ shouldUpdateShoots, setShouldUpdateShoots ] = useState(false);
   
+  const [ isInitialShootsLoad, setIsInitialShootsLoad ] = useState(true);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -191,9 +192,12 @@ const Shoots = () => {
     if(!finalPageLoaded && (shouldUpdateShoots) ) {
 
       setIsLoading(true);
+      if(!shootsData.length) {
+        console.log(shootsData)
+        setIsInitialShootsLoad(true)
+      }
 
       const fetchShoots = async () => {
-        console.log(selectedTag)
       
         try {
           const response = selectedTag === null
@@ -202,8 +206,6 @@ const Shoots = () => {
           
           if(response.ok) {
             const { shootSummaries, isFinalPage } = await response.json();
-
-            console.log(shootSummaries)
 
             finalPageFetched = isFinalPage;
             
@@ -224,9 +226,9 @@ const Shoots = () => {
           toast.error(`Failed to fetch shoots: ${error}`);
         } finally {
           setTimeout(() => {
-          setIsLoading(false); 
-          setShouldUpdateShoots(false);
-          setIsInitialShootsLoad(false);
+            setIsLoading(false); 
+            setShouldUpdateShoots(false);
+            setIsInitialShootsLoad(false);
           }, minLoadingInterval);
 
           if(finalPageFetched) {
@@ -240,7 +242,7 @@ const Shoots = () => {
     }
     
     setShouldUpdateShoots(false)
-  }, [shouldUpdateShoots, isOnShootDetails, currentPage, shoot_id, shootsData.length]);
+  }, [shouldUpdateShoots, isOnShootDetails, currentPage, shoot_id, shootsData.length, selectedTag]);
 
   // handleOverScroll useEffect
   useEffect(() => {
@@ -298,7 +300,7 @@ const Shoots = () => {
         </div>
         <div className={`shoots__inner ${isOnShootDetails 
           ? "onShootDetails" 
-          : ""}`}
+          : "show"}`}
         >
 
           {shootsData.map((shoot, idx) => (
@@ -322,9 +324,6 @@ const Shoots = () => {
               />
             </Link>
           ))}
-          {/* {!isInitialShootsLoad && !finalPageLoaded && (distanceToBottom <= overScrollThreshold) */}
-
-          {/* {!isInitialShootsLoad */}
           {!isInitialShootsLoad && !finalPageLoaded 
           
             ?

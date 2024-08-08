@@ -12,7 +12,6 @@ const DeleteShootModal = () => {
     isLoggedIn, 
     setIsLoggedIn,
     setIsLoading,
-    setShouldUpdateShoots,
     selectedShoot, 
     setShowDeleteOrEditModal,
     deleteOrEditClickAction, 
@@ -46,19 +45,18 @@ const DeleteShootModal = () => {
         });
 
         if(response.ok) {
-          setShouldUpdateShoots(true);
           
           if(selectedTag) {
-            handleNavigateHome(false, true, selectedTag);
+            handleNavigateHome(selectedTag);
           } else if(!selectedTag) {
-            handleNavigateHome(true, false, null);
+            handleNavigateHome();
           }
           
           toast.success(`Shoot ${selectedShoot} successfully deleted.`); 
         } else if(response.status === 401) {
           setIsLoading(false);
           setIsLoggedIn(false);
-          handleNavigateHome(true, false, null);
+          handleNavigateHome();
           return toast.error("Please login again...");
         } else {
           toast.error(`Failed to delete Shoot ${selectedShoot}.`);
@@ -66,7 +64,7 @@ const DeleteShootModal = () => {
         }
       } catch (error) {
         console.error(`Error deleting Shoot ${selectedShoot}: ${error}`);
-        handleNavigateHome(true, false, null);
+        handleNavigateHome();
         toast.error(`Error deleting Shoot ${selectedShoot}. Loggin you out...`);
       }
     } else {
