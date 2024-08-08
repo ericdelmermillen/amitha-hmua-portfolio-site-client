@@ -54,9 +54,9 @@ const Shoots = () => {
   // const itemsPerPage = 1;
   // const itemsPerPage = 2;
   // const itemsPerPage = 4;
-  const itemsPerPage = 6;
+  // const itemsPerPage = 6;
   // const itemsPerPage = 10;
-  // const itemsPerPage = 12;
+  const itemsPerPage = 12;
   // const itemsPerPage = 100;
 
   const [ finalPageLoaded, setFinalPageLoaded ] = useState(false);
@@ -64,7 +64,8 @@ const Shoots = () => {
   const handleOverScroll = () => {
     const distanceToBottom = fullHeight - (windowHeight + scrollYPos);
 
-    if(!finalPageLoaded && !isLoading) {
+    // if(!finalPageLoaded && !isLoading) {
+    if((!finalPageLoaded && !isLoading) || (!finalPageLoaded && shootsData.length < itemsPerPage)) {
       
       if(distanceToBottom <= overScrollThreshold) {
         setShouldUpdateShoots(true);
@@ -249,7 +250,7 @@ const Shoots = () => {
     if(!finalPageLoaded) {
       handleOverScroll();
     }
-  }, [scrollYPos, prevScrollYPos]);
+  }, [scrollYPos, prevScrollYPos, shootsData.length]);
 
   // useEffect to clear shoots state when navigating to page
   useEffect(() => {
@@ -298,16 +299,27 @@ const Shoots = () => {
           }
 
         </div>
-        <div className={`shoots__inner ${isOnShootDetails 
-          ? "onShootDetails" 
-          : "show"}`}
+        {/* <div className={`shoots__inner ${
+          isOnShootDetails 
+            ? "onShootDetails" 
+            : "show"
+          }`}
+        > */}
+        <div className={`shoots__inner ${
+          isInitialShootsLoad 
+            ? "hide" 
+            : isOnShootDetails  
+            ? "onShootDetails"
+            : ""
+          }`}
         >
 
           {shootsData.map((shoot, idx) => (
             <Link 
               to={`/shoot/${shoot.shoot_id}`} 
               key={shoot.shoot_id}
-            >{idx + 1}
+            // >{idx + 1}
+            >
               <Shoot
                 key={shoot.shoot_id}
                 shoot_id={shoot.shoot_id}
