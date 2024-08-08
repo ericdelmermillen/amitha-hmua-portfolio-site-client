@@ -62,6 +62,16 @@ export const AppProvider = ({ children }) => {
   const navigate = useNavigate(); 
 
   const handleNavigateHome = useCallback((updateAllShoots, updateFilteredShoots, tagObj) => {   
+
+    if(!tagObj) {
+      console.log("tagObj === null")
+      navigate('/work');
+    } else if (tagObj) {
+      // navigate(`/work?tag=${tagObj.tag_name}`);
+    }
+    
+    setIsOrderEditable(false);
+    return 
     
     if(updateAllShoots && !updateFilteredShoots) {
       setSelectedTag(null);
@@ -70,7 +80,6 @@ export const AppProvider = ({ children }) => {
     } else if(!updateAllShoots && updateFilteredShoots && tagObj) {
       navigate(`/work?tag=${tagObj.tag_name}`);
     }
-    setIsOrderEditable(false);
   }, [navigate]);
 
   const handleNavLinkClick = useCallback(() => {

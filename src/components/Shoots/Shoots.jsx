@@ -35,7 +35,7 @@ const Shoots = () => {
     isLoading
   } = useAppContext();
 
-  const [ shouldUpdateAllShoots, setShouldUpdateAllShoots ] = useState(false);
+  const [ shouldUpdateShoots, setShouldUpdateShoots ] = useState(false);
   
   const location = useLocation();
   const navigate = useNavigate();
@@ -66,7 +66,7 @@ const Shoots = () => {
     if(!finalPageLoaded && !isLoading) {
       
       if(distanceToBottom <= overScrollThreshold) {
-        setShouldUpdateAllShoots(true);
+        setShouldUpdateShoots(true);
         shootsData.length > 0 
         ? setCurrentPage(c => c + 1)
         : setCurrentPage(1);
@@ -188,8 +188,7 @@ const Shoots = () => {
   useEffect(() => {
     let finalPageFetched = false;
     
-    // if(!finalPageLoaded && shouldUpdateAllShoots && !location.search.includes("tag")) {
-    if(!finalPageLoaded && (shouldUpdateAllShoots) ) {
+    if(!finalPageLoaded && (shouldUpdateShoots) ) {
 
       setIsLoading(true);
 
@@ -226,11 +225,9 @@ const Shoots = () => {
         } finally {
           setTimeout(() => {
           setIsLoading(false); 
-          setShouldUpdateAllShoots(false);
+          setShouldUpdateShoots(false);
           setIsInitialShootsLoad(false);
           }, minLoadingInterval);
-
-          console.log(`isFinalPage: ${finalPageFetched}`)
 
           if(finalPageFetched) {
             setTimeout(() => {
@@ -242,8 +239,8 @@ const Shoots = () => {
       fetchShoots();
     }
     
-    setShouldUpdateAllShoots(false)
-  }, [shouldUpdateAllShoots, isOnShootDetails, currentPage, shoot_id, shootsData.length]);
+    setShouldUpdateShoots(false)
+  }, [shouldUpdateShoots, isOnShootDetails, currentPage, shoot_id, shootsData.length]);
 
   // handleOverScroll useEffect
   useEffect(() => {
@@ -265,7 +262,7 @@ const Shoots = () => {
         setFinalPageLoaded(false);
   
         if(pathname.includes('work')) {
-          setShouldUpdateAllShoots(true);
+          setShouldUpdateShoots(true);
           setShootsData([]);
         }
       }

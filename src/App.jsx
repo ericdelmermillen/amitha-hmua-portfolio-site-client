@@ -48,7 +48,7 @@ const App = () => {
     setIsLoggedIn(false);
     localStorage.removeItem('token'); 
     localStorage.removeItem('refreshToken'); 
-    handleNavigateHome(true, false, null);
+    handleNavigateHome();
     toast.success("Successfully logged out!");
   }, []);
 
