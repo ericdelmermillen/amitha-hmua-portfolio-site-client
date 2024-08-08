@@ -50,14 +50,20 @@ export const AppProvider = ({ children }) => {
 
   const [ isInitialShootsLoad, setIsInitialShootsLoad ] = useState(false);
 
+  const [ isOrderEditable, setIsOrderEditable ] = useState(false);
+
   const [ bioImg, setBioImg ] = useState("");
+
   const [ bioName, setBioName ] = useState("");
+
   const [ bioText, setBioText ] = useState("");
+
   const [ bioImageNotSet, setBioImageNotSet ] = useState(false);
   
   const navigate = useNavigate(); 
 
   const handleNavigateHome = useCallback((updateAllShoots, updateFilteredShoots, tagObj) => {   
+    
     if(updateAllShoots && !updateFilteredShoots) {
       setSelectedTag(null);
       navigate('/work');
@@ -65,6 +71,7 @@ export const AppProvider = ({ children }) => {
     } else if(!updateAllShoots && updateFilteredShoots && tagObj) {
       navigate(`/work?tag=${tagObj.tag_name}`);
     }
+    setIsOrderEditable(false);
   }, [navigate]);
 
   const handleNavLinkClick = useCallback(() => {
@@ -257,6 +264,8 @@ export const AppProvider = ({ children }) => {
     setShootDetails,
     isInitialShootsLoad, 
     setIsInitialShootsLoad,
+    isOrderEditable, 
+    setIsOrderEditable,
     bioImg, 
     setBioImg,
     bioName, 
@@ -268,7 +277,7 @@ export const AppProvider = ({ children }) => {
     // non-state functions
     handleNavLinkClick,
     handleNavigateHome,
-    handleDeleteOrEditClick
+    handleDeleteOrEditClick,
    }
   
   return (

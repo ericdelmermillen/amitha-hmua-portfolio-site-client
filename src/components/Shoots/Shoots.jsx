@@ -25,7 +25,9 @@ const Shoots = () => {
     setShowDeleteOrEditModal,
     setShootDetails,
     isInitialShootsLoad,
-    setIsInitialShootsLoad
+    setIsInitialShootsLoad,
+    isOrderEditable, 
+    setIsOrderEditable
   } = useAppContext();
 
   const [ shouldUpdateAllShoots, setShouldUpdateAllShoots ] = useState(false);
@@ -38,7 +40,7 @@ const Shoots = () => {
   const [ currentPage, setCurrentPage ] = useState(1);
   const [ isOnShootDetails, setIsOnShootDetails ] = useState(location.pathname.includes('/shoot/'));
   const [ currentShootId, setCurrentShootId ] = useState(shoot_id);
-  const [ isOrderEditable, setIsOrderEditable ] = useState(false);
+  // const [ isOrderEditable, setIsOrderEditable ] = useState(false);
 
   const [ activeDragShoot, setActiveDragShoot ] = useState({id: -1}); 
 
@@ -47,7 +49,8 @@ const Shoots = () => {
   // const itemsPerPage = 4;
   // const itemsPerPage = 6;
   // const itemsPerPage = 10;
-  const itemsPerPage = 12;
+  // const itemsPerPage = 12;
+  const itemsPerPage = 100;
 
   const [ finalPageLoaded, setFinalPageLoaded ] = useState(false);
 
@@ -180,6 +183,7 @@ const Shoots = () => {
 
   // fetchAllShoots useEffect
   useEffect(() => {
+    console.log(currentPage)
     if((!finalPageLoaded && !selectedTag && !location.search.includes("tag"))) {
       setIsLoading(true);
       
