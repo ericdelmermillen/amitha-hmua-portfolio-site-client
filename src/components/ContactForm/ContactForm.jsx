@@ -138,7 +138,7 @@ const ContactForm = () => {
       const responseData = await response.json(); 
   
       toast.success(`${responseData.message} Redirecting...`);
-      handleNavigateHome(true, false, null);
+      handleNavigateHome();
       
     } catch(error) {
       toast.error(error.message);

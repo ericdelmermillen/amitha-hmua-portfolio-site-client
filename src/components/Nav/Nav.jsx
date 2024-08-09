@@ -19,7 +19,7 @@ const Nav = ({ handleLogOut }) => {
    } = useAppContext();
 
    const handleHomeClick = () => {
-    handleNavigateHome(true, false, null);
+    handleNavigateHome();
     handleNavClick();
    };
 

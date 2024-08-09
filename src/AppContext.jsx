@@ -28,7 +28,6 @@ export const AppProvider = ({ children }) => {
   const [ showSideNav, setShowSideNav ] = useState(false);
 
   const [ selectedShoot, setSelectedShoot ] = useState(null);
-  const [ shouldUpdateShoots, setShouldUpdateShoots ] = useState(false);
   
   const [ selectedPhotogModelTag, setSelectedPhotogModelTag ] = useState({});
 
@@ -45,26 +44,31 @@ export const AppProvider = ({ children }) => {
   const [ shouldUpdateTags, setShouldUpdateTags ] = useState(false);
   
   const [ selectValue, setSelectValue ] = useState(null);
-
+  
   const [ shootDetails, setShootDetails ] = useState(null);
 
-  const [ isInitialShootsLoad, setIsInitialShootsLoad ] = useState(false);
+  const [ isOrderEditable, setIsOrderEditable ] = useState(false);
 
   const [ bioImg, setBioImg ] = useState("");
+
   const [ bioName, setBioName ] = useState("");
+
   const [ bioText, setBioText ] = useState("");
+
   const [ bioImageNotSet, setBioImageNotSet ] = useState(false);
   
   const navigate = useNavigate(); 
 
-  const handleNavigateHome = useCallback((updateAllShoots, updateFilteredShoots, tagObj) => {   
-    if(updateAllShoots && !updateFilteredShoots) {
-      setSelectedTag(null);
+  const handleNavigateHome = useCallback((tagObj) => {   
+
+    if(!tagObj) {
       navigate('/work');
-      setSelectValue(null);
-    } else if(!updateAllShoots && updateFilteredShoots && tagObj) {
+      setSelectedTag(null);
+    } else if (tagObj) {
       navigate(`/work?tag=${tagObj.tag_name}`);
     }
+
+    setIsOrderEditable(false);
   }, [navigate]);
 
   const handleNavLinkClick = useCallback(() => {
@@ -243,8 +247,6 @@ export const AppProvider = ({ children }) => {
     setShouldUpdatePhotographers,
     shouldUpdateModels, 
     setShouldUpdateModels,
-    shouldUpdateShoots, 
-    setShouldUpdateShoots,
     shouldUpdateTags, 
     setShouldUpdateTags,
     tags, 
@@ -255,8 +257,8 @@ export const AppProvider = ({ children }) => {
     setSelectValue,
     shootDetails, 
     setShootDetails,
-    isInitialShootsLoad, 
-    setIsInitialShootsLoad,
+    isOrderEditable, 
+    setIsOrderEditable,
     bioImg, 
     setBioImg,
     bioName, 
@@ -268,7 +270,7 @@ export const AppProvider = ({ children }) => {
     // non-state functions
     handleNavLinkClick,
     handleNavigateHome,
-    handleDeleteOrEditClick
+    handleDeleteOrEditClick,
    }
   
   return (
@@ -282,6 +284,6 @@ export const AppProvider = ({ children }) => {
   // custom hook to access AppContext object in context consumers
 const useAppContext = () => {
   return useContext(AppContext)
-};
+}; 
 
 export { useAppContext };

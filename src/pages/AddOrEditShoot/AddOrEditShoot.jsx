@@ -364,11 +364,11 @@ const handleSubmitShoot = async (e) => {
   } else if(!isLoggedIn) {
     toast.error("Not logged in...");
   } 
-  handleNavigateHome(true, false, null);
+  handleNavigateHome();
 };
 
   const handleCancel = () => {
-    handleNavigateHome(true, false, null);
+    handleNavigateHome();
   };
   
   // fetch photographers
@@ -380,7 +380,7 @@ const handleSubmitShoot = async (e) => {
       headers['Authorization'] = `Bearer ${token}`;
     } else {
       setIsLoggedIn(false);
-      handleNavigateHome(true, false, null);
+      handleNavigateHome();
       return toast.error("Not logged in");
     }
 
@@ -414,7 +414,7 @@ const handleSubmitShoot = async (e) => {
       headers['Authorization'] = `Bearer ${token}`;
     } else {
       setIsLoggedIn(false);
-      handleNavigateHome(true, false, null);
+      handleNavigateHome();
       return toast.error("Not logged in");
     }
 

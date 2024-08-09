@@ -35,7 +35,7 @@ const NavSelect = ({ selectOptions }) => {
     
     setTimeout(() => {
       setSelectedTag(option);
-      handleNavigateHome(false, true, option);
+      handleNavigateHome(option);
     }, minLoadingInterval);
 
     // Reset scroll position to top
@@ -51,18 +51,18 @@ const NavSelect = ({ selectOptions }) => {
     if(showOptions) {
       setSelectValue(null);
       setTimeout(() => {
-        handleNavigateHome(true, false, null);
+        handleNavigateHome();
       }, minLoadingInterval);
     } else if(!showOptions) {
       if(selectValue) {
         const foundOption = selectOptions.find(tag => tag.tag_name === selectValue);
         setTimeout(() => {
           setSelectedTag(foundOption);
-          handleNavigateHome(false, true, foundOption);
+          handleNavigateHome(foundOption);
         }, minLoadingInterval);
       } else if(!selectValue) {
         setTimeout(() => {
-          handleNavigateHome(true, false, null);
+          handleNavigateHome();
         }, minLoadingInterval);
       }
     }

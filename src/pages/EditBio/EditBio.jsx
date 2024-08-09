@@ -46,7 +46,7 @@ const EditBio = () => {
   };
 
   const handleCancel = () => {
-    handleNavigateHome(true, false, null);
+    handleNavigateHome();
   };
   
   const handleImageChange = useCallback(async (e, inputNo) => {
@@ -89,7 +89,7 @@ const EditBio = () => {
     const tokenIsExpired = await checkTokenExpiration(setIsLoggedIn, navigate);
 
     if(tokenIsExpired) {
-      handleNavigateHome(true, false, null);
+      handleNavigateHome();
       return toast.error("Token missing. Logging you out...");
     }
 
