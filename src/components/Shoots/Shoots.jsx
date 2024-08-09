@@ -304,7 +304,7 @@ const Shoots = () => {
         <div className={`shoots__inner ${
           isInitialShootsLoad 
             ? "hide" 
-            : isOnShootDetails  
+            : isOnShootDetails 
             ? "onShootDetails"
             : ""
           }`}
