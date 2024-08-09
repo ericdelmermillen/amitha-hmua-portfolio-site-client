@@ -33,8 +33,6 @@ const Shoots = () => {
     isLoading
   } = useAppContext();
 
-  // console.log(isInitialShootsLoad)
-
   const [ shouldUpdateShoots, setShouldUpdateShoots ] = useState(false);
   
   const [ isInitialShootsLoad, setIsInitialShootsLoad ] = useState(true);
@@ -194,8 +192,7 @@ const Shoots = () => {
 
       setIsLoading(true);
       if(!shootsData.length) {
-        console.log(shootsData)
-        setIsInitialShootsLoad(true)
+        setIsInitialShootsLoad(true);
       }
 
       const fetchShoots = async () => {
@@ -220,7 +217,6 @@ const Shoots = () => {
             }    
             
             setShootsData(prevShoots => [...prevShoots, ...filteredData.filter(shoot => !prevShoots.some(prev => prev.shoot_id === shoot.shoot_id))]);
-
           }
         } catch(error) {
           console.log(`Error fetching shoots: ${error}`);
@@ -318,8 +314,9 @@ const Shoots = () => {
             <Link 
               to={`/shoot/${shoot.shoot_id}`} 
               key={shoot.shoot_id}
-            // >{idx + 1}
             >
+              {isLoggedIn ? idx + 1 : ""}
+
               <Shoot
                 key={shoot.shoot_id}
                 shoot_id={shoot.shoot_id}
@@ -362,27 +359,28 @@ const Shoots = () => {
 
         {isLoggedIn && !isOnShootDetails && finalPageLoaded && !selectedTag && !isOrderEditable
 
-        ? <div className="shoots__button-container">
-            <button
-              className="shoots__editShootOrder"
-              onClick={makeOrderEditable}
-            >
-              Edit Order
-            </button>
-          </div>
+          ? <div className="shoots__button-container">
+              <button
+                className="shoots__editShootOrder"
+                onClick={makeOrderEditable}
+              >
+                Edit Order
+              </button>
+            </div>
 
-        : isLoggedIn && !isOnShootDetails && finalPageLoaded && !selectedTag && isOrderEditable
-        
-        ? <div className="shoots__button-container">
-            <button
-              className="shoots__editShootOrder"
-              onClick={saveNewOrder}
-            >
-              Save Order
-            </button>
-          </div>
-        
-        : null}
+          : isLoggedIn && !isOnShootDetails && finalPageLoaded && !selectedTag && isOrderEditable
+          
+          ? <div className="shoots__button-container">
+              <button
+                className="shoots__editShootOrder"
+                onClick={saveNewOrder}
+              >
+                Save Order
+              </button>
+            </div>
+          
+          : null
+        }
 
       </div>
     </>

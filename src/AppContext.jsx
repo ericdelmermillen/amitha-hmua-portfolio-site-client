@@ -63,6 +63,7 @@ export const AppProvider = ({ children }) => {
 
     if(!tagObj) {
       navigate('/work');
+      setSelectedTag(null);
     } else if (tagObj) {
       navigate(`/work?tag=${tagObj.tag_name}`);
     }
@@ -283,6 +284,6 @@ export const AppProvider = ({ children }) => {
   // custom hook to access AppContext object in context consumers
 const useAppContext = () => {
   return useContext(AppContext)
-};
+}; 
 
 export { useAppContext };
