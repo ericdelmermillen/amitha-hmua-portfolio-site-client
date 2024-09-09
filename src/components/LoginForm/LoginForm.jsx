@@ -9,11 +9,13 @@ import './LoginForm.scss';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+const isSafari = navigator.userAgent.toLowerCase().includes("safari") && 
+  (!navigator.userAgent.toLowerCase().includes("chrome") || !navigator.userAgent.toLowerCase().includes("mozilla"));
+
 const LoginForm = () => {
   const { 
     setIsLoggedIn,
     handleNavigateHome,
-    isSafari
   } = useAppContext();
   
   const [ email, setEmail ] = useState('');
