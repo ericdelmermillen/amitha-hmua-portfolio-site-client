@@ -68,7 +68,7 @@ const checkTokenExpiration = async (setIsLoggedIn, navigate) => {
 
 const checkIfIsFirefox = () => {
   return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-}
+};
 
 
 const scrollToTop = () => {
