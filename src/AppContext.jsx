@@ -17,7 +17,6 @@ export const AppProvider = ({ children }) => {
   const [ colorMode, setColorMode ] = useState(localStorage.getItem('colorMode') || "light");
   const [ isLoading, setIsLoading ] = useState(false); 
   const [ minLoadingInterval, setMinLoadingInterval ] = useState(250); 
-  const [ isFirefox, setIsFirefox ] = useState(navigator.userAgent.toLowerCase().indexOf('firefox') > -1);
 
   const [ showFloatingButton, setShowFloatingButton ] = useState(!location.pathname.includes("edit") || !location.pathname.includes("add"));
 
@@ -218,8 +217,6 @@ export const AppProvider = ({ children }) => {
     setShowFloatingButton,
     prevURL, 
     setPrevURL,
-    isFirefox, 
-    setIsFirefox,
     setMinLoadingInterval,
     minLoadingInterval, 
     selectedShoot, 

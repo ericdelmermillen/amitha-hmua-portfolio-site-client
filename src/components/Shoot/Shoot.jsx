@@ -1,7 +1,10 @@
 import { useAppContext } from '../../AppContext';
 import DeleteIcon from '../../assets/icons/DeleteIcon.jsx';
 import EditIcon from '../../assets/icons/EditIcon.jsx';
+import { checkIfIsFirefox } from '../../utils/utils.js';
 import './Shoot.scss';
+
+const isFirefox = checkIfIsFirefox();
 
 const Shoot = ({ 
   shoot_id, 
@@ -18,8 +21,7 @@ const Shoot = ({
 
   const { 
     isLoggedIn, 
-    handleDeleteOrEditClick,
-    isFirefox
+    handleDeleteOrEditClick
   } = useAppContext();
 
   const handleDragOver = (e) => {

@@ -1,9 +1,11 @@
 import { useRef, useState } from 'react';
+import { checkIfIsFirefox } from '../../utils/utils';
 import PhotoPlaceholder from '../../assets/icons/PhotoPlaceholder';
 import './PhotoInput.scss';
 
+const isFirefox = checkIfIsFirefox();
+
 const PhotoInput = ({ 
-  isFirefox, 
   shootPhoto, 
   setShootPhotos, 
   handleImageChange,
