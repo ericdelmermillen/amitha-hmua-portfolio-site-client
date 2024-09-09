@@ -18,7 +18,6 @@ export const AppProvider = ({ children }) => {
   const [ isLoading, setIsLoading ] = useState(false); 
   const [ minLoadingInterval, setMinLoadingInterval ] = useState(250); 
   const [ isFirefox, setIsFirefox ] = useState(navigator.userAgent.toLowerCase().indexOf('firefox') > -1);
-  // *** const [ isSafari, setIsSafari ] = useState(false);
 
   const [ showFloatingButton, setShowFloatingButton ] = useState(!location.pathname.includes("edit") || !location.pathname.includes("add"));
 
@@ -189,14 +188,6 @@ export const AppProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem('colorMode', colorMode);
   }, [colorMode]);
-
-  // *** useEffect(() => {
-  //   const userAgent = navigator.userAgent.toLowerCase();
-  //   const isSafariBrowser = /safari/.test(userAgent) && !/chrome/.test(userAgent) && !/android/.test(userAgent);
-  //   const isSafariFeatureDetection = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-
-  //   setIsSafari(isSafariBrowser || isSafariFeatureDetection);
-  // }, []);
   
   // check loggedIn on mount
   useEffect(() => {
@@ -229,8 +220,6 @@ export const AppProvider = ({ children }) => {
     setPrevURL,
     isFirefox, 
     setIsFirefox,
-    // ** isSafari, 
-    // setIsSafari,
     setMinLoadingInterval,
     minLoadingInterval, 
     selectedShoot, 
