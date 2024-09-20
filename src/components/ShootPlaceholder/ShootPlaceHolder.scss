@@ -18,16 +18,20 @@
     background: var(--background-color);
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.4rem;
     padding-block: 0.75rem;
     width: 100%;
+
+    &.hide {
+      display: none;
+    }
   }
 
   &__placeholder-models,
   &__placeholder-photographers {
     background: var(--placeholder-color);
     border-radius: var(--borderRadius);
-    height: 2rem;
+    height: 1.5rem;
     width: 65%;
   }
   

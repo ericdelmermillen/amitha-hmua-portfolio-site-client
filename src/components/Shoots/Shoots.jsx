@@ -4,13 +4,13 @@ import { useAppContext } from '../../AppContext.jsx';
 import { toast } from 'react-toastify';
 import { checkTokenExpiration } from '../../utils/utils.js';
 import Shoot from '../Shoot/Shoot.jsx';
-import './Shoots.scss';
 import ShootPlaceHolder from '../ShootPlaceholder/ShootPlaceHolder.jsx';
+import './Shoots.scss';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const windowHeight = window.innerHeight;
-const overScrollThreshold = 300; 
+const overScrollThreshold = window.innerHeight * 0.9; 
 
 const Shoots = () => {
 
@@ -32,7 +32,7 @@ const Shoots = () => {
     setIsOrderEditable,
     isLoading
   } = useAppContext();
-
+  
   const [ shouldUpdateShoots, setShouldUpdateShoots ] = useState(false);
   
   const [ isInitialShootsLoad, setIsInitialShootsLoad ] = useState(true);
@@ -54,15 +54,15 @@ const Shoots = () => {
   // const itemsPerPage = 4;
   // const itemsPerPage = 6;
   // const itemsPerPage = 10;
-  const itemsPerPage = 12;
-  // const itemsPerPage = 100;
+  // const itemsPerPage = 12;
+  const itemsPerPage = 100;
 
   const [ finalPageLoaded, setFinalPageLoaded ] = useState(false);
     
   const handleOverScroll = () => {
     const distanceToBottom =  windowHeight - scrollYPos;
 
-    if((!finalPageLoaded && !isLoading) || (!finalPageLoaded && shootsData.length < itemsPerPage)) {
+    if(!finalPageLoaded && !isLoading){
       
       if(distanceToBottom <= overScrollThreshold) {
         setShouldUpdateShoots(true);
@@ -92,7 +92,7 @@ const Shoots = () => {
 
     if(tokenIsExpired) {
       return;
-    }
+    };
     
     if(isLoggedIn) {      
       toast.info("Updating database. One sec...");
@@ -186,13 +186,12 @@ const Shoots = () => {
   // fetchAllShoots useEffect
   useEffect(() => {
     let finalPageFetched = false;
+
+    if(location.search.split("=")[1] && selectedTag === null) {
+      return
+    };
     
     if(!finalPageLoaded && (shouldUpdateShoots) ) {
-
-      setIsLoading(true);
-      if(!shootsData.length) {
-        setIsInitialShootsLoad(true);
-      }
 
       const fetchShoots = async () => {
       
@@ -202,13 +201,17 @@ const Shoots = () => {
             : await fetch(`${BASE_URL}/shoots/all?tag_id=${selectedTag.id}&page=${currentPage}&limit=${itemsPerPage}`);
           
           if(response.ok) {
-            const { shootSummaries, isFinalPage } = await response.json();
+            const { shootSummaries, isFinalPage } = await response.json();            
 
             finalPageFetched = isFinalPage;
             
             const data = shootSummaries;
             
             let filteredData = [...data];
+
+            if(filteredData.length < itemsPerPage) {
+              finalPageFetched = true;
+            }
             
             if(isOnShootDetails) {
               const currentShoot = shoot_id;
@@ -279,7 +282,11 @@ const Shoots = () => {
         >
 
           {Array.from({ length: itemsPerPage }, (_, idx) => 
-            <ShootPlaceHolder key={idx}/>
+            <ShootPlaceHolder 
+          
+              key={idx}
+              isOnShootDetails={isOnShootDetails}
+            />
             )
           }
 
@@ -301,20 +308,20 @@ const Shoots = () => {
             >
               {isLoggedIn ? idx + 1 : ""}
 
-              <Shoot
-                key={shoot.shoot_id}
-                shoot_id={shoot.shoot_id}
-                display_order={shoot.display_order}
-                thumbnail_url={shoot.thumbnail_url}
-                models={shoot.models}
-                photographers={shoot.photographers}
-                isOnShootDetails={isOnShootDetails}
-                handleNewShootId={handleNewShootId}
-                isOrderEditable={isOrderEditable}
-                handleShootDragStart={handleShootDragStart}
-                handleDropShootTarget={handleDropShootTarget}
-                tags={shoot.tags}
-              />
+                <Shoot
+                  key={shoot.shoot_id}
+                  shoot_id={shoot.shoot_id}
+                  display_order={shoot.display_order}
+                  thumbnail_url={shoot.thumbnail_url}
+                  models={shoot.models}
+                  photographers={shoot.photographers}
+                  isOnShootDetails={isOnShootDetails}
+                  handleNewShootId={handleNewShootId}
+                  isOrderEditable={isOrderEditable}
+                  handleShootDragStart={handleShootDragStart}
+                  handleDropShootTarget={handleDropShootTarget}
+                  tags={shoot.tags}
+                />
             </Link>
           ))}
           {!isInitialShootsLoad && !finalPageLoaded 
@@ -323,7 +330,10 @@ const Shoots = () => {
 
               (Array.from({ length: itemsPerPage }, (_, idx) => 
 
-                <ShootPlaceHolder key={idx}/>
+                <ShootPlaceHolder 
+                  isOnShootDetails={isOnShootDetails}
+                  key={idx}
+                />
                 )
               )
 
