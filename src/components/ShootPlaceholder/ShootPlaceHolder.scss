@@ -1,0 +1,37 @@
+@import "../../partials/mixins";
+@import "../../partials/variables";
+
+.shootPlaceholder {
+  align-items: center;
+  background: var(--placeholder-color);
+  border-radius: var(--borderRadius);
+  display: flex;
+  flex-direction: column;
+
+  &__placeholder-img {
+    @include shootImg;
+    min-width: 100%;
+  }
+
+  &__placeholder-textContainer {
+    align-items: center;
+    background: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-block: 0.75rem;
+    width: 100%;
+  }
+
+  &__placeholder-models,
+  &__placeholder-photographers {
+    background: var(--placeholder-color);
+    border-radius: var(--borderRadius);
+    height: 2rem;
+    width: 65%;
+  }
+  
+  &__placeholder-photographers {
+    width: 75%;
+  }
+}

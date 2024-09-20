@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { checkTokenExpiration } from '../../utils/utils.js';
 import Shoot from '../Shoot/Shoot.jsx';
 import './Shoots.scss';
+import ShootPlaceHolder from '../ShootPlaceholder/ShootPlaceHolder.jsx';
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -278,27 +279,12 @@ const Shoots = () => {
         >
 
           {Array.from({ length: itemsPerPage }, (_, idx) => 
-
-            <div 
-              className="shoots__placeholder initial"
-              key={idx + 1}
-            >
-              <div className="shoots__placeholder-img"></div>
-              <div className="shoots__placeholder-textContainer">
-                <div className="shoots__placeholder-models"></div>
-                <div className="shoots__placeholder-photographers"></div>
-              </div>
-            </div>
+            <ShootPlaceHolder key={idx}/>
             )
           }
 
         </div>
-        {/* <div className={`shoots__inner ${
-          isOnShootDetails 
-            ? "onShootDetails" 
-            : "show"
-          }`}
-        > */}
+        
         <div className={`shoots__inner ${
           isInitialShootsLoad 
             ? "hide" 
@@ -337,16 +323,8 @@ const Shoots = () => {
 
               (Array.from({ length: itemsPerPage }, (_, idx) => 
 
-                <div 
-                  className="shoots__placeholder secondary"
-                  key={idx + 1}
-                >
-                  <div className="shoots__placeholder-img"></div>
-                  <div className="shoots__placeholder-textContainer">
-                    <div className="shoots__placeholder-models"></div>
-                    <div className="shoots__placeholder-photographers"></div>
-                  </div>
-                </div>)
+                <ShootPlaceHolder key={idx}/>
+                )
               )
 
             : null
