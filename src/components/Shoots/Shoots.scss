@@ -49,11 +49,11 @@
 
   &__placeholders {
     display: none;
+    gap: 1rem;
     position: sticky;
 
     &.show {
       display: grid;
-      gap: 1rem;
       grid-template-columns: 1fr;
       min-width: 100%;
       

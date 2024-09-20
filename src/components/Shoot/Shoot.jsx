@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { useAppContext } from '../../AppContext';
+import { checkIfIsFirefox } from '../../utils/utils.js';
 import DeleteIcon from '../../assets/icons/DeleteIcon.jsx';
 import EditIcon from '../../assets/icons/EditIcon.jsx';
-import { checkIfIsFirefox } from '../../utils/utils.js';
+import ShootPlaceHolder from '../ShootPlaceholder/ShootPlaceHolder.jsx';
 import './Shoot.scss';
 
 const isFirefox = checkIfIsFirefox();
@@ -23,6 +25,12 @@ const Shoot = ({
     isLoggedIn, 
     handleDeleteOrEditClick
   } = useAppContext();
+
+  const [ imageIsLoaded, setIsImagedLoaded ] = useState(false);
+
+  const handleUpdateImageIsLoaded = () => {
+    setIsImagedLoaded(true);
+  }
 
   const handleDragOver = (e) => {
     e.preventDefault();
@@ -49,6 +57,12 @@ const Shoot = ({
           : null}
         onClick={() => handleNewShootId(shoot_id)}
       >
+        <div className={`shoot__placeholder ${imageIsLoaded ? "hide" : ""}`}>
+          <ShootPlaceHolder 
+            isOnShootDetails={isOnShootDetails}
+          />
+        </div>
+        
         <div className="shoot__overlay"></div>
         
         {isLoggedIn && !isOnShootDetails && !isOrderEditable
@@ -85,18 +99,21 @@ const Shoot = ({
 
         <img 
           draggable={isOrderEditable}
-          className='shoot__img'
+          className={`shoot__img ${imageIsLoaded ? "show" : ""}`}
           src={thumbnail_url} 
           alt={`Thumbnail for "${shoot_id}" shoot`}
+          onLoad={handleUpdateImageIsLoaded}
           onDragStart={isOrderEditable 
             ? (e) => handleShootDragStart(e, shoot_id) 
             : null}
         />
 
         <div 
-          className={`shoot__info ${isOnShootDetails && "smallText"}`}
+          className={`shoot__info ${!isOnShootDetails 
+            ? "show" 
+            : ""}`}
         >
-          <p className='shoot__models'>
+          <p className="shoot__models">
             <span className="models__label">
               {models.length > 1 
                 ? "Models: " 

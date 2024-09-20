@@ -3,6 +3,7 @@
 
 .shoot {
   cursor: pointer;
+  padding-bottom: 0.5rem;
   position: relative;
 
   &__overlay {
@@ -18,18 +19,35 @@
     cursor: grab;
   }
 
+  &__placeholder {
+    position: absolute;
+    top: 0;
+    width: 100%;
+  
+    &.hide {
+      opacity: 0;
+      transition: opacity var(--placeholder-transition-time) ease-out;
+    }
+  }
+
   &__img {
     @include shootImg;
+    opacity: 0;
+    transition: opacity var(--placeholder-transition-time) ease-out;
+
+    &.show {
+      opacity: 1;
+    }
   }
 
   &__info {
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 0.25rem;
     padding-block: 0.75rem;
-
-    &.smallText {
-      display: none;
+    
+    &.show {
+      display: flex;
     }
   }
 
