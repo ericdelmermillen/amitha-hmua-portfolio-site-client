@@ -9,7 +9,6 @@ import './Shoots.scss';
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const windowHeight = window.innerHeight;
-const fullHeight = document.body.scrollHeight;
 const overScrollThreshold = 300; 
 
 const Shoots = () => {
@@ -60,9 +59,8 @@ const Shoots = () => {
   const [ finalPageLoaded, setFinalPageLoaded ] = useState(false);
     
   const handleOverScroll = () => {
-    const distanceToBottom = fullHeight - (windowHeight + scrollYPos);
+    const distanceToBottom =  windowHeight - scrollYPos;
 
-    // if(!finalPageLoaded && !isLoading) {
     if((!finalPageLoaded && !isLoading) || (!finalPageLoaded && shootsData.length < itemsPerPage)) {
       
       if(distanceToBottom <= overScrollThreshold) {
@@ -238,7 +236,7 @@ const Shoots = () => {
       fetchShoots();
     }
     
-    setShouldUpdateShoots(false)
+    setShouldUpdateShoots(false);
   }, [shouldUpdateShoots, isOnShootDetails, currentPage, shoot_id, shootsData.length, selectedTag]);
 
   // handleOverScroll useEffect
