@@ -7,7 +7,8 @@ const AppContext = createContext();
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export const AppProvider = ({ children }) => {
+// export const AppProvider = ({ children }) => {
+const AppProvider = ({ children }) => {
 
   const location = useLocation();
 
@@ -272,4 +273,4 @@ const useAppContext = () => {
   return useContext(AppContext)
 }; 
 
-export { useAppContext };
+export { AppProvider, useAppContext };
