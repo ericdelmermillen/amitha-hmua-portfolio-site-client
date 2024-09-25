@@ -13,10 +13,6 @@
     min-height: 55vh;
     min-width: 100%;
     position: sticky;
-
-    &.hide {
-      display: none;
-    }
     
     &.onShootDetails {
       grid-template-columns: repeat(2, 1fr);
