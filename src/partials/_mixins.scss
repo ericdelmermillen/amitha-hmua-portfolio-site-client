@@ -3,7 +3,8 @@
 .app {
   // general styling variables
   --borderRadius: 8px;
-  --placeholder-transition-time: 250ms;
+  --placeholder-transition-time: 100ms;
+  // --placeholder-transition-time: 2s;
 
   // colors
   --modalOverlayBg: rgba(0, 0, 0, 0.5);

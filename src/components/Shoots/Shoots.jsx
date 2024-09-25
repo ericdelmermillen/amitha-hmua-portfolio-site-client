@@ -54,8 +54,8 @@ const Shoots = () => {
   // const itemsPerPage = 4;
   // const itemsPerPage = 6;
   // const itemsPerPage = 10;
-  // const itemsPerPage = 12;
-  const itemsPerPage = 100;
+  const itemsPerPage = 12;
+  // const itemsPerPage = 100;
 
   const [ finalPageLoaded, setFinalPageLoaded ] = useState(false);
     
@@ -281,21 +281,10 @@ const Shoots = () => {
           : ""}`}
         >
 
-          {Array.from({ length: itemsPerPage }, (_, idx) => 
-            <ShootPlaceHolder 
-          
-              key={idx}
-              isOnShootDetails={isOnShootDetails}
-            />
-            )
-          }
-
         </div>
         
         <div className={`shoots__inner ${
-          isInitialShootsLoad 
-            ? "hide" 
-            : isOnShootDetails 
+          isOnShootDetails 
             ? "onShootDetails"
             : ""
           }`}
@@ -324,6 +313,7 @@ const Shoots = () => {
                 />
             </Link>
           ))}
+          
           {!isInitialShootsLoad && !finalPageLoaded 
           
             ?
