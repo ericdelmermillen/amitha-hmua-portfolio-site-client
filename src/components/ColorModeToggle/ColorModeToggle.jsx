@@ -1,14 +1,16 @@
+import { useEffect, useState } from 'react';
 import { useAppContext} from '../../AppContext';
 import sun from '../../assets/icons/sun.svg';
 import moon from '../../assets/icons/crescent_moon.svg';
 import './ColorModeToggle.scss';
 
 const ColorModeToggle = ({ inputId }) => {
-
   const { 
     colorMode, 
     setColorMode,
   } = useAppContext();
+
+  const [ isDarkMode, setIsDarkMode ] = useState(colorMode === 'dark')
 
   const handleToggleColorMode = () => {
     const currentMode = colorMode === 'light' 
@@ -17,6 +19,11 @@ const ColorModeToggle = ({ inputId }) => {
     setColorMode(currentMode);
   };
 
+  useEffect(() => {
+    setIsDarkMode(colorMode === 'dark');
+  }, [colorMode]);
+
+
   return (
     <>
       <div className='colorModeToggle'>
@@ -24,7 +31,8 @@ const ColorModeToggle = ({ inputId }) => {
           className="colorModeToggle__checkbox" 
           type="checkbox" 
           id={inputId} 
-          onClick={handleToggleColorMode}
+          onChange={handleToggleColorMode}
+          checked={isDarkMode}
         />
         <label 
           className="colorModeToggle__checkbox-label"
