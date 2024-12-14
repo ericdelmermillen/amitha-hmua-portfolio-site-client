@@ -10,7 +10,7 @@ const ColorModeToggle = ({ inputId }) => {
     setColorMode,
   } = useAppContext();
 
-  const [ isDarkMode, setIsDarkMode ] = useState(colorMode === 'dark')
+  const [ isDarkMode, setIsDarkMode ] = useState(colorMode === 'dark');
 
   const handleToggleColorMode = () => {
     const currentMode = colorMode === 'light' 
