@@ -1,169 +1,168 @@
-@import '../../partials/mixins.scss';
-@import '../../partials/variables.scss';
+@import "../../partials/mixins.scss";
+@import "../../partials/variables.scss";
 
 .contactForm {
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  height: 100%;
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  
-  &__modal {
-    background-color: var(--background-color);
-    border-radius: var(--borderRadius);
-    box-shadow: var(--box-shadow);
-    display: flex;
-    flex-direction: column;
-    min-height: 28rem;
-    max-height: 33rem;
-    max-width: 40rem;
-    overflow-y: auto;
-    padding-block: 1rem;
-    padding-inline: 2rem;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 90%;
-    
-    @media(min-width: $tablet) {
-      padding-block: 2rem;
-      width: 80%;
-    }
-  }
+	align-items: center;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: flex;
+	justify-content: center;
+	height: 100%;
+	left: 50%;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
 
-  &__form {
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-  }
-  
-  &__title {
-    color: var(--text-color);
-    font-size: 1.75rem;
-    margin-block: 0.5rem;
-    text-align: center;
-    
-    @media(min-width: $tablet) {
-      margin-block: 1rem;
-    }
-  }
-  
-  &__instructions {
-    color: var(--text-color);
-    font-size: 1.25rem;
-    font-weight: normal;
-    margin-bottom: 0.5rem;
-    
-    @media(min-width: $tablet) {
-      margin-bottom: 1rem;
-    }
-  }
+	&__modal {
+		background-color: var(--background-color);
+		border-radius: var(--borderRadius);
+		box-shadow: var(--box-shadow);
+		display: flex;
+		flex-direction: column;
+		min-height: 28rem;
+		max-height: 33rem;
+		max-width: 40rem;
+		overflow-y: auto;
+		padding-block: 1rem;
+		padding-inline: 2rem;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 90%;
 
-  &__label {
-    display: none;
-  }
+		@media (min-width: $tablet) {
+			padding-block: 2rem;
+			width: 80%;
+		}
+	}
 
-  &__name-container {
+	&__form {
+		display: flex;
+		flex-direction: column;
+		overflow-y: auto;
+	}
 
-    @media(min-width: $tablet) {
-      display: grid;
-      gap: 1rem;
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
+	&__title {
+		color: var(--text-color);
+		font-size: 1.75rem;
+		margin-block: 0.5rem;
+		text-align: center;
 
-  input {
-    @include input;
-  }
+		@media (min-width: $tablet) {
+			margin-block: 1rem;
+		}
+	}
 
-  &__firstName {
-    height: 3.85rem;
-    position: relative;
-  }
+	&__instructions {
+		color: var(--text-color);
+		font-size: 1.25rem;
+		font-weight: normal;
+		margin-bottom: 0.5rem;
 
-  &__firstName-error {
-    display: none;
-    
-    &.error {
-      @include error;
-    }
-  }
+		@media (min-width: $tablet) {
+			margin-bottom: 1rem;
+		}
+	}
 
-  &__lastName {
-    height: 4rem;
-    position: relative;
-  }
+	&__label {
+		display: none;
+	}
 
-  &__lastName-error {
-    display: none;
-    
-    &.error {
-      @include error;
-    }
-  }
-  
-  &__email {
-    height: 3.85rem;
-    position: relative;
-  }
+	&__name-container {
+		@media (min-width: $tablet) {
+			display: grid;
+			gap: 1rem;
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
 
-  &__email-error {
-    display: none;
-    
-    &.error {
-      @include error;
-    }
-  }
-  
-  &__subject {
-    position: relative;
-    height: 3.85rem;
-  }
+	input {
+		@include input;
+	}
 
-  &__subject-error {
-    display: none;
-    
-    &.error {
-      @include error;
-    }
-  }
-  
-  &__message {
-    height: 8rem;
-    position: relative;
-  }
+	&__firstName {
+		height: 3.85rem;
+		position: relative;
+	}
 
-  &__message-input {
-    @include input;
-    height: 6rem;
-    resize: none;
-  }
+	&__firstName-error {
+		display: none;
 
-  &__message-error {
-    display: none;
-    
-    &.error {
-      @include error;
-    }
-  }
-  
-  &__button-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    margin-block: auto;
-  }
-  
-  &__button {
-    @include button;
-    
-    &--cancel {
-      width: 100%;
-    }
-  }
+		&.error {
+			@include error;
+		}
+	}
+
+	&__lastName {
+		height: 4rem;
+		position: relative;
+	}
+
+	&__lastName-error {
+		display: none;
+
+		&.error {
+			@include error;
+		}
+	}
+
+	&__email {
+		height: 3.85rem;
+		position: relative;
+	}
+
+	&__email-error {
+		display: none;
+
+		&.error {
+			@include error;
+		}
+	}
+
+	&__subject {
+		position: relative;
+		height: 3.85rem;
+	}
+
+	&__subject-error {
+		display: none;
+
+		&.error {
+			@include error;
+		}
+	}
+
+	&__message {
+		height: 8rem;
+		position: relative;
+	}
+
+	&__message-input {
+		@include input;
+		height: 6rem;
+		resize: none;
+	}
+
+	&__message-error {
+		display: none;
+
+		&.error {
+			@include error;
+		}
+	}
+
+	&__button-container {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+		margin-block: auto;
+	}
+
+	&__button {
+		@include button;
+
+		&--cancel {
+			width: 100%;
+		}
+	}
 }
