@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { checkIfIsFirefox } from '../../utils/utils';
 import PhotoPlaceholder from '../../assets/icons/PhotoPlaceholder';
 import './PhotoInput.scss';
+import { useAppContext } from '../../AppContext';
 
 const isFirefox = checkIfIsFirefox();
 
@@ -12,6 +13,8 @@ const PhotoInput = ({
   handleInputDragStart = null,
   handleDropInputTarget = null
 }) => {
+
+  const { minLoadingInterval } = useAppContext();
 
   const [ showImage, setShowImage ] = useState(false);
 
@@ -26,8 +29,12 @@ const PhotoInput = ({
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
-    setShowImage(true);
-    file && handleImageChange(e, shootPhoto.photoNo);
+    if(file) {
+      handleImageChange(e, shootPhoto.photoNo);
+      setTimeout(() => {
+        setShowImage(true);
+      }, minLoadingInterval);
+    };
   };
 
   const handleClearInput = (e) => {
