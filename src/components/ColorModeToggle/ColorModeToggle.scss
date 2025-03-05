@@ -1,5 +1,5 @@
-@import "../../partials/mixins.scss";
-@import "../../partials/variables.scss";
+@use "../../partials/mixins.scss" as mx;
+@use "../../partials/variables.scss" as vars;
 
 .colorModeToggle {
 	position: relative;

@@ -7,7 +7,6 @@ const AppContext = createContext();
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-// export const AppProvider = ({ children }) => {
 const AppProvider = ({ children }) => {
 
   const location = useLocation();
@@ -55,6 +54,10 @@ const AppProvider = ({ children }) => {
   const [ bioText, setBioText ] = useState("");
 
   const [ bioImageNotSet, setBioImageNotSet ] = useState(false);
+
+  const [ lightboxOpen, setLightboxOpen ] = useState(false);
+  const [ lightboxIndex, setLightboxIndex ] = useState(0);
+  const [ slides, setSlides ] = useState([]);
   
   const navigate = useNavigate(); 
 
@@ -65,7 +68,7 @@ const AppProvider = ({ children }) => {
       setSelectedTag(null);
     } else if (tagObj) {
       navigate(`/work?tag=${tagObj.tag_name}`);
-    }
+    };
 
     setIsOrderEditable(false);
   }, [navigate]);
@@ -83,8 +86,18 @@ const AppProvider = ({ children }) => {
     
     if(shoot_id) {
       setSelectedShoot(shoot_id);
-    }
+    };
   }, []);
+
+  const handleSetLightBoxState = (images, idx = 0) => {
+    setSlides(images);
+    setLightboxIndex(idx);
+    setLightboxOpen(true);
+  };
+
+  const hideNav = () => document.getElementById("nav").classList.add("hide");
+
+  const showNav = () => document.getElementById("nav").classList.remove("hide");
 
   // fetchTags
   useEffect(() => {
@@ -105,7 +118,7 @@ const AppProvider = ({ children }) => {
         setTags(data.tags);
       } catch (error) {
         console.log(error);
-      } 
+      };
     };
     
     if(shouldUpdateTags) {
@@ -115,7 +128,7 @@ const AppProvider = ({ children }) => {
       setTimeout(() => {
         setIsLoading(false);
       }, minLoadingInterval);
-    }
+    };
 
     fetchTags();
   }, [BASE_URL, shouldUpdateTags]);
@@ -140,16 +153,16 @@ const AppProvider = ({ children }) => {
               setBioImageNotSet(data.bioImageNotSet)
             } else {
               throw new Error("Error fetching bio page content")
-            }
+            };
   
           } catch(error) {
             console.log(error);
             toast.error(error);
-          }
-        }
+          };
+        };
         fetchBioData();
-      }
-    } 
+      };
+    };
   }, [location]);
 
   // handle updating of current URL for comparison of if URL has changed elsewhere to avoid unneccessary calls
@@ -164,13 +177,13 @@ const AppProvider = ({ children }) => {
 
     if(currentURL !== prevURL) {
       setPrevURL(currentURL);
-    }
+    };
 
     if(URLIncludesEdit || URLIncludesAdd) {
       setShowFloatingButton(false);
     } else if(!URLIncludesEdit || !URLIncludesAdd) {
       setShowFloatingButton(true);
-    }
+    };
     
     scrollToTop();
     
@@ -180,7 +193,7 @@ const AppProvider = ({ children }) => {
       setTimeout(() => {
         setIsLoading(false);
       }, minLoadingInterval);
-    }
+    };
     setShowPhotogModelTagModal(false);
   }, [location]);
 
@@ -199,7 +212,6 @@ const AppProvider = ({ children }) => {
     const storedColorMode = localStorage.getItem('colorMode');  
     setColorMode(storedColorMode || "light");
   }, []);
-
 
   const contextValues = {
     isLoading, 
@@ -254,11 +266,23 @@ const AppProvider = ({ children }) => {
     setBioText,
     bioImageNotSet, 
     setBioImageNotSet,
+
+    // YARL
+    lightboxOpen, 
+    setLightboxOpen,
+    lightboxIndex, 
+    setLightboxIndex,
+    slides, 
+    setSlides,
+    handleSetLightBoxState,
+
     // non-state functions
+    hideNav,
+    showNav,
     handleNavLinkClick,
     handleNavigateHome,
-    handleDeleteOrEditClick,
-   }
+    handleDeleteOrEditClick
+   };
   
   return (
     <>
@@ -268,7 +292,7 @@ const AppProvider = ({ children }) => {
     </>
   )};
 
-  // custom hook to access AppContext object in context consumers
+// custom hook to access AppContext object in context consumers
 const useAppContext = () => {
   return useContext(AppContext)
 }; 
