@@ -1,160 +1,174 @@
-@import './partials/mixins';
-@import './partials/variables';
+@use "./partials/mixins" as mx;
+@use "./partials/variables" as vars;
 
 /* css reset */
-*, 
-*::before, 
+*,
+*::before,
 *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
 html {
-  scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }
 
 body {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  display: flex;
-  flex-direction: column;
-  font-family: arial;
-  overflow-x: hidden;
+	background-color: var(--background-color);
+	color: var(--text-color);
+	display: flex;
+	flex-direction: column;
+	font-family: arial;
+	overflow-x: hidden;
 }
 
-ul, 
+ul,
 ol {
-  list-style: none;
+	list-style: none;
 }
 
 a {
-  color: inherit;
-  font-family: inherit;
-  text-decoration: none;
+	color: inherit;
+	font-family: inherit;
+	text-decoration: none;
 
-  &:focus {
-    outline: none;
-  }
+	&:focus {
+		outline: none;
+	}
 }
 
 img {
-  display: block;
-  margin-bottom: 0;
+	display: block;
+	margin-bottom: 0;
 }
 
 .app {
-  background: var(--background-color);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-inline: auto;
-  position: relative;
+	background: var(--background-color);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin-inline: auto;
+	position: relative;
 
-  &__inner {
-    margin-top: 5rem;
-    overflow-x: hidden;
-    
-    @media(min-width: var(--tablet)) {
-      margin-top: 0;
-    }
-  }
-  
-  .touchOffDiv {
-    height: 100%;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 5;
-  }
+	&__inner {
+		margin-top: 5rem;
+		overflow-x: hidden;
 
-  .loading {
-    left: 50%;
-    opacity: 1;
-    position: fixed;
-    text-align: center;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    transition: opacity 0.25s ease;
-    z-index: 5;
+		@media (min-width: var(--tablet)) {
+			margin-top: 0;
+		}
+	}
 
-    &::after {
-      content: '';
-      animation: spin 0.5s infinite linear; 
-      border: 6px solid var(--text-color);
-      border-radius: 50%;
-      border-top-color: transparent;
-      display: block;
-      height: 60px;
-      width: 60px;
-    }
-  }
+	.touchOffDiv {
+		height: 100%;
+		position: fixed;
+		top: 0;
+		width: 100%;
+		z-index: 5;
+	}
 
-  .loading:not(.isLoading) {
-    opacity: 0;
-  }
+	.loading {
+		left: 50%;
+		opacity: 1;
+		position: fixed;
+		text-align: center;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		transition: opacity 0.25s ease;
+		z-index: 5;
 
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
+		&::after {
+			content: "";
+			animation: spin 0.5s infinite linear;
+			border: 6px solid var(--text-color);
+			border-radius: 50%;
+			border-top-color: transparent;
+			display: block;
+			height: 60px;
+			width: 60px;
+		}
+	}
+
+	.loading:not(.isLoading) {
+		opacity: 0;
+	}
+
+	@keyframes spin {
+		to {
+			transform: rotate(360deg);
+		}
+	}
 }
 
 .colorModeToggle {
-  
-  &__container {
-    height: 2rem;
-    left: 2rem;
-    opacity: 0;
-    pointer-events: none;
-    position: fixed;
-    top: 6rem;
-    transition: all 2s ease-in;
-    user-select: none;
-    z-index: 10;
-    
-    &.show {
-      border: 2px solid var(--button-color);
-      opacity: 1;
-      pointer-events:all;
-      transition: all 0.5s ease-out;
-      user-select: auto;
-    }
-  }
+	&__container {
+		height: 2rem;
+		left: 2rem;
+		opacity: 0;
+		pointer-events: none;
+		position: fixed;
+		top: 6rem;
+		transition: all 2s ease-in;
+		user-select: none;
+		z-index: 10;
+
+		&.show {
+			border: 2px solid var(--button-color);
+			opacity: 1;
+			pointer-events: all;
+			transition: all 0.5s ease-out;
+			user-select: auto;
+		}
+	}
 }
 
 .floatingButton {
-  align-items: center;
-  background: var(--background-color);
-  border-radius: 50%;
-  bottom: 2.5rem;
-  box-shadow: var(--box-shadow);
-  cursor: pointer;
-  display: flex;
-  height: 3rem;
-  justify-content: center;
-  padding: 0.25rem;
-  position: fixed;
-  right: 2.5rem;
-  width: 3rem;
-  z-index: 5;
+	align-items: center;
+	background: var(--background-color);
+	border-radius: 50%;
+	bottom: 2.5rem;
+	box-shadow: var(--box-shadow);
+	cursor: pointer;
+	display: flex;
+	height: 3rem;
+	justify-content: center;
+	padding: 0.25rem;
+	position: fixed;
+	right: 2.5rem;
+	width: 3rem;
+	z-index: 5;
 
-  &__up-stroke {
-    stroke: var(--text-color);
-  }
+	&__up-stroke {
+		stroke: var(--text-color);
+	}
 
-  &__add, 
-  &__up {
-    height: 35px;
-    width: 35px;
-  }
+	&__add,
+	&__up {
+		height: 35px;
+		width: 35px;
+	}
 
-  &__add-stroke {
-    stroke: var(--text-color);
-  }
-  
-  &.hide {
-    display: none;
-  }
+	&__add-stroke {
+		stroke: var(--text-color);
+	}
+
+	&.hide {
+		display: none;
+	}
+}
+
+// YARL classes for customization
+.yarl__button {
+	&:disabled {
+		display: none !important;
+	}
+
+	&[aria-label="Zoom in"] {
+		display: none;
+	}
+
+	&[aria-label="Zoom out"] {
+		display: none;
+	}
 }

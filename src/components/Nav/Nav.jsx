@@ -1,15 +1,14 @@
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../../AppContext';
 import ColorModeToggle from '../ColorModeToggle/ColorModeToggle';
-import Logo from '../../assets/icons/Logo';
 import Instagram from '../../assets/icons/Instagram';
+import Logo from '../../assets/icons/Logo';
 import NavSelect from '../NavSelect/NavSelect.jsx'
 import './Nav.scss';
 
 const Nav = ({ handleLogOut }) => {
   const { 
     isLoggedIn, 
-    showSideNav, 
     setShowSideNav,
     scrollYPos, 
     prevScrollYPos, 
@@ -30,6 +29,7 @@ const Nav = ({ handleLogOut }) => {
   return (
     <>
       <nav 
+        id="nav"
         className={`nav ${prevScrollYPos < scrollYPos && scrollYPos > 50 
           ? "hide"
           : ""}`

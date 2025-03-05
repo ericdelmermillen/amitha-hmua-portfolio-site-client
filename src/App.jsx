@@ -2,9 +2,11 @@ import { useCallback, useEffect } from 'react';
 import { Routes, Route, useNavigate, Navigate } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import { scrollToTop } from './utils/utils.js';
+import { useAppContext } from './AppContext.jsx'; 
+import { Zoom } from "yet-another-react-lightbox/plugins"; 
+import Lightbox from "yet-another-react-lightbox";
 import AddIcon from './assets/icons/AddIcon.jsx';
 import AddOrEditShoot from './pages/AddOrEditShoot/AddOrEditShoot.jsx';
-import { useAppContext } from './AppContext.jsx'; 
 import Bio from './pages/Bio/Bio.jsx';
 import Contact from './pages/Contact/Contact.jsx';
 import EditBio from './pages/EditBio/EditBio.jsx';
@@ -20,6 +22,7 @@ import SideNav from './components/SideNav/SideNav.jsx';
 import UpIcon from './assets/icons/UpIcon.jsx';
 import './App.scss';
 import 'react-toastify/dist/ReactToastify.css';
+import "yet-another-react-lightbox/styles.css";
 
 
 const App = () => {
@@ -41,7 +44,12 @@ const App = () => {
     setSelectedTag, 
     selectedTag, 
     setSelectValue,
-    handleNavigateHome
+    handleNavigateHome,
+    lightboxOpen, 
+    setLightboxOpen,
+    lightboxIndex, 
+    setLightboxIndex,
+    slides
   } = useAppContext();
 
   const handleLogOut = useCallback(() => {
@@ -98,28 +106,28 @@ const App = () => {
           >  
           </div>
 
-            <div 
-              className={`floatingButton ${isLoggedIn && showFloatingButton
-                ? "toTop" 
-                : !showFloatingButton
-                ? "hide"
-                : "add_Shoot"}`}
-                onClick={isLoggedIn 
-                  ? handleNavigateToAddShoot
-                  : scrollToTop}
-            >
-              {isLoggedIn 
-                ? <AddIcon
-                    className={"floatingButton__add"}
-                    classNameStroke={"floatingButton__add-stroke"}
-                  />
-                
-                : <UpIcon 
-                    className={"floatingButton__up"}
-                    classNameStroke={"floatingButton__up-stroke"}
-                  />
-              }
-            </div>
+          <div 
+            className={`floatingButton ${isLoggedIn && showFloatingButton
+              ? "toTop" 
+              : !showFloatingButton
+              ? "hide"
+              : "add_Shoot"}`}
+              onClick={isLoggedIn 
+                ? handleNavigateToAddShoot
+                : scrollToTop}
+          >
+            {isLoggedIn 
+              ? <AddIcon
+                  className={"floatingButton__add"}
+                  classNameStroke={"floatingButton__add-stroke"}
+                />
+              
+              : <UpIcon 
+                  className={"floatingButton__up"}
+                  classNameStroke={"floatingButton__up-stroke"}
+                />
+            }
+          </div>
 
         <Nav handleLogOut={handleLogOut}/>
         <SideNav handleLogOut={handleLogOut}/>
@@ -160,6 +168,18 @@ const App = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
+
+        <Lightbox
+            open={lightboxOpen}
+            close={() => setLightboxOpen(false)}
+            index={lightboxIndex}
+            slides={slides}
+            plugins={[, Zoom]}
+            carousel={{ finite: slides.length === 1 }} 
+            className={`yarl-lightbox ${slides.length === 1 ? "hide-arrows" : ""}`}
+            on={{click: ({ index }) => setLightboxIndex(index)}}
+            zoom={{ enabled: slides.length > 0 }}
+        />
 
         <ToastContainer
           position="bottom-center"

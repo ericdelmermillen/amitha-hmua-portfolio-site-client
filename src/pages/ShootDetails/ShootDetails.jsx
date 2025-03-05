@@ -19,16 +19,30 @@ const ShootDetails = () => {
     minLoadingInterval,
     shootDetails, 
     setShootDetails,
-    isLoggedIn
+    isLoggedIn,
+    lightboxOpen, 
+    handleSetLightBoxState,
+    hideNav,
+    showNav
   } = useAppContext();
 
   const [ photos, setPhotos ] = useState([]);
   const [ photographers, setPhotographers ] = useState([]);
   const [ models, setModels ] = useState([]);
   const [ formattedDate, setFormattedDate ] = useState('');
-
+  
   // state for when to render placeholders
   const [ componentIsLoaded, setComponentIsLoaded ] = useState(false);
+
+  const handleSetLightBoxImages = (idx) => {
+    const images = photos.map((photo, idx) => ({
+      src: photo.photo_url,
+      alt: `Photo number ${idx + 1} from shoot number ${shoot_id}`
+    }));
+
+    hideNav();
+    handleSetLightBoxState(images, idx);
+  };
 
   const handlePhotosLoaded = () => {
     setTimeout(() => {
@@ -59,19 +73,24 @@ const ShootDetails = () => {
         } else {
           toast.error(response.statusText);
           throw new Error(`Failed to fetch shoot details: ${response.statusText}`);
-        }
+        };
 
       } catch(error) {
         console.log(error);
         setIsLoading(false);
         navigate('/notfound');
-      }
-    }
+      };
+    };
 
     fetchShootDetails();
   }, [shoot_id]);
-  
 
+  useEffect(() => {
+    if(!lightboxOpen) {
+      showNav();
+    };
+  }, [lightboxOpen]);
+  
   return (
     <>
       <div className="shootDetails">
@@ -118,6 +137,7 @@ const ShootDetails = () => {
                   className='shootDetails__photo'
                   src={photo.photo_url} 
                   alt={`Photo from photo shoot ${shoot_id}`} 
+                  onClick={() => handleSetLightBoxImages(idx)}
                   onLoad={idx === photos.length - 1 
                     ? handlePhotosLoaded 
                     : null} 
