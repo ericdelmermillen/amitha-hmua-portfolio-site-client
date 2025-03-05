@@ -2,9 +2,11 @@
 @use "../../partials/variables.scss" as vars;
 
 .home {
+	padding-top: 2rem !important;
 	@include mx.page;
 
 	@media (min-width: vars.$tablet) {
+		padding-top: 0 !important;
 	}
 
 	&__inner {
