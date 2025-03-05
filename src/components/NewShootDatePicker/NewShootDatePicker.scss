@@ -1,27 +1,26 @@
-@import '../../partials/mixins.scss';
-@import '../../partials/variables.scss';
+@use "../../partials/mixins.scss" as mx;
+@use "../../partials/variables.scss" as vars;
 
 .datePicker {
-  
-  &__selector {
-    @include input;
-    cursor: pointer;
-  }
-  
-  &__container {
-    position: relative;
-    width: 9rem;
-    z-index: 2;
-  }
-    
-    &:focus, &:active {
-      outline: 1px solid var(--text-color);
-    }
+	&__selector {
+		cursor: pointer;
+		@include mx.input;
+	}
 
-  &__icon-container {
-    position: absolute;
-    right: 0.8rem;
-    top: 0.45rem;
-  }
+	&__container {
+		position: relative;
+		width: 9rem;
+		z-index: 2;
+	}
+
+	&:focus,
+	&:active {
+		outline: 1px solid var(--text-color);
+	}
+
+	&__icon-container {
+		position: absolute;
+		right: 0.8rem;
+		top: 0.45rem;
+	}
 }
-

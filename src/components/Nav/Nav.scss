@@ -1,144 +1,144 @@
-@import '../../partials/mixins.scss';
-@import '../../partials/variables.scss';
+@use "../../partials/mixins.scss" as mx;
+@use "../../partials/variables.scss" as vars;
 
 .nav {
-  align-items: center;
-  background: var(--navAndFooterBG);
-  box-shadow: var(--nav-boxShadow); 
-  display: flex;
-  height: 5rem;
-  justify-content: center;
-  margin-top: 0;
-  position: fixed;
-  transition: all 600ms ease;
-  top: 0;
-  width: 100%;
-  z-index: 4;
-  
-    @media(min-width: $tablet) {
-      align-items: center;
-      display: flex;
-      justify-content: center;
-      left: 0;
-      padding-block: 1rem;
-      position: fixed;
-      right: 0;
-    }
-    
-  &.hide {
-    top: -5rem;
-  }
-  
-  &__inner {
-    align-items: center;
-    display: flex;
-    max-width: 1920px;
-    padding-inline: 2.5rem;
-    width: 100%;
-    justify-content: center;
-    
-    @media(min-width: $tablet) {
-      justify-content: baseline;
-    }
-  }
+	align-items: center;
+	background: var(--navAndFooterBG);
+	box-shadow: var(--nav-boxShadow);
+	display: flex;
+	height: 5rem;
+	justify-content: center;
+	margin-top: 0;
+	position: fixed;
+	transition: all 600ms ease;
+	top: 0;
+	width: 100%;
+	z-index: 4;
 
-  &__logo {
-    align-items: center;
-    display: flex;
-    height: 4rem;
-    justify-content: center;
-    margin-top: 0.25rem;
-    margin-inline-start: 1rem;
-    width: 8rem;
+	@media (min-width: vars.$tablet) {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		left: 0;
+		padding-block: 1rem;
+		position: fixed;
+		right: 0;
+	}
 
-    @media(min-width: 350px) {
-      width: 10rem;
-    }
+	&.hide {
+		top: -5rem;
+	}
 
-    &--icon {
-     fill: var(--text-color); 
-     stroke: var(--text-color);
-    }
-  }
+	&__inner {
+		align-items: center;
+		display: flex;
+		max-width: 1920px;
+		padding-inline: 2.5rem;
+		width: 100%;
+		justify-content: center;
 
-  &__links {
-    display: none;
-    
-    @media(min-width: $largeTablet) {
-      align-items: center; 
-      display: flex;
-      margin-inline-start: auto;
-    }
-  }
-  
-  &__link {
-    @include navLink;
-    text-transform: uppercase;
-    border-radius: var(--borderRadius);
-    
-    @media(min-width: $largeTablet) {
-      align-items: center;
-      border: none;
-      display: flex;
-      height: 4rem;
-      width: 10rem;
-    }
-    
-    &--work {
-      width: 100%;
-    }
+		@media (min-width: vars.$tablet) {
+			justify-content: baseline;
+		}
+	}
 
-    &--instagram {
-      align-items: center;
-      display: flex;
-      fill: var(--text-color);
-      justify-content: center;
-      max-width: 4rem;
-    }
+	&__logo {
+		align-items: center;
+		display: flex;
+		height: 4rem;
+		justify-content: center;
+		margin-top: 0.25rem;
+		margin-inline-start: 1rem;
+		width: 8rem;
 
-    &--colorMode {
-      @media(min-width: $tablet) {
-        max-width: 6rem;
-      }
+		@media (min-width: 350px) {
+			width: 10rem;
+		}
 
-      @media(min-width: $largeTablet) {
-        border: none;
-        min-width: 8rem;
-        max-width: 8rem;
-      }
-    }
-  }
+		&--icon {
+			fill: var(--text-color);
+			stroke: var(--text-color);
+		}
+	}
 
-  &__logout {
-    display: none;
-    
-    @media(min-width: $largeTablet) {
-      @include buttonRounded;
-      display: block;
-    }
-  }
+	&__links {
+		display: none;
 
-  &__toggle-button {
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    gap: 0.35rem;
-    height: 2.5rem;
-    justify-content: center;
-    position: absolute;
-    right: 2rem;
-    top: 1.3rem;
-    width: 2rem;
-    
-    @media(min-width: $largeTablet) {
-        display: none;
-      }
-    }
-    
-  &__toggle-icon {
-    border: 2px solid var(--text-color);
-    border-radius: 2px;
-    min-width: 100%;
-    width: 2rem;
-  }
+		@media (min-width: vars.$largeTablet) {
+			align-items: center;
+			display: flex;
+			margin-inline-start: auto;
+		}
+	}
+
+	&__link {
+		text-transform: uppercase;
+		border-radius: var(--borderRadius);
+		@include mx.navLink;
+
+		@media (min-width: vars.$largeTablet) {
+			align-items: center;
+			border: none;
+			display: flex;
+			height: 4rem;
+			width: 10rem;
+		}
+
+		&--work {
+			width: 100%;
+		}
+
+		&--instagram {
+			align-items: center;
+			display: flex;
+			fill: var(--text-color);
+			justify-content: center;
+			max-width: 4rem;
+		}
+
+		&--colorMode {
+			@media (min-width: vars.$tablet) {
+				max-width: 6rem;
+			}
+
+			@media (min-width: vars.$largeTablet) {
+				border: none;
+				min-width: 8rem;
+				max-width: 8rem;
+			}
+		}
+	}
+
+	&__logout {
+		display: none;
+
+		@media (min-width: vars.$largeTablet) {
+			display: block;
+			@include mx.buttonRounded;
+		}
+	}
+
+	&__toggle-button {
+		cursor: pointer;
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+		height: 2.5rem;
+		justify-content: center;
+		position: absolute;
+		right: 2rem;
+		top: 1.3rem;
+		width: 2rem;
+
+		@media (min-width: vars.$largeTablet) {
+			display: none;
+		}
+	}
+
+	&__toggle-icon {
+		border: 2px solid var(--text-color);
+		border-radius: 2px;
+		min-width: 100%;
+		width: 2rem;
+	}
 }

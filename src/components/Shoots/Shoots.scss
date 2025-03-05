@@ -1,73 +1,73 @@
-@import '../../partials/mixins.scss';
-@import '../../partials/variables.scss';
+@use "../../partials/mixins.scss" as mx;
+@use "../../partials/variables.scss" as vars;
 
 .shoots {
-  max-width: min(calc(100vw - 4rem), $desktop);
-  min-width: min(calc(100vw - 4rem), $desktop);
-  
-  &__inner {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(1, 1fr);
-    height: 80%;
-    min-height: 55vh;
-    min-width: 100%;
-    position: sticky;
-    
-    &.onShootDetails {
-      grid-template-columns: repeat(2, 1fr);
-      min-height: 0;
-      
-      @media(min-width: $tablet) {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-    
-    @media(min-width: $tablet) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    
-    @media(min-width: $desktop) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
+	max-width: min(calc(100vw - 4rem), vars.$desktop);
+	min-width: min(calc(100vw - 4rem), vars.$desktop);
 
-  &__button-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 5rem;
-  }
+	&__inner {
+		display: grid;
+		gap: 1rem;
+		grid-template-columns: repeat(1, 1fr);
+		height: 80%;
+		min-height: 55vh;
+		min-width: 100%;
+		position: sticky;
 
-  &__editShootOrder {
-    @include button;
-    margin-inline: auto;
-  }
+		&.onShootDetails {
+			grid-template-columns: repeat(2, 1fr);
+			min-height: 0;
 
-  &__placeholders {
-    display: none;
-    gap: 1rem;
-    position: sticky;
+			@media (min-width: vars.$tablet) {
+				grid-template-columns: repeat(3, 1fr);
+			}
+		}
 
-    &.show {
-      display: grid;
-      grid-template-columns: 1fr;
-      min-width: 100%;
-      
-      &.onShootDetails {
-        grid-template-columns: repeat(2, 1fr);
-        
-        @media(min-width: $tablet) {
-          grid-template-columns: repeat(3, 1fr);
-        }
-      }
-    
-      @media(min-width: $tablet) {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      @media(min-width: $desktop) {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-  }
+		@media (min-width: vars.$tablet) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		@media (min-width: vars.$desktop) {
+			grid-template-columns: repeat(3, 1fr);
+		}
+	}
+
+	&__button-container {
+		display: flex;
+		justify-content: center;
+		margin-top: 5rem;
+	}
+
+	&__editShootOrder {
+		margin-inline: auto;
+		@include mx.button;
+	}
+
+	&__placeholders {
+		display: none;
+		gap: 1rem;
+		position: sticky;
+
+		&.show {
+			display: grid;
+			grid-template-columns: 1fr;
+			min-width: 100%;
+
+			&.onShootDetails {
+				grid-template-columns: repeat(2, 1fr);
+
+				@media (min-width: vars.$tablet) {
+					grid-template-columns: repeat(3, 1fr);
+				}
+			}
+
+			@media (min-width: vars.$tablet) {
+				grid-template-columns: repeat(2, 1fr);
+			}
+
+			@media (min-width: vars.$desktop) {
+				grid-template-columns: repeat(3, 1fr);
+			}
+		}
+	}
 }
