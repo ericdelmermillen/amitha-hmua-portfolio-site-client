@@ -60,7 +60,7 @@
 	padding-top: 0rem;
 	width: 100%;
 
-	@media (min-width: $tablet) {
+	@media (min-width: vars.$tablet) {
 		margin-top: 4rem;
 	}
 
@@ -78,7 +78,7 @@
 	padding-block: 4rem;
 	padding-top: 0rem;
 
-	@media (min-width: $tablet) {
+	@media (min-width: vars.$tablet) {
 		padding-top: 2rem;
 		margin-top: 4rem;
 	}
@@ -185,7 +185,7 @@
 		flex-direction: column;
 		gap: 0.5rem;
 
-		@media (min-width: $tablet) {
+		@media (min-width: vars.$tablet) {
 			flex-direction: row;
 		}
 	}
@@ -216,7 +216,7 @@
 		justify-content: center;
 		gap: 1rem;
 
-		@media (min-width: $tablet) {
+		@media (min-width: vars.$tablet) {
 			flex-direction: row;
 			gap: 0.5rem;
 		}

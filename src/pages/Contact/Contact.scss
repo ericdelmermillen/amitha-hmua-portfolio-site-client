@@ -1,7 +1,6 @@
-@import '../../partials/mixins.scss';
-@import '../../partials/variables.scss';
+@use "../../partials/mixins.scss" as mx;
+@use "../../partials/variables.scss" as vars;
 
 .contact {
-  @include page;
-  background-color: var(--background-color);
+	@include mx.page;
 }
