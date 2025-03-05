@@ -13,14 +13,24 @@ const Bio = () => {
     bioName, 
     bioText, 
     bioImageNotSet,
-    handleDeleteOrEditClick
+    handleDeleteOrEditClick,
+    lightboxOpen, 
+    handleSetLightBoxState,
+    hideNav,
+    showNav
   } = useAppContext();
 
   const [ componentIsLoaded, setIsComponentLoaded ] = useState(false);
 
   const handleEditBioClick = (e) => {
     handleDeleteOrEditClick(e, "Edit Bio", null);
-  }
+  };
+
+  const handleSetLightBox = (idx) => {
+    const image = [{ src: bioImg, alt: `Bio Image of ${bioName}`}]
+    hideNav();
+    handleSetLightBoxState(image);
+  };
 
   // fetch bioPageData useEffect
   useEffect(() => {
@@ -28,12 +38,19 @@ const Bio = () => {
       setTimeout(() => {
         setIsLoading(false)
       }, minLoadingInterval);
-    }
+    };
 
     if(bioImageNotSet) {
       toast.info("Bio page not set up by User yet");
-    }
+    };
   }, [bioText, bioName, bioImg]);
+
+  // useEffect for when Lightbox closes to show the nav
+  useEffect(() => {
+    if(!lightboxOpen) {
+      showNav();
+    };
+  }, [lightboxOpen]);
   
   return (
     <>
@@ -55,6 +72,7 @@ const Bio = () => {
                   : ""}`}
                 src={bioImg}
                 alt={`Hero Image of ${bioName}`}
+                onClick={handleSetLightBox}
                 onLoad={() => setIsComponentLoaded(true)}
               />
             </div>
