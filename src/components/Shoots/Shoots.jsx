@@ -192,8 +192,6 @@ const Shoots = () => {
     };
     
     if(!finalPageLoaded && (shouldUpdateShoots) ) {
-      console.log(`CurrentPage: ${currentPage}`)
-      
 
       const fetchShoots = async () => {
         setIsLoading(true)

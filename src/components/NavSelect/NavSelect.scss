@@ -2,14 +2,20 @@
 @use "../../partials/variables.scss" as vars;
 
 .navSelect {
+	display: flex;
+	justify-content: center;
 	height: 3rem;
 	margin-inline-end: 0;
-	max-width: 17.25rem;
-	min-width: 17.25rem;
+	max-width: 100%;
+	min-width: 15.25rem;
 	padding: 0;
 	position: relative;
-	width: 100%;
 	z-index: 1;
+
+	@media (min-width: vars.$smallPhone) {
+		max-width: 17.25rem;
+		min-width: 17.25rem;
+	}
 
 	&.tall {
 		z-index: 2;
@@ -76,10 +82,10 @@
 		position: relative;
 
 		@media (min-width: vars.$largeTablet) {
+			background: var(--navAndFooterBG);
 			border-bottom: none;
 			height: 3rem;
 			text-transform: uppercase;
-			background: var(--navAndFooterBG);
 		}
 	}
 

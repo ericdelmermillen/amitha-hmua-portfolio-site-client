@@ -32,10 +32,10 @@
 	&__inner {
 		align-items: center;
 		display: flex;
+		justify-content: center;
 		max-width: 1920px;
 		padding-inline: 2.5rem;
 		width: 100%;
-		justify-content: center;
 
 		@media (min-width: vars.$tablet) {
 			justify-content: baseline;
@@ -47,8 +47,8 @@
 		display: flex;
 		height: 4rem;
 		justify-content: center;
-		margin-top: 0.25rem;
 		margin-inline-start: 1rem;
+		margin-top: 0.25rem;
 		width: 8rem;
 
 		@media (min-width: 350px) {
@@ -72,8 +72,8 @@
 	}
 
 	&__link {
-		text-transform: uppercase;
 		border-radius: var(--borderRadius);
+		text-transform: uppercase;
 		@include mx.navLink;
 
 		@media (min-width: vars.$largeTablet) {
@@ -103,8 +103,8 @@
 
 			@media (min-width: vars.$largeTablet) {
 				border: none;
-				min-width: 8rem;
 				max-width: 8rem;
+				min-width: 8rem;
 			}
 		}
 	}
@@ -123,12 +123,16 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.35rem;
-		height: 2.5rem;
+		height: 2.25rem;
 		justify-content: center;
+		max-width: 100%;
 		position: absolute;
 		right: 2rem;
 		top: 1.3rem;
-		width: 2rem;
+
+		@media (min-width: vars.$smallPhone) {
+			height: 2.5rem;
+		}
 
 		@media (min-width: vars.$largeTablet) {
 			display: none;
@@ -136,9 +140,14 @@
 	}
 
 	&__toggle-icon {
-		border: 2px solid var(--text-color);
+		border: 1.25px solid var(--text-color);
 		border-radius: 2px;
 		min-width: 100%;
-		width: 2rem;
+		width: 1.5rem;
+
+		@media (min-width: vars.$smallPhone) {
+			border: 1.5px solid var(--text-color);
+			width: 2rem;
+		}
 	}
 }
