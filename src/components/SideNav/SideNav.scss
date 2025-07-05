@@ -10,11 +10,14 @@
 	position: fixed;
 	top: 0;
 	transition: all 0.5s ease-in-out;
-	width: max(50vw, 400px);
 	width: 80vw;
 	z-index: 5;
 
-	@media (min-width: 525px) {
+	@media (min-width: vars.$smallPhone) {
+		width: 70vw;
+	}
+
+	@media (min-width: 575px) {
 		width: 50vw;
 	}
 
@@ -22,7 +25,11 @@
 		left: 20vw;
 		transition: all 0.5s ease-out;
 
-		@media (min-width: 525px) {
+		@media (min-width: vars.$smallPhone) {
+			left: 30vw;
+		}
+
+		@media (min-width: 575px) {
 			left: 50vw;
 		}
 	}
@@ -37,20 +44,26 @@
 
 	&__close-button {
 		cursor: pointer;
-		height: 2rem;
+		height: 1.75rem;
 		padding-top: 0.8rem;
 		position: fixed;
-		top: 2.5rem;
-		width: 2rem;
+		top: 2.25rem;
+		width: 1.5rem;
+
+		@media (min-width: vars.$smallPhone) {
+			height: 2rem;
+			top: 2rem;
+			width: 2rem;
+		}
 	}
 
 	&__links {
 		display: flex;
 		flex-direction: column;
 		gap: 2rem;
-		text-align: center;
 		height: max(100%, 60vh);
 		margin-top: 8rem;
+		text-align: center;
 		width: 15rem;
 	}
 
@@ -64,10 +77,14 @@
 	&__close-icon {
 		background-color: var(--text-color);
 		border-radius: 2px;
-		height: 3.75px;
+		height: 3px;
 		position: absolute;
 		transform-origin: center;
 		width: 100%;
+
+		@media (min-width: vars.$smallPhone) {
+			height: 3.75px;
+		}
 	}
 
 	&__close-icon:first-child {
