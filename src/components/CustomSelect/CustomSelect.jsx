@@ -34,8 +34,8 @@ const CustomSelect = ({
     for(const chooser of chooserIDs) {
       if(chooser[entryID] === chooserID) {
         return true;
-      }
-    }
+      };
+    };
   };
   
   const handleTouchOff = () => {
@@ -44,7 +44,7 @@ const CustomSelect = ({
     // Reset scroll position to top
     if(innerRef.current) {
       innerRef.current.scrollTop = 0;
-    }
+    };
   };
 
   const handleOptionClick = (e, option, modalType, entryType) => {
@@ -59,41 +59,57 @@ const CustomSelect = ({
         setSelectedPhotogModelTag({id: null, model_name: null});
       } else if(entryType === "tag_name") {
         setSelectedPhotogModelTag({id: null, tag_name: null});
-      } 
-    }
+      };
+    };
     setShowPhotogModelTagModal({modalType: modalType});
   };
 
   const handleUpdateSelectValue = (option) => {
-    setSelectValue(option.photographer_name || option.model_name || option.tag_name);
-  
-    setChooserIDs(prevChooserIDs => {
-      return prevChooserIDs.map(chooserID => {
-        if(chooserID.chooserNo === chooserNo) {
-          if(chooserType === "Photographer" && !chooserID.photographerID) {
-            return { ...chooserID, photographerID: option.id };
-          } else if (chooserType === "Model" && !chooserID.modelID) {
-            return { ...chooserID, modelID: option.id };
-          } else if (chooserType === "Tag" && !chooserID.tagID) {
-            return { ...chooserID, tagID: option.id };
-          }
-        }
+  setSelectValue(option.photographer_name || option.model_name || option.tag_name);
+
+  setChooserIDs(prevChooserIDs => {
+    return prevChooserIDs.map(chooserID => {
+      if (chooserID.chooserNo !== chooserNo) {
         return chooserID;
-      });
+      };
+
+      if (chooserType === "Photographer") {
+        return {
+          ...chooserID,
+          photographerID: option.id,
+          photographerName: option.photographer_name
+        };
+      } else if (chooserType === "Model") {
+        return {
+          ...chooserID,
+          modelID: option.id,
+          modelName: option.model_name
+        };
+      } else if (chooserType === "Tag") {
+        return {
+          ...chooserID,
+          tagID: option.id,
+          tagName: option.tag_name
+        };
+      };
+
+      return chooserID;
     });
-  
-    setShowOptions(false);
-  
-    // Reset scroll position to top
-    if (innerRef.current) {
-      innerRef.current.scrollTop = 0;
-    }
+  });
+
+  setShowOptions(false);
+
+  // Reset scroll position to top
+  if (innerRef.current) {
+    innerRef.current.scrollTop = 0;
   };
+};
+
 
   useEffect(() => {
     if(chooserName) {
       setSelectValue(chooserName);
-    }
+    };
   }, [chooserName]);
   
   return (
