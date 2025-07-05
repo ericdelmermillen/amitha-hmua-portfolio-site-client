@@ -50,11 +50,11 @@ const Shoots = () => {
   const [ activeDragShoot, setActiveDragShoot ] = useState({id: -1}); 
 
   // const itemsPerPage = 1;
-  // const itemsPerPage = 2;
+  const itemsPerPage = 2;
   // const itemsPerPage = 4;
   // const itemsPerPage = 6;
   // const itemsPerPage = 10;
-  const itemsPerPage = 12;
+  // const itemsPerPage = 12;
   // const itemsPerPage = 100;
 
   const [ finalPageLoaded, setFinalPageLoaded ] = useState(false);
@@ -192,8 +192,11 @@ const Shoots = () => {
     };
     
     if(!finalPageLoaded && (shouldUpdateShoots) ) {
+      console.log(`CurrentPage: ${currentPage}`)
+      
 
       const fetchShoots = async () => {
+        setIsLoading(true)
       
         try {
           const response = selectedTag === null
