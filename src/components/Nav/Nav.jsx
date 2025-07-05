@@ -14,17 +14,15 @@ const Nav = ({ handleLogOut }) => {
     prevScrollYPos, 
     tags, 
     handleNavigateHome,
+    handleSetShowSideNav,
     handleNavLinkClick
    } = useAppContext();
 
    const handleHomeClick = () => {
     handleNavigateHome();
-    handleNavClick();
-   };
-
-   const handleNavClick = () => {
-    handleNavLinkClick();
-   };
+    handleNavLinkClick()
+  };
+  
   
   return (
     <>
@@ -52,7 +50,7 @@ const Nav = ({ handleLogOut }) => {
             </li>
             <Link 
               to={'/bio'}
-              onClick={handleNavClick}
+              onClick={handleNavLinkClick}
             >
               <li className="nav__link nav__link--bio">
                 Bio
@@ -60,7 +58,7 @@ const Nav = ({ handleLogOut }) => {
             </Link>
             <Link 
               to={'/contact'}
-              onClick={handleNavClick}
+              onClick={handleNavLinkClick}
             >
               <li className="nav__link">
                 Contact
@@ -91,7 +89,7 @@ const Nav = ({ handleLogOut }) => {
           <div 
             className="nav__toggle-button" 
             aria-label="Toggle Menu"
-            onClick={() => setShowSideNav(showSideNav =>!showSideNav)}
+            onClick={handleSetShowSideNav}
           >
             <div className="nav__toggle-icon"></div>
             <div className="nav__toggle-icon"></div>

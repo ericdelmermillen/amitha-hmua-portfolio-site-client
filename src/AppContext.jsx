@@ -78,6 +78,12 @@ const AppProvider = ({ children }) => {
     setSelectedTag(null);
   }, []);
 
+  const handleSetShowSideNav = () => {
+    requestAnimationFrame(() => {
+      setShowSideNav(showSideNav => !showSideNav);
+    });
+   };
+
   const handleDeleteOrEditClick = useCallback((e, action, shoot_id = null) => {
     e.preventDefault();
     e.stopPropagation();
@@ -280,6 +286,7 @@ const AppProvider = ({ children }) => {
     hideNav,
     showNav,
     handleNavLinkClick,
+    handleSetShowSideNav,
     handleNavigateHome,
     handleDeleteOrEditClick
    };

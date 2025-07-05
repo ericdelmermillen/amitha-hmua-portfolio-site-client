@@ -52,6 +52,12 @@ const App = () => {
     slides
   } = useAppContext();
 
+  const handleHideSideNav = () => {
+    requestAnimationFrame(() => {
+      setShowSideNav(false) 
+    });
+  };
+
   const handleLogOut = useCallback(() => {
     setIsLoggedIn(false);
     localStorage.removeItem('token'); 
@@ -101,7 +107,7 @@ const App = () => {
               ? "touchOffDiv" 
               : ""}
             onClick={showSideNav 
-              ? () => setShowSideNav(false) 
+              ? handleHideSideNav
               : null}
           >  
           </div>
