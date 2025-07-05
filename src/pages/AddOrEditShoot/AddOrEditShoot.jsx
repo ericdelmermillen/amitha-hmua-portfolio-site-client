@@ -90,7 +90,7 @@ const AddOrEditShoot = ({ shootAction }) => {
       );
     } catch (error) {
       console.error('Error compressing image:', error);
-    }
+    };
   }, []);
 
   const handleInputDragStart = useCallback((photoNo) => {
@@ -118,7 +118,7 @@ const AddOrEditShoot = ({ shootAction }) => {
               photo.displayOrder = dropTargetInputDisplayOrder;
             } else if (photo.displayOrder < dropTargetInputDisplayOrder && photo.displayOrder >= activeDraggedInputOldDisplayOrder) {
               photo.displayOrder--;
-            }
+            };
           } else if (activeDraggedInputOldDisplayOrder > dropTargetInputDisplayOrder) {
             if (photo.photoNo === dropTargetInputNo) {
               photo.displayOrder = dropTargetInputDisplayOrder + 1;
@@ -126,7 +126,7 @@ const AddOrEditShoot = ({ shootAction }) => {
               photo.displayOrder = dropTargetInputDisplayOrder;
             } else if (photo.displayOrder > dropTargetInputDisplayOrder && photo.displayOrder <= activeDraggedInputOldDisplayOrder) {
               photo.displayOrder++;
-            }
+            };
           } else if (dropTargetInputDisplayOrder > activeDraggedInputOldDisplayOrder) {
             if (photo.photoNo === dropTargetInputNo) {
               photo.displayOrder = dropTargetInputDisplayOrder - 1;
@@ -134,10 +134,10 @@ const AddOrEditShoot = ({ shootAction }) => {
               photo.displayOrder = dropTargetInputDisplayOrder;
             } else if (photo.displayOrder <= dropTargetInputDisplayOrder && photo.displayOrder > activeDraggedInputOldDisplayOrder) {
               photo.displayOrder--;
-            }
-          }
-        }
-      }
+            };
+          };
+        };
+      };
   
       updatedShootPhotos.sort((a, b) => a.displayOrder - b.displayOrder);
   
@@ -183,8 +183,7 @@ const AddOrEditShoot = ({ shootAction }) => {
       const newChooser = { chooserNo: maxChooserNo + 1, tagID: null, tagName: null};
 
       return setTagChooserIDs(prevChooserIDs => [...prevChooserIDs, newChooser]);
-
-    }
+    };
 
     return toast.error(`Please select a ${selectedEntryType} before adding a new one`);
   };
@@ -198,7 +197,7 @@ const AddOrEditShoot = ({ shootAction }) => {
       chooserType = "Model";
     } else if(chooser.hasOwnProperty('tagID')) {
       chooserType = "Tag";
-    }
+    };
 
     const { chooserNo } = chooser;
     
@@ -208,7 +207,7 @@ const AddOrEditShoot = ({ shootAction }) => {
       return setModelChooserIDs(prevChoosers => prevChoosers.filter(chooser => chooser.chooserNo !== chooserNo));
     } else if(chooserType === "Tag") {
       return setTagChooserIDs(prevChoosers => prevChoosers.filter(chooser => chooser.chooserNo !== chooserNo));
-    }
+    };
   };
 
 const handleSubmitShoot = async (e) => {
@@ -218,7 +217,7 @@ const handleSubmitShoot = async (e) => {
 
   if(tokenIsExpired) {
     return;
-  }
+  };
 
   if(isLoggedIn) {
     try {
@@ -229,39 +228,39 @@ const handleSubmitShoot = async (e) => {
       tagChooserIDs.forEach(tagChooser => {
         if(tagChooser.tagID !== null) {
           selectedTagIDs.push(tagChooser.tagID);
-        }
+        };
       });
 
       if(selectedTagIDs.length === 0) {
         setIsLoading(false);
         return toast.error("Select at least one tag");
-      }
+      };
 
       const selectedPhotographerIDs = [];
 
       photographerChooserIDs.forEach(photographerChooser => {
         if(photographerChooser.photographerID !== null) {
           selectedPhotographerIDs.push(photographerChooser.photographerID);
-        }
+        };
       });
 
       if(!selectedPhotographerIDs.length) {
         setIsLoading(false);
         return toast.error("Select at least one photographer");
-      }
+      };
 
       const selectedModelIDs = [];
 
       modelChooserIDs.forEach(modelChooser => {
         if(modelChooser.modelID !== null) {
           selectedModelIDs.push(modelChooser.modelID);
-        }
+        };
       });
 
       if(!selectedModelIDs.length) {
         setIsLoading(false);
         return toast.error("Select at least one model");
-      }
+      };
       
       const shoot = {};
       shoot.shoot_date = newShootDate.toISOString().split('T')[0];
@@ -289,7 +288,7 @@ const handleSubmitShoot = async (e) => {
             shoot.photo_urls.push(objectName);
           } else if(!shootPhoto.photoPreview.includes("aws")) {
             shoot.photo_urls.push(shootPhoto.photoPreview);
-          }
+          };
 
         } else if(shootPhoto.photoData) {
 
@@ -305,7 +304,7 @@ const handleSubmitShoot = async (e) => {
             awsURL = url;
           } catch (error) {
             console.log(error);
-          }
+          };
 
           // post image to aws s3 bucket
           try {
@@ -319,9 +318,9 @@ const handleSubmitShoot = async (e) => {
             shoot.photo_urls.push(objectName);
           } catch(error) {
             console.log(error);
-          }
-        }
-      }
+          };
+        };
+      };
 
       let response;
       
@@ -337,7 +336,7 @@ const handleSubmitShoot = async (e) => {
           headers: headers,
           body: JSON.stringify(shoot)
         });
-      }
+      };
         
       if(!response.ok) {
         setIsLoggedIn(false)
@@ -348,10 +347,8 @@ const handleSubmitShoot = async (e) => {
           toast.success("Shoot updated Successfully");
         } else if(!shoot_id) {
           toast.success("Shoot added Successfully");
-        }
-
-      }
-      
+        };
+      };
     } catch(error) {
       console.log(error);
 
@@ -359,11 +356,11 @@ const handleSubmitShoot = async (e) => {
         toast.error('Error updating shoot. Logging you out...');
       } else if (!shoot_id) {
         toast.error('Error creating shoot. Logging you out...');
-      }
-    }
+      };
+    };
   } else if(!isLoggedIn) {
     toast.error("Not logged in...");
-  } 
+  };
   handleNavigateHome();
 };
 
@@ -382,7 +379,7 @@ const handleSubmitShoot = async (e) => {
       setIsLoggedIn(false);
       handleNavigateHome();
       return toast.error("Not logged in");
-    }
+    };
 
     const fetchPhotographers = async () => {
       try {
@@ -390,19 +387,19 @@ const handleSubmitShoot = async (e) => {
 
         if(!response.ok) {
           throw new Error(`Failed to fetch photographers: ${response.statusText}`);
-        }
+        };
 
         const data = await response.json();
         setPhotographers(data.photographers);
       } catch (error) {
         console.log(error);
-      }
+      };
     };
     
     if(isInitialLoad || shouldUpdatePhotographers) {
       setShouldUpdatePhotographers(false);
       fetchPhotographers();
-    } 
+    } ;
   }, [BASE_URL, shouldUpdatePhotographers]);
 
   // fetch models
@@ -416,7 +413,7 @@ const handleSubmitShoot = async (e) => {
       setIsLoggedIn(false);
       handleNavigateHome();
       return toast.error("Not logged in");
-    }
+    };
 
     const fetchModels = async () => {
       try {
@@ -425,19 +422,19 @@ const handleSubmitShoot = async (e) => {
 
         if(!response.ok) {
           throw new Error(`Failed to fetch models: ${response.statusText}`);
-        }
+        };
 
         const data = await response.json();
         setModels(data.models);
       } catch (error) {
         console.log(error);
-      } 
+      };
     };
     
     if(isInitialLoad || shouldUpdateModels) {
       setShouldUpdateModels(false);
       fetchModels();
-    }
+    };
   }, [BASE_URL, shouldUpdateModels]);
 
 
@@ -480,7 +477,7 @@ const handleSubmitShoot = async (e) => {
               chooser.photographerID = +fetchedPhotogIDs[idx];
               chooser.photographerName = fetchedShootPhotographers[idx];
               fetchedPhotographerChooserIDs.push(chooser);
-            }
+            };
 
             const fetchedModelChooserIDs = [];
 
@@ -490,7 +487,7 @@ const handleSubmitShoot = async (e) => {
               chooser.modelID = +fetchedModelIDs[idx];
               chooser.modelName = fetchedShootModels[idx];
               fetchedModelChooserIDs.push(chooser);
-            }
+            };
 
             const fetchedTagChooserIDs = [];
             
@@ -500,7 +497,7 @@ const handleSubmitShoot = async (e) => {
               chooser.tagID = +fetchedTagIDs[idx];
               chooser.tagName = fetchedShootTags[idx];
               fetchedTagChooserIDs.push(chooser);
-            }
+            };
 
             setPhotographerChooserIDs(fetchedPhotographerChooserIDs);
             setModelChooserIDs(fetchedModelChooserIDs);
@@ -508,15 +505,15 @@ const handleSubmitShoot = async (e) => {
           } else {
             toast.error(response.statusText);
             throw new Error(`Failed to fetch shoot details: ${response.statusText}`);
-          }
+          };
           
         } catch(error) {
           console.log(error);
           navigate('/notfound');
-        }
-      }
+        };
+      };
       fetchShootDetails();
-    }
+    };
 
     setIsLoading(false);
   }, [shoot_id]);

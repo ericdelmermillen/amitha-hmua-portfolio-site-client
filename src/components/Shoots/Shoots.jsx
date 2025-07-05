@@ -69,8 +69,8 @@ const Shoots = () => {
         shootsData.length > 0 
         ? setCurrentPage(c => c + 1)
         : setCurrentPage(1);
-      }
-    }
+      };
+    };
   };
   
   const handleNewShootId = useCallback((shootId) => {
@@ -104,7 +104,7 @@ const Shoots = () => {
         updateObj.shoot_id = shoot.shoot_id;
         updateObj.display_order = shoot.display_order;
         new_shoot_order.push(updateObj);
-      }
+      };
 
       try {
         const response = await fetch(`${BASE_URL}/shoots/updateorder`, {
@@ -119,14 +119,14 @@ const Shoots = () => {
         if(response.ok) {
           toast.success("Database updated.");
           setIsLoading(false);
-        }
+        };
         
       } catch(error) {
         console.log(error);
         toast.error("Error updating database...");
         setIsLoading(false);
-      }
-    }
+      };
+    };
 
     setIsOrderEditable(false);
     setActiveDragShoot({id: -1});
@@ -156,7 +156,7 @@ const Shoots = () => {
               shoot.display_order = dropTargetShootDisplayOrder;
             } else if (shoot.display_order < dropTargetShootDisplayOrder && shoot.display_order >= activeDraggedShootOldDisplayOrder) {
               shoot.display_order--;
-            }
+            };
           } else if (activeDraggedShootOldDisplayOrder > dropTargetShootDisplayOrder) {
             if (shoot.shoot_id === dropTargetShootId) {
               shoot.display_order = dropTargetShootDisplayOrder + 1;
@@ -164,7 +164,7 @@ const Shoots = () => {
               shoot.display_order = dropTargetShootDisplayOrder;
             } else if (shoot.display_order > dropTargetShootDisplayOrder && shoot.display_order <= activeDraggedShootOldDisplayOrder) {
               shoot.display_order++;
-            }
+            };
           } else if (dropTargetShootDisplayOrder > activeDraggedShootOldDisplayOrder) {
             if (shoot.shoot_id === dropTargetShootId) {
               shoot.display_order = dropTargetShootDisplayOrder - 1;
@@ -172,10 +172,10 @@ const Shoots = () => {
               shoot.display_order = dropTargetShootDisplayOrder;
             } else if (shoot.display_order <= dropTargetShootDisplayOrder && shoot.display_order > activeDraggedShootOldDisplayOrder) {
               shoot.display_order--;
-            }
-          }
-        }
-      }
+            };
+          };
+        };
+      };
       updatedShootsData.sort((a, b) => a.display_order - b.display_order);
       return updatedShootsData;
     });
@@ -188,7 +188,7 @@ const Shoots = () => {
     let finalPageFetched = false;
 
     if(location.search.split("=")[1] && selectedTag === null) {
-      return
+      return;
     };
     
     if(!finalPageLoaded && (shouldUpdateShoots) ) {
@@ -211,15 +211,15 @@ const Shoots = () => {
 
             if(filteredData.length < itemsPerPage) {
               finalPageFetched = true;
-            }
+            };
             
             if(isOnShootDetails) {
               const currentShoot = shoot_id;
               filteredData = data.filter(shoot => shoot.shoot_id !== +currentShoot);
-            }    
+            };
             
             setShootsData(prevShoots => [...prevShoots, ...filteredData.filter(shoot => !prevShoots.some(prev => prev.shoot_id === shoot.shoot_id))]);
-          }
+          };
         } catch(error) {
           console.log(`Error fetching shoots: ${error}`);
           toast.error(`Failed to fetch shoots: ${error}`);
@@ -234,11 +234,11 @@ const Shoots = () => {
             setTimeout(() => {
               setFinalPageLoaded(true);
             }, minLoadingInterval);
-          } 
-        }
-      }
+          };
+        };
+      };
       fetchShoots();
-    }
+    };
     
     setShouldUpdateShoots(false);
   }, [shouldUpdateShoots, isOnShootDetails, currentPage, shoot_id, shootsData.length, selectedTag]);
@@ -247,7 +247,7 @@ const Shoots = () => {
   useEffect(() => {
     if(!finalPageLoaded) {
       handleOverScroll();
-    }
+    };
   }, [scrollYPos, prevScrollYPos, shootsData.length]);
 
   // useEffect to clear shoots state when navigating to page
@@ -265,8 +265,8 @@ const Shoots = () => {
         if(pathname.includes('work')) {
           setShouldUpdateShoots(true);
           setShootsData([]);
-        }
-      }
+        };
+      };
     }, [location]);
 
   return (
