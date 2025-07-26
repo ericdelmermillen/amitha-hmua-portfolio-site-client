@@ -159,6 +159,7 @@
 
 	&__photo {
 		@include mx.shootDetailsImg;
+		cursor: pointer;
 	}
 
 	&__divider {
