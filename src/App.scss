@@ -139,6 +139,10 @@ img {
 	width: 3rem;
 	z-index: 5;
 
+	@media (min-width: vars.$ultraWide) {
+		right: calc((100vw - 1920px) / 2 + 2.5rem);
+	}
+
 	&__up-stroke {
 		stroke: var(--text-color);
 	}
