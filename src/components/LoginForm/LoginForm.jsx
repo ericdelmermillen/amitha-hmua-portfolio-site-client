@@ -34,7 +34,7 @@ const LoginForm = () => {
 
     if(shouldCheckEmailIsValid) {
       setEmailIsInvalid(!isValidEmail(email));
-    }
+    };
   };
 
   const handleCheckEmailIsValid =() => {
@@ -65,16 +65,22 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    let invalidInputs = 0;
   
     if(!isValidEmail(email)) {
       setEmailIsInvalid(true);
-      return;
-    }
+      invalidInputs += 1;
+    };
     
     if(!isValidPassword(password)) {
       setPasswordInvalid(true);
+      invalidInputs += 1;
+    };
+
+    if(invalidInputs) {
       return;
-    }
+    };
   
     try {
       const response = await fetch(`${BASE_URL}/auth/login`, {
