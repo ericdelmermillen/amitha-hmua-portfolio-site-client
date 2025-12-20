@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef, useEffect } from "react";
 import { useAppContext } from '../../AppContext'; 
 import { Link } from 'react-router-dom';
 import { isValidEmail, isValidPassword } from '../../utils/utils';
@@ -15,66 +15,67 @@ const isSafari = navigator.userAgent.toLowerCase().includes("safari") &&
 const LoginForm = () => {
   const { 
     setIsLoggedIn,
-    handleNavigateHome,
+    handleNavigateHome
   } = useAppContext();
   
   const [ email, setEmail ] = useState('');
   const [ emailIsInvalid, setEmailIsInvalid ] = useState(false);
-  const [ shouldCheckEmailIsValid, setShouldCheckEmailIsValid ] = useState(false);
   
   const [ password, setPassword ] = useState('');
   const [ passwordInvalid, setPasswordInvalid ] = useState(false);
-  const [ shouldCheckPasswordIsValid, setShouldCheckPasswordIsValid ] = useState(false);
-
+  const [ initialFormCheck, setInitialFormCheck ] = useState(false);
   const [ showPassword, setShowPassword ] = useState(false);
   const [ showModal, setShowModal ] = useState(false);
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
 
-    if(shouldCheckEmailIsValid) {
-      setEmailIsInvalid(!isValidEmail(email));
+  const handleEmailChange = (e) => {
+    const emailValue =
+      e?.target.value ?? emailRef.current?.value ?? "";
+
+    setEmail(emailValue);
+
+    if(initialFormCheck) {
+      handleCheckEmailIsValid(emailValue);
     };
   };
 
-  const handleCheckEmailIsValid =() => {
-    if(isValidEmail(email)) {
-      setEmailIsInvalid(false)
-    } else {
-      setEmailIsInvalid(true);
-      setShouldCheckEmailIsValid(true);
-    }
+    const handleCheckEmailIsValid = (emailValue) => {
+    setEmailIsInvalid(!isValidEmail(emailValue));
   };
-
+  
   const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-    
-    if(shouldCheckPasswordIsValid) {
-      handleCheckPasswordIsValid()
-    }
+    const passwordValue =
+      e?.target.value ?? passwordRef.current?.value ?? "";
+
+    setPassword(passwordValue);
+
+    if(initialFormCheck) {
+      handleCheckPasswordIsValid(passwordValue);
+    };
   };
 
-  const handleCheckPasswordIsValid = () => {
-    if(isValidPassword(password)) {
-      setPasswordInvalid(false);
-    } else {
-      setPasswordInvalid(true)
-      setShouldCheckPasswordIsValid(true)
-    }
-  };
+  const handleCheckPasswordIsValid = (passwordValue) => {
+  setPasswordInvalid(!isValidPassword(passwordValue));
+};
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setInitialFormCheck(true);
 
     let invalidInputs = 0;
   
     if(!isValidEmail(email)) {
       setEmailIsInvalid(true);
+      toast.error("Invalid email");
       invalidInputs += 1;
     };
     
     if(!isValidPassword(password)) {
       setPasswordInvalid(true);
+      toast.error("Invalid password");
       invalidInputs += 1;
     };
 
@@ -103,16 +104,16 @@ const LoginForm = () => {
         handleNavigateHome();
         toast.success('Successfully logged in!');
       } else if(response.status === 401) {
-        console.log("401")
+        console.log("401");
         toast.error('Login Failed. Check Email & Password')
       } else if(response.status === 404) {
         console.log(`response.status: ${response.status}`)
         toast.error("User not found");
-      }
+      };
     } catch(error) {
       toast.error(error.message)
       console.error('Error:', error);
-    }
+    };
   };
 
   useEffect(() => {
@@ -141,12 +142,12 @@ const LoginForm = () => {
                 id='email'
                 className='loginForm__input'
                 value={email}
+                ref={emailRef}
                 placeholder='Email'
                 onChange={handleEmailChange}
-                onBlur={handleCheckEmailIsValid}
               />
               <div 
-                className={`loginForm__error ${emailIsInvalid && 'email-error'}`}
+                className={`loginForm__error ${emailIsInvalid && initialFormCheck && 'email-error'}`}
               >
                 Invalid Email
               </div>
@@ -162,9 +163,9 @@ const LoginForm = () => {
                   id='password'
                   className='loginForm__input'
                   value={password}
+                  ref={passwordRef}
                   placeholder='Password'
                   onChange={handlePasswordChange}
-                  onBlur={handleCheckPasswordIsValid}
                 />
 
                 <div 
@@ -184,9 +185,9 @@ const LoginForm = () => {
                 </div>
               </div>
               <div 
-                className={`loginForm__error ${passwordInvalid && 'password-error'}`}
+                className={`loginForm__error ${passwordInvalid && initialFormCheck && 'password-error'}`}
               >
-                Password Incorrect
+                Invalid Password
               </div>
             </div>
             <div className='loginForm__button-container'>
