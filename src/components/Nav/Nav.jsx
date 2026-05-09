@@ -11,7 +11,7 @@ const Nav = ({ handleLogOut }) => {
     isLoggedIn, 
     setShowSideNav,
     scrollYPos, 
-    prevScrollYPos, 
+    getPrevScrollYPosValue,
     tags, 
     handleNavigateHome,
     handleSetShowSideNav,
@@ -22,13 +22,13 @@ const Nav = ({ handleLogOut }) => {
     handleNavigateHome();
     handleNavLinkClick()
   };
-  
+
   
   return (
     <>
       <nav 
         id="nav"
-        className={`nav ${prevScrollYPos < scrollYPos && scrollYPos > 50 
+        className={`nav ${getPrevScrollYPosValue() < scrollYPos && scrollYPos > 50 
           ? "hide"
           : ""}`
       }>
@@ -98,6 +98,7 @@ const Nav = ({ handleLogOut }) => {
         </div>
       </nav>
     </>
-  )};
+  );
+};
 
 export default Nav;
