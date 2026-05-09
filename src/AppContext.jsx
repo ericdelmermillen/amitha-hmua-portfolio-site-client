@@ -1,4 +1,11 @@
-import { useState, useEffect, createContext, useContext, useCallback, } from 'react';
+import { 
+  useState, 
+  useRef,
+  useEffect, 
+  createContext, 
+  useContext, 
+  useCallback
+} from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { checkTokenExpiration, scrollToTop } from './utils/utils.js';
 import { toast } from 'react-toastify';
@@ -21,7 +28,6 @@ const AppProvider = ({ children }) => {
   const [ showFloatingButton, setShowFloatingButton ] = useState(!location.pathname.includes("edit") || !location.pathname.includes("add"));
 
   const [ scrollYPos, setScrollYPos ] = useState(window.scrollY);
-  const [ prevScrollYPos, setPrevScrollYPos ] = useState(window.scrollY);
   
   const [ showSideNav, setShowSideNav ] = useState(false);
 
@@ -58,12 +64,15 @@ const AppProvider = ({ children }) => {
   const [ lightboxOpen, setLightboxOpen ] = useState(false);
   const [ lightboxIndex, setLightboxIndex ] = useState(0);
   const [ slides, setSlides ] = useState([]);
+
+  const prevScrollYPosRef = useRef(null);
+  const getPrevScrollYPosValue = () => prevScrollYPosRef.current ?? 0;
   
   const navigate = useNavigate(); 
 
   const handleNavigateHome = useCallback((tagObj) => {   
 
-    if(!tagObj) {
+    if (!tagObj) {
       navigate('/work');
       setSelectedTag(null);
     } else if (tagObj) {
@@ -90,7 +99,7 @@ const AppProvider = ({ children }) => {
     setShowDeleteOrEditModal(true);
     setDeleteOrEditClickAction(action);
     
-    if(shoot_id) {
+    if (shoot_id) {
       setSelectedShoot(shoot_id);
     };
   }, []);
@@ -116,7 +125,7 @@ const AppProvider = ({ children }) => {
       try {
         const response = await fetch(`${BASE_URL}/tags/all`, { headers });
         
-        if(!response.ok) {
+        if (!response.ok) {
           throw new Error(`Failed to fetch tags: ${response.statusText}`);
         }
 
@@ -127,7 +136,7 @@ const AppProvider = ({ children }) => {
       };
     };
     
-    if(shouldUpdateTags) {
+    if (shouldUpdateTags) {
       setIsLoading(true);
       setShouldUpdateTags(false);
       fetchTags();
@@ -141,9 +150,9 @@ const AppProvider = ({ children }) => {
 
   // fetch bioPage data
   useEffect(() => {
-    if(location.pathname.includes("bio")) {
+    if (location.pathname.includes("bio")) {
 
-      if(!bioText.length || !bioName.length || !bioImg.length) {
+      if (!bioText.length || !bioName.length || !bioImg.length) {
         setIsLoading(true);
   
         const fetchBioData = async () => {
@@ -151,7 +160,7 @@ const AppProvider = ({ children }) => {
           try {
             const response = await fetch(`${BASE_URL}/bio`);
   
-            if(response.ok) {
+            if (response.ok) {
               const data = await response.json();
               setBioText(data.bioText);
               setBioName(data.bioName);
@@ -181,19 +190,19 @@ const AppProvider = ({ children }) => {
     const URLIncludesEdit = pathname.includes("edit");
     const URLIncludesAdd = pathname.includes("add");
 
-    if(currentURL !== prevURL) {
+    if (currentURL !== prevURL) {
       setPrevURL(currentURL);
     };
 
-    if(URLIncludesEdit || URLIncludesAdd) {
+    if (URLIncludesEdit || URLIncludesAdd) {
       setShowFloatingButton(false);
-    } else if(!URLIncludesEdit || !URLIncludesAdd) {
+    } else if (!URLIncludesEdit || !URLIncludesAdd) {
       setShowFloatingButton(true);
     };
     
     scrollToTop();
     
-    if(location.pathname === "/work" && prevURL !== "/work") {
+    if (location.pathname === "/work" && prevURL !== "/work") {
       setIsLoading(false);
     } else {
       setTimeout(() => {
@@ -202,6 +211,30 @@ const AppProvider = ({ children }) => {
     };
     setShowPhotogModelTagModal(false);
   }, [location]);
+
+  // useEffect for updating of scrollYPos
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setScrollYPos((prev) => {
+            prevScrollYPosRef.current = prev;
+            return window.scrollY;
+          });
+          
+          setShowSideNav(false);
+          setShowDeleteOrEditModal(false);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Update local storage when color mode state changes
   useEffect(() => {
@@ -230,8 +263,6 @@ const AppProvider = ({ children }) => {
     setShowSideNav,
     scrollYPos, 
     setScrollYPos,
-    prevScrollYPos, 
-    setPrevScrollYPos,
     showFloatingButton, 
     setShowFloatingButton,
     prevURL, 
@@ -283,6 +314,7 @@ const AppProvider = ({ children }) => {
     handleSetLightBoxState,
 
     // non-state functions
+    getPrevScrollYPosValue,
     hideNav,
     showNav,
     handleNavLinkClick,
@@ -297,7 +329,8 @@ const AppProvider = ({ children }) => {
         {children}
       </AppContext.Provider>
     </>
-  )};
+  );
+};
 
 // custom hook to access AppContext object in context consumers
 const useAppContext = () => {

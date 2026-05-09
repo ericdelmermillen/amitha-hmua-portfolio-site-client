@@ -34,9 +34,6 @@ const App = () => {
     colorMode, 
     showSideNav, 
     setShowSideNav,
-    scrollYPos, 
-    setScrollYPos,
-    setPrevScrollYPos,
     showPhotogModelTagModal, 
     showDeleteOrEditModal, 
     isLoading, 
@@ -71,26 +68,6 @@ const App = () => {
     setSelectValue(null);
     navigate('/shoots/add');
   }, [navigate]);
-
-  // handle scroll position for show hide of menu
-  useEffect(() => {
-    const handleScrollY = () => {
-      const newScrollYPos = window.scrollY;
-
-      if(scrollYPos !== undefined && setPrevScrollYPos !== undefined && newScrollYPos !== scrollYPos) {
-        setPrevScrollYPos(scrollYPos);
-        setScrollYPos(newScrollYPos);
-      }
-    };
-
-    handleScrollY();
-
-    window.addEventListener("scroll", handleScrollY);
-
-    return () => {
-      window.removeEventListener("scroll", handleScrollY);
-    };
-  }, [scrollYPos]);
 
   return (
     <>
@@ -213,6 +190,7 @@ const App = () => {
       
       </div>
     </>
-  )};
+  );
+};
 
 export default App;
