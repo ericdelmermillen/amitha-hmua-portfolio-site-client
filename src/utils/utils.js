@@ -6,17 +6,18 @@ const checkTokenExpiration = async (setIsLoggedIn, navigate) => {
   const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const token = localStorage.getItem('token');
 
-  if(token) {
+
+  if (token) {
     try {
       const decodedToken = jwtDecode(token);
       const currentTime = Math.floor(Date.now() / 1000);
 
-      if(decodedToken.exp > currentTime) {
+      if (decodedToken.exp > currentTime) {
         return setIsLoggedIn(true);
-      } else if(decodedToken.exp < currentTime) {
+      } else if (decodedToken.exp < currentTime) {
         const refreshToken = localStorage.getItem('refreshToken');
         
-        if(refreshToken) {
+        if (refreshToken) {
           const refreshResponse = await fetch(`${BASE_URL}/auth/refresh`, {
             method: 'POST',
             headers: {
@@ -29,7 +30,7 @@ const checkTokenExpiration = async (setIsLoggedIn, navigate) => {
 
           console.log("Token expired: attempting refresh");
 
-          if(refreshResponse.ok) {
+          if (refreshResponse.ok) {
             const { accessToken } = await refreshResponse.json();
             localStorage.setItem('token', accessToken);
             setIsLoggedIn(true);
