@@ -266,6 +266,7 @@ const EditBio = () => {
         </div>
       </div>
     </>
-  )};
+  );
+};
 
 export default EditBio;

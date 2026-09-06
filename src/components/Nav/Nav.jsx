@@ -9,7 +9,6 @@ import './Nav.scss';
 const Nav = ({ handleLogOut }) => {
   const { 
     isLoggedIn, 
-    setShowSideNav,
     scrollYPos, 
     getPrevScrollYPosValue,
     tags, 
@@ -22,7 +21,6 @@ const Nav = ({ handleLogOut }) => {
     handleNavigateHome();
     handleNavLinkClick()
   };
-
   
   return (
     <>

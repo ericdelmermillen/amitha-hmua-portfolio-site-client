@@ -187,11 +187,11 @@ const Shoots = () => {
   useEffect(() => {
     let finalPageFetched = false;
 
-    if(location.search.split("=")[1] && selectedTag === null) {
+    if (location.search.split("=")[1] && selectedTag === null) {
       return;
     };
     
-    if(!finalPageLoaded && (shouldUpdateShoots) ) {
+    if (!finalPageLoaded && (shouldUpdateShoots) ) {
 
       const fetchShoots = async () => {
         setIsLoading(true)
@@ -201,20 +201,20 @@ const Shoots = () => {
             ? await fetch(`${BASE_URL}/shoots/all?page=${currentPage}&limit=${itemsPerPage}`)
             : await fetch(`${BASE_URL}/shoots/all?tag_id=${selectedTag.id}&page=${currentPage}&limit=${itemsPerPage}`);
           
-          if(response.ok) {
+          if (response.ok) {
             const { shootSummaries, isFinalPage } = await response.json();            
-
+            
             finalPageFetched = isFinalPage;
             
             const data = shootSummaries;
             
             let filteredData = [...data];
 
-            if(filteredData.length < itemsPerPage) {
+            if (filteredData.length < itemsPerPage) {
               finalPageFetched = true;
             };
             
-            if(isOnShootDetails) {
+            if (isOnShootDetails) {
               const currentShoot = shoot_id;
               filteredData = data.filter(shoot => shoot.shoot_id !== +currentShoot);
             };
@@ -296,7 +296,6 @@ const Shoots = () => {
               to={`/shoot/${shoot.shoot_id}`} 
               key={shoot.shoot_id}
             >
-              {isLoggedIn ? idx + 1 : ""}
 
                 <Shoot
                   key={shoot.shoot_id}

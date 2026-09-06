@@ -2,8 +2,10 @@
 @use "../../partials/variables.scss" as vars;
 
 .notFound {
-	justify-content: center;
 	@include mx.page;
+	& {
+		justify-content: center;
+	}
 
 	&__heading,
 	&__sub-heading {

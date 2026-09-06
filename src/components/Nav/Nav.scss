@@ -72,39 +72,41 @@
 	}
 
 	&__link {
-		border-radius: var(--borderRadius);
-		text-transform: uppercase;
 		@include mx.navLink;
-
-		@media (min-width: vars.$largeTablet) {
-			align-items: center;
-			border: none;
-			display: flex;
-			height: 4rem;
-			width: 10rem;
-		}
-
-		&--work {
-			width: 100%;
-		}
-
-		&--instagram {
-			align-items: center;
-			display: flex;
-			fill: var(--text-color);
-			justify-content: center;
-			max-width: 4rem;
-		}
-
-		&--colorMode {
-			@media (min-width: vars.$tablet) {
-				max-width: 6rem;
-			}
+		& {
+			border-radius: var(--borderRadius);
+			text-transform: uppercase;
 
 			@media (min-width: vars.$largeTablet) {
+				align-items: center;
 				border: none;
-				max-width: 8rem;
-				min-width: 8rem;
+				display: flex;
+				height: 4rem;
+				width: 10rem;
+			}
+
+			&--work {
+				width: 100%;
+			}
+
+			&--instagram {
+				align-items: center;
+				display: flex;
+				fill: var(--text-color);
+				justify-content: center;
+				max-width: 4rem;
+			}
+
+			&--colorMode {
+				@media (min-width: vars.$tablet) {
+					max-width: 6rem;
+				}
+
+				@media (min-width: vars.$largeTablet) {
+					border: none;
+					max-width: 8rem;
+					min-width: 8rem;
+				}
 			}
 		}
 	}
@@ -113,8 +115,10 @@
 		display: none;
 
 		@media (min-width: vars.$largeTablet) {
-			display: block;
 			@include mx.buttonRounded;
+			& {
+				display: block;
+			}
 		}
 	}
 

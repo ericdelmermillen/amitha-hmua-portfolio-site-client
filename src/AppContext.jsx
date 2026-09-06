@@ -76,7 +76,7 @@ const AppProvider = ({ children }) => {
       navigate('/work');
       setSelectedTag(null);
     } else if (tagObj) {
-      navigate(`/work?tag=${tagObj.tag_name}`);
+      navigate(`/work?tag=${tagObj.name}`);
     };
 
     setIsOrderEditable(false);
@@ -130,6 +130,7 @@ const AppProvider = ({ children }) => {
         }
 
         const data = await response.json();
+
         setTags(data.tags);
       } catch (error) {
         console.log(error);

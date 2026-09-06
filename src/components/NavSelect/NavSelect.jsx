@@ -29,7 +29,7 @@ const NavSelect = ({ selectOptions }) => {
   };
 
   const handleUpdateSelectValue = (option) => {
-    setSelectValue(option.tag_name);
+    setSelectValue(option.name);
     setShowOptions(false);
     setShowSideNav(false);
     
@@ -55,7 +55,7 @@ const NavSelect = ({ selectOptions }) => {
       }, minLoadingInterval);
     } else if(!showOptions) {
       if(selectValue) {
-        const foundOption = selectOptions.find(tag => tag.tag_name === selectValue);
+        const foundOption = selectOptions.find(tag => tag.name === selectValue);
         setTimeout(() => {
           setSelectedTag(foundOption);
           handleNavigateHome(foundOption);
@@ -84,7 +84,7 @@ const NavSelect = ({ selectOptions }) => {
       setSelectValue(locationTagName);
 
       if(selectOptions.length) {
-        const foundTag = selectOptions.find(tag => tag.tag_name.toLowerCase() === locationTagName.toLowerCase());
+        const foundTag = selectOptions.find(tag => tag.name.toLowerCase() === locationTagName.toLowerCase());
 
         if(foundTag) {
           setSelectedTag(foundTag);
@@ -163,7 +163,7 @@ const NavSelect = ({ selectOptions }) => {
                 key={option.id} 
                 onClick={() => handleUpdateSelectValue(option)}
               >
-                {`# ${option.tag_name}`}
+                {`# ${option.name}`}
               </div>
             )}
           </div>

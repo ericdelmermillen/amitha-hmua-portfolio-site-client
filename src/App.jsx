@@ -124,7 +124,6 @@ const App = () => {
           }
           <Route path="/bio" element={<Bio />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/contact" element={<Contact />} />
           <Route path="/shoot/:shoot_id" element={<ShootDetails />} />
           <Route path="/login" element={<Login />} />
           

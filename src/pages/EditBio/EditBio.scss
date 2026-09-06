@@ -2,7 +2,9 @@
 @use "../../partials/variables.scss" as vars;
 
 .editBio {
-	@include mx.page;
+	& {
+		@include mx.page;
+	}
 
 	&__inner {
 		border: 1px solid var(--text-color);
@@ -76,10 +78,12 @@
 	}
 
 	&__bio-caption {
-		margin-block: 2rem;
-		max-width: 20rem;
-		text-align: center;
 		@include mx.input;
+		& {
+			margin-block: 2rem;
+			max-width: 20rem;
+			text-align: center;
+		}
 	}
 
 	&__text-section {
@@ -91,14 +95,16 @@
 	}
 
 	&__bio-text {
-		height: 35rem;
-		line-height: 1.5;
-		padding: 1rem !important;
-		resize: none;
 		@include mx.input;
+		& {
+			height: 35rem;
+			line-height: 1.5;
+			padding: 1rem;
+			resize: none;
 
-		@media (min-width: 500px) {
-			height: 30rem;
+			@media (min-width: 500px) {
+				height: 30rem;
+			}
 		}
 	}
 

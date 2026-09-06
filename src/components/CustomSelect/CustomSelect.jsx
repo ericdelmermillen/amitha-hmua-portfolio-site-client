@@ -174,7 +174,7 @@ const CustomSelect = ({
                   : ""}`} 
                 key={option.id} onClick={() => handleUpdateSelectValue(option)}
               >
-                {option.photographer_name || option.model_name || option.tag_name}
+                {option.name}
                 <div 
                   className="customSelect__option--edit-icon"
                   onClick={(e) => handleOptionClick(e, option, "Edit")}
